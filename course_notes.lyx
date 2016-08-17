@@ -2909,7 +2909,7 @@ We have
  We have 
 \begin_inset Formula 
 \[
-\frac{1}{p}+\frac{1}{q}=1\implies\frac{1}{q}=1-\frac{1}{p}=\frac{p-1}{p}\Rightarrow q\left(p-1\right)=p,
+\frac{1}{p}+\frac{1}{q}=1\implies\frac{1}{q}=1-\frac{1}{p}=\frac{p-1}{p}\implies q\left(p-1\right)=p,
 \]
 
 \end_inset
@@ -4867,58 +4867,19 @@ Suppose that a random variable
 
  is given by
 \begin_inset Formula 
-\begin{flalign}
-f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right) & =\prod_{i=1}^{n}f\left(x_{i}|\theta\right)\label{eq:joint-distr-proof-step-1}\\
- & =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right]\label{eq:joint-distr-proof-step-2}\\
- & =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \label{eq:joint-distr-proof-step-3}
-\end{flalign}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:joint-distr-proof-step-1"
-
-\end_inset
-
- follows because the joint pdf of independent random variables is the product
- of their marginal pdfs.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:joint-distr-proof-step-2"
-
-\end_inset
-
- follows because we are given that the pdf of 
-\begin_inset Formula $X$
-\end_inset
-
- is part of a 
-\begin_inset Formula $k$
-\end_inset
-
--parameter exponential family, so it can be written in that form.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:joint-distr-proof-step-3"
-
-\end_inset
-
- follows from algebra, and because the product of exponentials is an exponential
- raised to the sum of the individual powers, e.g., 
-\begin_inset Formula $\mathrm{e}^{x_{1}}\cdot\mathrm{e}^{x_{2}}=\mathrm{e}^{x_{1}+x_{2}}$
-\end_inset
-
-.
- Then, let 
-\begin_inset Formula 
 \begin{flalign*}
-h^{*}\left(x\right) & =\prod_{i=1}^{n}h\left(x_{i}\right)\\
-c^{*}\left(\theta\right) & =\left[c\left(\theta\right)\right]^{n},
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right) & =\prod_{i=1}^{n}f\left(x_{i}|\theta\right)\tag{independence}\\
+ & =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right]\tag{\ensuremath{f} is part of an exponential family}\\
+ & =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \tag{\ensuremath{\mathrm{e}^{x}\cdot\mathrm{e}^{y}=\mathrm{e}^{x+y}}}
 \end{flalign*}
+
+\end_inset
+
+Then, let 
+\begin_inset Formula 
+\[
+h^{*}\left(x\right)=\prod_{i=1}^{n}h\left(x_{i}\right)\quad\text{and}\quad c^{*}\left(\theta\right)=\left[c\left(\theta\right)\right]^{n},
+\]
 
 \end_inset
 
@@ -4973,7 +4934,7 @@ name "sec:Natural-parameters"
 An exponential family is sometimes reparametrized as
 \begin_inset Formula 
 \begin{flalign*}
-f\left(x|\eta\right) & =h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right),
+f\left(x|\boldsymbol{\eta}\right) & =h\left(x\right)c^{*}\left(\boldsymbol{\eta}\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right),
 \end{flalign*}
 
 \end_inset
@@ -4985,16 +4946,16 @@ where the natural parameters are defined by
  and the natural parameter space is
 \begin_inset Formula 
 \[
-\left\{ \eta=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \mbox{d}x<\infty\right\} 
+\left\{ \boldsymbol{\eta}=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x<\infty\right\} 
 \]
 
 \end_inset
 
 so that 
 \begin_inset Formula 
-\begin{flalign*}
-c^{*}\left(\eta\right) & =\frac{1}{\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\mbox{d}x\right\} },
-\end{flalign*}
+\[
+c^{*}\left(\boldsymbol{\eta}\right)=\frac{1}{\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\dif x\right\} },
+\]
 
 \end_inset
 
@@ -5365,7 +5326,7 @@ and the moment-generating function for
  is
 \begin_inset Formula 
 \[
-M_{\left(X_{1},\ldots,X_{k}\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}x_{j}}\right].
+M_{\left(X_{1},\ldots,X_{k}\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}X_{j}}\right].
 \]
 
 \end_inset
@@ -5374,167 +5335,140 @@ M_{\left(X_{1},\ldots,X_{k}\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\math
 \end_layout
 
 \begin_layout Proof
-We begin with the pdf of an exponential family.
+We begin with the pdf of an exponential family, i.e., 
 \begin_inset Formula 
-\begin{flalign}
-1 & =\int f\left(x|\theta\right)\mbox{d}x\label{eq:expected-val-proof-step-1}\\
- & =\int h\left(x\right)c\left(\theta\right)\exp\left(\sum_{i=1}^{k}\omega_{i}\left(\theta\right)t_{i}\left(x\right)\right)\text{d}x\label{eq:expected-val-proof-step-2}\\
- & =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\mbox{d}x\label{eq:expected-val-proof-step-3}\\
-\frac{\partial}{\partial\eta_{j}}1 & =\frac{\partial}{\partial\eta_{j}}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\mbox{d}x\label{eq:expected-val-proof-step-4}\\
-0 & =\int\frac{\partial}{\partial\eta_{j}}\left[h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\mbox{d}x\label{eq:expected-val-proof-step-5}\\
- & =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\mbox{d}x\label{eq:expected-val-proof-step-6}\\
- & \quad+\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\left(\eta_{i}t_{i}\left(x\right)\right)\right)\mbox{d}x\nonumber \\
- & =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\mbox{d}x\label{eq:expected-val-proof-step-7}\\
- & \quad+\E\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\left(\eta_{i}t_{i}\left(x\right)\right)\right)\nonumber \\
- & =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\text{d}x\label{eq:expected-val-proof-step-8}\\
- & \quad+\E\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\left(\eta_{i}t_{i}\left(x\right)\right)\right)\nonumber \\
- & =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\cdot1+\E\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\left(\eta_{i}t_{i}\left(x\right)\right)\right)\label{eq:expected-val-proof-step-9}\\
--\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right) & =\E\left(\frac{\partial}{\partial\eta_{j}}\eta_{1}t_{1}\left(x\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{j}t_{j}\left(x\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{k}t_{k}\left(x\right)\right)\label{eq:expected-val-proof-step-10}\\
- & =\E\left(0\cdot t_{1}\left(x\right)+\ldots+1\cdot t_{j}\left(x\right)+\ldots+0\cdot t_{k}\left(x\right)\right)\label{eq:expected-val-proof-step-11}\\
- & =\E\left(t_{j}\left(x\right)\right)\label{eq:expected-val-proof-step-12}
-\end{flalign}
+\begin{flalign*}
+1 & =\int f\left(x|\theta\right)\mbox{d}x\tag{definition of a pdf}\\
+ & =\int h\left(x\right)c\left(\theta\right)\exp\left(\sum_{i=1}^{k}\omega_{i}\left(\theta\right)t_{i}\left(x\right)\right)\dif x\tag{\ensuremath{f} is in an exponential family}\\
+ & =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x.\tag{natural parameterization}
+\end{flalign*}
 
 \end_inset
 
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-1"
-
-\end_inset
-
- follows from the definition of a pdf.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-2"
-
-\end_inset
-
- follows by expressing 
-\begin_inset Formula $f\left(x|\theta\right)$
-\end_inset
-
- in exponential family form.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-3"
-
-\end_inset
-
- follows from the natural reparameterization of 
-\begin_inset Formula $f\left(x|\theta\right)$
-\end_inset
-
-.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-4"
-
-\end_inset
-
- follows by taking the derivative of both sides of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-3"
-
-\end_inset
-
- with respect to 
+Taking the derivative of both sides with repect to 
 \begin_inset Formula $\eta_{j}$
 \end_inset
 
-.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-5"
+ gives 
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial}{\partial\eta_{j}}1 & =\frac{\partial}{\partial\eta_{j}}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+\implies0 & =\int\frac{\partial}{\partial\eta_{j}}\left[h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x\\
+ & =\int\left[h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\right]\dif x\\
+ & =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & \quad+\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & \quad+\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{flalign*}
 
 \end_inset
 
- follows from interchanging differentiation and integration.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-6"
+
+\end_layout
+
+\begin_layout Proof
+where the final equality follows from the definition of expected value.
+ Observe that for some differentiable function 
+\begin_inset Formula $g\left(x\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+g'\left(x\right)=\frac{g\left(x\right)}{g\left(x\right)}g'\left(x\right)=g\left(x\right)\frac{\dif}{\dif x}\log\left(g\left(x\right)\right),
+\]
 
 \end_inset
 
- follows from the product rule and the chain rule.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-7"
+which leads to 
+\begin_inset Formula 
+\begin{flalign*}
+0 & =\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right]\\
+ & =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right]\\
+ & =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\cdot1+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{flalign*}
 
 \end_inset
 
- follows from the fact that 
-\begin_inset Formula $g'\left(x\right)=g\left(x\right)\frac{\partial}{\partial x}\log\left(g\left(x\right)\right)$
-\end_inset
-
- and the definition of expected value.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-8"
-
-\end_inset
-
- follows because we are integrating with respect to 
-\begin_inset Formula $x$
-\end_inset
-
-, so we may treat functions of 
-\begin_inset Formula $\eta$
-\end_inset
-
- exclusively as constant.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-9"
+where the final equality follows from the fact that the integral of a pdf
+ over its range of positivity is equal to 1.
+ Then,
+\begin_inset Formula 
+\begin{flalign*}
+-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right) & =\E\left[\frac{\partial}{\partial\eta_{j}}\eta_{1}t_{1}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{j}t_{j}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{k}t_{k}\left(X\right)\right]\\
+ & =\E\left[0\cdot t_{1}\left(X\right)+\ldots+1\cdot t_{j}\left(X\right)+\ldots+0\cdot t_{k}\left(X\right)\right]\\
+ & =\E\left[t_{j}\left(X\right)\right],
+\end{flalign*}
 
 \end_inset
 
- follows because the pdf 
-\begin_inset Formula $f\left(x|\eta\right)$
-\end_inset
-
- integrates to 1.
- We rearrange terms and expand the sum to write 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-10"
-
-\end_inset
-
-.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:expected-val-proof-step-11"
+proving the first claim.
+ Then,
+\begin_inset Formula 
+\begin{flalign*}
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right) & =\frac{\partial}{\partial\eta_{j}}\left(-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)\right)\\
+ & =\frac{\partial}{\partial\eta_{j}}\E\left[t_{j}\left(X\right)\right]\\
+ & =\frac{\partial}{\partial\eta_{j}}\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\int t_{j}\left(x\right)h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x\\
+ & =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & \quad+\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x.
+\end{flalign*}
 
 \end_inset
 
- follows because the derivative of 
-\begin_inset Formula $\eta_{i}$
+The first summand becomes
+\begin_inset Formula 
+\begin{flalign*}
+ & \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\E\left[t_{j}\left(X\right)\right]\\
+ & =\left(-\E\left[t_{j}\left(X\right)\right]\right)\E\left[t_{j}\left(X\right)\right]\\
+ & =-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2},
+\end{flalign*}
+
 \end_inset
 
- with respect to 
-\begin_inset Formula $\eta_{j}$
+where the penultimate equality follows from the first part of the proof.
+ The second summand becomes 
+\begin_inset Formula 
+\begin{flalign*}
+ & \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\frac{\partial}{\partial\eta_{1}}n_{1}t_{1}\left(x\right)+\cdots+\frac{\partial}{\partial\eta_{k}}n_{k}t_{k}\left(x\right)\right)\dif x\\
+ & =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(0+\cdots+1\cdot t_{j}\left(x\right)+\cdots+0\right)\dif x\\
+ & =\int\left(t_{j}\left(x\right)\right)^{2}h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x\\
+ & =\E\left[\left(t_{j}\left(X\right)\right)^{2}\right].
+\end{flalign*}
+
 \end_inset
 
- is equal to zero for 
-\begin_inset Formula $i\neq j$
+For some random variable 
+\begin_inset Formula $Y$
 \end_inset
 
- and is equal to 1 in the case where 
-\begin_inset Formula $i=j$
+ with defined second central moment, we have 
+\begin_inset Formula 
+\begin{flalign*}
+\Var\left(Y\right) & =\E\left[\left(Y-\E\left[Y\right]\right)^{2}\right]\\
+ & =\E\left[Y^{2}-2Y\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\right]\\
+ & =\E\left[Y^{2}\right]-2\E\left[Y\E\left[Y\right]\right]+\E\left[\left(\E\left[Y\right]\right)^{2}\right]\\
+ & =\E\left[Y^{2}\right]-2\E\left[Y\right]\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\tag{\ensuremath{\E\left[Y\right]} is constant}\\
+ & =\E\left[Y^{2}\right]-2\left(\E\left[Y\right]\right)^{2}+\left(\E\left[Y\right]\right)^{2}\\
+ & =\E\left[Y^{2}\right]-\left(\E\left[Y\right]\right)^{2}.
+\end{flalign*}
+
 \end_inset
 
-.
+It follows that 
+\begin_inset Formula 
+\[
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)=-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2}+\E\left[\left(t_{j}\left(X\right)\right)^{2}\right]=\Var\left(t_{j}\left(X\right)\right),
+\]
+
+\end_inset
+
+proving the second claim.
 \end_layout
 
 \begin_layout Example
@@ -5650,7 +5584,7 @@ If
  exists and is given by 
 \begin_inset Formula 
 \begin{flalign*}
-M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right) & =\frac{C^{*}\left(\eta\right)}{C^{*}\left(\eta+s\right)}
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right) & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}
 \end{flalign*}
 
 \end_inset
@@ -5686,40 +5620,27 @@ reference "sec:Natural-parameters"
 , it has a pdf given by
 \begin_inset Formula 
 \begin{flalign*}
-f\left(x|\eta\right) & =h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right).
+f\left(x|\eta\right) & =h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} .
 \end{flalign*}
 
 \end_inset
 
-Then, we have
-\begin_inset Formula 
-\begin{flalign}
-M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right) & =\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(x\right)}\right]\label{eq:mgf-proof-step-1}\\
- & =\int\exp\left(\sum_{j=1}^{k}s_{j}t_{j}\left(x\right)\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right)\mbox{d}x\label{eq:mgf-proof-step-2}\\
- & =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right)\mbox{d}x\label{eq:mgf-proof-step-3}\\
- & =\frac{c^{*}\left(\eta+s\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right)\mbox{d}x\label{eq:mgf-proof-step-4}\\
- & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta+s\right)\exp\left(\sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right)\mbox{d}x\label{eq:mgf-proof-step-5}\\
- & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot1\label{eq:mgf-proof-step-6}\\
- & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}.
-\end{flalign}
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-1"
-
-\end_inset
-
- follows from 
+It follows from 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "thm:expected-value-exp-family"
 
 \end_inset
 
- with 
+ that 
+\begin_inset Formula 
+\[
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right],
+\]
+
+\end_inset
+
+with 
 \begin_inset Formula $X_{i}$
 \end_inset
 
@@ -5728,74 +5649,22 @@ reference "thm:expected-value-exp-family"
 \end_inset
 
 .
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-2"
+ Then, we have
+\begin_inset Formula 
+\begin{flalign*}
+\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right] & =\int\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)\right\} h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x\\
+ & =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)+\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x\\
+ & =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x\\
+ & =\frac{c^{*}\left(\eta+s\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x\\
+ & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta+s\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x\\
+ & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot\int f\left(x|\eta+s\right)\dif x\\
+ & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot1\\
+ & =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)},
+\end{flalign*}
 
 \end_inset
 
- follows from the definition of expected value (of a function of a random
- variable, i.e., 
-\begin_inset Formula $\E\left[g\left(X\right)\right]$
-\end_inset
-
-).
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-3"
-
-\end_inset
-
- follows from algebra.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-4"
-
-\end_inset
-
- follows from multiplying by 
-\begin_inset Formula $1=c^{*}\left(\eta+s\right)/c^{*}\left(\eta+s\right)$
-\end_inset
-
-.
- We rearrange terms to write 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-5"
-
-\end_inset
-
-.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-6"
-
-\end_inset
-
- follows because the integral in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:mgf-proof-step-5"
-
-\end_inset
-
- is the pdf of 
-\begin_inset Formula $X$
-\end_inset
-
- with parameter 
-\begin_inset Formula $\eta+s$
-\end_inset
-
-, i.e., 
-\begin_inset Formula $f\left(x|\eta+s\right)$
-\end_inset
-
- and therefore integrates to 1.
+establishing the claim.
 \end_layout
 
 \begin_layout Definition
@@ -6257,91 +6126,39 @@ Let
 \end_layout
 
 \begin_layout Proof
-Let 
+Suppose that 
 \begin_inset Formula $X\sim\left(1/\sigma\right)f\left(\left(x-\mu\right)/\sigma\right)$
 \end_inset
 
 .
- Then, we have
+ Then, the cdf of 
+\begin_inset Formula $X$
+\end_inset
+
+ is given by
 \begin_inset Formula 
-\begin{flalign}
-F\left(x\right) & =P\left(\left\{ X\leq x\right\} \right)\label{eq:loc-scale-family-proof-step-1}\\
- & =\int_{-\infty}^{x}\frac{1}{\sigma}f\left(\frac{t-\mu}{\sigma}\right)\dif t\label{eq:loc-scale-family-proof-step-2}\\
- & =\int_{-\infty}^{\left(x-\mu\right)/\sigma}\frac{1}{\sigma}f\left(z\right)\sigma\dif z\label{eq:loc-scale-family-proof-step-3}\\
- & =\int_{-\infty}^{\left(x-\mu\right)/\sigma}f\left(z\right)\dif z\label{eq:loc-scale-family-proof-step-4}\\
- & =P\left(Z\leq\frac{x-\mu}{\sigma}\right)\label{eq:loc-scale-family-proof-step-5}\\
- & =P\left(\sigma Z+\mu\leq x\right).\label{eq:loc-scale-family-proof-step-6}
-\end{flalign}
+\begin{flalign*}
+F_{X}\left(x\right) & =P\left(\left\{ X\leq x\right\} \right)\\
+ & =\int_{-\infty}^{x}f\left(x\right)\dif x\\
+ & =\int_{-\infty}^{x}\frac{1}{\sigma}f\left(\frac{t-\mu}{\sigma}\right)\dif t\\
+ & =\int_{-\infty}^{\left(x-\mu\right)/\sigma}\frac{1}{\sigma}f\left(z\right)\sigma\dif z\tag{\ensuremath{z=\left(t-\mu\right)/\sigma\implies\dif t=\sigma\dif z}}\\
+ & =\int_{-\infty}^{\left(x-\mu\right)/\sigma}f\left(z\right)\dif z\\
+ & =P\left(\left\{ Z\leq\frac{x-\mu}{\sigma}\right\} \right)\\
+ & =P\left(\left\{ Z\leq z\right\} \right)\tag{\ensuremath{z=\left(x-\mu\right)/\sigma}}\\
+ & =F_{Z}\left(z\right).
+\end{flalign*}
 
 \end_inset
 
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-1"
-
+Thus, 
+\begin_inset Formula $X$
 \end_inset
 
- is the definition of a cdf.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-2"
-
+ will be a random variable with the specified pdf if and only if 
+\begin_inset Formula $Z=\left(X-\mu\right)/\sigma$
 \end_inset
 
- follows from the definition of a pdf.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-3"
-
-\end_inset
-
- follows from making the substitution 
-\begin_inset Formula $z=\left(t-\mu\right)/\sigma$
-\end_inset
-
-, so that 
-\begin_inset Formula $\mbox{d}t=\sigma\mbox{d}z$
-\end_inset
-
-, 
-\begin_inset Formula $f\left(z\right)$
-\end_inset
-
- is a pdf for 
-\begin_inset Formula $Z$
-\end_inset
-
-, and the upper limit of integration is 
-\begin_inset Formula $z\left(x\right)=\left(x-\mu\right)/\sigma$
-\end_inset
-
-.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-4"
-
-\end_inset
-
- follows from algebra.
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-5"
-
-\end_inset
-
- follows from the definition of a pdf, and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:loc-scale-family-proof-step-6"
-
-\end_inset
-
- follows from algebra.
+ is also a random variable.
 \end_layout
 
 \begin_layout Theorem
@@ -7246,7 +7063,7 @@ where the final equality follows from the fact that if
 \begin{flalign*}
 F_{X}\left(x\right) & =\int_{-\infty}^{x}f_{X}\left(t\right)\dif t\\
  & =\int_{-\infty}^{x}\frac{1}{\theta}I_{\left(0,\theta\right)}\left(t\right)\dif t\\
- & =\int_{-\infty}^{0}0\mbox{d}t+\int_{0}^{x}\frac{1}{\theta}\dif t\\
+ & =\int_{-\infty}^{0}0\dif t+\int_{0}^{x}\frac{1}{\theta}\dif t\\
  & =0+\left(\frac{1}{\theta}\int_{0}^{x}1\dif t\right)\\
  & =\frac{1}{\theta}\left(t\Big\rvert_{0}^{x}\right)\\
  & =\frac{1}{\theta}\left(x-0\right)\\
@@ -27632,7 +27449,7 @@ reference "thm:properties-of-cdf"
 ), i.e., 
 \begin_inset Formula 
 \[
-\sup_{x\in\mathbb{R}}\left[F\left(x|\theta_{2}\right)-F\left(x|\theta_{1}\right)\right]=0\Leftrightarrow F\left(x|\theta_{2}\right)-F\left(x|\theta_{1}\right)\leq0\Leftrightarrow F\left(x|\theta_{2}\right)\leq F\left(x|\theta_{1}\right).
+\sup_{x\in\mathbb{R}}\left[F\left(x|\theta_{2}\right)-F\left(x|\theta_{1}\right)\right]=0\implies F\left(x|\theta_{2}\right)-F\left(x|\theta_{1}\right)\leq0\implies F\left(x|\theta_{2}\right)\leq F\left(x|\theta_{1}\right).
 \]
 
 \end_inset
@@ -27654,9 +27471,9 @@ It follows that
 \begin_inset Formula 
 \begin{flalign*}
 F\left(c|\theta_{2}\right) & \leq F\left(c|\theta_{1}\right)\\
-\Leftrightarrow P_{\theta_{2}}\left(\left\{ X\leq c\right\} \right) & \leq P_{\theta_{1}}\left(\left\{ X\leq c\right\} \right)\\
-\Leftrightarrow1-P_{\theta_{2}}\left(\left\{ X>c\right\} \right) & \leq1-P_{\theta_{1}}\left(\left\{ X>c\right\} \right)\\
-\Leftrightarrow P_{\theta_{1}}\left(\left\{ X>c\right\} \right) & \leq P_{\theta_{2}}\left(\left\{ X>c\right\} \right).
+\implies P_{\theta_{2}}\left(\left\{ X\leq c\right\} \right) & \leq P_{\theta_{1}}\left(\left\{ X\leq c\right\} \right)\\
+\implies1-P_{\theta_{2}}\left(\left\{ X>c\right\} \right) & \leq1-P_{\theta_{1}}\left(\left\{ X>c\right\} \right)\\
+\implies P_{\theta_{1}}\left(\left\{ X>c\right\} \right) & \leq P_{\theta_{2}}\left(\left\{ X>c\right\} \right).
 \end{flalign*}
 
 \end_inset
@@ -28022,9 +27839,9 @@ reference "thm:karlin-rubin"
 \begin_inset Formula 
 \begin{flalign*}
 \alpha & =P_{\theta_{0}}\left(\left\{ X_{\left(n\right)}>k\right\} \right)\\
- & =\int_{k}^{\infty}f_{X_{\left(n\right)}}\left(t|\theta=\theta_{0}\right)\text{d}t\\
- & =\int_{k}^{\infty}\frac{nt^{n-1}}{\theta_{0}^{n}}I_{\left(0,\theta_{0}\right)}\left(t\right)\text{d}t\\
- & =\int_{k}^{\theta_{0}}\frac{nt^{n-1}}{\theta_{0}^{n}}\text{d}t+\int_{\theta_{0}}^{\infty}0\text{d}t\\
+ & =\int_{k}^{\infty}f_{X_{\left(n\right)}}\left(t|\theta=\theta_{0}\right)\dif t\\
+ & =\int_{k}^{\infty}\frac{nt^{n-1}}{\theta_{0}^{n}}I_{\left(0,\theta_{0}\right)}\left(t\right)\dif t\\
+ & =\int_{k}^{\theta_{0}}\frac{nt^{n-1}}{\theta_{0}^{n}}\text{d}t+\int_{\theta_{0}}^{\infty}0\dif t\\
  & =\frac{t^{n}}{\theta_{0}^{n}}\Big\rvert_{k}^{\theta_{0}}+0\\
  & =\frac{\theta_{0}^{n}}{\theta_{0}^{n}}-\frac{k^{n}}{\theta_{0}^{n}}\\
  & =1-\frac{k^{n}}{\theta_{0}^{n}},
@@ -28035,7 +27852,7 @@ reference "thm:karlin-rubin"
 so that
 \begin_inset Formula 
 \[
-\alpha=1-\frac{k^{n}}{\theta_{0}^{n}}\Leftrightarrow1-\alpha=\frac{k^{n}}{\theta_{0}^{n}}\Leftrightarrow k^{n}=\theta_{0}^{n}\left(1-\alpha\right)\Leftrightarrow k=\left[\theta_{0}^{n}\left(1-\alpha\right)\right]^{1/n}=\theta_{0}\left(1-\alpha\right)^{1/n}.
+\alpha=1-\frac{k^{n}}{\theta_{0}^{n}}\implies1-\alpha=\frac{k^{n}}{\theta_{0}^{n}}\implies k^{n}=\theta_{0}^{n}\left(1-\alpha\right)\implies k=\left[\theta_{0}^{n}\left(1-\alpha\right)\right]^{1/n}=\theta_{0}\left(1-\alpha\right)^{1/n}.
 \]
 
 \end_inset
@@ -28443,7 +28260,7 @@ Noting that
 , the likelihood function is given by
 \begin_inset Formula 
 \[
-L\left(\theta|\mathbf{x}\right)=2\theta x+1-\theta=1+\theta\left(2x-1\right),
+\mathcal{L}\left(\theta|\mathbf{x}\right)=2\theta x+1-\theta=1+\theta\left(2x-1\right),
 \]
 
 \end_inset
@@ -28451,10 +28268,10 @@ L\left(\theta|\mathbf{x}\right)=2\theta x+1-\theta=1+\theta\left(2x-1\right),
 and the LRT test statistic is 
 \begin_inset Formula 
 \begin{flalign*}
-\lambda\left(\mathbf{x}\right) & =\frac{\sup_{\Theta_{0}}L\left(\theta|\mathbf{x}\right)}{\sup_{\Theta}L\left(\theta|\mathbf{x}\right)}\\
- & =\frac{\sup_{\theta=0}L\left(\theta|\mathbf{x}\right)}{\sup_{\theta\in\Theta}L\left(\theta|\mathbf{x}\right)}\\
- & =\frac{1+0\cdot\left(2x-1\right)}{\sup_{\theta\in\Theta}L\left(\theta|x\right)}\\
- & =\frac{1}{\sup_{\theta\in\Theta}L\left(\theta|x\right)}.
+\lambda\left(\mathbf{x}\right) & =\frac{\sup_{\Theta_{0}}\mathcal{L}\left(\theta|\mathbf{x}\right)}{\sup_{\Theta}\mathcal{L}\left(\theta|\mathbf{x}\right)}\\
+ & =\frac{\sup_{\theta=0}\mathcal{L}\left(\theta|\mathbf{x}\right)}{\sup_{\theta\in\Theta}\mathcal{L}\left(\theta|\mathbf{x}\right)}\\
+ & =\frac{1+0\cdot\left(2x-1\right)}{\sup_{\theta\in\Theta}\mathcal{L}\left(\theta|x\right)}\\
+ & =\frac{1}{\sup_{\theta\in\Theta}\mathcal{L}\left(\theta|x\right)}.
 \end{flalign*}
 
 \end_inset
@@ -28472,7 +28289,7 @@ Then, for
 \end_inset
 
 , 
-\begin_inset Formula $L\left(\theta|x\right)$
+\begin_inset Formula $\mathcal{L}\left(\theta|x\right)$
 \end_inset
 
  is decreasing in 
@@ -28489,7 +28306,7 @@ Then, for
 \end_inset
 
 , 
-\begin_inset Formula $L\left(\theta|x\right)$
+\begin_inset Formula $\mathcal{L}\left(\theta|x\right)$
 \end_inset
 
  is increasing in 
@@ -28504,7 +28321,7 @@ Then, for
  Thus,
 \begin_inset Formula 
 \[
-\sup_{\theta\in\Theta}L\left(\theta|x\right)=\begin{cases}
+\sup_{\theta\in\Theta}\mathcal{L}\left(\theta|x\right)=\begin{cases}
 1+\left(-1\right)\left(2x-1\right)=2-2x, & x<\frac{1}{2}\\
 1+1\left(2x-1\right)=2x, & x>\frac{1}{2}
 \end{cases},
@@ -36377,7 +36194,7 @@ steepest descent
 Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "alg:gen-optimization"
+reference "alg:steepest-descent"
 
 \end_inset
 
@@ -36539,11 +36356,11 @@ end{algorithmic}
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "alg:gen-optimization"
+name "alg:steepest-descent"
 
 \end_inset
 
-General optimization iteration
+Steepest Descent
 \end_layout
 
 \end_inset
@@ -36646,15 +36463,15 @@ which is a one-dimensional root-finding problem.
 \end_inset
 
 .
- We now consider the problem of root-finding.
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Root-finding
 \end_layout
 
 \begin_layout Standard
-Let 
+We now consider the problem of root-finding.
+ Let 
 \begin_inset Formula $h$
 \end_inset
 
@@ -36675,7 +36492,7 @@ Let
  
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Bisection method
 \end_layout
 
@@ -36988,7 +36805,7 @@ name "alg:root-bisection"
 
 \end_inset
 
-Bisection method
+Bisection Method
 \end_layout
 
 \end_inset
@@ -37012,7 +36829,7 @@ Observe that the bisection method requires knowledge only of
  the algorithm is slow.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Newton's method
 \end_layout
 
@@ -37216,7 +37033,7 @@ end{algorithmic}
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Newton's method (root-finding)
+Newton's Method (root-finding)
 \end_layout
 
 \end_inset
@@ -37267,7 +37084,7 @@ chase
  is required.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Hybrid methods
 \end_layout
 
@@ -37715,13 +37532,193 @@ secant method
 ) by instead constructing a secant line.
 \end_layout
 
+\begin_layout Subsection
+Newton's Method for optimization
+\end_layout
+
 \begin_layout Standard
 Consider again the problem of minimizing 
 \begin_inset Formula $f\left(\mathbf{x}\right):\mathbb{R}^{n}\rightarrow\mathbb{R}$
 \end_inset
 
+ by Steepest Descent.
+ Suppose that 
+\begin_inset Formula $f\left(\mathbf{x}\right)=10^{5}x_{1}^{2}+x_{2}^{2}$
+\end_inset
+
+, whose level curves are shown in figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:ex-steepest-descent}
+\end_layout
+
+\end_inset
+
 .
- The steepest descent method converges slowly, and finding the 
+ The minimum of 
+\begin_inset Formula $f$
+\end_inset
+
+ is easily seen to occur at 
+\begin_inset Formula $\mathbf{x}^{\star}=\left(0,0\right)$
+\end_inset
+
+.
+ Thus, the 
+\begin_inset Quotes eld
+\end_inset
+
+best
+\begin_inset Quotes erd
+\end_inset
+
+ direction given some starting point 
+\begin_inset Formula $\mathbf{x}^{\left(0\right)}$
+\end_inset
+
+ is one that points toward the origin.
+ Suppose that we begin the optimization with 
+\begin_inset Formula $\mathbf{x}^{\left(0\right)}=\left(0.01,-1\right)$
+\end_inset
+
+.
+ The best direction is depicted as a dashed blue arrow.
+ Noting that 
+\begin_inset Formula $\nabla f\left(\mathbf{x}^{\left(0\right)}\right)=\left(2\cdot10^{3},-2\right)$
+\end_inset
+
+, we see that the (unnormalized) steepest descent direction 
+\begin_inset Formula $\mathbf{d}^{\left(0\right)}=\left(-2\cdot10^{3},2\right)$
+\end_inset
+
+, depicted as a red arrow, is quite poor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ex-steepest-descent, fig.height = 3, fig.width = 5, fig.align = 'center',
+ fig.pos = 'h', fig.cap = 'Level curves of $f
+\backslash
+
+\backslash
+left(
+\backslash
+
+\backslash
+mathbf{x}
+\backslash
+
+\backslash
+right)=10^{5}x_{1}^{2}+x_{2}^{2}$'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+f <- function(x, y) 10^5 * x^2 + y^2
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- seq(-1e-2, 1e-2, 1e-4)
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- seq(-1, 1, 1e-2)
+\end_layout
+
+\begin_layout Plain Layout
+
+z <- outer(x, y, f)
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,2,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+contour(x = x, y = y, z = z, levels = c(0.01, 0.1, 0.25, 0.5, 1, 2.5, 5, 10),
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+        drawlabels = F, cex.lab = 0.75, cex.axis = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+x0 <- c(1e-2, -1)
+\end_layout
+
+\begin_layout Plain Layout
+
+points(x0[1], x0[2])
+\end_layout
+
+\begin_layout Plain Layout
+
+grad.f <- function(x, y) c(2 * 10^5 * x, 2 * y)
+\end_layout
+
+\begin_layout Plain Layout
+
+grad.x0 <- grad.f(x0[1], x0[2])
+\end_layout
+
+\begin_layout Plain Layout
+
+x1 <- x0 + 5e-6 * -grad.x0
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = x0[1], y0 = x0[2], x1 = 0, y1 = 0, col = "blue", lty = 2,
+\end_layout
+
+\begin_layout Plain Layout
+
+       length = 0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = x0[1], y0 = x0[2], x1 = x1[1], y1 = x1[2], col = "red",
+\end_layout
+
+\begin_layout Plain Layout
+
+       length = 0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Steepest Descent algorithm converges slowly in part because it gives
+ poor descent directions, and in part because finding the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -38270,8 +38267,1483 @@ Thus,
  is quadratic.
 \end_layout
 
+\begin_layout Definition
+Suppose that 
+\begin_inset Formula $f\left(\mathbf{x}\right):\mathbb{R}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+.
+ An iterative optimization algorithm is a 
+\emph on
+descent method
+\emph default
+ if 
+\begin_inset Formula $f\left(\mathbf{x}^{\left(0\right)}\right)\geq f\left(\mathbf{x}^{\left(1\right)}\right)\geq f\left(\mathbf{x}^{\left(2\right)}\right)\geq\cdots$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Descent algorithms always converge, i.e., the longer the algorithm runs, the
+ closer it comes to the solution of the optimization problem.
+ Observe that Steepest Descent with backtracking is a descent method, but
+ that Steepest Descent with bisection is not.
+ Because Newton's Method may, for example, find a maximum rather than a
+ minimum, it is also not a descent method.
+ To shape it into one, we must 
+\begin_inset Quotes eld
+\end_inset
+
+fix
+\begin_inset Quotes erd
+\end_inset
+
+ both the direction and the step length.
+ Supposing for the moment that the direction is acceptable, we will fix
+ the step length by 
+\emph on
+damping
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Require
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$
+\backslash
+left
+\backslash
+Vert 
+\backslash
+nabla f
+\backslash
+left(
+\backslash
+mathbf{x}
+\backslash
+right)
+\backslash
+right
+\backslash
+Vert >
+\backslash
+varepsilon$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{d}\gets-\left[\mathbf{H}_{f}\left(\mathbf{x}\right)\right]^{-1}\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$f
+\backslash
+left(
+\backslash
+mathbf{x}
+\backslash
+right)<f
+\backslash
+left(
+\backslash
+mathbf{x}+s
+\backslash
+mathbf{d}
+\backslash
+right)$}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets s/2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{x}\gets\mathbf{x}+s\mathbf{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:damped-newtons-method"
+
+\end_inset
+
+Damped Newton's Method
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Observe that the first attempt of algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:damped-newtons-method"
+
+\end_inset
+
+ is simply (undamped) Newton's Method, i.e., we check whether Newton's Method
+ satisfies 
+\begin_inset Formula $f\left(\mathbf{x}^{\left(i-i\right)}\right)\geq f\left(\mathbf{x}^{\left(i\right)}\right)$
+\end_inset
+
+, and damp (normalize) the direction only if it does not.
+ Now, the direction might actually be wrong, so Damped Newton's Method is
+ still not a descent algorithm.
+\end_layout
+
+\begin_layout Definition
+For a function 
+\begin_inset Formula $f$
+\end_inset
+
+ at a point 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+, the direction 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ is a 
+\emph on
+descent direction
+\emph default
+ if there exists a value 
+\begin_inset Formula $\tilde{s}$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $s<\tilde{s}$
+\end_inset
+
+, 
+\begin_inset Formula $f\left(\mathbf{x}+s\mathbf{d}\right)<f\left(\mathbf{x}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Noting that the step length 
+\begin_inset Formula $s$
+\end_inset
+
+ will be 
+\begin_inset Quotes eld
+\end_inset
+
+small,
+\begin_inset Quotes erd
+\end_inset
+
+ consider the Taylor series expansion of 
+\begin_inset Formula $f\left(\mathbf{x}+s\mathbf{d}\right)$
+\end_inset
+
+ around the base point 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}+s\mathbf{d}\right)\approx f\left(\mathbf{x}\right)+\nabla f\left(\mathbf{x}\right)\cdot\left(s\mathbf{d}\right)+\varepsilon,
+\]
+
+\end_inset
+
+where the error term 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ will be small, on the order of 
+\begin_inset Formula $\mathcal{O}\left(s^{2}\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ will satisfy 
+\begin_inset Formula $f\left(\mathbf{x}+s\mathbf{d}\right)<f\left(\mathbf{x}\right)$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ will be a descent direction, if 
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)>f\left(\mathbf{x}+s\mathbf{d}\right)\approx f\left(\mathbf{x}\right)+\nabla f\left(\mathbf{x}\right)\cdot\left(s\mathbf{d}\right)=f\left(\mathbf{x}\right)+s\nabla f\left(\mathbf{x}\right)\cdot\mathbf{d}\implies s\nabla f\left(\mathbf{x}\right)\cdot\mathbf{d}<0.
+\]
+
+\end_inset
+
+Now, the step length 
+\begin_inset Formula $s$
+\end_inset
+
+ is strictly positive, so this inequality will hold if and only if 
+\begin_inset Formula $\nabla f\left(\mathbf{x}\right)\cdot\mathbf{d}<0$
+\end_inset
+
+, i.e., if the dot product of the gradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ and the direction 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ is negative.
+\end_layout
+
+\begin_layout Subsection
+Quadratic optimization
+\end_layout
+
+\begin_layout Standard
+Recall that an 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional quadratic has the form 
+\begin_inset Formula $f\left(\mathbf{x}\right)=\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}+\mathbf{b}^{\mathsf{T}}\mathbf{x}+c$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ can be taken as symmetric.
+ We would like to know under what circumstances 
+\begin_inset Formula $f$
+\end_inset
+
+ will have a maximum, a minimum, or a saddle point, i.e., the characteristics
+ of the critical point.
+ Suppose that 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{2}$
+\end_inset
+
+, suppose for the moment that 
+\begin_inset Formula $f$
+\end_inset
+
+ has no cross-term, and let 
+\begin_inset Formula $f\left(\mathbf{x}\right)=x_{1}^{2}+2x_{2}^{2}$
+\end_inset
+
+.
+ It is clear that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a paraboloid opening up, hence the critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+ is a minimum.
+ If we instead let 
+\begin_inset Formula $f\left(\mathbf{x}\right)=-x_{1}^{2}-2x_{2}^{2}$
+\end_inset
+
+, then 
+\begin_inset Formula $f$
+\end_inset
+
+ is a paraboloid opening down, hence the critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+ is a maximum.
+ If we let 
+\begin_inset Formula $f\left(\mathbf{x}\right)=x_{1}^{2}-2x_{2}^{2}$
+\end_inset
+
+, then the critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+ is a saddle point.
+ Now suppose that 
+\begin_inset Formula $f\left(\mathbf{x}\right)=x_{1}^{2}+6x_{1}x_{2}+3x_{2}^{2}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ now has a cross-term, and it is not immediately clear how to characterize
+ the critical point.
+ We will see that 
+\emph on
+all
+\emph default
+ quadratics have no cross-term, given an appropriate transformation.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Spectral Theorem]
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ be an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ real, symmetric matrix.
+ Then, 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has an orthonormal basis of eigenvectors.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Corollary
+Suppose that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ real, symmetric matrix, and let 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)},\mathbf{q}^{\left(2\right)},\ldots,\mathbf{q}^{\left(n\right)}$
+\end_inset
+
+ be the eigenvectors corresponding to the ordered eigenvalues 
+\begin_inset Formula $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ be the matrix whose 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ column is given by 
+\begin_inset Formula $\mathbf{q}^{\left(j\right)}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\mathbf{Q}=\begin{bmatrix}\mathbf{q}^{\left(1\right)} & \mathbf{q}^{\left(2\right)} & \cdots & \mathbf{q}^{\left(n\right)}\end{bmatrix}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+ be the diagonal matrix whose 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ diagonal entry is 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has the decomposition 
+\begin_inset Formula $\mathbf{A}=\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
 \begin_layout Chapter
 Numerical linear algebra
+\end_layout
+
+\begin_layout Section
+Machine representation
+\end_layout
+
+\begin_layout Standard
+Suppose that we encode an integer using 32 
+\emph on
+bits
+\emph default
+ (equivalently, 4 
+\emph on
+bytes
+\emph default
+), each of which may be 0 or 1.
+ We allocate a single bit 
+\begin_inset Formula $s$
+\end_inset
+
+ to hold the sign, and we denote the 
+\begin_inset Formula $k\text{th}$
+\end_inset
+
+ bit by 
+\begin_inset Formula $i_{k}$
+\end_inset
+
+.
+ Then, an integer 
+\begin_inset Formula $x$
+\end_inset
+
+ can be written as
+\begin_inset Formula 
+\[
+x=\left(-1\right)^{s}\cdot\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}\right)=\left(-1\right)^{s}\sum_{k=1}^{31}i_{k}2^{k-1},
+\]
+
+\end_inset
+
+and we can store this representation as
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{30}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{31}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $i_{k}=1$
+\end_inset
+
+ if the 
+\begin_inset Formula $k\text{th}$
+\end_inset
+
+ term is included in the sum and 0 if it is not.
+ Now, this encoding is inefficient because it represents zero in two ways
+ (zero is unsigned, so we may have 
+\begin_inset Formula $s=0$
+\end_inset
+
+ or 
+\begin_inset Formula $s=1$
+\end_inset
+
+), hence we are losing a bit.
+ Suppose instead that we allocate all 32 bits to terms in the above summation,
+ and by convention subtract 
+\begin_inset Formula $2^{31}$
+\end_inset
+
+ from the sum, so that negative integers can be represented.
+ Then, under this scheme, 
+\begin_inset Formula 
+\[
+x=\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}+i_{32}2^{31}\right)-2^{31}=\sum_{k=1}^{32}i_{k}2^{k-1}-2^{31}.
+\]
+
+\end_inset
+
+To represent 1, we will have 
+\begin_inset Formula $i_{1}=1$
+\end_inset
+
+, 
+\begin_inset Formula $i_{32}=1$
+\end_inset
+
+, and 
+\begin_inset Formula $i_{k}=0$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 2,3,\ldots,31\right\} $
+\end_inset
+
+.
+ The next consecutive integer is 2, which we represent with 
+\begin_inset Formula $i_{2}=1$
+\end_inset
+
+, 
+\begin_inset Formula $i_{32}=1$
+\end_inset
+
+, and 
+\begin_inset Formula $i_{k}=0$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 1\right\} \cup\left\{ 3,4,\ldots,31\right\} $
+\end_inset
+
+.
+ We represent 3 as 
+\begin_inset Formula $i_{1}=1$
+\end_inset
+
+, 
+\begin_inset Formula $i_{2}=1$
+\end_inset
+
+, 
+\begin_inset Formula $i_{32}=1$
+\end_inset
+
+, and 
+\begin_inset Formula $i_{k}=0$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 3,4,\ldots,31\right\} $
+\end_inset
+
+.
+ We proceed in this fashion until 
+\begin_inset Formula $i_{k}=1$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 1,2,\ldots,32\right\} $
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+x_{\text{max}}=\left[2^{0}+2^{1}+2^{2}+\cdots+2^{30}+2^{31}\right]-2^{31}=2^{0}+2^{1}+2^{2}+\cdots+2^{30}=2147483647=2^{31}-1,
+\]
+
+\end_inset
+
+which is the largest integer that can be stored under this encoding scheme.
+ The largest negative integer that can be stored occurs when each 
+\begin_inset Formula $i_{k}$
+\end_inset
+
+ is 0, and this is 
+\begin_inset Formula $-2^{31}$
+\end_inset
+
+.
+ Zero is represented by setting 
+\begin_inset Formula $i_{32}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $i_{k}=0$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 1,2,\ldots,31\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Floating-point numbers
+\end_layout
+
+\begin_layout Standard
+Under the IEEE standard, numbers are encoded as 64-bit words of the form
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="9">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e_{11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{52}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the sign bit and the 52 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ bits represent the mantissa.
+ The 11 
+\begin_inset Formula $e_{k}$
+\end_inset
+
+ bits represent the positive binary integer that is the sum of the exponent
+ and the 
+\emph on
+bias
+\emph default
+ 
+\begin_inset Formula $2^{10}-1=1023$
+\end_inset
+
+ (for exponents between 
+\begin_inset Formula $-1022$
+\end_inset
+
+ and 1023).
+ For example, an exponent of 0 is represented as 
+\begin_inset Formula $0+1023=\left(11\,1111\,1111\right)_{2}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\boxed{e_{1}e_{2}\ldots e_{11}}=\mathtt{011\,1111\,1111}$
+\end_inset
+
+.
+ An exponent of 1 is represented as 
+\begin_inset Formula $1+1023=1024=\left(100\,0000\,0000\right)_{2}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\boxed{e_{1}e_{2}\ldots e_{11}}=\mathtt{100\,0000\,0000}$
+\end_inset
+
+.
+ To find the actual exponent, we must subtract the bias.
+
+\emph on
+ 
+\emph default
+Then, under this scheme, the representation of 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+x=\left(-1\right)^{s}\cdot1.\boxed{b_{1}b_{2}\ldots b_{52}}\cdot2^{\boxed{e_{1}e_{2}\ldots e_{11}}-1023},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\boxed{b_{1}b_{2}\dots b_{52}}$
+\end_inset
+
+ is the concatenation of the 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ bits, so that the term 
+\begin_inset Formula $2^{-j}$
+\end_inset
+
+ should be included in the decimal representation of 
+\begin_inset Formula $x$
+\end_inset
+
+ if the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ mantissa bit is 1, and 
+\begin_inset Formula $\boxed{e_{1}e_{2}\ldots e_{11}}$
+\end_inset
+
+ is the concatenation of the 
+\begin_inset Formula $e_{k}$
+\end_inset
+
+ bits.
+ 
+\end_layout
+
+\begin_layout Standard
+Now, the exponent value 
+\begin_inset Formula $2047_{10}=\left(111\,1111\,1111\right)_{2}$
+\end_inset
+
+ is reserved to represent infinity if every 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ is zero, i.e., if the mantissa bits are all zero, and to represent NaN (Not
+ a Number) otherwise.
+ The exponent value 0 is used to represent 
+\emph on
+subnormal
+\emph default
+ floating point numbers, or those numbers where the left-most bit is not
+ assumed to be 1.
+ Thus, the smallest non-reserved value the exponent bits can take is 
+\begin_inset Formula $\mathtt{000\,0000\,001}$
+\end_inset
+
+, which corresponds to an exponent of 
+\begin_inset Formula $2^{0}-1023=-1022$
+\end_inset
+
+.
+ The largest non-reserved value the exponent bits can take is 
+\begin_inset Formula $\mathtt{111\,1111\,1110}$
+\end_inset
+
+, which corresponds to an exponent of 
+\begin_inset Formula 
+\[
+\sum_{k=1}^{10}2^{k}-1023=1023.
+\]
+
+\end_inset
+
+Thus, the range of the exponent is 
+\begin_inset Formula $\left(-2^{10}+2,2^{10}-1\right)$
+\end_inset
+
+, so that the largest number that can be represented using the 
+\emph on
+double precision
+\emph default
+ floating-point encoding is 
+\begin_inset Formula $2^{2^{10}-1}$
+\end_inset
+
+.
+ In this encoding, the 
+\emph on
+radix point
+\emph default
+ (generalization of a decimal point) 
+\begin_inset Quotes eld
+\end_inset
+
+floats.
+\begin_inset Quotes erd
+\end_inset
+
+ We also observe that we cannot represent every real number exactly.
+ For example, 
+\begin_inset Formula $\sqrt{2}$
+\end_inset
+
+ does not have a finite decimal expansion, and extremely large or small
+ numbers cannot be represented exactly due to the defined (and finite) number
+ of bits available for representation.
+\end_layout
+
+\begin_layout Definition
+For some 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+, denote by 
+\begin_inset Formula $\text{fl}\left(x\right)$
+\end_inset
+
+ the closest double precision floating-point number to 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We now consider the accuracy of floating-point representation.
+ We have 52 stored mantissa bits plus 1 implicit leading bit to store the
+ precision of 
+\begin_inset Formula $x$
+\end_inset
+
+, which is equivalent to 15-17 decimal bits.
+ The 
+\emph on
+relative roundoff error
+\emph default
+ in representing 
+\begin_inset Formula $x$
+\end_inset
+
+ is 
+\begin_inset Formula $\left|\text{fl}\left(x\right)-x\right|/\left|x\right|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Suppose that 
+\begin_inset Formula $x=12345678901234567890$
+\end_inset
+
+.
+ Assuming that 16 decimal bits of precision are available to represent 
+\begin_inset Formula $x$
+\end_inset
+
+, we have 
+\begin_inset Formula $\text{fl}\left(x\right)=12345678901234560000$
+\end_inset
+
+, so that the relative roundoff error is
+\begin_inset Formula 
+\[
+\frac{\left|\text{fl}\left(x\right)-x\right|}{\left|x\right|}=\frac{\left|7890\right|}{\left|x\right|}\approx\frac{10^{4}}{10^{20}}=10^{-16}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The number 
+\emph on
+machine epsilon
+\emph default
+, denoted 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+, is the distance between 1 and the smallest floating point number greater
+ than 1.
+\end_layout
+
+\begin_layout Standard
+Alternatively, 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+ is the smallest positive number for which 
+\begin_inset Formula $\text{fl}\left(1+\epsilon_{\text{mach}}\right)\neq1$
+\end_inset
+
+.
+ Under the IEEE double precision floating-point standard, machine epsilon
+ is 
+\begin_inset Formula $2^{-52}\approx10^{-16}$
+\end_inset
+
+.
+ The relative roundoff error in representing some 
+\begin_inset Formula $x\neq0$
+\end_inset
+
+ will be at most 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\frac{\left|\text{fl}\left(x\right)-x\right|}{\left|x\right|}\leq\epsilon_{\text{mach}}.
+\]
+
+\end_inset
+
+In the worst case, i.e., equality, we will have 
+\begin_inset Formula $\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\text{fl}\left(x\right)\geq x$
+\end_inset
+
+, then 
+\begin_inset Formula $\left|\text{fl}\left(x\right)-x\right|\geq0$
+\end_inset
+
+, so that this expression becomes
+\begin_inset Formula 
+\[
+\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}\implies\text{fl}\left(x\right)-x=\left|x\right|\epsilon_{\text{mach}}\implies\text{fl}\left(x\right)=x+\left|x\right|\epsilon_{\text{mach}}.
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $\text{fl}\left(x\right)<x$
+\end_inset
+
+, then 
+\begin_inset Formula $\left|\text{fl}\left(x\right)-x\right|<0$
+\end_inset
+
+, so that the expression becomes
+\begin_inset Formula 
+\[
+\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}\implies-\left(\text{fl}\left(x\right)-x\right)=\left|x\right|\epsilon_{\text{mach}}\implies\text{fl}\left(x\right)=x-\left|x\right|\epsilon_{\text{mach}},
+\]
+
+\end_inset
+
+which we can express compactly as 
+\begin_inset Formula $\text{fl}\left(x\right)=x\pm\left|x\right|\epsilon_{\text{mach}}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+, then the right side of this expression becomes 
+\begin_inset Formula $x\pm x\epsilon_{\text{mach}}=x\left(1\pm\epsilon_{\text{mach}}\right)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $x<0$
+\end_inset
+
+, the right side of the expression becomes 
+\begin_inset Formula 
+\[
+x\pm\left(-x\right)\epsilon_{\text{mach}}=x\pm x\epsilon_{\text{mach}}=x\left(1\pm\epsilon_{\text{mach}}\right),
+\]
+
+\end_inset
+
+hence 
+\begin_inset Formula $\text{fl}\left(x\right)=x\left(1\pm\epsilon_{\text{mach}}\right)$
+\end_inset
+
+ for all real 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Thus, the relative error of floating-point representation is bounded by
+ 
+\begin_inset Formula $x\left(1\pm\epsilon_{\text{mach}}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+Suppose 
+\begin_inset Formula $x,y\in\mathbb{R}$
+\end_inset
+
+, and consider the floating-point representation of 
+\begin_inset Formula $\left(x+y\right)^{2}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\begin{flalign*}
+\text{fl}\left(\left(x+y\right)^{2}\right) & =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)^{2}\right)\\
+ & =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\cdot\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\right)\\
+ & =\text{fl}\left(\left(x\left(1+\epsilon_{1}\right)+y\left(1+\epsilon_{2}\right)\right)\cdot\left(x\left(1+\epsilon_{1}\right)+y\left(1+\epsilon_{2}\right)\right)\right)\\
+ & =\text{fl}\left(x^{2}\left(1+\epsilon_{1}\right)^{2}\left(1+\epsilon_{3}\right)+y^{2}\left(1+\epsilon_{2}\right)^{2}\left(1+\epsilon_{4}\right)+2xy\left(1+\epsilon_{1}\right)\left(1+\epsilon_{2}\right)\left(1+\epsilon_{5}\right)\right)\\
+ & =\left[x^{2}\left(1+\epsilon_{1}\right)^{2}\left(1+\epsilon_{3}\right)+y^{2}\left(1+\epsilon_{2}\right)^{2}\left(1+\epsilon_{4}\right)+2xy\left(1+\epsilon_{1}\right)\left(1+\epsilon_{2}\right)\left(1+\epsilon_{5}\right)\right]\left(1+\epsilon_{6}\right),
+\end{flalign*}
+
+\end_inset
+
+where the 
+\begin_inset Formula $\epsilon_{i}$
+\end_inset
+
+ terms are specific to the respective floating-point representations of
+ each quantity and are on the order of 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+.
+ This expression can be simplified as
+\begin_inset Formula 
+\[
+\text{fl}\left(\left(x+y\right)^{2}\right)=\left(x+y\right)^{2}\left(1+c\epsilon_{\text{mach}}\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $c\approx4$
+\end_inset
+
+ (and in particular, 
+\begin_inset Formula $c>1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+We see from this example that floating-point errors can add up.
+ Let 
+\begin_inset Formula 
+\[
+\mathbf{A}=\begin{bmatrix}10^{7} & 0 & 0\\
+0 & 10^{20} & 0\\
+0 & 0 & 1
+\end{bmatrix},\quad\mathbf{b}=\begin{bmatrix}5\\
+3\\
+2
+\end{bmatrix},
+\]
+
+\end_inset
+
+and consider solving 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+.
+ When we invert 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ to find the solution 
+\begin_inset Formula $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}$
+\end_inset
+
+, we will mix quantities, e.g., 1 and 
+\begin_inset Formula $10^{20}$
+\end_inset
+
+, on very different scales, and the 1 will be wiped out by error.
+\end_layout
+
+\begin_layout Section
+Gaussian elimination
 \end_layout
 
 \begin_layout Standard
@@ -38279,7 +39751,7 @@ Consider the problem of finding
 \begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
 \end_inset
 
- that satifies 
+ that satisfies 
 \begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
 \end_inset
 
@@ -38312,16 +39784,16 @@ Consider the problem of finding
 .
 \end_layout
 
-\begin_layout Section
-Gaussian elimination
-\end_layout
-
 \begin_layout Standard
 We can numerically solve the system 
 \begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
 \end_inset
 
- by using Gaussian elimination, which reduces the augmented matrix 
+ by using 
+\emph on
+Gaussian elimination
+\emph default
+, which reduces the augmented matrix 
 \begin_inset Formula $\left[\begin{array}{c|c}
 \mathbf{A} & \mathbf{b}\end{array}\right]$
 \end_inset
@@ -38734,6 +40206,16 @@ which is of
 \end_inset
 
  complexity.
+ Increasing 
+\begin_inset Formula $n$
+\end_inset
+
+ by 10, for example, thus increases the number of operations required to
+ perform Gaussian elimination by roughly 
+\begin_inset Formula $10^{3}=1000$
+\end_inset
+
+.
 \end_layout
 
 \end_body
