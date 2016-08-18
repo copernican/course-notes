@@ -45,3 +45,31 @@ bin2dec <- function(x) {
 bin2dec(x)
 bin2dec(dec2bin(1023))
 dec2bin(1023)
+
+# change of basis via spectral theorem
+lambda <- eigen(matrix(c(1,3,3,2), nr = 2))$vectors
+
+plot.new()
+plot.window(xlim = c(-1, 1), ylim = c(-1, 1.2), asp = 1)
+arrows(x0 = 0, y0 = 0, x1 = 1, y1 = 0, length = 0.1, col = "black")
+arrows(x0 = 0, y0 = 0, x1 = 0, y1 = 1, length = 0.1, col = "black")
+arrows(x0 = 0, y0 = 0, x1 = lambda[1,1], y1 = lambda[2,1], length = 0.1, 
+       lty = 2, col = "blue")
+arrows(x0 = 0, y0 = 0, x1 = lambda[1,2], y1 = lambda[2,2], length = 0.1, 
+       lty = 2, col = "blue")
+text(x = 1.1, y = 0.1, cex = 0.75, labels = expression(e^(1)))
+text(x = 0.1, y = 1.1, cex = 0.75, labels = expression(e^(2)))
+text(x = lambda[1,1] + 0.1, y = lambda[2,1] + 0.1, cex = 0.75, 
+     labels = expression(q^(1)), col = "blue")
+text(x = lambda[1,2] - 0.1, y = lambda[2,2] + 0.1, cex = 0.75, 
+     labels = expression(q^(2)), col = "blue")
+
+# example of a convex function
+curve(x^2, xlim = c(-2, 2), ylab = "f(x)", cex.lab = 0.75, 
+      xaxt = "n", yaxt = "n")
+x1 <- c(-0.5, 0.25)
+x2 <- c(1, 1)
+axis(side = 1, at = c(x1[1], x2[1]), cex.axis = 0.75, 
+     labels = c(expression(x[1]), expression(x[2])))
+points(x = c(-0.5, 1), y = c(0.25, 1))
+segments(x0 = -0.5, y0 = 0.25, x1 = 1, y1 = 1, lty = 2)

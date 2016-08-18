@@ -4271,6 +4271,13 @@ status open
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:logistic-regression"
+
+\end_inset
+
 For 
 \begin_inset Formula $Y_{1},Y_{2},\ldots,Y_{n}$
 \end_inset
@@ -38790,7 +38797,14 @@ status open
 
 \end_inset
 
- Let 
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:spectral"
+
+\end_inset
+
+Let 
 \begin_inset Formula $\mathbf{A}$
 \end_inset
 
@@ -38870,6 +38884,1971 @@ Suppose that
 
 \begin_layout Proof
 [proof goes here]
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\left\{ \mathbf{e}^{\left(i\right)}\right\} _{i=1}^{n}$
+\end_inset
+
+ be the standard basis vectors for 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+, i.e., the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ component of 
+\begin_inset Formula $\mathbf{e}^{\left(i\right)}$
+\end_inset
+
+ is 1 and all other components are zero.
+ Then, any 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ can be represented as a linear combination of the 
+\begin_inset Formula $\mathbf{e}^{\left(i\right)}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\mathbf{x}=\begin{bmatrix}x_{1}\\
+x_{2}\\
+\vdots\\
+x_{n}
+\end{bmatrix}=x_{1}\mathbf{e}^{\left(1\right)}+x_{2}\mathbf{e}^{\left(2\right)}+\cdots+x_{n}\mathbf{e}^{\left(n\right)}=\sum_{i=1}^{n}x_{i}\mathbf{e}^{\left(i\right)}.
+\]
+
+\end_inset
+
+Consider again the general quadratic, and observe that the matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ determines the behavior of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ For simplicity, we consider only the initial term, i.e., 
+\begin_inset Formula $f\left(\mathbf{x}\right)=\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}$
+\end_inset
+
+.
+ Then, we can express 
+\begin_inset Formula $f$
+\end_inset
+
+ in terms of the 
+\begin_inset Formula $\mathbf{e}^{\left(i\right)}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\begin{flalign*}
+f\left(\mathbf{x}\right) & =f\left(\sum_{i=1}^{n}x_{i}\mathbf{e}^{\left(i\right)}\right)\\
+ & =\left(\sum_{i=1}^{n}x_{i}\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\left(\sum_{j=1}^{n}x_{j}\mathbf{e}^{\left(j\right)}\right)\\
+ & =\left(\sum_{i=1}^{n}x_{i}\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\right)\mathbf{A}\left(\sum_{j=1}^{n}x_{j}\mathbf{e}^{\left(j\right)}\right)\tag{\ensuremath{\left(\mathbf{u}+\mathbf{v}\right)^{\mathsf{T}}=\mathbf{u}^{\mathsf{T}}+\mathbf{v}^{\mathsf{T}}}}\\
+ & =\left(\sum_{i=1}^{n}x_{i}\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\right)\left(\sum_{j=1}^{n}x_{j}\mathbf{A}\mathbf{e}^{\left(j\right)}\right)\tag{\ensuremath{\mathbf{M}\left(\mathbf{u}+\mathbf{v}\right)=\mathbf{M}\mathbf{u}+\mathbf{M}\mathbf{v}}}\\
+ & =\sum_{i=1}^{n}x_{i}\sum_{j=1}^{n}x_{j}\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{e}^{\left(j\right)}\\
+ & =\sum_{i=1}^{n}\sum_{j=1}^{n}x_{i}x_{j}\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{e}^{\left(j\right)}.
+\end{flalign*}
+
+\end_inset
+
+Now, right-multiplying 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ by 
+\begin_inset Formula $\mathbf{e}^{\left(j\right)}$
+\end_inset
+
+ will extract the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ column of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, so that each product 
+\begin_inset Formula $\mathbf{A}\mathbf{e}^{\left(j\right)}$
+\end_inset
+
+ will be 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ column of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{e}^{\left(j\right)}=\begin{bmatrix}a_{11} & a_{12} & \cdots & a_{1n}\\
+a_{21} & a_{22} & \cdots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{n1} & a_{n2} & \cdots & a_{nn}
+\end{bmatrix}\begin{bmatrix}0\\
+\vdots\\
+1\\
+\vdots\\
+0
+\end{bmatrix}=\begin{bmatrix}a_{1j}\\
+a_{2j}\\
+\vdots\\
+a_{nj}
+\end{bmatrix}.
+\]
+
+\end_inset
+
+Then, left-multiplying 
+\begin_inset Formula $\mathbf{A}\mathbf{e}^{\left(j\right)}$
+\end_inset
+
+ by 
+\begin_inset Formula $\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}$
+\end_inset
+
+ will extract the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ component of 
+\begin_inset Formula $\mathbf{A}\mathbf{e}^{\left(j\right)}$
+\end_inset
+
+, so that each product 
+\begin_inset Formula $\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{e}^{\left(j\right)}$
+\end_inset
+
+ will be the 
+\begin_inset Formula $\left(i,j\right)\text{th}$
+\end_inset
+
+ component of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, i.e.,
+\begin_inset Formula 
+\[
+\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{e}^{\left(j\right)}=\begin{bmatrix}0 & \cdots & 1 & \cdots & 0\end{bmatrix}\begin{bmatrix}a_{1j}\\
+a_{2j}\\
+\vdots\\
+a_{nj}
+\end{bmatrix}=a_{ij}.
+\]
+
+\end_inset
+
+Then, our expression for 
+\begin_inset Formula $f\left(\mathbf{x}\right)$
+\end_inset
+
+ becomes
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)=\sum_{i=1}^{n}\sum_{j=1}^{n}x_{i}x_{j}\left(\mathbf{e}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{e}^{\left(j\right)}=\sum_{i=1}^{n}\sum_{j=1}^{n}x_{i}x_{j}a_{ij}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+We now consider when cross-terms appear in 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{2}$
+\end_inset
+
+, and let
+\begin_inset Formula 
+\[
+\mathbf{A}=\begin{bmatrix}1 & 3\\
+3 & 2
+\end{bmatrix}\implies f\left(\mathbf{x}\right)=\sum_{i=1}^{2}\sum_{j=1}^{2}x_{i}x_{j}a_{ij}=x_{1}^{2}\cdot1+x_{1}x_{2}\cdot3+x_{2}x_{1}\cdot3+x_{2}^{2}\cdot2=x_{1}^{2}+6x_{1}x_{2}+2x_{2}^{2}.
+\]
+
+\end_inset
+
+We see that 
+\begin_inset Formula $f$
+\end_inset
+
+ contains the cross-term 
+\begin_inset Formula $6x_{1}x_{2}$
+\end_inset
+
+.
+ It is clear that 
+\begin_inset Formula $f$
+\end_inset
+
+ would not have a cross-term if 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ were diagonal.
+ Now, 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ real, symmetric matrix, so 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "thm:spectral"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has an orthonormal basis of eigenvectors, which we denote by 
+\begin_inset Formula $\left\{ \mathbf{q}^{\left(i\right)}\right\} _{i=1}^{n}$
+\end_inset
+
+.
+ Because the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ form a basis for 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+, it follows that we can express 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ in terms of the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ with corresponding weights 
+\begin_inset Formula $\left\{ w_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\mathbf{x}=w_{1}\mathbf{q}^{\left(1\right)}+w_{2}\mathbf{q}^{\left(2\right)}+\cdots+w_{n}\mathbf{q}^{\left(n\right)}=\sum_{i=1}^{n}w_{i}\mathbf{q}^{\left(i\right)}.
+\]
+
+\end_inset
+
+Then, our result above implies that 
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)=f\left(\sum_{i=1}^{n}w_{i}\mathbf{q}^{\left(i\right)}\right)=\sum_{i=1}^{n}\sum_{j=1}^{n}w_{i}w_{j}\left(\mathbf{q}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{q}^{\left(j\right)}.
+\]
+
+\end_inset
+
+Now, 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ is an eigenvector of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with corresponding eigenvalue 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\mathbf{A}\mathbf{q}^{\left(j\right)}=\lambda_{j}\mathbf{q}^{\left(j\right)}$
+\end_inset
+
+, hence
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)=\sum_{i=1}^{n}\sum_{j=1}^{n}w_{i}w_{j}\left(\mathbf{q}^{\left(i\right)}\right)^{\mathsf{T}}\lambda_{j}\mathbf{q}^{\left(j\right)}=\sum_{i=1}^{n}\sum_{j=1}^{n}w_{i}w_{j}\lambda_{j}\left(\mathbf{q}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{q}^{\left(j\right)}.
+\]
+
+\end_inset
+
+Because the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ are orthonormal, we will have 
+\begin_inset Formula $\left(\mathbf{q}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{q}^{\left(j\right)}=1$
+\end_inset
+
+ in the case that 
+\begin_inset Formula $i=j$
+\end_inset
+
+ and zero otherwise.
+ Thus,
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)=w_{i}\cdot w_{i}\lambda_{i}\cdot1=w_{i}^{2}\lambda_{i}.
+\]
+
+\end_inset
+
+The characteristic polynomial of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\begin{flalign*}
+\det\left(\mathbf{A}-\lambda\mathbf{I}_{2}\right) & =\det\left(\begin{bmatrix}1 & 3\\
+3 & 2
+\end{bmatrix}-\begin{bmatrix}\lambda & 0\\
+0 & \lambda
+\end{bmatrix}\right)\\
+ & =\det\left(\begin{bmatrix}1-\lambda & 3\\
+3 & 2-\lambda
+\end{bmatrix}\right)\\
+ & =\left(1-\lambda\right)\left(2-\lambda\right)-9\\
+ & =2-\lambda-2\lambda+\lambda^{2}-9\\
+ & =\lambda^{2}-3\lambda-7.
+\end{flalign*}
+
+\end_inset
+
+Solving for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+\lambda=\frac{3\pm\sqrt{9-4\left(-7\right)}}{2}=\frac{3\pm\sqrt{37}}{2}\implies\lambda_{1}=\frac{3+\sqrt{37}}{2}\approx\Sexpr{(3+sqrt(37))/2},\ \lambda_{2}=\frac{3-\sqrt{37}}{2}\approx\Sexpr{(3-sqrt(37))/2},
+\]
+
+\end_inset
+
+so that expressing 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ in the 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+-basis gives 
+\begin_inset Formula 
+\[
+f\left(\mathbf{x}\right)=x_{1}^{2}+6x_{1}x_{2}+2x_{2}^{2}\iff f\left(\mathbf{w}\right)=\Sexpr{round((3+sqrt(37))/2,1)}w_{1}^{2}\Sexpr{round((3-sqrt(37))/2,1)}w_{2}^{2}.
+\]
+
+\end_inset
+
+We see that when we express 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ in the 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+-basis, our expression for 
+\begin_inset Formula $f\left(\mathbf{w}\right)$
+\end_inset
+
+ does not contain a cross-term.
+ Figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:ex-spectral}
+\end_layout
+
+\end_inset
+
+ shows the standard and 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+ bases for 
+\begin_inset Formula $f\left(\mathbf{x}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ex-spectral, fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos
+ = 'h', fig.cap = 'Standard and $
+\backslash
+
+\backslash
+mathbf{q}$ bases for $f
+\backslash
+
+\backslash
+left(
+\backslash
+
+\backslash
+mathbf{x}
+\backslash
+
+\backslash
+right)$'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+lambda <- eigen(matrix(c(1,3,3,2), nr = 2))$vectors
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(0.5,1,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.new()
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.window(xlim = c(-1, 1.1), ylim = c(0, 1.2), asp = 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = 1, y1 = 0, length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = 0, y1 = 1, length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = lambda[1,1], y1 = lambda[2,1], length = 0.1,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       lty = 2, col = "blue")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = lambda[1,2], y1 = lambda[2,2], length = 0.1,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       lty = 2, col = "blue")
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = 1.05, y = 0.05, cex = 0.75, labels = expression(e^(1)))
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = 0.05, y = 1.05, cex = 0.75, labels = expression(e^(2)))
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = lambda[1,1] + 0.05, y = lambda[2,1] + 0.05, cex = 0.75, 
+\end_layout
+
+\begin_layout Plain Layout
+
+     labels = expression(q^(1)), col = "blue")
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = lambda[1,2] - 0.05, y = lambda[2,2] + 0.05, cex = 0.75, 
+\end_layout
+
+\begin_layout Plain Layout
+
+     labels = expression(q^(2)), col = "blue")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can apply the same idea to other quadratics, e.g., the regression least-squares
+ loss function, where 
+\begin_inset Formula $\mathbf{A}=\mathbf{B}^{\mathsf{T}}\mathbf{B}$
+\end_inset
+
+ for some design matrix 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+.
+ Computing the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ also provides information about the nature of the critical point, which
+ we state in the following theorem.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be an 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional quadratic, i.e., 
+\begin_inset Formula $f\left(\mathbf{x}\right)=\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}+\mathbf{b}^{\mathsf{T}}\mathbf{x}+c$
+\end_inset
+
+, and let 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ be the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+.
+ Then, the critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+a maximum if all the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ are negative, i.e., if 
+\begin_inset Formula $\left\{ \lambda_{i}:\lambda_{i}<0\ \forall i\right\} $
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+a minimum if all the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ are positive, i.e., if 
+\begin_inset Formula $\left\{ \lambda_{i}:\lambda_{i}>0\ \forall i\right\} $
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+a saddle point if the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ are of mixed sign.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Definition
+An 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is 
+\emph on
+positive definite
+\emph default
+ if 
+\begin_inset Formula $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $\left\{ \mathbf{x}:\mathbf{x}\in\mathbb{R}^{n},\mathbf{x}\neq\mathbf{0}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is positive definite, then for every nonzero 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+, the quantity 
+\begin_inset Formula $\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}$
+\end_inset
+
+ will be positive, which implies that the critical point of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is a minimum, hence all the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ are positive.
+\end_layout
+
+\begin_layout Proposition
+An 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is positive definite if and only if 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has all positive eigenvalues.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Standard
+Now consider the action of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ on a nonzero vector 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is positive definite, then 
+\begin_inset Formula $0<\mathbf{x}^{\mathsf{T}}\mathbf{A}\mathbf{x}=\mathbf{x}\cdot\mathbf{A}\mathbf{x}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ is nonzero, so the dot product of 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{A}\mathbf{x}$
+\end_inset
+
+ will be positive only in the case that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ does not 
+\begin_inset Quotes eld
+\end_inset
+
+flip
+\begin_inset Quotes erd
+\end_inset
+
+ the direction of 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Recall that the inner while loop in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:damped-newtons-method"
+
+\end_inset
+
+ will exit only when 
+\begin_inset Formula $f\left(\mathbf{x}+s\mathbf{d}\right)$
+\end_inset
+
+ is less than or equal to 
+\begin_inset Formula $f\left(\mathbf{x}\right)$
+\end_inset
+
+, i.e., when the step length 
+\begin_inset Formula $s$
+\end_inset
+
+ results in 
+\begin_inset Quotes eld
+\end_inset
+
+downhill
+\begin_inset Quotes erd
+\end_inset
+
+ (or at least 
+\begin_inset Quotes eld
+\end_inset
+
+flat
+\begin_inset Quotes erd
+\end_inset
+
+) movement.
+ This will occur only in the case that 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ is a descent direction, so it becomes natural to ask which choices of 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ will provide descent directions.
+ Recall that the dot product of two vectors 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+ can be written as 
+\begin_inset Formula $\mathbf{u}\cdot\mathbf{v}=\left\Vert \mathbf{u}\right\Vert \left\Vert \mathbf{v}\right\Vert \cos\theta$
+\end_inset
+
+, where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is the angle formed by 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+.
+ Noting that the gradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ evaluated at some point 
+\begin_inset Formula $\tilde{\mathbf{x}}$
+\end_inset
+
+ points in the direction of steepest increase of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $\tilde{\mathbf{x}}$
+\end_inset
+
+, it follows that a descent direction will be a direction 
+\begin_inset Quotes eld
+\end_inset
+
+opposite
+\begin_inset Quotes erd
+\end_inset
+
+ to 
+\begin_inset Formula $\nabla f\left(\tilde{\mathbf{x}}\right)$
+\end_inset
+
+, i.e., a direction for which 
+\begin_inset Formula $\mathbf{d}\cdot\nabla f\left(\tilde{\mathbf{x}}\right)<0$
+\end_inset
+
+, which will occur when 
+\begin_inset Formula $\theta\in\left(\pi/2,3\pi/2\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, Damped Newton's Method defines the direction at a point 
+\begin_inset Formula $\tilde{\mathbf{x}}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\mathbf{d}=-\left[\mathbf{H}_{f}\left(\tilde{\mathbf{x}}\right)\right]^{-1}\nabla f\left(\tilde{\mathbf{x}}\right)$
+\end_inset
+
+.
+ The Hessian of a general quadratic 
+\begin_inset Formula $f$
+\end_inset
+
+ can be shown to be equal (possibly up to a constant, depending on the exact
+ form of 
+\begin_inset Formula $f$
+\end_inset
+
+) to the matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $\mathbf{d}=-\mathbf{A}^{-1}\nabla f\left(\tilde{\mathbf{x}}\right)$
+\end_inset
+
+, which implies that 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ will be a descent direction if
+\begin_inset Formula 
+\begin{flalign*}
+0 & >\left(-\mathbf{A}^{-1}\nabla f\left(\tilde{\mathbf{x}}\right)\right)\cdot\nabla f\left(\tilde{\mathbf{x}}\right)\\
+\implies0 & <\mathbf{A}^{-1}\nabla f\left(\tilde{\mathbf{x}}\right)\cdot\nabla f\left(\tilde{\mathbf{x}}\right)\\
+ & =\left[\mathbf{A}^{-1}\nabla f\left(\tilde{\mathbf{x}}\right)\right]^{\mathsf{T}}\nabla f\left(\tilde{\mathbf{x}}\right)\\
+ & =\left[\nabla f\left(\tilde{\mathbf{x}}\right)\right]^{\mathsf{T}}\left(\mathbf{A}^{-1}\right)^{\mathsf{T}}\nabla f\left(\tilde{\mathbf{x}}\right)\\
+ & =\left[\nabla f\left(\tilde{\mathbf{x}}\right)\right]^{\mathsf{T}}\left(\mathbf{A}^{\mathsf{T}}\right)^{\mathsf{T}}\nabla f\left(\tilde{\mathbf{x}}\right)\tag{\ensuremath{\mathbf{A}} is symmetric}\\
+ & =\left[\nabla f\left(\tilde{\mathbf{x}}\right)\right]^{\mathsf{T}}\mathbf{A}\nabla f\left(\tilde{\mathbf{x}}\right).
+\end{flalign*}
+
+\end_inset
+
+The quantity 
+\begin_inset Formula $\left[\nabla f\left(\tilde{\mathbf{x}}\right)\right]^{\mathsf{T}}\mathbf{A}\nabla f\left(\tilde{\mathbf{x}}\right)$
+\end_inset
+
+ will be positive for all 
+\begin_inset Formula $\nabla f\left(\tilde{\mathbf{x}}\right)\neq\mathbf{0}$
+\end_inset
+
+ in the case that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is positive definite, and in this case 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ will be a descent direction.
+\end_layout
+
+\begin_layout Proposition
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a twice-differentiable function of 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ with Hessian 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+, and let 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ be the Damped Newton's Method direction at a point 
+\begin_inset Formula $\tilde{\mathbf{x}}$
+\end_inset
+
+.
+ Then,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $\left[\mathbf{H}_{f}\left(\tilde{\mathbf{x}}\right)\right]^{-1}$
+\end_inset
+
+ is positive definite, then 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ is a descent direction.
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $\mathbf{H}_{f}\left(\tilde{\mathbf{x}}\right)$
+\end_inset
+
+ is positive definite, then 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+ is a descent direction.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We are now ready to state a result that extends Newton's Method in the case
+ that the Hessian of the function 
+\begin_inset Formula $f$
+\end_inset
+
+ is positive definite.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a twice-differentiable function of 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ with Hessian 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+ is positive definite for all 
+\begin_inset Formula $\mathbf{x}\neq\mathbf{0}$
+\end_inset
+
+, then Newton's Method always gives descent directions.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Standard
+Thus, if the Hessian of 
+\begin_inset Formula $f$
+\end_inset
+
+ is positive definite, then Damped Newton's Method is a descent algorithm.
+\end_layout
+
+\begin_layout Subsection
+Convexity
+\end_layout
+
+\begin_layout Definition
+Suppose that 
+\begin_inset Formula $f:\mathbb{R}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\mathbf{x},\mathbf{y}\in\mathbb{R}^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda\in\left[0,1\right]$
+\end_inset
+
+.
+ Then,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\emph on
+convex
+\emph default
+ if 
+\begin_inset Formula $f\left(\lambda\mathbf{x}+\left(1-\lambda\right)\mathbf{y}\right)\leq\lambda f\left(\mathbf{x}\right)+\left(1-\lambda\right)f\left(\mathbf{y}\right)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\emph on
+concave
+\emph default
+ if 
+\begin_inset Formula $f\left(\lambda\mathbf{x}+\left(1-\lambda\right)\mathbf{y}\right)\geq\lambda f\left(\mathbf{x}\right)+\left(1-\lambda\right)f\left(\mathbf{y}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Geometrically, if the function 
+\begin_inset Formula $f$
+\end_inset
+
+ is plotted, and a line is drawn between the points 
+\begin_inset Formula $\left(\mathbf{x},f\left(\mathbf{x}\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(\mathbf{y},f\left(\mathbf{y}\right)\right)$
+\end_inset
+
+, 
+\begin_inset Formula $f$
+\end_inset
+
+ will be convex if the line is always 
+\begin_inset Quotes eld
+\end_inset
+
+above
+\begin_inset Quotes erd
+\end_inset
+
+ the graph of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Concretely, suppose that 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+, and let 
+\begin_inset Formula $f\left(x\right)=x^{2}$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $x_{1}=-0.5$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}=1$
+\end_inset
+
+, so that 
+\begin_inset Formula $f\left(x_{1}\right)=0.25$
+\end_inset
+
+ and 
+\begin_inset Formula $f\left(x_{2}\right)=1$
+\end_inset
+
+.
+ Figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:ex-convex}
+\end_layout
+
+\end_inset
+
+ shows 
+\begin_inset Formula $f$
+\end_inset
+
+ and the points 
+\begin_inset Formula $\left(x_{1},f\left(x_{1}\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(x_{2},f\left(x_{2}\right)\right)$
+\end_inset
+
+.
+ Observe that the (dashed) line connecting these points lies above the graph
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ It is easy to see that this will be true for any choices of 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ex-convex, fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos =
+ 'h', fig.cap = '$f
+\backslash
+
+\backslash
+left(x
+\backslash
+
+\backslash
+right)$ is convex'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,2.5,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(x^2, xlim = c(-2, 2), ylab = "f(x)", cex.lab = 0.75, 
+\end_layout
+
+\begin_layout Plain Layout
+
+      xaxt = "n", yaxt = "n")
+\end_layout
+
+\begin_layout Plain Layout
+
+x1 <- c(-0.5, 0.25)
+\end_layout
+
+\begin_layout Plain Layout
+
+x2 <- c(1, 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(side = 1, at = c(x1[1], x2[1]), cex.axis = 0.75, 
+\end_layout
+
+\begin_layout Plain Layout
+
+     labels = c(expression(x[1]), expression(x[2])))
+\end_layout
+
+\begin_layout Plain Layout
+
+points(x = c(-0.5, 1), y = c(0.25, 1))
+\end_layout
+
+\begin_layout Plain Layout
+
+segments(x0 = -0.5, y0 = 0.25, x1 = 1, y1 = 1, lty = 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+We also have 
+\begin_inset Formula 
+\begin{flalign*}
+f\left(\lambda x_{1}+\left(1-\lambda\right)x_{2}\right) & =\left(\lambda x_{1}+\left(1-\lambda\right)x_{2}\right)^{2}\\
+ & =\lambda^{2}x_{1}^{2}+2\left(\lambda x_{1}\right)\left(1-\lambda\right)x_{2}+\left(1-\lambda\right)^{2}x_{2}^{2}\\
+ & =\lambda^{2}x_{1}^{2}+2\lambda x_{1}\left(x_{2}-\lambda x_{2}\right)+\left(1-2\lambda+\lambda^{2}\right)x_{2}^{2}\\
+ & =\lambda^{2}x_{1}^{2}+2\lambda x_{1}x_{2}-2\lambda^{2}x_{1}x_{2}+x_{2}^{2}-2\lambda x_{2}^{2}+\lambda^{2}x_{2}^{2}
+\end{flalign*}
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\lambda f\left(x_{1}\right)+\left(1-\lambda\right)f\left(x_{2}\right)=\lambda x_{1}^{2}+\left(1-\lambda\right)x_{2}^{2}=\lambda x_{1}^{2}+x_{2}^{2}-\lambda x_{2}^{2}.
+\]
+
+\end_inset
+
+Then, 
+\begin_inset Formula $f$
+\end_inset
+
+ will be convex if 
+\begin_inset Formula 
+\[
+\lambda^{2}x_{1}^{2}+2\lambda x_{1}x_{2}-2\lambda^{2}x_{1}x_{2}+x_{2}^{2}-2\lambda x_{2}^{2}+\lambda^{2}x_{2}^{2}\leq\lambda x_{1}^{2}+x_{2}^{2}-\lambda x_{2}^{2}
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $x_{1},x_{2}\in\mathbb{R}$
+\end_inset
+
+ and all 
+\begin_inset Formula $\lambda\in\left[0,1\right]$
+\end_inset
+
+.
+ Suppose that the inequality holds, so that 
+\begin_inset Formula 
+\begin{flalign*}
+0 & \leq\lambda x_{1}^{2}+x_{2}^{2}-\lambda x_{2}^{2}-\lambda^{2}x_{1}^{2}-2\lambda x_{1}x_{2}+2\lambda^{2}x_{1}x_{2}-x_{2}^{2}+2\lambda x_{2}^{2}-\lambda^{2}x_{2}^{2}\\
+ & =\left(1-\lambda\right)\lambda x_{1}^{2}+\lambda x_{2}^{2}-2\left(1-\lambda\right)\lambda x_{1}x_{2}-\lambda^{2}x_{2}^{2}\\
+ & =\left(1-\lambda\right)\lambda x_{1}^{2}+\left(1-\lambda\right)\lambda x_{2}^{2}-2\left(1-\lambda\right)\lambda x_{1}x_{2}\\
+ & =\lambda\left(1-\lambda\right)\left(x_{1}^{2}+x_{2}^{2}-2x_{1}x_{2}\right)\\
+ & =\lambda\left(1-\lambda\right)\left(x_{1}-x_{2}\right)^{2}.
+\end{flalign*}
+
+\end_inset
+
+We have 
+\begin_inset Formula $\lambda\in\left[0,1\right]$
+\end_inset
+
+, so that both 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ and 
+\begin_inset Formula $1-\lambda$
+\end_inset
+
+ will be nonnegative.
+ Then, for any real numbers 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+, the quantity 
+\begin_inset Formula $\left(x_{1}-x_{2}\right)^{2}$
+\end_inset
+
+ will be nonnegative.
+ It follows that the product 
+\begin_inset Formula $\lambda\left(1-\lambda\right)\left(x_{1}-x_{2}\right)^{2}$
+\end_inset
+
+ will be nonnegative for all 
+\begin_inset Formula $x_{1},x_{2}\in\mathbb{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda\in\left[0,1\right]$
+\end_inset
+
+, so that the inequality holds, and it follows that 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:convex-positive-definite"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a twice-differentiable function of 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ with Hessian 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex if and only if 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+ is positive definite.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Standard
+Observe that if 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+, the equivalent condition for convexity is that 
+\begin_inset Formula $f''\left(x\right)>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Damped Newton's Method applied to a convex function is a descent algorithm.
+\end_layout
+
+\begin_layout Enumerate
+If a function 
+\begin_inset Formula $f:\mathbb{R}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+ has a minimum, then Damped Newton's Method with converge to the minimum.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Standard
+We now state some important facts.
+\end_layout
+
+\begin_layout Proposition
+Suppose that 
+\begin_inset Formula $f:\mathbb{R}^{n}\rightarrow\mathbb{R}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex, then 
+\begin_inset Formula $-f$
+\end_inset
+
+ is concave.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+ are convex, then 
+\begin_inset Formula $c_{1}f\left(\mathbf{x}\right)+c_{2}g\left(\mathbf{x}\right)$
+\end_inset
+
+ is convex if 
+\begin_inset Formula $c_{1},c_{2}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+A linear function is both concave and convex.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Standard
+In the absence of constraints, convex optimization is a 
+\begin_inset Quotes eld
+\end_inset
+
+solved
+\begin_inset Quotes erd
+\end_inset
+
+ problem, whereas non-convex optimization remains a 
+\begin_inset Quotes eld
+\end_inset
+
+hard
+\begin_inset Quotes erd
+\end_inset
+
+ problem.
+\end_layout
+
+\begin_layout Section
+Logistic regression
+\end_layout
+
+\begin_layout Standard
+We will see that 
+\emph on
+logistic regression
+\emph default
+ is not quadratic, but is nevertheless a convex problem.
+ As in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "exa:logistic-regression"
+
+\end_inset
+
+, suppose that we collect data 
+\begin_inset Formula $\left(Y_{i},x_{i}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $i\in\left\{ 1,2,\ldots,n\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $x_{i}\in\mathbb{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $Y_{i}\in\left\{ 0,1\right\} $
+\end_inset
+
+.
+ We would like to fit a 
+\emph on
+sigmoid curve
+\emph default
+ to the data.
+ Logistic regression assumes the model
+\begin_inset Formula 
+\[
+P\left(Y=1|x,\alpha_{0},\alpha_{1}\right)=\frac{1}{1+\exp\left(\alpha_{0}+\alpha_{1}x\right)}.
+\]
+
+\end_inset
+
+We now show that fitting the logistic regression corresponds to a convex
+ optimization problem.
+ Either 
+\begin_inset Formula $Y_{i}=0$
+\end_inset
+
+ or 
+\begin_inset Formula $Y_{i}=1$
+\end_inset
+
+, so that the pmf of 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+P\left(Y_{i}=y_{i}|x_{i},\boldsymbol{\alpha}\right)=\left[P\left(Y_{i}=1|x_{i},\boldsymbol{\alpha}\right)\right]^{y_{i}}\left[P\left(Y_{i}=0|x_{i},\boldsymbol{\alpha}\right)\right]^{1-y_{i}}.
+\]
+
+\end_inset
+
+We assume the 
+\begin_inset Formula $Y_{i}\text{'s}$
+\end_inset
+
+ are a random sample, so that they are iid.
+ Then, the log-likelihood is given by
+\begin_inset Formula 
+\begin{flalign*}
+\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\log\prod_{i=1}^{N}P\left(Y_{i}=y_{i}|x_{i},\boldsymbol{\alpha}\right)\\
+ & =\sum_{i=1}^{N}\log\left[P\left(Y_{i}=1|x_{i},\boldsymbol{\alpha}\right)\right]^{y_{i}}\left[P\left(Y_{i}=0|x_{i},\boldsymbol{\alpha}\right)\right]^{1-y_{i}}\\
+ & =\sum_{i=1}^{N}\left[\log\left[P\left(Y_{i}=1|x_{i},\boldsymbol{\alpha}\right)\right]^{y_{i}}+\log\left[P\left(Y_{i}=0|x_{i},\boldsymbol{\alpha}\right)\right]^{1-y_{i}}\right]\\
+ & =\sum_{i=1}^{N}\left[y_{i}\log P\left(Y_{i}=1|x_{i},\boldsymbol{\alpha}\right)+\left(1-y_{i}\right)\log P\left(Y_{i}=0|x_{i},\boldsymbol{\alpha}\right)\right]\\
+ & =\sum_{i=1}^{N}\left[y_{i}\log\frac{1}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}+\left(1-y_{i}\right)\log\left[1-P\left(Y_{i}=1|x_{i}\boldsymbol{\alpha}\right)\right]\right]\\
+ & =\sum_{i=1}^{N}\left[y_{i}\left(\log1-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right)+\left(1-y_{i}\right)\log\left(1-\frac{1}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\right]\\
+ & =\sum_{i=1}^{N}\left[y_{i}\left(0-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right)+\left(1-y_{i}\right)\log\left(\frac{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}-1}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\right]\\
+ & =\sum_{i=1}^{N}\left[-y_{i}\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)+\left(1-y_{i}\right)\left[\log\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\right]\\
+ & =\sum_{i=1}^{N}\left[-y_{i}\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)+\left(1-y_{i}\right)\left[\alpha_{0}+\alpha_{1}x_{i}-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\right]\\
+ & =\sum_{i=1}^{N}\left[-y_{i}\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)+\alpha_{0}+\alpha_{1}x_{i}-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right.\\
+ & \qquad\quad\left.-y_{i}\left(\alpha_{0}+\alpha_{1}x_{i}\right)+y_{i}\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\\
+ & =\sum_{i=1}^{N}\left[\left(1-y_{i}\right)\left(\alpha_{0}+\alpha_{1}x_{i}\right)-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right].
+\end{flalign*}
+
+\end_inset
+
+Taking the derivative with respect to 
+\begin_inset Formula $\alpha_{0}$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial}{\partial\alpha_{0}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{0}}\sum_{i=1}^{N}\left[\left(1-y_{i}\right)\left(\alpha_{0}+\alpha_{1}x_{i}\right)-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{0}}\left[\left(1-y_{i}\right)\left(\alpha_{0}+\alpha_{1}x_{i}\right)-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\\
+ & =\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right).
+\end{flalign*}
+
+\end_inset
+
+Taking the derivative with respect to 
+\begin_inset Formula $\alpha_{1}$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial}{\partial\alpha_{1}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{1}}\sum_{i=1}^{N}\left[\left(1-y_{i}\right)\left(\alpha_{0}+\alpha_{1}x_{i}\right)-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{1}}\left[\left(1-y_{i}\right)\left(\alpha_{0}+\alpha_{1}x_{i}\right)-\log\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\right]\\
+ & =\sum_{i=1}^{N}\left[\left(1-y_{i}\right)x_{i}-\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right]\\
+ & =\sum_{i=1}^{N}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right).
+\end{flalign*}
+
+\end_inset
+
+Then,
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.5}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{flalign*}
+\nabla\ell\left(\boldsymbol{\alpha}\right) & =\begin{bmatrix}\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+\sum_{i=1}^{N}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)
+\end{bmatrix}\\
+ & =\sum_{i=1}^{N}\begin{bmatrix}1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\\
+x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)
+\end{bmatrix}\\
+ & =\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}.
+\end{flalign*}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.0}
+\end_layout
+
+\end_inset
+
+We now evaluate the second partial derivatives of the log-likelihood.
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial^{2}}{\partial\alpha_{0}^{2}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{0}}\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{0}}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\left[0-0-\frac{\partial}{\partial\alpha_{0}}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right]\\
+ & =\sum_{i=1}^{N}-\frac{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\cdot1-\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\left(\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\cdot1}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+ & =\sum_{i=1}^{N}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}+\left(\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}-\left(\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+ & =\sum_{i=1}^{N}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+\frac{\partial^{2}}{\partial\alpha_{1}^{2}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{1}}\sum_{i=1}^{N}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{1}}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}x_{i}\frac{\partial}{\partial\alpha_{1}}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}x_{i}\left[0-0-\frac{\partial}{\partial\alpha_{1}}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right]\\
+ & =\sum_{i=1}^{N}-x_{i}\frac{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\cdot x_{i}-\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\left(\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)\cdot x_{i}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+ & =\sum_{i=1}^{N}-x_{i}\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}-\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+ & =\sum_{i=1}^{N}-\frac{x_{i}^{2}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+\frac{\partial^{2}}{\partial\alpha_{1}\partial\alpha_{0}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{1}}\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{1}}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\left[0-0-\frac{\partial}{\partial\alpha_{1}}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right]\\
+ & =\sum_{i=1}^{N}-\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+\frac{\partial^{2}}{\partial\alpha_{0}\partial\alpha_{1}}\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\frac{\partial}{\partial\alpha_{0}}\sum_{i=1}^{N}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}\frac{\partial}{\partial\alpha_{0}}x_{i}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}x_{i}\frac{\partial}{\partial\alpha_{0}}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\\
+ & =\sum_{i=1}^{N}-\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}
+\end{flalign*}
+
+\end_inset
+
+Then, the Hessian is
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.5}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right) & =\begin{bmatrix}-\sum_{i=1}^{N}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}} & -\sum_{i=1}^{N}\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+-\sum_{i=1}^{N}\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}} & -\sum_{i=1}^{N}\frac{x_{i}^{2}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}
+\end{bmatrix}\\
+ & =-\sum_{i=1}^{N}\begin{bmatrix}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}} & \frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\\
+\frac{x_{i}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}} & \frac{x_{i}^{2}\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}
+\end{bmatrix}\\
+ & =-\sum_{i=1}^{N}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\begin{bmatrix}1 & x_{i}\\
+x_{i} & x_{i}^{2}
+\end{bmatrix}\\
+ & =-\sum_{i=1}^{N}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\begin{bmatrix}1 & x_{i}\end{bmatrix}.
+\end{flalign*}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.0}
+\end_layout
+
+\end_inset
+
+We have 
+\begin_inset Formula $\mathrm{e}^{z}>0$
+\end_inset
+
+ for 
+\begin_inset Formula $z\in\mathbb{R}$
+\end_inset
+
+, so it follows that the quantity 
+\begin_inset Formula 
+\[
+k_{i}=\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}},\quad i=1,\ldots,N
+\]
+
+\end_inset
+
+is positive.
+ Now, suppose that 
+\begin_inset Formula $\mathbf{z}\in\mathbb{R}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{z}\neq\mathbf{0}$
+\end_inset
+
+.
+ Noting that we can write the Hessian as 
+\begin_inset Formula 
+\[
+\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)=-\sum_{i=1}^{N}k_{i}\begin{bmatrix}1 & x_{i}\\
+x_{i} & x_{i}^{2}
+\end{bmatrix}=\begin{bmatrix}-k_{1} & -k_{1}x_{1}\\
+-k_{1}x_{1} & -k_{1}x_{1}^{2}
+\end{bmatrix}+\cdots+\begin{bmatrix}-k_{N} & -k_{N}x_{N}\\
+-k_{N}x_{N} & -k_{N}x_{N}^{2}
+\end{bmatrix}=\mathbf{A}_{1}+\cdots+\mathbf{A}_{N},
+\]
+
+\end_inset
+
+we have 
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z} & =\mathbf{z}^{\mathsf{T}}\left(\mathbf{A}_{1}+\cdots+\mathbf{A}_{N}\right)\mathbf{z}\\
+ & =\mathbf{z}^{\mathsf{T}}\left(\mathbf{A}_{1}\mathbf{z}+\cdots+\mathbf{A}_{N}\mathbf{z}\right)\tag{distributive property}\\
+ & =\mathbf{z}^{\mathsf{T}}\mathbf{A}_{1}\mathbf{z}+\cdots+\mathbf{z}^{\mathsf{T}}\mathbf{A}_{N}\mathbf{z}.\tag{distributive property}
+\end{flalign*}
+
+\end_inset
+
+For any 
+\begin_inset Formula $\mathbf{A}_{i}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{z}^{\mathsf{T}}\mathbf{A}_{i}\mathbf{z} & =\mathbf{z}^{\mathsf{T}}\begin{bmatrix}-k_{i} & -k_{i}x_{i}\\
+-k_{i}x_{i} & -k_{i}x_{i}^{2}
+\end{bmatrix}\mathbf{z}\\
+ & =\mathbf{z}^{\mathsf{T}}-k_{i}\begin{bmatrix}1 & x_{i}\\
+x_{i} & x_{i}^{2}
+\end{bmatrix}\mathbf{z}\tag{\ensuremath{k_{i}} is a scalar}\\
+ & =-k_{i}\mathbf{z}^{\mathsf{T}}\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\begin{bmatrix}1 & x_{i}\end{bmatrix}\mathbf{z}\\
+ & =-k_{i}\left(\mathbf{z}\cdot\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\right)\left(\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\cdot\mathbf{z}\right)\tag{\ensuremath{\mathbf{u}^{\mathsf{T}}\mathbf{v}=\mathbf{u}\cdot\mathbf{v}}}\\
+ & =-k_{i}\left(\mathbf{z}\cdot\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\right)^{2}.\tag{\ensuremath{\mathbf{u}\cdot\mathbf{v}=\mathbf{v}\cdot\mathbf{u}}}
+\end{flalign*}
+
+\end_inset
+
+
+\begin_inset Formula $k_{i}$
+\end_inset
+
+ is positive, and the square of the dot product of 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+ and 
+\begin_inset Formula $\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}$
+\end_inset
+
+ will be nonnegative (we may have 
+\begin_inset Formula $z_{1}+z_{2}x_{i}=0$
+\end_inset
+
+), so that 
+\begin_inset Formula 
+\[
+\mathbf{z}^{\mathsf{T}}\mathbf{A}_{i}\mathbf{z}=-k_{i}\left(\mathbf{z}\cdot\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\right)^{2}\leq0,
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $\mathbf{A}_{i}$
+\end_inset
+
+ is negative semidefinite.
+ Now, 
+\begin_inset Formula $\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}$
+\end_inset
+
+ is equal to the sum of the 
+\begin_inset Formula $\mathbf{z}^{\mathsf{T}}\mathbf{A}_{i}\mathbf{z}$
+\end_inset
+
+ terms, all of which are less than or equal to zero, i.e., each 
+\begin_inset Formula $\mathbf{A}_{i}$
+\end_inset
+
+ is negative semidefinite, so it follows that 
+\begin_inset Formula $\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}$
+\end_inset
+
+ will be be less than or equal to zero.
+ (The inequality will be strict in the case that at least two of the 
+\begin_inset Formula $x_{i}\text{'s}$
+\end_inset
+
+ are non-zero and unequal, which is likely for a reasonable data set.) The
+ log-likelihood is thus concave, and the maximum likelihood estimate 
+\begin_inset Formula $\hat{\boldsymbol{\alpha}}$
+\end_inset
+
+ corresponds to a global maximum.
+ Now consider the negative log-likelihood, i.e., 
+\begin_inset Formula $-\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)$
+\end_inset
+
+.
+ We may equivalently minimize this function to find the maximum likelihood
+ estimate 
+\begin_inset Formula $\hat{\boldsymbol{\alpha}}$
+\end_inset
+
+.
+ In this case, we will have 
+\begin_inset Formula 
+\[
+\nabla\left[-\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\right]=-\sum_{i=1}^{N}\left(1-y_{i}-\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}\right)\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}
+\]
+
+\end_inset
+
+and thus
+\begin_inset Formula 
+\[
+\mathbf{H}_{-\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)=-\left[-\sum_{i=1}^{N}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\begin{bmatrix}1 & x_{i}\end{bmatrix}\right]=\sum_{i=1}^{N}\frac{\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}}{\left(1+\mathrm{e}^{\alpha_{0}+\alpha_{1}x_{i}}\right)^{2}}\begin{bmatrix}1\\
+x_{i}
+\end{bmatrix}\begin{bmatrix}1 & x_{i}\end{bmatrix}.
+\]
+
+\end_inset
+
+We have shown that 
+\begin_inset Formula $\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}\leq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $\mathbf{z}\neq\mathbf{0}$
+\end_inset
+
+, so it follows that
+\begin_inset Formula 
+\[
+\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}\leq0\implies-\mathbf{z}^{\mathsf{T}}\mathbf{H}_{\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}\geq0\implies\mathbf{z}^{\mathsf{T}}\mathbf{H}_{-\ell}\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)\mathbf{z}\geq0\quad\forall\ \mathbf{z}\neq\mathbf{0},
+\]
+
+\end_inset
+
+i.e., the Hessian of the negative log-likelihood is positive semidefinite.
+ In the case that the inequality is strict (which will be true for a reasonable
+ data set), then 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "thm:convex-positive-definite"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $-\ell\left(\boldsymbol{\alpha}|\mathbf{x},\mathbf{y}\right)$
+\end_inset
+
+ is convex, so that finding the maximum likelihood estimate, i.e., minimizing
+ the negative log-likelihood, is a convex optimization problem.
+\end_layout
+
+\begin_layout Standard
+We now consider the problem in multiple dimensions, i.e., when 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ for 
+\begin_inset Formula $n>1$
+\end_inset
+
+.
+ In this case, logistic regression assumes the model 
+\begin_inset Formula 
+\[
+P\left(Y=1|x,\boldsymbol{\alpha}\right)=\frac{1}{1+\exp\left(\alpha_{0}+\sum_{i=1}^{n}\alpha_{i}x_{i}\right)}.
+\]
+
+\end_inset
+
+In the multidimensional case, we can apply similar ideas as in the 1-dimensional
+ case to conclude that logistic regression corresponds to a convex optimization.
 \end_layout
 
 \begin_layout Chapter
@@ -40213,6 +42192,38 @@ which is of
  by 10, for example, thus increases the number of operations required to
  perform Gaussian elimination by roughly 
 \begin_inset Formula $10^{3}=1000$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Condition number
+\end_layout
+
+\begin_layout Standard
+Consider again the problem of finding 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+ for some 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional vector 
+\begin_inset Formula $\mathbf{b}$
 \end_inset
 
 .
