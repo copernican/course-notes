@@ -22,6 +22,7 @@
 \DeclareMathOperator{\Corr}{Corr}
 \DeclareMathOperator{\dif}{d}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator{\tr}{tr}
 \usepackage{algpseudocode}
 \end_preamble
@@ -25273,8 +25274,8 @@ status open
 
 \begin_layout Plain Layout
 
-<<echo=FALSE, fig.height=3, fig.width=5, fig.align='center', fig.pos='h', fig.cap='po
-wer function for $H_{0}-H_{1}=0.2$'>>=
+<<echo = FALSE, fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos
+ = 'h', fig.cap = 'power function for $H_{0}-H_{1}=0.2$'>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -32332,12 +32333,25 @@ status open
 
 \begin_layout Plain Layout
 
-<<>>=
+<<ex-spf, fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos = 'h',
+ fig.cap = 'Tolerance in minutes by experimental group'>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-# code goes here
+spf <- read.table("data/spf.txt", header = T, sep = "
+\backslash
+t")
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,3,0.5,2))
+\end_layout
+
+\begin_layout Plain Layout
+
+boxplot(spf, ylab = "Tolerance (min)", cex.lab = 0.75, cex.axis = 0.75)
 \end_layout
 
 \begin_layout Plain Layout
@@ -32497,12 +32511,138 @@ status open
 
 \begin_layout Plain Layout
 
-<<>>=
+<<fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos = 'h'>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-# code goes here
+y <- log(spf$SUNSCREEN / spf$CONTROL)
+\end_layout
+
+\begin_layout Plain Layout
+
+ybar <- mean(y)
+\end_layout
+
+\begin_layout Plain Layout
+
+n <- length(y)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# prior hyperparameters
+\end_layout
+
+\begin_layout Plain Layout
+
+m0 <- 0
+\end_layout
+
+\begin_layout Plain Layout
+
+k0 <- 0.1
+\end_layout
+
+\begin_layout Plain Layout
+
+v0 <- 10
+\end_layout
+
+\begin_layout Plain Layout
+
+s0 <- 4
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# posterior hyperparameters
+\end_layout
+
+\begin_layout Plain Layout
+
+kn <- k0 + n
+\end_layout
+
+\begin_layout Plain Layout
+
+mn <- (k0 * m0 + n * ybar) / kn
+\end_layout
+
+\begin_layout Plain Layout
+
+vn <- v0 + n
+\end_layout
+
+\begin_layout Plain Layout
+
+sn <- (v0 * s0 + (n - 1) * var(y) + (k0 * n / kn) * (ybar - m0)^2) / vn
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# draw samples
+\end_layout
+
+\begin_layout Plain Layout
+
+nsamp <- 1e5
+\end_layout
+
+\begin_layout Plain Layout
+
+phi <- rgamma(n = nsamp, shape = vn / 2, rate = sn * vn / 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+sigma2 <- 1 / phi
+\end_layout
+
+\begin_layout Plain Layout
+
+mu <- rnorm(nsamp, mn, sqrt(sigma2 / kn))
+\end_layout
+
+\begin_layout Plain Layout
+
+mu.t <- rt(nsamp, vn) * sqrt(sn / kn) + mn
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# compare the distributions of the posterior samples
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,3,0.5,2))
+\end_layout
+
+\begin_layout Plain Layout
+
+qqplot(mu, mu.t)
+\end_layout
+
+\begin_layout Plain Layout
+
+abline(a = 0, b = 1, col = "red")
 \end_layout
 
 \begin_layout Plain Layout
@@ -34653,7 +34793,7 @@ Then, the Bayes factor in support of
 ALGEBRAIC ISSUES, FIX LATER, FINAL RESULT SHOULD BE
 \begin_inset Formula 
 \[
-\text{BF}==\frac{\left(\sigma^{2}/n+\tau^{2}\right)^{-1/2}\exp\left\{ -\frac{1}{2\left(\sigma^{2}/n+\tau^{2}\right)}\left(\bar{y}-\mu_{0}\right)^{2}\right\} }{\sqrt{n}/\sigma\exp\left\{ -\frac{n}{2\sigma^{2}}\left(\bar{y}-\mu_{0}\right)^{2}\right\} }.
+\text{BF}=\frac{\left(\sigma^{2}/n+\tau^{2}\right)^{-1/2}\exp\left\{ -\frac{1}{2\left(\sigma^{2}/n+\tau^{2}\right)}\left(\bar{y}-\mu_{0}\right)^{2}\right\} }{\sqrt{n}/\sigma\exp\left\{ -\frac{n}{2\sigma^{2}}\left(\bar{y}-\mu_{0}\right)^{2}\right\} }.
 \]
 
 \end_inset
@@ -42226,7 +42366,454 @@ Consider again the problem of finding
 \begin_inset Formula $\mathbf{b}$
 \end_inset
 
+, and suppose that 
+\begin_inset Formula $\mathbf{A}\mathbf{x}^{\star}=\mathbf{b}+\Delta\mathbf{b}$
+\end_inset
+
 .
+ Let 
+\begin_inset Formula $f:\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}$
+\end_inset
+
+ be the function defined by 
+\begin_inset Formula $f\left(\mathbf{b}\right)=\mathbf{A}^{-1}\mathbf{b}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\mathbf{x}=f\left(\mathbf{b}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{x}^{\star}=f\left(\mathbf{b}+\Delta\mathbf{b}\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $\Delta\mathbf{b}\in\mathbb{R}^{n}$
+\end_inset
+
+.
+ We wish to calculate the 
+\begin_inset Quotes eld
+\end_inset
+
+derivative
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\frac{\left\Vert f\left(\mathbf{b}+\Delta\mathbf{b}\right)-f\left(\mathbf{b}\right)\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }=\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }=\frac{\left\Vert \mathbf{A}^{-1}\left(\mathbf{b}+\Delta\mathbf{b}\right)-\mathbf{A}^{-1}\mathbf{b}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }=\frac{\left\Vert \mathbf{A}^{-1}\Delta\mathbf{b}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }.
+\]
+
+\end_inset
+
+Now, 
+\begin_inset Formula $\left\Vert \Delta\mathbf{b}\right\Vert $
+\end_inset
+
+ is a constant, so that for some 
+\begin_inset Formula $\Delta\mathbf{b}\neq\mathbf{0}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{A}^{-1}\Delta\mathbf{b}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }=\left\Vert \frac{\mathbf{A}^{-1}\Delta\mathbf{b}}{\left\Vert \Delta\mathbf{b}\right\Vert }\right\Vert =\left\Vert \mathbf{A}^{-1}\left(\frac{\Delta\mathbf{b}}{\left\Vert \Delta\mathbf{b}\right\Vert }\right)\right\Vert \leq\max_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \mathbf{A}^{-1}\mathbf{z}\right\Vert ,
+\]
+
+\end_inset
+
+where we have replaced the unit vector 
+\begin_inset Formula $\Delta\mathbf{b}/\left\Vert \Delta\mathbf{b}\right\Vert $
+\end_inset
+
+ by 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+.
+ Thus, the 
+\begin_inset Quotes eld
+\end_inset
+
+derivative
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ is the maximum value of the norm of the vector 
+\begin_inset Formula $\mathbf{A}^{-1}\mathbf{z}$
+\end_inset
+
+ over all 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional unit vectors 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+, or informally, how far 
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+stretches
+\begin_inset Quotes erd
+\end_inset
+
+ the unit ball defined by 
+\begin_inset Formula $\mathbf{z}\in\mathbb{R}^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Suppose that 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$
+\end_inset
+
+.
+ Then, the 
+\emph on
+norm
+\emph default
+ of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, written 
+\begin_inset Formula $\left\Vert \mathbf{A}\right\Vert $
+\end_inset
+
+, is given by 
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{A}\right\Vert =\max_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \mathbf{A}\mathbf{z}\right\Vert .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can thus express the 
+\begin_inset Quotes eld
+\end_inset
+
+derivative
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }\leq\left\Vert \mathbf{A}^{-1}\right\Vert .
+\]
+
+\end_inset
+
+Now suppose that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is symmetric, and consider calculating 
+\begin_inset Formula $\left\Vert \mathbf{A}\right\Vert $
+\end_inset
+
+.
+ Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:spectral"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has an orthonormal basis of eigenvectors, which we denote by 
+\begin_inset Formula $\left\{ \mathbf{q}^{\left(i\right)}\right\} _{i=1}^{n}$
+\end_inset
+
+, with corresponding eigenvalues 
+\begin_inset Formula $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$
+\end_inset
+
+.
+ Noting that we can express any 
+\begin_inset Formula $\left\{ \mathbf{z}:\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1\right\} $
+\end_inset
+
+ in the 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+-basis, i.e., 
+\begin_inset Formula 
+\[
+\mathbf{z}=c_{1}\mathbf{q}^{\left(1\right)}+c_{2}\mathbf{q}^{\left(2\right)}+\cdots+c_{n}\mathbf{q}^{\left(n\right)}=\sum_{i=1}^{n}c_{i}\mathbf{q}^{\left(i\right)},
+\]
+
+\end_inset
+
+it follows that 
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{z}\right\Vert ^{2}=\mathbf{z}\cdot\mathbf{z}=\left(\sum_{i=1}^{n}c_{i}\mathbf{q}^{\left(i\right)}\right)\cdot\left(\sum_{j=1}^{n}c_{j}\mathbf{q}^{\left(j\right)}\right)=\left(\sum_{i=1}^{n}c_{i}\mathbf{q}^{\left(i\right)}\right)\cdot c_{1}\mathbf{q}^{\left(1\right)}+\cdots+\left(\sum_{i=1}^{n}c_{i}\mathbf{q}^{\left(i\right)}\right)\cdot c_{n}\mathbf{q}^{\left(n\right)}.
+\]
+
+\end_inset
+
+The expansion of the 
+\begin_inset Formula $k\text{th}$
+\end_inset
+
+ term in this sum is another sum whose summands are of the form 
+\begin_inset Formula $c_{i}c_{k}\left(\mathbf{q}^{\left(i\right)}\cdot\mathbf{q}^{\left(k\right)}\right)$
+\end_inset
+
+.
+ Because the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ are orthonormal, these summands will be equal to one in the case that 
+\begin_inset Formula $i=k$
+\end_inset
+
+ and zero otherwise, i.e., 
+\begin_inset Formula 
+\[
+c_{i}c_{k}\left(\mathbf{q}^{\left(i\right)}\cdot\mathbf{q}^{\left(k\right)}\right)=\begin{cases}
+1, & \text{if }i=k\\
+0, & \text{otherwise}
+\end{cases},
+\]
+
+\end_inset
+
+and it follows that 
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{z}\right\Vert ^{2}=c_{1}\cdot c_{1}\cdot1+c_{2}\cdot c_{2}\cdot1+\cdots+c_{n}\cdot c_{n}\cdot1=\sum_{i=1}^{n}c_{i}^{2}.
+\]
+
+\end_inset
+
+We have 
+\begin_inset Formula $\left\Vert \mathbf{z}\right\Vert =1$
+\end_inset
+
+, which implies that 
+\begin_inset Formula $\left\Vert \mathbf{z}\right\Vert ^{2}=1$
+\end_inset
+
+, hence that 
+\begin_inset Formula $\sum_{i=1}^{n}c_{i}^{2}=1$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{z}=\mathbf{A}\left(\sum_{i=1}^{n}c_{i}\mathbf{q}^{\left(i\right)}\right)=\sum_{i=1}^{n}c_{i}\mathbf{A}\mathbf{q}^{\left(i\right)}=\sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{q}^{\left(i\right)}.
+\]
+
+\end_inset
+
+Now, if a unit-norm vector 
+\begin_inset Formula $\mathbf{z}^{\star}\in\mathbb{R}^{n}$
+\end_inset
+
+ maximizes 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert $
+\end_inset
+
+, i.e., if 
+\begin_inset Formula 
+\[
+\mathbf{z}^{\star}=\argmax_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \mathbf{A}\mathbf{z}\right\Vert ,
+\]
+
+\end_inset
+
+then 
+\begin_inset Formula $\mathbf{z}^{\star}$
+\end_inset
+
+ will also maximize 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}$
+\end_inset
+
+.
+ We can then consider maximizing 
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}=\left(\mathbf{A}\mathbf{z}\right)\cdot\left(\mathbf{A}\mathbf{z}\right)=\left(\sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{q}^{\left(i\right)}\right)\cdot\left(\sum_{j=1}^{n}c_{j}\lambda_{j}\mathbf{q}^{\left(j\right)}\right).
+\]
+
+\end_inset
+
+Reasoning as above, i.e., exploiting the orthonormality of the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+, this expression becomes
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}=\sum_{i=1}^{n}\left(c_{i}\lambda_{i}\right)^{2}=\sum_{i=1}^{n}c_{i}^{2}\lambda_{i}^{2}.
+\]
+
+\end_inset
+
+We can thus recast calculating the norm of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ as a constrained optimization, i.e., as finding the 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+ that maximizes 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $\sum_{i=1}^{n}c_{i}^{2}=1$
+\end_inset
+
+.
+ Recalling that 
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ is eigenvalue of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with the 
+\begin_inset Formula $k\text{th}$
+\end_inset
+
+ largest absolute value, it follows that to maximize 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}$
+\end_inset
+
+, we should put all the 
+\begin_inset Quotes eld
+\end_inset
+
+weight
+\begin_inset Quotes erd
+\end_inset
+
+ into 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+, i.e., set 
+\begin_inset Formula $c_{1}=1$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}$
+\end_inset
+
+ is maximized when 
+\begin_inset Formula $c_{1}=1$
+\end_inset
+
+, and in this case 
+\begin_inset Formula $\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}=\lambda_{1}^{2}$
+\end_inset
+
+.
+ When we set 
+\begin_inset Formula $c_{1}=1$
+\end_inset
+
+, we set all the remaining weights 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ to zero, so that 
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{z}=\sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{q}^{\left(i\right)}=1\cdot\lambda_{1}\mathbf{q}^{\left(1\right)}+0+\cdots+0=\lambda_{1}\mathbf{q}^{\left(1\right)}\implies\left\Vert \mathbf{A}\mathbf{z}\right\Vert ^{2}=\left\Vert \lambda_{1}\mathbf{q}^{\left(1\right)}\right\Vert ^{2}=\left\Vert \mathbf{A}\mathbf{q}^{\left(1\right)}\right\Vert ^{2}\implies\mathbf{z}=\mathbf{q}^{\left(1\right)},
+\]
+
+\end_inset
+
+where we have used the fact that 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with corresponding eigenvector 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+.
+ Thus, the norm of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\left\Vert \mathbf{A}\right\Vert =\max_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \mathbf{A}\mathbf{z}\right\Vert =\max_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \lambda_{1}\mathbf{q}^{\left(1\right)}\right\Vert =\left\Vert \lambda_{1}\mathbf{q}^{\left(1\right)}\right\Vert =\lambda_{1}\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert =\lambda_{1}\cdot1=\lambda_{1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+The norm of a real 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with eigenvalues 
+\begin_inset Formula $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots\left|\lambda_{n}\right|$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\Vert \mathbf{A}\right\Vert =\lambda_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
 \end_layout
 
 \end_body
