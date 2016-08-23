@@ -42816,5 +42816,467 @@ The norm of a real
 [proof goes here]
 \end_layout
 
+\begin_layout Standard
+In practice, our interest will typically be in the 
+\emph on
+relative
+\emph default
+ error.
+ We will examine the ratio of the 
+\emph on
+relative forward error
+\emph default
+ 
+\begin_inset Formula $\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \mathbf{x}\right\Vert $
+\end_inset
+
+ to the 
+\emph on
+relative backward error
+\emph default
+ 
+\begin_inset Formula $\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert $
+\end_inset
+
+, where 
+\begin_inset Quotes eld
+\end_inset
+
+forward
+\begin_inset Quotes erd
+\end_inset
+
+ refers to solving for 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+, i.e., the error in the solution, and 
+\begin_inset Quotes eld
+\end_inset
+
+backward
+\begin_inset Quotes erd
+\end_inset
+
+ refers to the fact that 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+ is an input.
+ We have
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert } & =\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \Delta\mathbf{b}\right\Vert }{\left\Vert \mathbf{x}\right\Vert /\left\Vert \mathbf{b}\right\Vert }\\
+ & =\frac{\left\Vert \mathbf{A}^{-1}\Delta\mathbf{b}\right\Vert /\left\Vert \Delta\mathbf{b}\right\Vert }{\left\Vert \mathbf{x}\right\Vert /\left\Vert \mathbf{A}\mathbf{x}\right\Vert }\\
+ & =\frac{\left\Vert \mathbf{A}^{-1}\Delta\mathbf{b}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert }\cdot\frac{\left\Vert \mathbf{A}\mathbf{x}\right\Vert }{\left\Vert \mathbf{x}\right\Vert }\\
+ & =\left\Vert \mathbf{A}^{-1}\frac{\Delta\mathbf{b}}{\left\Vert \Delta\mathbf{b}\right\Vert }\right\Vert \cdot\left\Vert \mathbf{A}\frac{\mathbf{x}}{\left\Vert \mathbf{x}\right\Vert }\right\Vert \\
+ & \leq\left(\max_{\mathbf{z}\in\mathbb{R}^{n},\left\Vert \mathbf{z}\right\Vert =1}\left\Vert \mathbf{A}^{-1}\mathbf{z}\right\Vert \right)\left(\max_{\mathbf{w}\in\mathbb{R}^{n},\left\Vert \mathbf{w}\right\Vert =1}\left\Vert \mathbf{A}\mathbf{w}\right\Vert \right)\\
+ & =\left\Vert \mathbf{A}^{-1}\right\Vert \left\Vert \mathbf{A}\right\Vert ,
+\end{flalign*}
+
+\end_inset
+
+where the penultimate inequality follows from two applications of our result
+ above.
+ Thus, the ratio of the relative forward error to the relative backward
+ error is bounded by the product of the norms of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:inverse-eigenvalues"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\mathbf{M}$
+\end_inset
+
+ be a real, invertible 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix, and let 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ be an eigenvalue of 
+\begin_inset Formula $\mathbf{M}$
+\end_inset
+
+ with corresponding eigenvector 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $1/\lambda$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $\mathbf{M}^{-1}$
+\end_inset
+
+ with corresponding eigenvector 
+\begin_inset Formula $\mathbf{v}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We have
+\begin_inset Formula 
+\[
+\mathbf{Mv}=\lambda\mathbf{v}\implies\mathbf{M}^{-1}\mathbf{M}\mathbf{v}=\mathbf{M}^{-1}\lambda\mathbf{v}\implies\mathbf{I}_{n}\mathbf{v}=\lambda\mathbf{M}^{-1}\mathbf{v}\implies\mathbf{M}^{-1}\mathbf{v}=\frac{1}{\lambda}\mathbf{v}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is symmetric with eigenvalues 
+\begin_inset Formula $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$
+\end_inset
+
+.
+ Then, 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "prop:inverse-eigenvalues"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+ has eigenvalues 
+\begin_inset Formula $\left|1/\lambda_{n}\right|>\left|1/\lambda_{n-1}\right|>\cdots>\left|1/\lambda_{1}\right|$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert }\leq\left\Vert \mathbf{A}^{-1}\right\Vert \left\Vert \mathbf{A}\right\Vert =\frac{1}{\lambda_{n}}\cdot\lambda_{1}=\frac{\lambda_{1}}{\lambda_{n}},
+\]
+
+\end_inset
+
+i.e., the ratio of the relative errors is bounded by the ratio of the largest
+ eigenvalue of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ to the smallest.
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ be a real, invertible 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with eigenvalues 
+\begin_inset Formula $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$
+\end_inset
+
+.
+ The 
+\emph on
+condition number
+\emph default
+ of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, written 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)$
+\end_inset
+
+, is given by 
+\begin_inset Formula 
+\[
+\kappa\left(\mathbf{A}\right)=\left\Vert \mathbf{A}^{-1}\right\Vert \left\Vert \mathbf{A}\right\Vert =\frac{\lambda_{1}}{\lambda_{n}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now express our previous result for the ratio of the relative errors
+ in terms of the condition number of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert }\leq\left\Vert \mathbf{A}^{-1}\right\Vert \left\Vert \mathbf{A}\right\Vert =\kappa\left(\mathbf{A}\right)\implies\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert }{\left\Vert \mathbf{x}\right\Vert }\leq\kappa\left(\mathbf{A}\right)\cdot\frac{\left\Vert \Delta\mathbf{b}\right\Vert }{\left\Vert \mathbf{b}\right\Vert }.
+\]
+
+\end_inset
+
+The condition number quantifies the sensitivity of the solution 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ to changes in 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+, or how much 
+\begin_inset Quotes eld
+\end_inset
+
+damage
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ can do given a small change in 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+.
+ The condition number is thus, in a sense, a derivative.
+\end_layout
+
+\begin_layout Standard
+Intuitively, 
+\begin_inset Formula $\Delta\mathbf{b}$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+smears
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+, and the question arises of the optimal direction in which to smear 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+ so that the solutions 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{x}^{\star}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{A}\mathbf{x}^{\star}=\mathbf{b}+\Delta\mathbf{b}$
+\end_inset
+
+, respectively, are maximally different.
+ Take 
+\begin_inset Formula $\mathbf{b}=\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{x}=\mathbf{q}^{\left(1\right)}\implies\mathbf{x}=\mathbf{A}^{-1}\mathbf{q}^{\left(1\right)}=\frac{1}{\lambda_{1}}\mathbf{q}^{\left(1\right)}.
+\]
+
+\end_inset
+
+We see that, having taken 
+\begin_inset Formula $\mathbf{b}=\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, which has unit length, we divide by the largest eigenvalue 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+, so we have 
+\begin_inset Quotes eld
+\end_inset
+
+shrunk
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ as much as possible.
+ Now let 
+\begin_inset Formula $\Delta\mathbf{b}=\varepsilon\mathbf{q}^{\left(n\right)}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{x}^{\star}=\mathbf{q}^{\left(1\right)}+\varepsilon\mathbf{q}^{\left(n\right)}\implies\mathbf{x}^{\star}=\mathbf{A}^{-1}\left(\mathbf{q}^{\left(1\right)}+\varepsilon\mathbf{q}^{\left(n\right)}\right)=\mathbf{A}^{-1}\mathbf{q}^{\left(1\right)}+\varepsilon\mathbf{A}^{-1}\mathbf{q}^{\left(n\right)}=\frac{1}{\lambda_{1}}\mathbf{q}^{\left(1\right)}+\frac{\varepsilon}{\lambda_{n}}\mathbf{q}^{\left(n\right)}.
+\]
+
+\end_inset
+
+Thus, we have taken 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+, which 
+\begin_inset Quotes eld
+\end_inset
+
+lived
+\begin_inset Quotes erd
+\end_inset
+
+ along 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, and smeared it such that it now has a component along 
+\begin_inset Formula $\mathbf{q}^{\left(n\right)}$
+\end_inset
+
+.
+ We now examine the ratio of the relative errors
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert /\left\Vert \mathbf{x}\right\Vert }{\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert } & =\frac{\left\Vert \left(\mathbf{q}^{\left(1\right)}/\lambda_{1}+\varepsilon\mathbf{q}^{\left(n\right)}/\lambda_{n}\right)-\mathbf{q}^{\left(1\right)}/\lambda_{1}\right\Vert /\left\Vert \mathbf{q}^{\left(1\right)}/\lambda_{1}\right\Vert }{\left\Vert \varepsilon\mathbf{q}^{\left(n\right)}\right\Vert /\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert }\\
+ & =\frac{\left(\varepsilon/\lambda_{n}\right)\left\Vert \mathbf{q}^{\left(n\right)}\right\Vert /\left(1/\lambda_{1}\right)\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert }{\varepsilon\left\Vert \mathbf{q}^{\left(n\right)}\right\Vert /\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert }\\
+ & =\frac{\left(\varepsilon/\lambda_{n}\right)\cdot1/\left(1/\lambda_{1}\right)\cdot1}{\varepsilon\cdot1/1}\\
+ & =\frac{\lambda_{1}}{\lambda_{n}}.
+\end{flalign*}
+
+\end_inset
+
+We see that our result is precisely the condition number of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, i.e., the maximum 
+\begin_inset Quotes eld
+\end_inset
+
+damage
+\begin_inset Quotes erd
+\end_inset
+
+ is indeed inflicted by taking 
+\begin_inset Formula $\Delta\mathbf{b}=\varepsilon\mathbf{q}^{\left(n\right)}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has eigenvectors on very different scales, then 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)$
+\end_inset
+
+ will be very large.
+ We now consider the implications of roundoff error.
+ On a computer, we are solving not 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+, but 
+\begin_inset Formula $\mathbf{A}\mathbf{x}^{\star}=\text{fl}\left(\mathbf{b}\right)$
+\end_inset
+
+ (and leaving aside for the moment the fact that we have not 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, but its floating-point representation as well).
+ Now, 
+\begin_inset Formula $\text{fl}\left(\mathbf{b}\right)$
+\end_inset
+
+ will be equal to 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+ plus a term on the order of 
+\begin_inset Formula $\epsilon_{\text{mach}}\approx10^{-16}$
+\end_inset
+
+ times 
+\begin_inset Formula $\Delta\mathbf{b}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\text{fl}\left(\mathbf{b}\right)=\mathbf{b}+\epsilon_{\text{mach}}\Delta\mathbf{b}$
+\end_inset
+
+.
+ Accouting for floating-point error, our result above becomes 
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert }{\left\Vert \mathbf{x}\right\Vert }\leq\kappa\left(\mathbf{A}\right)\cdot\frac{\left\Vert \epsilon_{\text{mach}}\Delta\mathbf{b}\right\Vert }{\left\Vert \mathbf{b}\right\Vert }.
+\]
+
+\end_inset
+
+Now, the quantity 
+\begin_inset Formula $\left\Vert \Delta\mathbf{b}\right\Vert /\left\Vert \mathbf{b}\right\Vert $
+\end_inset
+
+ will be some constant, which for the moment we ignore, leaving only machine
+ epsilon, so that the relative error due to roundoff is 
+\begin_inset Formula 
+\[
+\frac{\left\Vert \mathbf{x}^{\star}-\mathbf{x}\right\Vert }{\left\Vert \mathbf{x}\right\Vert }\leq\kappa\left(\mathbf{A}\right)\cdot\epsilon_{\text{mach}}.
+\]
+
+\end_inset
+
+It is clear that if 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)=10^{20}$
+\end_inset
+
+, for example, then 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)\cdot\epsilon_{\text{mach}}=10^{20}\cdot10^{-16}=10^{4}$
+\end_inset
+
+, so that the relative error will be large, and the results of such a computatio
+n compromised by roundoff error.
+\end_layout
+
 \end_body
 \end_document
