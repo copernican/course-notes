@@ -43278,5 +43278,1046 @@ It is clear that if
 n compromised by roundoff error.
 \end_layout
 
+\begin_layout Standard
+Now consider a one-dimensional example, i.e., 
+\begin_inset Formula $x^{\star},x\in\mathbb{R}$
+\end_inset
+
+.
+ Then, in a 
+\begin_inset Quotes eld
+\end_inset
+
+worst-case
+\begin_inset Quotes erd
+\end_inset
+
+ scenario, the relative error will be
+\begin_inset Formula 
+\[
+\left|x^{\star}-x\right|=\kappa\left(\mathbf{A}\right)\cdot\epsilon_{\text{mach}}\left|x\right|\implies x^{\star}=x\left(1\pm\kappa\left(\mathbf{A}\right)\cdot\epsilon_{\text{mach}}\right).
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)=10^{d}$
+\end_inset
+
+ and taking 
+\begin_inset Formula $\epsilon_{\text{mach}}=10^{-16}$
+\end_inset
+
+, we have 
+\begin_inset Formula $x^{\star}=x\left(1\pm10^{d}\cdot10^{-16}\right)=x\left(1\pm10^{d-16}\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $x$
+\end_inset
+
+ will be 
+\begin_inset Quotes eld
+\end_inset
+
+shifted
+\begin_inset Quotes erd
+\end_inset
+
+ by 
+\begin_inset Formula $d-16$
+\end_inset
+
+ digits.
+ For example, if 
+\begin_inset Formula $x=1234567$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa\left(\mathbf{A}\right)=10^{14}$
+\end_inset
+
+, then we will have 
+\begin_inset Formula 
+\[
+x^{\star}=x\left(1+10^{-2}\right)=1234567+12345.67=1246912.67,
+\]
+
+\end_inset
+
+i.e., we retain only 2 significant digits of 
+\begin_inset Formula $x$
+\end_inset
+
+ (the remaining digits are incorrect).
+ (We obtain the same result when we consider 
+\begin_inset Formula $x^{\star}=x\left(1-10^{-2}\right)$
+\end_inset
+
+, i.e., we retain only two correct digits.) In general, we will retain 
+\begin_inset Formula $\min\left(\left|d-16\right|,0\right)$
+\end_inset
+
+ significant digits, so that in the case that 
+\begin_inset Formula $d\geq16$
+\end_inset
+
+, we will not retain 
+\emph on
+any
+\emph default
+ correct digits.
+ Consider the following implications:
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Solving systems of the form 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+.
+
+\emph default
+ For example, when we compute a direction in Newton's Method, we are solving
+ 
+\begin_inset Formula $\left[\mathbf{H}_{f}\left(\mathbf{x}\right)\right]\mathbf{d}=-\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+.
+ If the Hessian 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+ has high condition number, this computation may fail.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Fitting a linear regression by solving the normal equations.
+
+\emph default
+ We fit a linear regression by solving the normal equations 
+\begin_inset Formula $\mathbf{B}^{\mathsf{T}}\mathbf{B}\boldsymbol{\alpha}=\mathbf{B}^{\mathsf{T}}\mathbf{y}$
+\end_inset
+
+ for 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+.
+ The matrix 
+\begin_inset Formula $\mathbf{B}^{\mathsf{T}}\mathbf{B}$
+\end_inset
+
+ tends to have the square of the condition number of 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ , which may be high.
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+Fitting a linear regression given observations 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+.
+
+\emph default
+ When we solve the normal equations, our observations 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ are actually 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ plus some noise term 
+\begin_inset Formula $\Delta\mathbf{y}$
+\end_inset
+
+, which is on the order of 
+\begin_inset Formula $10^{-2}$
+\end_inset
+
+ for the NBA data set.
+\end_layout
+
+\begin_layout Standard
+The normal equations tend to be badly conditioned because 
+\begin_inset Formula $\kappa\left(\mathbf{B}^{\mathsf{T}}\mathbf{B}\right)$
+\end_inset
+
+ is often high.
+\end_layout
+
+\begin_layout Section
+Projections
+\end_layout
+
+\begin_layout Standard
+We now consider fitting a linear regression in the case that solution via
+ the normal equations is impractical, e.g., due to the high condition number
+ of 
+\begin_inset Formula $\mathbf{B}^{\mathsf{T}}\mathbf{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ be a set in 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+, and suppose that 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+.
+ Then, the 
+\emph on
+projection
+\emph default
+ of 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, written 
+\begin_inset Formula $\text{proj}_{\Omega}\left(\mathbf{x}\right)$
+\end_inset
+
+, is defined by 
+\begin_inset Formula 
+\[
+\text{proj}_{\Omega}\left(\mathbf{x}\right)=\argmin_{\mathbf{z}\in\Omega}\left\Vert \mathbf{z}-\mathbf{x}\right\Vert .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Informally, the projection of 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is the vector 
+\begin_inset Formula $\mathbf{z}\in\Omega$
+\end_inset
+
+ closest to 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\left\{ \mathbf{v}^{\left(i\right)}\right\} _{i=1}^{k}\in\mathbb{R}^{n}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ be the span of the 
+\begin_inset Formula $\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+.
+ We wish to find 
+\begin_inset Formula $\text{proj}_{\Omega}\left(\mathbf{x}\right)$
+\end_inset
+
+.
+ Because the 
+\begin_inset Formula $\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+ span 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, we can write any 
+\begin_inset Formula $\mathbf{z}\in\Omega$
+\end_inset
+
+ as a linear combination of the 
+\begin_inset Formula $\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\mathbf{z}=\alpha_{1}\mathbf{v}^{\left(1\right)}+\alpha_{2}\mathbf{v}^{\left(2\right)}+\cdots+\alpha_{k}\mathbf{v}^{\left(k\right)}=\sum_{i=1}^{k}\alpha_{i}\mathbf{v}^{\left(i\right)},
+\]
+
+\end_inset
+
+so that we can rewrite the projection as the equivalent problem of finding
+ the 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+ that solves
+\begin_inset Formula 
+\[
+\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}\in\mathbb{R}^{k}}\left\Vert \mathbf{x}-\sum_{i=1}^{k}\alpha_{i}\mathbf{v}^{\left(i\right)}\right\Vert .
+\]
+
+\end_inset
+
+Now, any 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+ that minimizes this quantity will also minimize its square, so that 
+\begin_inset Formula 
+\[
+\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}\in\mathbb{R}^{k}}\left\Vert \mathbf{x}-\sum_{i=1}^{k}\alpha_{i}\mathbf{v}^{\left(i\right)}\right\Vert ^{2}.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ be the matrix whose 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ column is given by 
+\begin_inset Formula $\mathbf{v}^{\left(j\right)}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\sum_{i=1}^{k}\alpha_{i}\mathbf{v}^{\left(i\right)}=\begin{bmatrix}\mathbf{v}^{\left(1\right)} & \mathbf{v}^{\left(2\right)} & \cdots & \mathbf{v}^{\left(k\right)}\end{bmatrix}\begin{bmatrix}\alpha_{1}\\
+\alpha_{2}\\
+\vdots\\
+\alpha_{k}
+\end{bmatrix}=\mathbf{V}\boldsymbol{\alpha}\implies\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}\in\mathbb{R}^{k}}\left\Vert \mathbf{x}-\mathbf{V}\boldsymbol{\alpha}\right\Vert ^{2}.
+\]
+
+\end_inset
+
+We recognize this expression as having the same form as the least-squares
+ loss function, and it follows that this quantity is minimized by 
+\begin_inset Formula $\boldsymbol{\alpha}=\left(\mathbf{V}^{\mathsf{T}}\mathbf{V}\right)^{-1}\mathbf{V}^{\mathsf{T}}\mathbf{x}$
+\end_inset
+
+.
+ Thus, linear regression is simply a projection of the observations 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ onto the basis (the span of the columns) of the model matrix 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ (and observe that we can replace the particular vectors that form 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ with a collection of vectors having the same span without affecting the
+ projection).
+ The normal equations are then seen to be badly conditioned because 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ is in general a 
+\begin_inset Quotes eld
+\end_inset
+
+bad
+\begin_inset Quotes erd
+\end_inset
+
+ basis, i.e., its columns are 
+\begin_inset Quotes eld
+\end_inset
+
+close
+\begin_inset Quotes erd
+\end_inset
+
+ to being linearly dependent.
+ Suppose that we have just two columns, i.e., 
+\begin_inset Formula $\left\{ \mathbf{v}^{\left(i\right)}\right\} _{i=1}^{2}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{v}^{\left(1\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ are close, then 
+\begin_inset Formula $\kappa\left(\mathbf{V}\right)$
+\end_inset
+
+ will be high.
+ If 
+\begin_inset Formula $\mathbf{v}^{\left(1\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ are orthogonal, then 
+\begin_inset Formula $\kappa\left(\mathbf{V}\right)$
+\end_inset
+
+ will be low, so that the best possible basis consists of mutually orthogonal
+ vectors.
+ In particular, suppose that the model matrix admits the decomposition 
+\begin_inset Formula $\mathbf{B}=\mathbf{Q}\mathbf{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$
+\end_inset
+
+.
+ Then, there exists an orthonormal matrix 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ and an invertible, upper triangular matrix 
+\begin_inset Formula $\mathbf{R}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mathbf{A}=\mathbf{Q}\mathbf{R}$
+\end_inset
+
+, and the span of the columns of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is equal to the span of the columns of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+.
+ This decomposition is known as the 
+\emph on
+
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+ decomposition.
+\end_layout
+
+\begin_layout Standard
+If we can compute the 
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+ decomposition of the model matrix 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+, then we can replace a possibly badly conditioned matrix with a matrix
+ having much better condition number (because the 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ matrix consists of orthogonal columns), i.e., 
+\begin_inset Formula 
+\begin{flalign*}
+\boldsymbol{\alpha} & =\left(\mathbf{B}^{\mathsf{T}}\mathbf{B}\right)^{-1}\mathbf{B}^{\mathsf{T}}\mathbf{y}\\
+ & =\left(\left(\mathbf{Q}\mathbf{R}\right)^{\mathsf{T}}\mathbf{Q}\mathbf{R}\right)^{-1}\left(\mathbf{Q}\mathbf{R}\right)^{\mathsf{T}}\mathbf{y}\\
+ & =\left(\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{\mathsf{T}}\mathbf{Q}\mathbf{R}\right)^{-1}\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{\mathsf{T}}\mathbf{y}\\
+ & =\left(\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{-1}\mathbf{Q}\mathbf{R}\right)^{-1}\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{\mathsf{T}}\mathbf{y}\tag{\ensuremath{\mathbf{Q}} is orthogonal}\\
+ & =\left(\mathbf{R}^{\mathsf{T}}\mathbf{R}\right)^{-1}\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{\mathsf{T}}\mathbf{y}\\
+ & =\mathbf{R}^{-1}\left(\mathbf{R}^{\mathsf{T}}\right)^{-1}\mathbf{R}^{\mathsf{T}}\mathbf{Q}^{\mathsf{T}}\mathbf{y}\\
+ & =\mathbf{R}^{-1}\mathbf{Q}^{\mathsf{T}}\mathbf{y}.
+\end{flalign*}
+
+\end_inset
+
+We can interpret the product 
+\begin_inset Formula $\mathbf{Q}^{\mathsf{T}}\mathbf{y}$
+\end_inset
+
+ as projecting 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ onto the span of the columns of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+, and the action of 
+\begin_inset Formula $\mathbf{R}^{-1}$
+\end_inset
+
+ as returning this product to the 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+-basis.
+ In general, 
+\begin_inset Formula $\mathbf{R}^{-1}$
+\end_inset
+
+ is usually much better conditioned than 
+\begin_inset Formula $\mathbf{B}^{\mathsf{T}}\mathbf{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We continue to consider the problem of fitting a linear regression, i.e.,
+ solving the optimization 
+\begin_inset Formula 
+\[
+\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}}\left\Vert \mathbf{y}-\mathbf{B}\boldsymbol{\alpha}\right\Vert ,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ is a vector of observations and 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ is the model matrix.
+ We can view the product 
+\begin_inset Formula $\mathbf{B}\boldsymbol{\alpha}$
+\end_inset
+
+ as linearly combining a basis, i.e., the columns of 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+.
+ Recall that 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ is often a 
+\begin_inset Quotes eld
+\end_inset
+
+bad
+\begin_inset Quotes erd
+\end_inset
+
+ basis in the sense that it may have columns that are close to being (or
+ actually are) linearly dependent, which occurs often when collecting data.
+ The 
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+ decomposition may allow us to fit the regression by finding a matrix 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ such that the span of the columns of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ is equal to the span of the columns of 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+.
+ We then project 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ by solving
+\begin_inset Formula 
+\[
+\hat{\boldsymbol{\beta}}=\argmin_{\boldsymbol{\beta}}\left\Vert \mathbf{y}-\mathbf{Q}\boldsymbol{\beta}\right\Vert ^{2},
+\]
+
+\end_inset
+
+which is solved by 
+\begin_inset Formula $\boldsymbol{\beta}=\left(\mathbf{Q}^{\mathsf{T}}\mathbf{Q}\right)^{-1}\mathbf{Q}^{\mathsf{T}}\mathbf{y}=\left(\mathbf{Q}^{-1}\mathbf{Q}\right)^{-1}\mathbf{Q}^{\mathsf{T}}\mathbf{y}=\mathbf{Q}^{\mathsf{T}}\mathbf{y}$
+\end_inset
+
+.
+ Observe that the product 
+\begin_inset Formula $\mathbf{Q}\boldsymbol{\beta}$
+\end_inset
+
+ can be viewed as linearly combining the columns of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+, which have the same span as the columns of 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+, so that we can write any 
+\begin_inset Formula $\mathbf{z}\in\text{span}\left\{ \text{col}\left(\mathbf{B}\right)\right\} $
+\end_inset
+
+ as a linear combination of the columns of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\mathbf{z}=\mathbf{Q}\boldsymbol{\beta}$
+\end_inset
+
+.
+ We also have 
+\begin_inset Formula $\mathbf{z}=\mathbf{B}\boldsymbol{\alpha}$
+\end_inset
+
+, so it follows that 
+\begin_inset Formula $\mathbf{Q}\boldsymbol{\beta}=\mathbf{B}\boldsymbol{\alpha}$
+\end_inset
+
+.
+ If we fit the linear regression in the 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+-basis, we must then convert the coefficients 
+\begin_inset Formula $\boldsymbol{\beta}$
+\end_inset
+
+ back to the 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+-basis, which is accomplished as
+\begin_inset Formula 
+\[
+\mathbf{B}\boldsymbol{\alpha}=\mathbf{Q}\boldsymbol{\beta}\implies\boldsymbol{\alpha}=\mathbf{B}^{-1}\mathbf{Q}\boldsymbol{\beta}=\left(\mathbf{Q}\mathbf{R}\right)^{-1}\mathbf{Q}\boldsymbol{\beta}=\mathbf{R}^{-1}\mathbf{Q}^{-1}\mathbf{Q}\boldsymbol{\beta}=\mathbf{R}^{-1}\boldsymbol{\beta},
+\]
+
+\end_inset
+
+where we have replaced 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ by its 
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+ decomposition.
+ Now, 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ is orthonormal and 
+\begin_inset Formula $\mathbf{R}$
+\end_inset
+
+ is upper triangular and invertible, so that the decomposition provides
+ both computational stability (through a possibly lower condition number)
+ and performance (due to the upper triangular shape of 
+\begin_inset Formula $\mathbf{R}$
+\end_inset
+
+).
+ We now consider the problem of finding the decomposition.
+ Letting 
+\begin_inset Formula $\left\{ \mathbf{v}^{\left(i\right)}\right\} _{i=1}^{k}\in\mathbb{R}^{n}$
+\end_inset
+
+, we wish to find 
+\begin_inset Formula $\left\{ \mathbf{q}^{\left(i\right)}\right\} _{i=1}^{k}\in\mathbb{R}^{n}$
+\end_inset
+
+ such that the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ are orthonormal and
+\begin_inset Formula 
+\[
+\text{span}\left\{ \mathbf{v}^{\left(1\right)},\mathbf{v}^{\left(2\right)},\ldots,\mathbf{v}^{\left(\ell\right)}\right\} =\text{span}\left\{ \mathbf{q}^{\left(1\right)},\mathbf{q}^{\left(2\right)},\ldots,\mathbf{q}^{\left(\ell\right)}\right\} ,\quad\ell\in\left\{ 1,2,\ldots,k\right\} .
+\]
+
+\end_inset
+
+We can find the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+ through Gram-Schmidt orthogonalization.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{v}^{\left(1\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Normalize 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, i.e., set 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{q}^{\left(1\right)}/\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+To produce 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+, we will subtract from 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ its projection onto 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, i.e., we will set 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}=\mathbf{v}^{\left(2\right)}-\left(\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}\right)\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Normalize 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+, i.e., set 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}=\mathbf{q}^{\left(2\right)}/\left\Vert \mathbf{q}^{\left(2\right)}\right\Vert $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+To produce 
+\begin_inset Formula $\mathbf{q}^{\left(3\right)}$
+\end_inset
+
+, we will subtract from 
+\begin_inset Formula $\mathbf{v}^{\left(3\right)}$
+\end_inset
+
+ its projections onto 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+, i.e., we will set 
+\begin_inset Formula $\mathbf{q}^{\left(3\right)}=\mathbf{v}^{\left(3\right)}-\left(\mathbf{v}^{\left(3\right)}\cdot\mathbf{q}^{\left(1\right)}\right)\mathbf{q}^{\left(1\right)}-\left(\mathbf{v}^{\left(3\right)}\cdot\mathbf{q}^{\left(2\right)}\right)\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Normalize 
+\begin_inset Formula $\mathbf{q}^{\left(3\right)}$
+\end_inset
+
+, i.e., set 
+\begin_inset Formula $\mathbf{q}^{\left(3\right)}=\mathbf{q}^{\left(3\right)}/\left\Vert \mathbf{q}^{\left(3\right)}\right\Vert $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Continue in this fashion until we construct 
+\begin_inset Formula $\mathbf{q}^{\left(k\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:gram-schmidt-orth"
+
+\end_inset
+
+ provides a formal statement of the Gram-Schmidt iteration.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Require
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ \mathbf{v}^{\left(i\right)}\right\} _{i=1}^{k}\in\mathbb{R}^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{$i=1,2,
+\backslash
+ldots,k$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{w}^{\left(i\right)}\gets\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{$j=1,2,
+\backslash
+ldots,i-1$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{w}^{\left(i\right)}\gets\mathbf{w}^{\left(i\right)}-\left(\mathbf{v}^{\left(i\right)}\cdot\mathbf{q}^{\left(j\right)}\right)\mathbf{q}^{\left(j\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndFor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}\gets\mathbf{w}^{\left(i\right)}/\left\Vert \mathbf{w}^{\left(i\right)}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndFor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ \mathbf{q}^{\left(i\right)}\right\} _{i=1}^{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:gram-schmidt-orth"
+
+\end_inset
+
+Gram-Schmidt Orthogonalization
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
