@@ -73,3 +73,26 @@ axis(side = 1, at = c(x1[1], x2[1]), cex.axis = 0.75,
      labels = c(expression(x[1]), expression(x[2])))
 points(x = c(-0.5, 1), y = c(0.25, 1))
 segments(x0 = -0.5, y0 = 0.25, x1 = 1, y1 = 1, lty = 2)
+
+# beginning of GS orthogonalization
+plot.new()
+plot.window(xlim = c(-0.2, 1), ylim = c(0, 1.2), asp = 1)
+v1 <- c(0.9, 0.2)
+v2 <- c(0.3, 0.8)
+q1 <- v1 / norm(v1, type = "2")
+arrows(x0 = 0, y0 = 0, x1 = q1[1], y1 = q1[2], length = 0.1, col = "black")
+arrows(x0 = 0, y0 = 0, x1 = v2[1], y1 = v2[2], length = 0.1, col = "black")
+u <- crossprod(v2, q1) * q1
+arrows(x0 = 0, y0 = 0, x1 = u[1], y1 = u[2], length = 0.1, col = "black")
+segments(x0 = v2[1], y0 = v2[2], x1 = u[1], y1 = u[2], lty = 2)
+w <- v2 - u
+arrows(x0 = 0, y0 = 0, x1 = w[1], y1 = w[2], length = 0.1, col = "black")
+q2 <- w / norm(w, type = "2")
+arrows(x0 = 0, y0 = 0, x1 = q2[1], y1 = q2[2], length = 0.1, col = "black")
+arrows(x0 = v2[1], y0 = v2[2], x1 = w[1], y1 = w[2], lty = 2, length = 0.1)
+text(x = q1[1] + 0.1, y = q1[2], labels = expression(q^(1)), cex = 0.75)
+text(x = u[1], y = u[2] - 0.1, labels = "u", cex = 0.75)
+text(x = v2[1] + 0.1, y = v2[2], labels = expression(v^(2)), cex = 0.75)
+text(x = w[1] + 0.1, y = w[2] + 0.1, labels = "-u", cex = 0.75)
+text(x = q2[1], y = q2[2] + 0.1, labels = expression(q^(2)), cex = 0.75)
+text(x = 0.1, y = 0.1, labels = expression(theta), cex = 0.75)

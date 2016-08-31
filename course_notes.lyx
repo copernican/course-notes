@@ -44075,7 +44075,7 @@ Continue in this fashion until we construct
 \begin_inset Formula $\mathbf{q}^{\left(k\right)}$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -44317,6 +44317,442 @@ Gram-Schmidt Orthogonalization
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+We now consider an intuitive argument for why Gram-Schmidt produces an orthonorm
+al basis.
+ Suppose that we construct 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{v}^{\left(1\right)}/\left\Vert \mathbf{v}^{\left(1\right)}\right\Vert $
+\end_inset
+
+.
+ We will construct 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+ by setting it equal to the difference of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ and the projection of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+.
+ Set 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ to be this projection, i.e., 
+\begin_inset Formula $\mathbf{u}=\left(\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}\right)\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, subtract 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ from 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+, and normalize the result to produce 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+.
+ Figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:gs-ortho}
+\end_layout
+
+\end_inset
+
+ depicts the initial steps of the iteration.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<gs-ortho, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center',
+ fig.pos = 'h', fig.cap = 'Example of Gram-Schmidt Orthogonalization'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(1.5,1,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.new()
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.window(xlim = c(-0.2, 1), ylim = c(0, 1.2), asp = 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+v1 <- c(0.9, 0.2)
+\end_layout
+
+\begin_layout Plain Layout
+
+v2 <- c(0.3, 0.8)
+\end_layout
+
+\begin_layout Plain Layout
+
+q1 <- v1 / norm(v1, type = "2")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = q1[1], y1 = q1[2], length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = v2[1], y1 = v2[2], length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+u <- crossprod(v2, q1) * q1
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = u[1], y1 = u[2], length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+segments(x0 = v2[1], y0 = v2[2], x1 = u[1], y1 = u[2], lty = 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+w <- v2 - u
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = w[1], y1 = w[2], length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+q2 <- w / norm(w, type = "2")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = 0, y0 = 0, x1 = q2[1], y1 = q2[2], length = 0.1, col = "black")
+\end_layout
+
+\begin_layout Plain Layout
+
+arrows(x0 = v2[1], y0 = v2[2], x1 = w[1], y1 = w[2], lty = 2, length = 0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = q1[1] + 0.1, y = q1[2], labels = expression(q^(1)), cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = u[1], y = u[2] - 0.1, labels = "u", cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = v2[1] + 0.1, y = v2[2], labels = expression(v^(2)), cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = w[1] + 0.1, y = w[2] + 0.1, labels = "-u", cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = q2[1], y = q2[2] + 0.1, labels = expression(q^(2)), cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+text(x = 0.1, y = 0.1, labels = expression(theta), cex = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Clearly 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ lies along 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, so we will have 
+\begin_inset Formula $\mathbf{u}=c\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ for some 
+\begin_inset Formula $c\in\mathbb{R}$
+\end_inset
+
+.
+ Observing that the projection of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ forms a right angle with 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, and letting 
+\begin_inset Formula $\theta$
+\end_inset
+
+ be the angle between 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+, we see that 
+\begin_inset Formula $c=\left\Vert \mathbf{u}\right\Vert $
+\end_inset
+
+, and that 
+\begin_inset Formula $\cos\theta=\left\Vert \mathbf{u}\right\Vert /\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \implies c=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $\mathbf{u}=\left(\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta\right)\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+.
+ Now, the dot product of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \left\Vert \mathbf{q}^{\left(1\right)}\right\Vert \cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cdot1\cdot\cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta,
+\]
+
+\end_inset
+
+where the penultimate equality follows because 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ has unit norm.
+ Then, we see that 
+\begin_inset Formula $\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta=\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, as given in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:gram-schmidt-orth"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ is parallel to 
+\begin_inset Formula $\mathbf{v}^{\left(1\right)}$
+\end_inset
+
+, hence has the same span.
+ Noting that in our construction 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}=\mathbf{v}^{\left(2\right)}-\left(\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}\right)\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, the term 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ is a constant, it is clear that 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+ is a linear combination of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}\in\text{span}\left\{ \mathbf{v}^{\left(2\right)},\mathbf{q}^{\left(1\right)}\right\} $
+\end_inset
+
+.
+ We have shown that 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+ are orthogonal, hence linearly independent, so it follows that the span
+ of 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+ must be the same as the span of 
+\begin_inset Formula $\mathbf{v}^{\left(2\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+.
+ We can argue in a similar fashion for the remaining 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can also consider reconstructing the 
+\begin_inset Formula $\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+ from the 
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+\mathbf{V}=\begin{bmatrix}\mathbf{v}^{\left(1\right)} & \mathbf{v}^{\left(2\right)} & \cdots & \mathbf{v}^{\left(k\right)}\end{bmatrix}=\begin{bmatrix}\mathbf{q}^{\left(1\right)} & \mathbf{q}^{\left(2\right)} & \cdots & \mathbf{q}^{\left(k\right)}\end{bmatrix}\begin{bmatrix}r_{11} & r_{12} & \cdots & r_{1k}\\
+0 & r_{22} & \cdots & r_{2k}\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & r_{kk}
+\end{bmatrix}=\mathbf{Q}\mathbf{R},
+\]
+
+\end_inset
+
+where we recall that 
+\begin_inset Formula $\mathbf{R}\in\mathbf{M}_{k,k}\left(\mathbb{R}\right)$
+\end_inset
+
+ is upper triangular.
+ Now, the first column of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\mathbf{v}^{\left(1\right)}$
+\end_inset
+
+, is equal to the first column of 
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+, which is simply 
+\begin_inset Formula $r_{11}\mathbf{q}^{\left(1\right)}$
+\end_inset
+
+, and the second column is given by 
+\begin_inset Formula $r_{12}\mathbf{q}^{\left(1\right)}+r_{22}\mathbf{q}^{\left(2\right)}$
+\end_inset
+
+.
+ So, we see that to reconstruct the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ column of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+, we require the first 
+\begin_inset Formula $j$
+\end_inset
+
+ columns of 
+\begin_inset Formula $\mathbf{Q}\mathbf{R}$
+\end_inset
+
+, which in turn requires the vectors 
+\begin_inset Formula $\left\{ \mathbf{q}^{\left(i\right)}\right\} _{i=1}^{j}$
+\end_inset
+
+.
+ Finally, we observe that 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ will be invertible so long as its diagonal entries are non-zero, which
+ will be true provided the 
+\begin_inset Formula $\mathbf{v}^{\left(i\right)}$
+\end_inset
+
+ are not linearly dependent.
 \end_layout
 
 \end_body
