@@ -47265,7 +47265,54 @@ so that Riemann integration has error
 \end_inset
 
 .
- 
+\end_layout
+
+\begin_layout Standard
+We can also approximate the integral of 
+\begin_inset Formula $f$
+\end_inset
+
+ over the interval 
+\begin_inset Formula $\left(a,b\right)$
+\end_inset
+
+ by the trapezoid rule.
+ For the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ subinterval, rather than construct a rectangle as in the Riemann sum approximat
+ion, we will construct a trapezoid whose vertices are given by 
+\begin_inset Formula $\left(x_{i},x_{i+1},f\left(x_{i+1}\right),f\left(x_{i}\right)\right)$
+\end_inset
+
+.
+ The area of a trapezoid is equal to the product of the mean of the lengths
+ of its parallel sides and its height (the perpendicular distance between
+ the parallel sides).
+ It follows that the area of the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ trapezoid is
+\begin_inset Formula 
+\[
+A_{i}=\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x,
+\]
+
+\end_inset
+
+so that the trapezoid rule approximation is
+\begin_inset Formula 
+\begin{flalign*}
+\int_{a}^{b}f\left(x\right)\dif x & =\int_{x_{0}}^{x_{1}}f\left(x\right)\dif x+\int_{x_{1}}^{x_{2}}f\left(x\right)\dif x+\cdots+\int_{x_{n-1}}^{x_{n}}f\left(x\right)\dif x\\
+ & \approx\frac{f\left(x_{0}\right)+f\left(x_{1}\right)}{2}\Delta x+\frac{f\left(x_{1}\right)+f\left(x_{2}\right)}{2}\Delta x+\cdots+\frac{f\left(x_{n-1}\right)+f\left(x_{n}\right)}{2}\Delta x\\
+ & =\sum_{i=0}^{n-1}\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x.
+\end{flalign*}
+
+\end_inset
+
+
 \end_layout
 
 \end_body
