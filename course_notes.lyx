@@ -37088,7 +37088,7 @@ Require
 \end_inset
 
  
-\begin_inset Formula $s$
+\begin_inset Formula $s\in\mathbb{R}$
 \end_inset
 
 
@@ -38965,6 +38965,12 @@ Let
 \end_layout
 
 \begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:spectral-decomposition"
+
+\end_inset
+
 Suppose that 
 \begin_inset Formula $\mathbf{A}$
 \end_inset
@@ -40989,6 +40995,1760 @@ P\left(Y=1|x,\boldsymbol{\alpha}\right)=\frac{1}{1+\exp\left(\alpha_{0}+\sum_{i=
 
 In the multidimensional case, we can apply similar ideas as in the 1-dimensional
  case to conclude that logistic regression corresponds to a convex optimization.
+\end_layout
+
+\begin_layout Section
+Non-convex optimization
+\end_layout
+
+\begin_layout Standard
+We have previously considered optimizing functions known to be convex.
+ We saw that we can optimize a quadratic analytically by solving the normal
+ equations, and that we can optimize any convex function by applying Damped
+ Newton's Method.
+ We will see that these approaches will fail for non-convex functions.
+\end_layout
+
+\begin_layout Example
+Suppose that we wish to find the global minimum of 
+\begin_inset Formula $f\left(x\right)=x^{4}-5x^{3}-2x^{2}$
+\end_inset
+
+, shown in figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:ex-non-convex}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ex-non-convex, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center',
+ fig.pos = 'h', fig.cap = '$f
+\backslash
+
+\backslash
+left(x
+\backslash
+
+\backslash
+right)=x^{4}-5x^{3}-2x^{2}$ is non-convex'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,2.5,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(x^4 - 5 * x^3 - 2 * x^2, xlim = c(-2, 6), ylab = "f(x)", 
+\end_layout
+
+\begin_layout Plain Layout
+
+      cex.lab = 0.75, xaxt = "n", yaxt = "n")
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(side = 1, at = c(-1 / 4, 0, 4), cex.axis = 0.75)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+The first derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $f'\left(x\right)=4x^{3}-15x^{2}-4x$
+\end_inset
+
+.
+ Setting this equal to zero and solving gives
+\begin_inset Formula 
+\[
+0=4x^{3}-15x^{2}-4x=x\left(4x^{2}-15x-4\right)=x\left(4x+1\right)\left(x-4\right)
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $f'$
+\end_inset
+
+ will equal zero in the case that any of these terms is zero, i.e., when 
+\begin_inset Formula $x=0$
+\end_inset
+
+, when 
+\begin_inset Formula $x=-1/4$
+\end_inset
+
+, and when 
+\begin_inset Formula $x=4$
+\end_inset
+
+.
+ To characterize each of the critical points of 
+\begin_inset Formula $f$
+\end_inset
+
+, we examine its second derivative, which is given by 
+\begin_inset Formula $f''\left(x\right)=12x^{2}-30x-4$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\[
+f''\left(0\right)=-4,\quad f''\left(-\frac{1}{4}\right)=\frac{12}{16}+\frac{30}{4}-4=\frac{17}{4},\quad f''\left(4\right)=192-120-4=68,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $f$
+\end_inset
+
+ has a maximum at 
+\begin_inset Formula $x=0$
+\end_inset
+
+ and minima at 
+\begin_inset Formula $x=-1/4$
+\end_inset
+
+ and 
+\begin_inset Formula $x=4$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\[
+f\left(-\frac{1}{4}\right)=\frac{1}{256}+\frac{5}{64}-\frac{2}{16}=-\frac{11}{256}\quad\text{and}\quad f\left(4\right)=256-320-32=-96,
+\]
+
+\end_inset
+
+so it is clear that 
+\begin_inset Formula $f$
+\end_inset
+
+ attains a global minimum at 
+\begin_inset Formula $x=4$
+\end_inset
+
+.
+ Although we were able to find the global minimum analytically in this case,
+ in higher dimensions the analysis becomes much more complicated, and in
+ addition closed-form solutions may not exist, so that we must optimize
+ such functions numerically.
+ Had we applied Newton's Method to this problem, we would have had no guarantee
+ of finding the global minimum, i.e., depending on our starting point, we
+ may have instead converged to the local minimum at 
+\begin_inset Formula $x=-1/4$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We saw in the previous example that Newton's Method is not guaranteed to
+ find the global minimum of a non-convex function, in particular because
+ it may not produce descent directions.
+ We might instead applied Steepest Descent with backtracking, but this will
+ be slow.
+ We will consider three alternatives: Newton's Method, modified to produce
+ descent directions, is suitable for any non-convex function, and both the
+ Gauss-Newton and Levenberg-Marquardt algorithms are suitable for fitting
+ a non-linear least-squares regression.
+\end_layout
+
+\begin_layout Subsection
+Newton's Method with Hessian modification
+\end_layout
+
+\begin_layout Standard
+Suppose that we wish to minimize some non-convex function 
+\begin_inset Formula $f\left(\mathbf{x}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+.
+ Recall that Damped Newton's Method will give a descent direction at 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ if the Hessian of 
+\begin_inset Formula $f$
+\end_inset
+
+ evaluated at 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+ is positive definite.
+ If 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ is not positive definite, then we can create a new matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ that is both positive definite and 
+\begin_inset Quotes eld
+\end_inset
+
+close
+\begin_inset Quotes erd
+\end_inset
+
+ to the Hessian.
+ Now, under suitable regularity conditions, Clairaut's Theorem implies that
+ 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ is symmetric, and it follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:spectral-decomposition"
+
+\end_inset
+
+ that 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ may be decomposed as 
+\begin_inset Formula $\mathbf{H}_{f}=\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ is an orthonormal matrix and 
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+ is a diagonal matrix whose diagonal entries 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ are the eigenvalues of 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ is not positive definite, then we will have 
+\begin_inset Formula $\min\left(\lambda_{1},\ldots,\lambda_{n}\right)<0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula 
+\[
+\lambda_{\text{min}}=\left|\min\left(\lambda_{1},\ldots,\lambda_{n}\right)\right|
+\]
+
+\end_inset
+
+and consider the sum 
+\begin_inset Formula $\mathbf{D}^{*}=\left(\lambda_{\text{min}}+k\right)\mathbf{I}_{n}+\mathbf{D}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\begin{bmatrix}\lambda_{\text{min}}+k & 0 & \cdots & 0\\
+0 & \lambda_{\text{min}}+k & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & \lambda_{\text{min}}+k
+\end{bmatrix}+\begin{bmatrix}\lambda_{1} & 0 & \cdots & 0\\
+0 & \lambda_{2} & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & \lambda_{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+ is some positive constant.
+ By adding 
+\begin_inset Formula $\lambda_{\text{min}}+k$
+\end_inset
+
+ to each entry of 
+\begin_inset Formula $\mathbf{D}$
+\end_inset
+
+, we ensure that the entries of 
+\begin_inset Formula $\mathbf{D}^{*}$
+\end_inset
+
+ will all be positive.
+ We will compute 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{A} & =\mathbf{Q}\mathbf{D}^{*}\mathbf{Q}^{\mathsf{T}}\\
+ & =\mathbf{Q}\left(\mathbf{D}+\left(\lambda_{\text{min}}+k\right)\mathbf{I}\right)\mathbf{Q}^{\mathsf{T}}\\
+ & =\left(\mathbf{QD}+\mathbf{Q}\left(\lambda_{\text{min}}+k\right)\mathbf{I}\right)\mathbf{Q}^{\mathsf{T}}\\
+ & =\mathbf{QDQ}^{\mathsf{T}}+\mathbf{Q}\left(\lambda_{\text{min}}+k\right)\mathbf{I}\mathbf{Q}^{\mathsf{T}}\\
+ & =\mathbf{H}_{f}\left(\mathbf{x}\right)+\left(\lambda_{\text{min}}+k\right)\mathbf{Q}\mathbf{I}\mathbf{Q}^{\mathsf{T}}\\
+ & =\mathbf{H}_{f}\left(\mathbf{x}\right)+\left(\lambda_{\text{min}}+k\right)\mathbf{Q}\mathbf{Q}^{\mathsf{T}}\\
+ & =\mathbf{H}_{f}\left(\mathbf{x}\right)+\left(\lambda_{\text{min}}+k\right)\mathbf{I},\tag{\ensuremath{\mathbf{Q}^{\mathsf{T}}=\mathbf{Q}^{-1}}}
+\end{flalign*}
+
+\end_inset
+
+i.e., at the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ iteration, we will find 
+\begin_inset Formula $\lambda_{\text{min}}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ and form 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ as the sum of 
+\begin_inset Formula $\left(\lambda_{\text{min}}+k\right)\mathbf{I}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+.
+ Now, consider the tuning parameter 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\lambda_{\text{min}}+k=0$
+\end_inset
+
+, then 
+\begin_inset Formula $\mathbf{A}=\mathbf{H}_{f}$
+\end_inset
+
+, i.e., we have the generic Newton's Method direction at 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\lambda_{\text{min}}+k$
+\end_inset
+
+ is very large, the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ will be very large, so that the eigenvalues of 
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+ will be very small.
+ In this case, multiplication by 
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+ will have a negligible effect on 
+\begin_inset Formula $-\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+, so that the resulting direction will be roughly that given by Steepest
+ Descent.
+ We will therefore choose 
+\begin_inset Formula $k$
+\end_inset
+
+ through trial-and-error, attempting to find a value that works well for
+ a given starting point.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Require
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$
+\backslash
+left
+\backslash
+Vert 
+\backslash
+nabla f
+\backslash
+left(
+\backslash
+mathbf{x}
+\backslash
+right)
+\backslash
+right
+\backslash
+Vert >
+\backslash
+epsilon$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\lambda_{\text{min}}\gets\min\left(\lambda_{1},\ldots,\lambda_{n}\right)$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Comment{$
+\backslash
+lambda_{j}$ is the $j
+\backslash
+text{th}$ eigenvalue of $
+\backslash
+mathbf{H}_{f}$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{$
+\backslash
+lambda_{
+\backslash
+text{min}}>0$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{A}\gets\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Else
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{A}\gets\left(\left|\lambda_{\text{min}}\right|+k\right)\mathbf{I}+\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndIf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ solve 
+\begin_inset Formula $\mathbf{A}\mathbf{d}=-\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$f
+\backslash
+left(
+\backslash
+mathbf{x}+s
+\backslash
+mathbf{d}
+\backslash
+right)>f
+\backslash
+left(
+\backslash
+mathbf{x}
+\backslash
+right)$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets s/2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{x}\gets\mathbf{x}+s\mathbf{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:newtons-method-hessian-mod"
+
+\end_inset
+
+Newton's Method with Hessian Modification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We also may be able to use Hessian modification to improve the condition
+ number of the matrix we invert to find the Newton's Method direction.
+ If the condition number of 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ (which is 
+\begin_inset Formula $\kappa\left(\mathbf{H}_{f}\right)=\left|\lambda_{1}/\lambda_{n}\right|$
+\end_inset
+
+) is large, then the direction obtained by solving 
+\begin_inset Formula $\mathbf{d}=-\left[\mathbf{H}_{f}\left(\mathbf{x}\right)\right]^{-1}\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+ will be inaccurate.
+ Informally, if 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+flat
+\begin_inset Quotes erd
+\end_inset
+
+ around the value 
+\begin_inset Formula $\tilde{\mathbf{x}}$
+\end_inset
+
+, then the Hessian of 
+\begin_inset Formula $f$
+\end_inset
+
+ will be close to zero, so that vectors will go to zero, hence 
+\begin_inset Formula $\lambda_{n}\approx0$
+\end_inset
+
+, and 
+\begin_inset Formula $\kappa\left(\mathbf{H}_{f}\left(\mathbf{x}\right)\right)$
+\end_inset
+
+ will be large.
+ When we modify the Hessian, the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ eigenvalue of the resulting matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ will be on the order of 
+\begin_inset Formula $\lambda_{i}+\lambda_{\text{min}}+k$
+\end_inset
+
+, where 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ eigenvalue of 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+.
+ The condition number of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is thus on the order of
+\begin_inset Formula 
+\[
+\kappa\left(\mathbf{A}\right)=\frac{\lambda_{1}+\lambda_{\text{min}}+k}{\lambda_{n}+\lambda_{\text{min}}+k}.
+\]
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{2}$
+\end_inset
+
+, and that the eigenvalues of 
+\begin_inset Formula $\mathbf{H}_{f}$
+\end_inset
+
+ are 
+\begin_inset Formula $\lambda_{1}=10$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{2}=10^{-5}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\kappa\left(\mathbf{H}_{f}\right)=10/10^{-5}=10^{6}$
+\end_inset
+
+.
+ Modifying the Hessian with 
+\begin_inset Formula $k=1$
+\end_inset
+
+, the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ are on the order of 
+\begin_inset Formula 
+\[
+\lambda_{1}+\lambda_{\text{min}}+1=10+10^{-5}+1\quad\text{and}\quad\lambda_{2}+\lambda_{\text{min}}+1=10^{-5}+10^{-5}+1,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+\kappa\left(\mathbf{A}\right)\approx\frac{11+10^{-5}}{1+2\cdot10^{-5}}=\Sexpr{(11+1e-5)/(1+2e-5)},
+\]
+
+\end_inset
+
+which we see is greatly improved relative to 
+\begin_inset Formula $\kappa\left(\mathbf{H}_{f}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Gauss-Newton method
+\end_layout
+
+\begin_layout Standard
+Suppose that we collect data that we believe is well represented by a mixture
+ of two Gaussians.
+ Let 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ be the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ observation and 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ be the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ covariate, so that our model is
+\begin_inset Formula 
+\[
+y_{i}\sim a_{1}\exp\left\{ -\frac{\left(x_{i}-\mu_{1}\right)^{2}}{\sigma_{1}^{2}}\right\} +a_{2}\exp\left\{ -\frac{\left(x_{i}-\mu_{2}\right)^{2}}{\sigma_{2}^{2}}\right\} ,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left(\mu_{1},\sigma_{1}^{2}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(\mu_{2},\sigma_{2}^{2}\right)$
+\end_inset
+
+ are the mean and variance of the respective Gaussians and 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ are the mixture weights, and where we have omitted the normalizing constants
+ for clarity.
+ Figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:ex-nonlinear-ls}
+\end_layout
+
+\end_inset
+
+ depicts the model and observations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ex-nonlinear-ls, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center',
+ fig.pos = 'h', fig.cap = 'Observations drawn from Gaussian mixture model'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# non-linear least-squares
+\end_layout
+
+\begin_layout Plain Layout
+
+gmm <- function(x, a, mu, sigma) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(a[1] * dnorm(x, mean = mu[1], sd = sigma[1]) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+           a[2] * dnorm(x, mean = mu[2], sd = sigma[2]))
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(2.5,2.5,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(gmm(x, a = c(0.4, 0.6), mu = c(1, 5), sigma = c(2, 1)), from = -3, 
+\end_layout
+
+\begin_layout Plain Layout
+
+      to = 7, ylab = "f(x)", cex.lab = 0.75, xaxt = "n", yaxt = "n")
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(0.4 * dnorm(x, mean = 1, sd = 2), col = "red", lty = 2, add = T)
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(0.6 * dnorm(x, mean = 5, sd = 1), col = "blue", lty = 3, add = T)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# randomly generate covariates
+\end_layout
+
+\begin_layout Plain Layout
+
+set.seed(123)
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- runif(50, min = -3, max = 7)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# and add some noise
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- gmm(x, a = c(0.4, 0.6), mu = c(1, 5), sigma = c(2, 1)) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+  rnorm(length(x), sd = 0.02)
+\end_layout
+
+\begin_layout Plain Layout
+
+points(x = x, y = y)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose that we draw 
+\begin_inset Formula $n$
+\end_inset
+
+ observations and wish to infer the parameters 
+\begin_inset Formula $\boldsymbol{\alpha}=\left(a_{1},u_{1},\sigma_{1}^{2},a_{2},\mu_{2},\sigma_{2}^{2}\right)$
+\end_inset
+
+.
+ Define the least-squares loss function
+\begin_inset Formula 
+\[
+L\left(\boldsymbol{\alpha}\right)=\sum_{i=1}^{n}\left(y_{i}-a_{1}\exp\left\{ -\frac{\left(x_{i}-\mu_{1}\right)^{2}}{\sigma_{1}^{2}}\right\} -a_{2}\exp\left\{ -\frac{\left(x_{i}-\mu_{2}\right)^{2}}{\sigma_{2}^{2}}\right\} \right)^{2}=\sum_{i=1}^{n}\left(r_{i}\left(\boldsymbol{\alpha}\right)\right)^{2},
+\]
+
+\end_inset
+
+and consider finding the 
+\begin_inset Formula $\hat{\boldsymbol{\alpha}}$
+\end_inset
+
+ that minimizes the sum of the squared residuals, i.e., 
+\begin_inset Formula 
+\[
+\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}}L\left(\boldsymbol{\alpha}\right)=\argmin_{\boldsymbol{\alpha}}\sum_{i=1}^{n}\left(r_{i}\left(\boldsymbol{\alpha}\right)\right)^{2}.
+\]
+
+\end_inset
+
+Now, the gradient of 
+\begin_inset Formula $L\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ can be expressed as
+\begin_inset Formula 
+\[
+\nabla L\left(\boldsymbol{\alpha}\right)=\nabla\left(\sum_{i=1}^{n}\left(r_{i}\left(\boldsymbol{\alpha}\right)\right)^{2}\right)=\sum_{i=1}^{n}\nabla\left(r_{i}\left(\boldsymbol{\alpha}\right)\right)^{2}=\sum_{i=1}^{n}2r_{i}\left(\boldsymbol{\alpha}\right)\nabla r_{i}\left(\boldsymbol{\alpha}\right),
+\]
+
+\end_inset
+
+so that the Hessian of 
+\begin_inset Formula $L\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ is a 
+\begin_inset Formula $6\times6$
+\end_inset
+
+ matrix whose 
+\begin_inset Formula $kj\text{th}$
+\end_inset
+
+ entry is 
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial^{2}}{\partial\alpha_{k}\partial\alpha_{j}}L\left(\boldsymbol{\alpha}\right) & =\frac{\partial}{\partial\alpha_{k}}\left[\frac{\partial}{\partial\alpha_{j}}L\left(\boldsymbol{\alpha}\right)\right]\\
+ & =\frac{\partial}{\partial\alpha_{k}}\sum_{i=1}^{n}2r_{i}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(j\right)}\left(\boldsymbol{\alpha}\right)\\
+ & =\sum_{i=1}^{n}2\frac{\partial}{\partial\alpha_{k}}r_{i}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(j\right)}\left(\boldsymbol{\alpha}\right)\\
+ & =2\sum_{i=1}^{n}\left[r_{i}^{\left(k\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(j\right)}\left(\boldsymbol{\alpha}\right)+r_{i}\left(\boldsymbol{\alpha}\right)\frac{\partial}{\partial\alpha_{k}}r_{i}^{\left(j\right)}\left(\boldsymbol{\alpha}\right)\right],
+\end{flalign*}
+
+\end_inset
+
+where 
+\begin_inset Formula $r_{i}^{\left(j\right)}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ denotes the derivative of 
+\begin_inset Formula $r_{i}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ with respect to the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ component of 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+, and where the final equality follows from the product rule.
+ Then, the Hessian is 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{2.0}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{H}_{L}\left(\boldsymbol{\alpha}\right) & =2\sum_{i=1}^{n}\begin{bmatrix}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)+r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)+r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)\\
+\vdots & \ddots & \vdots\\
+r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)+r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)+r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)
+\end{bmatrix}\\
+ & =2\sum_{i=1}^{n}\left(\begin{bmatrix}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)\\
+\vdots & \ddots & \vdots\\
+r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)
+\end{bmatrix}+\begin{bmatrix}r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)\\
+\vdots & \ddots & \vdots\\
+r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}\left(\boldsymbol{\alpha}\right)\dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)
+\end{bmatrix}\right)\\
+ & =2\sum_{i=1}^{n}\left(\begin{bmatrix}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right)\\
+\vdots\\
+r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)
+\end{bmatrix}\begin{bmatrix}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)\end{bmatrix}+r_{i}\left(\boldsymbol{\alpha}\right)\begin{bmatrix}\dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & \dfrac{\partial}{\partial\alpha_{1}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)\\
+\vdots & \ddots & \vdots\\
+\dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(1\right)}\left(\boldsymbol{\alpha}\right) & \cdots & \dfrac{\partial}{\partial\alpha_{6}}r_{i}^{\left(6\right)}\left(\boldsymbol{\alpha}\right)
+\end{bmatrix}\right),
+\end{flalign*}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+arraystretch{1.0}
+\end_layout
+
+\end_inset
+
+where we observe that 
+\begin_inset Formula $r_{i}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ is a scalar to obtain the final equality.
+ Now, the entires of the matrix in the second term of the final equality
+ are the second-order partial derivatives of 
+\begin_inset Formula $r_{i}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+, which is precisely the Hessian of 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+.
+ Thus, the Hessian of 
+\begin_inset Formula $L\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ finally becomes 
+\begin_inset Formula 
+\[
+\mathbf{H}_{L}\left(\boldsymbol{\alpha}\right)=2\sum_{i=1}^{n}\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}+r_{i}\left(\boldsymbol{\alpha}\right)\mathbf{H}_{r_{i}}\left(\boldsymbol{\alpha}\right)\right).
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\mathbf{u},\mathbf{w}\in\mathbb{R}^{n}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\theta$
+\end_inset
+
+ be the angle formed by 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+.
+ Then, another definition of the dot product of 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ is 
+\begin_inset Formula $\mathbf{u}\cdot\mathbf{w}=\left\Vert \mathbf{u}\right\Vert _{2}\left\Vert \mathbf{w}\right\Vert _{2}\cos\theta$
+\end_inset
+
+, which implies
+\begin_inset Formula 
+\[
+\mathbf{u}\cdot\mathbf{u}=\left\Vert \mathbf{u}\right\Vert _{2}\left\Vert \mathbf{u}\right\Vert _{2}\cos\theta=\left\Vert \mathbf{u}\right\Vert _{2}^{2}\cos0=\left\Vert \mathbf{u}\right\Vert _{2}^{2}\cdot1=\left\Vert \mathbf{u}\right\Vert _{2}^{2}=\left(\sqrt{u_{1}^{2}+\cdots+u_{n}^{2}}\right)^{2}=\sum_{i=1}^{n}u_{i}^{2},
+\]
+
+\end_inset
+
+which is easily seen to be nonnegative.
+ Now, suppose that 
+\begin_inset Formula $\mathbf{z}\in\mathbb{R}^{6}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{z}\neq\mathbf{0}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\begin{flalign*}
+\mathbf{z}^{\mathsf{T}}\left[\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\right]\mathbf{z} & =\left(\mathbf{z}^{\mathsf{T}}\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)\left[\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right]\tag{associativity}\\
+ & =\left[\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right]^{\mathsf{T}}\left[\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right]\tag{\ensuremath{\left(\mathbf{uv}\right)^{\mathsf{T}}=\mathbf{v}^{\mathsf{T}}\mathbf{u}^{\mathsf{T}}}}\\
+ & =\left[\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right]\cdot\left[\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right]\tag{\ensuremath{\mathbf{u}^{\mathsf{T}}\mathbf{v}=\mathbf{u}\cdot\mathbf{v}}}\\
+ & =\left\Vert \left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\mathbf{z}\right\Vert _{2}^{2}.
+\end{flalign*}
+
+\end_inset
+
+This quantity will be nonnegative for all 
+\begin_inset Formula $\mathbf{z}\neq\mathbf{0}$
+\end_inset
+
+, so it follows that the matrix 
+\begin_inset Formula $\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}$
+\end_inset
+
+ is positive semidefinite (and for any reasonable data set, it will be positive
+ definite).
+ Thus, while 
+\begin_inset Formula $\mathbf{H}_{r_{i}}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ may be positive definite, we are assured that 
+\begin_inset Formula $\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}$
+\end_inset
+
+ will be (at least) positive semidefinite.
+ We wish to minimize the sum of the squared residuals, so as we approach
+ the minimum, i.e., as the model becomes a better fit to the data, the residuals
+ will go to zero, so that the term 
+\begin_inset Formula $r_{i}\left(\boldsymbol{\alpha}\right)\mathbf{H}_{r_{i}}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ will go to zero.
+ The 
+\emph on
+Gauss-Newton Method
+\emph default
+ drops this term and replaces 
+\begin_inset Formula $\mathbf{H}_{L}\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\mathbf{H}_{L}^{\star}\left(\boldsymbol{\alpha}\right)=2\sum_{i=1}^{n}\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}},
+\]
+
+\end_inset
+
+which will be positive semidefinite because it is the sum of 
+\begin_inset Formula $n$
+\end_inset
+
+ positive semidefinite matrices.
+ Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:gauss-newton"
+
+\end_inset
+
+ provides a formal statement of the procedure.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Require
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$
+\backslash
+left
+\backslash
+Vert 
+\backslash
+nabla L
+\backslash
+left(
+\backslash
+boldsymbol{
+\backslash
+alpha}
+\backslash
+right)
+\backslash
+right
+\backslash
+Vert >
+\backslash
+epsilon$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathbf{H}_{L}^{\star}\left(\boldsymbol{\alpha}\right)\gets2\sum_{i=1}^{n}\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ solve 
+\begin_inset Formula $\mathbf{H}_{L}^{\star}\left(\boldsymbol{\alpha}\right)\mathbf{d}=-\nabla L\left(\boldsymbol{\alpha}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathbf{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{$L
+\backslash
+left(
+\backslash
+boldsymbol{
+\backslash
+alpha}+s
+\backslash
+mathbf{d}
+\backslash
+right)>L
+\backslash
+left(
+\backslash
+boldsymbol{
+\backslash
+alpha}
+\backslash
+right)$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $s\gets s/2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+State
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\boldsymbol{\alpha}\gets\boldsymbol{\alpha}+s\mathbf{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+EndWhile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:gauss-newton"
+
+\end_inset
+
+Gauss-Newton Method with backtracking
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Levenberg-Marquardt method
+\end_layout
+
+\begin_layout Standard
+The Gauss-Newton Method replaces the Hessian of the least-square loss function
+ by the sum of positive semidefinite matrices (positive definite for any
+ reasonable data set), which will reliably give descent directions.
+ While the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ matrix in this sum is positive semidefinite, it may be ill-conditioned,
+ i.e., 
+\begin_inset Formula $\kappa\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\right)$
+\end_inset
+
+ may be large, in which case the direction obtained (by inverting this matrix)
+ will be inaccurate.
+ The 
+\emph on
+Levenberg-Marquardt Method
+\emph default
+ introduces an additional term 
+\begin_inset Formula $c\mathbf{I}_{n}$
+\end_inset
+
+ for some 
+\begin_inset Formula $c>0$
+\end_inset
+
+ to improve the condition number, so that the replacement Hessian is
+\begin_inset Formula 
+\[
+\mathbf{H}_{L}^{\star}\left(\boldsymbol{\alpha}\right)=2\sum_{i=1}^{n}\left[c\mathbf{I}_{n}+\nabla r_{i}\left(\boldsymbol{\alpha}\right)\left(\nabla r_{i}\left(\boldsymbol{\alpha}\right)\right)^{\mathsf{T}}\right].
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -44753,6 +46513,759 @@ where we recall that
 \end_inset
 
  are not linearly dependent.
+\end_layout
+
+\begin_layout Section
+Numerical differentiation
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a real-valued function of 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+, and consider the problem of computing the first and second derivatives
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+, 
+\begin_inset Formula $f'\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $f''\left(x\right)$
+\end_inset
+
+.
+ More generally, if 
+\begin_inset Formula $f$
+\end_inset
+
+ is a real-valued function of 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{d}$
+\end_inset
+
+, we can compute the gradient and Hessian of 
+\begin_inset Formula $f$
+\end_inset
+
+, 
+\begin_inset Formula $\nabla f\left(\mathbf{x}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{H}_{f}\left(\mathbf{x}\right)$
+\end_inset
+
+, by computing the derivatives in one dimension at a time.
+ We will compute such a derivative by the method of 
+\emph on
+finite differences
+\emph default
+.
+ Observe that 
+\begin_inset Formula 
+\[
+f'\left(x\right)=\lim_{h\rightarrow0}\frac{f\left(x+h\right)-f\left(x\right)}{h}\approx\frac{f\left(x+h\right)-f\left(x\right)}{h},
+\]
+
+\end_inset
+
+where the final term is called the 
+\emph on
+forward finite difference
+\emph default
+ (forward because we are evaluating 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $x+h$
+\end_inset
+
+ for some 
+\begin_inset Formula $h>0$
+\end_inset
+
+).
+ The error associated with the forward finite difference is
+\begin_inset Formula 
+\[
+E_{\text{fwd}}\left(h\right)=\left|f'\left(x\right)-\frac{f\left(x+h\right)-f\left(x\right)}{h}\right|.
+\]
+
+\end_inset
+
+A third-order Taylor series for 
+\begin_inset Formula $f\left(x+h\right)$
+\end_inset
+
+ around the base point 
+\begin_inset Formula $x$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{equation}
+f\left(x+h\right)\approx f\left(x\right)+f'\left(x\right)\left(x+h-x\right)+\frac{1}{2!}f''\left(x\right)\left(x+h-x\right)^{2}+\mathcal{O}\left(h^{3}\right),\label{eq:taylor-fwd-finite-diff}
+\end{equation}
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+E_{\text{fwd}}\left(h\right)=\left|f'\left(x\right)-\frac{f\left(x\right)+hf'\left(x\right)+h^{2}f''\left(x\right)/2+\mathcal{O}\left(h^{3}\right)-f\left(x\right)}{h}\right|=\left|-\frac{h}{2}f''\left(x\right)+\mathcal{O}\left(h^{3}\right)\right|.
+\]
+
+\end_inset
+
+When 
+\begin_inset Formula $h$
+\end_inset
+
+ is small, the first term will tend to dominate the 
+\begin_inset Formula $\mathcal{O}\left(h^{3}\right)$
+\end_inset
+
+ term, so that the error associated with the forward finite difference is
+ 
+\begin_inset Formula $\mathcal{O}\left(h\right)$
+\end_inset
+
+.
+ We can similarly consider the 
+\emph on
+central finite difference
+\emph default
+, which is given by 
+\begin_inset Formula 
+\[
+f'\left(x\right)=\frac{f\left(x+h\right)-f\left(x-h\right)}{2h}\approx\frac{f\left(x+h\right)-f\left(x-h\right)}{2h}.
+\]
+
+\end_inset
+
+The error associated with the central finite difference is 
+\begin_inset Formula 
+\[
+E_{\text{ctr}}\left(h\right)=\left|f'\left(x\right)-\frac{f\left(x+h\right)-f\left(x-h\right)}{2h}\right|.
+\]
+
+\end_inset
+
+A third-order Taylor series for for 
+\begin_inset Formula $f\left(x-h\right)$
+\end_inset
+
+ around the base point 
+\begin_inset Formula $x$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{equation}
+f\left(x-h\right)\approx f\left(x\right)+f'\left(x\right)\left(x-h-x\right)+\frac{1}{2!}f''\left(x\right)\left(x-h-x\right)^{2}+\frac{1}{3!}f'''\left(x\right)\left(x-h-x\right)^{3}.\label{eq:taylor-bkwd-finite-diff}
+\end{equation}
+
+\end_inset
+
+Subtracting 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:taylor-bkwd-finite-diff"
+
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:taylor-fwd-finite-diff"
+
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{flalign*}
+f\left(x+h\right) & \approx f\left(x\right)+hf'\left(x\right)+\frac{h^{2}}{2}f''\left(x\right)+\frac{h^{3}}{6}f'''\left(x\right)\\
+-f\left(x-h\right) & \approx f\left(x\right)-hf'\left(x\right)+\frac{h^{2}}{2}f'\left(x\right)-\frac{h^{3}}{6}f'''\left(x\right)\\
+ & \approx0+2hf'\left(x\right)+0+\frac{2h^{3}}{6}f'''\left(x\right),
+\end{flalign*}
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+E_{\text{ctr}}\left(h\right)=\left|f'\left(x\right)-\frac{2hf'\left(x\right)+h^{3}f'''\left(x\right)/3}{2h}\right|=\left|-\frac{h^{2}}{6}f'''\left(x\right)\right|,
+\]
+
+\end_inset
+
+i.e., the error associated with the central finite difference is 
+\begin_inset Formula $\mathcal{O}\left(h^{2}\right)$
+\end_inset
+
+.
+ While the central finite difference is more accurate than the forward finite
+ difference, the forward finite difference requires only a single evaluation
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ beyond 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ and is thus a little faster.
+\end_layout
+
+\begin_layout Standard
+We now consider choosing 
+\begin_inset Formula $h$
+\end_inset
+
+, which we might naïvely choose to be arbitrarily small.
+ Recall that what we actually compute is not in general the exact representation
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+, but its floating-point representation, so that the error associated with
+ the forward finite difference becomes
+\begin_inset Formula 
+\begin{flalign*}
+E_{\text{fwd,ro}}\left(h\right) & =\left|f'\left(x\right)-\text{fl}\left(\frac{f\left(x+h\right)-f\left(x\right)}{h}\right)\right|\\
+ & =\left|f'\left(x\right)-\frac{\text{fl}\left(f\left(x+h\right)\right)-\text{fl}\left(f\left(x\right)\right)}{h}\right|\\
+ & =\left|f'\left(x\right)-\frac{f\left(x+h\right)\pm\epsilon_{1}-\left[f\left(x\right)\pm\epsilon_{2}\right]}{h}\right|,
+\end{flalign*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon_{2}$
+\end_inset
+
+ denote the round-off errors (each on the order of machine epsilon 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+) associated with the floating-point representation of the respective function
+ evaluations.
+ The 
+\begin_inset Formula $\epsilon_{i}$
+\end_inset
+
+ may not have the same sign, so without loss of generality, we have
+\begin_inset Formula 
+\[
+E_{\text{fwd,ro}}\left(h\right)=\left|f'\left(x\right)-\frac{f\left(x+h\right)-f\left(x\right)}{h}-\frac{\epsilon_{1}+\epsilon_{2}}{h}\right|=\left|-\frac{h}{2}f''\left(x\right)+\mathcal{O}\left(h^{3}\right)-\frac{\epsilon_{1}+\epsilon_{2}}{h}\right|.
+\]
+
+\end_inset
+
+Noting that 
+\begin_inset Formula $h>0$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\left|\frac{\epsilon_{1}+\epsilon_{2}}{h}\right|\leq\frac{2\epsilon_{\text{mach}}}{h}\implies E_{\text{fwd,ro}}\left(h\right)\leq\left|-\frac{h}{2}f''\left(x\right)+\mathcal{O}\left(h^{3}\right)+\frac{2\epsilon_{\text{mach}}}{h}\right|.
+\]
+
+\end_inset
+
+Now, as 
+\begin_inset Formula $h$
+\end_inset
+
+ goes to zero, the first two terms will go to zero, but the term 
+\begin_inset Formula $2\epsilon_{\text{mach}}/h$
+\end_inset
+
+ will go to infinity.
+ Conversely, as 
+\begin_inset Formula $h$
+\end_inset
+
+ goes to infinity, the term 
+\begin_inset Formula $2\epsilon_{\text{mach}}/h$
+\end_inset
+
+ will go to zero, but the first two terms will go to infinity.
+ I.e., we must choose 
+\begin_inset Formula $h$
+\end_inset
+
+ to simultaneously minimize these two sources of error.
+ Ignoring the 
+\begin_inset Formula $\mathcal{O}\left(h^{3}\right)$
+\end_inset
+
+ term and taking the derivative of 
+\begin_inset Formula $E_{\text{fwd,ro}}\left(h\right)$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+E_{\text{ro,fwd}}'\left(h\right)=\frac{1}{2}f''\left(x\right)-\frac{2\epsilon_{\text{mach}}}{h^{2}}.
+\]
+
+\end_inset
+
+Setting this equal to zero, we have
+\begin_inset Formula 
+\[
+\frac{2\epsilon_{\text{mach}}}{h^{2}}=\frac{1}{2}f''\left(x\right)\implies h^{2}f''\left(x\right)=4\epsilon_{\text{mach}}\implies h^{2}=\frac{4\epsilon_{\text{mach}}}{f''\left(x\right)}\implies h=\sqrt{\frac{4\epsilon_{\text{mach}}}{f''\left(x\right)}}.
+\]
+
+\end_inset
+
+We see that the 
+\begin_inset Formula $h$
+\end_inset
+
+ that minimizes the error of the approximation with round-off error is proportio
+nal to the square root of 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+.
+ Taking 
+\begin_inset Formula $\epsilon_{\text{mach}}=10^{-16}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+h\approx\sqrt{\epsilon_{\text{mach}}}=\sqrt{10^{-16}}=10^{-8},
+\]
+
+\end_inset
+
+i.e., for the forward finite difference, we should take 
+\begin_inset Formula $h$
+\end_inset
+
+ to be approximately 
+\begin_inset Formula $10^{-8}$
+\end_inset
+
+.
+ Similarly, the error associated with the central finite difference becomes
+ 
+\begin_inset Formula 
+\begin{flalign*}
+E_{\text{ctr,ro}}\left(h\right) & =\left|f'\left(x\right)-\text{fl}\left(\frac{f\left(x+h\right)-f\left(x-h\right)}{2h}\right)\right|\\
+ & =\left|f'\left(x\right)-\frac{\text{fl}\left(f\left(x+h\right)\right)-\text{fl}\left(f\left(x-h\right)\right)}{2h}\right|\\
+ & =\left|f'\left(x\right)-\frac{f\left(x+h\right)\pm\epsilon_{1}-\left[f\left(x-h\right)\pm\epsilon_{2}\right]}{2h}\right|,
+\end{flalign*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon_{2}$
+\end_inset
+
+ again denote the round-off errors associated with the floating-point representa
+tion of the respective function evaluations.
+ Proceeding as above, we have
+\begin_inset Formula 
+\begin{flalign*}
+E_{\text{ctr,ro}}\left(h\right) & =\left|f'\left(x\right)-\frac{f\left(x+h\right)-f\left(x-h\right)}{2h}-\frac{\epsilon_{1}+\epsilon_{2}}{2h}\right|\\
+ & =\left|-\frac{h^{2}}{6}f'''\left(x\right)-\frac{\epsilon_{1}+\epsilon_{2}}{2h}\right|\\
+ & \leq\left|-\frac{h^{2}}{6}f'''\left(x\right)-\frac{2\epsilon_{\text{mach}}}{2h}\right|\\
+ & =\left|-\frac{h^{2}}{6}f'''\left(x\right)-\frac{\epsilon_{\text{mach}}}{h}\right|.
+\end{flalign*}
+
+\end_inset
+
+Taking the derivative gives
+\begin_inset Formula 
+\[
+E_{\text{ctr,ro}}'\left(h\right)=-\frac{h}{3}f'''\left(x\right)+\frac{\epsilon_{\text{mach}}}{h^{2}}.
+\]
+
+\end_inset
+
+Setting this equal to zero, we have
+\begin_inset Formula 
+\[
+\frac{\epsilon_{\text{mach}}}{h^{2}}=\frac{h}{3}f'''\left(x\right)\implies h^{3}f'''\left(x\right)=3\epsilon_{\text{mach}}\implies h^{3}=\frac{3\epsilon_{\text{mach}}}{f'''\left(x\right)}\implies h=\left[\frac{3\epsilon_{\text{mach}}}{f'''\left(x\right)}\right]^{1/3}.
+\]
+
+\end_inset
+
+We see that the 
+\begin_inset Formula $h$
+\end_inset
+
+ that minimizes the error of the approximation with round-off error is proportio
+nal to the cube root of 
+\begin_inset Formula $\epsilon_{\text{mach}}$
+\end_inset
+
+.
+ Taking 
+\begin_inset Formula $\epsilon_{\text{mach}}=10^{-16}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+h\approx\left(\epsilon_{\text{mach}}\right)^{1/3}=\left(10^{-16}\right)^{1/3}=10^{-16/3},
+\]
+
+\end_inset
+
+i.e., for the central finite difference, we should take 
+\begin_inset Formula $h$
+\end_inset
+
+ to be approximately 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can also use finite differences to calculate the second derivative of
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+f''\left(x\right)\approx\frac{f\left(x+h\right)-2f\left(x\right)-f\left(x-h\right)}{h^{2}},
+\]
+
+\end_inset
+
+by applying Taylor series to the terms 
+\begin_inset Formula $f\left(x+h\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $f\left(x-h\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Numerical integration
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a real-valued function of 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+, and consider the problem of computing the definite integral of 
+\begin_inset Formula $f$
+\end_inset
+
+ over some interval 
+\begin_inset Formula $\left(a,b\right)$
+\end_inset
+
+ on which 
+\begin_inset Formula $f$
+\end_inset
+
+ is continuous, i.e., 
+\begin_inset Formula $\int_{a}^{b}f\left(x\right)\dif x$
+\end_inset
+
+.
+ We can we can approximate the integral of 
+\begin_inset Formula $f$
+\end_inset
+
+ over 
+\begin_inset Formula $\left(a,b\right)$
+\end_inset
+
+ by a Riemann sum.
+ Let 
+\begin_inset Formula $x_{0}=a$
+\end_inset
+
+ and let 
+\begin_inset Formula $x_{n}=b$
+\end_inset
+
+, and divide the interval into 
+\begin_inset Formula $n-1$
+\end_inset
+
+ subintervals of equal width 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+, so that the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ subinterval is given by 
+\begin_inset Formula $\left(x_{i},x_{i}+1\right)$
+\end_inset
+
+.
+ For the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ subinterval, construct a rectangle whose width is 
+\begin_inset Formula $\Delta x=x_{i+1}-x_{i}$
+\end_inset
+
+ and whose height is 
+\begin_inset Formula $f\left(x_{i}\right)$
+\end_inset
+
+.
+ Then, the Riemann approximation is 
+\begin_inset Formula 
+\begin{flalign*}
+\int_{a}^{b}f\left(x\right)\dif x & =\int_{x_{0}}^{x_{1}}f\left(x\right)\dif x+\int_{x_{1}}^{x_{2}}f\left(x\right)\dif x+\cdots+\int_{x_{n-1}}^{x_{n}}f\left(x\right)\dif x\\
+ & \approx f\left(x_{0}\right)\Delta x+f\left(x_{1}\right)\Delta x+\cdots+f\left(x_{n-1}\right)\Delta x\\
+ & =\sum_{i=0}^{n-1}f\left(x_{i}\right)\Delta x,
+\end{flalign*}
+
+\end_inset
+
+which we depict in figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:riemann}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<riemann, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center', fig.pos
+ = 'h', fig.cap = 'Riemann integration'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+f <- function(x) 2 * x^4 + x^3 - 3 * x^2 + 4
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(1.5,1,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(f(x), xlim = c(-1.2, 1), ylim = c(0, 4), ylab = "f(x)", 
+\end_layout
+
+\begin_layout Plain Layout
+
+      cex.lab = 0.75, xaxt = "n", yaxt = "n")
+\end_layout
+
+\begin_layout Plain Layout
+
+riemann <- function(func, lbound, ubound, subd) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  width <- (ubound - lbound) / subd
+\end_layout
+
+\begin_layout Plain Layout
+
+  x <- seq(lbound, ubound - width, by = width)
+\end_layout
+
+\begin_layout Plain Layout
+
+  y <- func(seq(lbound, ubound - width, by = width))
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(list(width = width, coord = cbind(x, y)))
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+coord <- riemann(f, -1.1, 0.9, 10)
+\end_layout
+
+\begin_layout Plain Layout
+
+rect(xleft = coord$coord[,1], ybottom = 0, 
+\end_layout
+
+\begin_layout Plain Layout
+
+     xright = coord$coord[,1] + coord$width, ytop = coord$coord[,2], 
+\end_layout
+
+\begin_layout Plain Layout
+
+     border = "red")
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(side = 1, at = c(-1.1, 0.9), cex.axis = 0.75, labels = c("a", "b"))
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now consider the error associated with Riemann integration.
+ Letting 
+\begin_inset Formula $x_{0}=a$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{n}=b$
+\end_inset
+
+, it follows from the linearity of integration that 
+\begin_inset Formula 
+\[
+\int_{a}^{b}f\left(x\right)\dif x=\int_{x_{0}}^{x_{1}}f\left(x\right)\dif x+\int_{x_{1}}^{x_{2}}f\left(x\right)\dif x+\cdots+\int_{x_{n-1}}^{x_{n}}f\left(x\right)\dif x=\sum_{i=0}^{n-1}\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x.
+\]
+
+\end_inset
+
+We will approximate each term in this sum by 
+\begin_inset Formula $f\left(x_{i}\right)\Delta x$
+\end_inset
+
+, so that the error is 
+\begin_inset Formula 
+\[
+E=\left|\sum_{i=0}^{n-1}\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x-\sum_{i=0}^{n-1}f\left(x_{i}\right)\Delta x\right|=\left|\sum_{i=0}^{n-1}\left(\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x-f\left(x_{i}\right)\Delta x\right)\right|.
+\]
+
+\end_inset
+
+Now, a first-order Taylor series for 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ around the base point 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is 
+\begin_inset Formula $f\left(x\right)\approx f\left(x_{i}\right)+f'\left(x_{i}\right)+f'\left(x_{i}\right)\left(x-x_{i}\right)$
+\end_inset
+
+, so that the error becomes 
+\begin_inset Formula 
+\begin{flalign*}
+E & \approx\left|\sum_{i=0}^{n-1}\left(\int_{x_{i}}^{x_{i+1}}f\left(x_{i}\right)+f'\left(x_{i}\right)\left(x-x_{i}\right)\dif x-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(\left[f\left(x_{i}\right)x+\frac{f'\left(x_{i}\right)\left(x-x_{i}\right)^{2}}{2}\right|_{x_{i}}^{x_{i+1}}-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)x_{i+1}+\frac{f'\left(x_{i}\right)\left(x_{i+1}-x_{i}\right)^{2}}{2}-f\left(x_{i}\right)x_{i}-\frac{f'\left(x_{i}\right)\left(x_{i}-x_{i}\right)^{2}}{2}-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)x_{i+1}+\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}-f\left(x_{i}\right)x_{i}-0-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)\left(x_{i+1}-x_{i}\right)+\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)\Delta x+\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}-f\left(x_{i}\right)\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}\right|.
+\end{flalign*}
+
+\end_inset
+
+Now, 
+\begin_inset Formula $f'\left(x_{i}\right)$
+\end_inset
+
+ is a constant, which we denote by 
+\begin_inset Formula $c$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+E\approx\left|\sum_{i=0}^{n-1}\frac{c\left(\Delta x\right)^{2}}{2}\right|=\left|\frac{c}{2}\sum_{i=0}^{n}\left(\Delta x\right)^{2}\right|=\left|\frac{cn}{2}\left(\Delta x\right)^{2}\right|.
+\]
+
+\end_inset
+
+The product of the number of intervals and the width of each interval is
+ equal to the width of the interval 
+\begin_inset Formula $\left(a,b\right)$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $n\Delta x=b-a$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+E\approx\left|\frac{c}{2}\left(\frac{b-a}{\Delta x}\right)\left(\Delta x\right)^{2}\right|=\left|\frac{c}{2}\left(b-a\right)\Delta x\right|,
+\]
+
+\end_inset
+
+so that Riemann integration has error 
+\begin_inset Formula $\mathcal{O}\left(\Delta x\right)$
+\end_inset
+
+.
+ 
 \end_layout
 
 \end_body

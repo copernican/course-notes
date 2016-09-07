@@ -74,6 +74,32 @@ axis(side = 1, at = c(x1[1], x2[1]), cex.axis = 0.75,
 points(x = c(-0.5, 1), y = c(0.25, 1))
 segments(x0 = -0.5, y0 = 0.25, x1 = 1, y1 = 1, lty = 2)
 
+# example of a non-convex function
+f <- function(x) x^4 - 5 * x^3 - 2 * x^2
+curve(x^4 - 5 * x^3 - 2 * x^2, xlim = c(-2, 6), ylab = "f(x)", 
+      cex.lab = 0.75, xaxt = "n", yaxt = "n")
+axis(side = 1, at = c(-1 / 4, 0, 4), cex.axis = 0.75,
+     labels = c(expression(-frac(1, 4)), 0, 4))
+
+# non-linear least-squares
+gmm <- function(x, a, mu, sigma) {
+  return(a[1] * dnorm(x, mean = mu[1], sd = sigma[1]) + 
+           a[2] * dnorm(x, mean = mu[2], sd = sigma[2]))
+}
+
+curve(gmm(x, a = c(0.4, 0.6), mu = c(1, 5), sigma = c(2, 1)), from = -3, 
+      to = 7, ylab = "f(x)", cex.lab = 0.75, xaxt = "n", yaxt = "n")
+curve(0.4 * dnorm(x, mean = 1, sd = 2), col = "red", lty = 2, add = T)
+curve(0.6 * dnorm(x, mean = 5, sd = 1), col = "blue", lty = 3, add = T)
+# randomly generate covariates
+set.seed(123)
+x <- runif(50, min = -3, max = 7)
+
+# and add some noise
+y <- gmm(x, a = c(0.4, 0.6), mu = c(1, 5), sigma = c(2, 1)) + 
+  rnorm(length(x), sd = 0.02)
+points(x = x, y = y)
+
 # beginning of GS orthogonalization
 plot.new()
 plot.window(xlim = c(-0.2, 1), ylim = c(0, 1.2), asp = 1)
@@ -96,3 +122,20 @@ text(x = v2[1] + 0.1, y = v2[2], labels = expression(v^(2)), cex = 0.75)
 text(x = w[1] + 0.1, y = w[2] + 0.1, labels = "-u", cex = 0.75)
 text(x = q2[1], y = q2[2] + 0.1, labels = expression(q^(2)), cex = 0.75)
 text(x = 0.1, y = 0.1, labels = expression(theta), cex = 0.75)
+
+# Riemann integration
+f <- function(x) 2 * x^4 + x^3 - 3 * x^2 + 4
+curve(f(x), xlim = c(-1.2, 1), ylim = c(0, 4), ylab = "f(x)", 
+      cex.lab = 0.75, xaxt = "n")
+      # , yaxt = "n")
+riemann <- function(func, lbound, ubound, subd) {
+  width <- (ubound - lbound) / subd
+  x <- seq(lbound, ubound - width, by = width)
+  y <- func(seq(lbound, ubound - width, by = width))
+  return(list(width = width, coord = cbind(x, y)))
+}
+coord <- riemann(f, -1.1, 0.9, 10)
+rect(xleft = coord$coord[,1], ybottom = 0, 
+     xright = coord$coord[,1] + coord$width, ytop = coord$coord[,2], 
+     border = "red")
+axis(side = 1, at = c(-1.1, 0.9), cex.axis = 0.75, labels = c("a", "b"))
