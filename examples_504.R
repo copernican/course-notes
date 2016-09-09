@@ -127,6 +127,7 @@ text(x = 0.1, y = 0.1, labels = expression(theta), cex = 0.75)
 f <- function(x) 2 * x^4 + x^3 - 3 * x^2 + 4
 curve(f(x), xlim = c(-1.2, 1), ylim = c(0, 4), ylab = "f(x)", 
       cex.lab = 0.75, xaxt = "n", yaxt = "n")
+
 riemann <- function(func, lbound, ubound, subd) {
   width <- (ubound - lbound) / subd
   x <- seq(lbound, ubound - width, by = width)
@@ -143,24 +144,14 @@ axis(side = 1, at = c(-1.1, 0.9), cex.axis = 0.75, labels = c("a", "b"))
 trapezoid <- function(func, lbound, ubound, subd) {
   width <- (ubound - lbound) / subd
   x <- seq(lbound, ubound, by = width)
-  # in this case, we need the value of func at ubound
   y <- func(seq(lbound, ubound, by = width))
-  # construct a vector of the means of the lenghts of the parallel sides
-  # m <- vapply(1:subd, FUN = function(i) {
-  #   return((hgt[i] + hgt[i + 1]) / 2)
-  # }, FUN.VALUE = 0)
-  # return(sum(m * width))
   return(list(width = width, coord = cbind(x, y)))
 }
 
 coord <- trapezoid(f, -1.1, 0.9, 10)
-vtx <- list()
 for(i in seq(1, nrow(coord$coord) - 1)) {
-  vtx[[i]] <- cbind(rep(c(coord$coord[i, 1], coord$coord[i + 1, 1]), each = 2),
-                    c(0, coord$coord[i, 2], coord$coord[i + 1, 2], 0))
+  polygon(x = rep(c(coord$coord[i, 1], coord$coord[i + 1, 1]), each = 2),
+          y = c(0, coord$coord[i, 2], coord$coord[i + 1, 2], 0),
+          border = "red")
 }
-polygon(x = vtx[[1]][,1], y = vtx[[1]][,2], border = "red")
-rect(xleft = coord$coord[,1], ybottom = 0, 
-     xright = coord$coord[,1] + coord$width, ytop = coord$coord[,2], 
-     border = "red")
 axis(side = 1, at = c(-1.1, 0.9), cex.axis = 0.75, labels = c("a", "b"))

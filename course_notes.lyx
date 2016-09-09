@@ -47210,7 +47210,7 @@ Now, a first-order Taylor series for
 \end_inset
 
  is 
-\begin_inset Formula $f\left(x\right)\approx f\left(x_{i}\right)+f'\left(x_{i}\right)+f'\left(x_{i}\right)\left(x-x_{i}\right)$
+\begin_inset Formula $f\left(x\right)\approx f\left(x_{i}\right)+f'\left(x_{i}\right)\left(x-x_{i}\right)$
 \end_inset
 
 , so that the error becomes 
@@ -47307,7 +47307,189 @@ so that the trapezoid rule approximation is
 \begin{flalign*}
 \int_{a}^{b}f\left(x\right)\dif x & =\int_{x_{0}}^{x_{1}}f\left(x\right)\dif x+\int_{x_{1}}^{x_{2}}f\left(x\right)\dif x+\cdots+\int_{x_{n-1}}^{x_{n}}f\left(x\right)\dif x\\
  & \approx\frac{f\left(x_{0}\right)+f\left(x_{1}\right)}{2}\Delta x+\frac{f\left(x_{1}\right)+f\left(x_{2}\right)}{2}\Delta x+\cdots+\frac{f\left(x_{n-1}\right)+f\left(x_{n}\right)}{2}\Delta x\\
- & =\sum_{i=0}^{n-1}\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x.
+ & =\sum_{i=0}^{n-1}\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x,
+\end{flalign*}
+
+\end_inset
+
+which we depict in figure 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{fig:trapezoid}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<trapezoid, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center',
+ fig.pos = 'h', fig.cap = 'Trapezoid rule integration'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+f <- function(x) 2 * x^4 + x^3 - 3 * x^2 + 4
+\end_layout
+
+\begin_layout Plain Layout
+
+par(mgp = c(1.5,0.5,0), mar = c(1.5,1,0.5,1))
+\end_layout
+
+\begin_layout Plain Layout
+
+curve(f(x), xlim = c(-1.2, 1), ylim = c(0, 4), ylab = "f(x)", 
+\end_layout
+
+\begin_layout Plain Layout
+
+      cex.lab = 0.75, xaxt = "n", yaxt = "n")
+\end_layout
+
+\begin_layout Plain Layout
+
+trapezoid <- function(func, lbound, ubound, subd) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  width <- (ubound - lbound) / subd
+\end_layout
+
+\begin_layout Plain Layout
+
+  x <- seq(lbound, ubound, by = width)
+\end_layout
+
+\begin_layout Plain Layout
+
+  y <- func(seq(lbound, ubound, by = width))
+\end_layout
+
+\begin_layout Plain Layout
+
+  return(list(width = width, coord = cbind(x, y)))
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+coord <- trapezoid(f, -1.1, 0.9, 10)
+\end_layout
+
+\begin_layout Plain Layout
+
+for(i in seq(1, nrow(coord$coord) - 1)) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  polygon(x = rep(c(coord$coord[i, 1], coord$coord[i + 1, 1]), each = 2),
+\end_layout
+
+\begin_layout Plain Layout
+
+          y = c(0, coord$coord[i, 2], coord$coord[i + 1, 2], 0),
+\end_layout
+
+\begin_layout Plain Layout
+
+          border = "red")
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(side = 1, at = c(-1.1, 0.9), cex.axis = 0.75, labels = c("a", "b"))
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now consider the error associated with trapezoid rule integration.
+ Again letting 
+\begin_inset Formula $x_{0}=a$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{n}=b$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\int_{a}^{b}f\left(x\right)\dif x=\sum_{i=0}^{n-1}\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x.
+\]
+
+\end_inset
+
+We will approximate each term in this sum by 
+\begin_inset Formula $\left(f\left(x_{i}\right)+f\left(x_{i+1}\right)\right)\Delta x/2$
+\end_inset
+
+, so that the error is
+\begin_inset Formula 
+\[
+E=\left|\sum_{i=0}^{n-1}\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x-\sum_{i=0}^{n-1}\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x\right|=\left|\sum_{i=0}^{n-1}\left(\int_{x_{i}}^{x_{i+1}}f\left(x\right)\dif x-\frac{f\left(x_{i}\right)+f\left(x_{i+1}\right)}{2}\Delta x\right)\right|.
+\]
+
+\end_inset
+
+Applying a first-order Taylor series for 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ around the base point 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and a first-order Taylor series for 
+\begin_inset Formula $f\left(x_{i+1}\right)$
+\end_inset
+
+ around 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{flalign*}
+E & \approx\left|\sum_{i=0}^{n-1}\left(\int_{x_{i}}^{x_{i+1}}f\left(x_{i}\right)+f'\left(x_{i}\right)\left(x-x_{i}\right)\dif x-\frac{f\left(x_{i}\right)+f\left(x_{i}\right)+f'\left(x_{i}\right)\left(x_{i+1}-x_{i}\right)}{2}\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(\left[f\left(x_{i}\right)x+\frac{f'\left(x_{i}\right)\left(x-x_{i}\right)^{2}}{2}\right|_{x_{i}}^{x_{i+1}}-\frac{2f\left(x_{i}\right)+f'\left(x_{i}\right)\Delta x}{2}\Delta x\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)x_{i+1}+\frac{f'\left(x_{i}\right)\left(x_{i+1}-x_{i}\right)^{2}}{2}-f\left(x_{i}\right)x_{i}-\frac{f'\left(x_{i}\right)\left(x_{i}-x_{i}\right)^{2}}{2}-f\left(x_{i}\right)\Delta x-\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}\right)\right|\\
+ & =\left|\sum_{i=0}^{n-1}\left(f\left(x_{i}\right)\left(x_{i+1}-x_{i}\right)+\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}-0-f\left(x_{i}\right)\Delta x-\frac{f'\left(x_{i}\right)\left(\Delta x\right)^{2}}{2}\right)\right|
 \end{flalign*}
 
 \end_inset
