@@ -122,6 +122,11 @@ Course Notes For
 \begin_inset Newline newline
 \end_inset
 
+Math 502.
+ Deterministic Mathematical Models
+\begin_inset Newline newline
+\end_inset
+
 Math 503.
  Mathematical Statistics
 \begin_inset Newline newline
@@ -132,8 +137,23 @@ Math 504.
 \begin_inset Newline newline
 \end_inset
 
+Math 611.
+ Stochastic Simulation
+\begin_inset Newline newline
+\end_inset
+
+Math 623.
+ Sparse Representations and Random Sampling
+\begin_inset Newline newline
+\end_inset
+
 Math 640.
  Bayesian Statistics
+\begin_inset Newline newline
+\end_inset
+
+Math 658.
+ Survey Sampling
 \end_layout
 
 \begin_layout Author
@@ -4180,8 +4200,317 @@ g^{\left(r\right)}\left(a\right)=\frac{\dif^{r}}{\dif x^{r}}g\left(x\right)\Bigr
 (This is Theorem 5.5.21 from Casella & Berger).
 \end_layout
 
+\begin_layout Chapter
+Linear algebra
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Fredholm Alternative]
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$
+\end_inset
+
+, let 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\mathbf{b}\in\mathbb{R}^{m}$
+\end_inset
+
+.
+ Then, there are two mutually exclusive possibilities:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The system 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{b}$
+\end_inset
+
+ has a unique solution 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ for each 
+\begin_inset Formula $\mathbf{b}$
+\end_inset
+
+.
+ In particular, the system has the solution 
+\begin_inset Formula $\mathbf{x}=\mathbf{0}$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathbf{b}=\mathbf{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The homogeneous equation 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{0}$
+\end_inset
+
+ has exactly 
+\begin_inset Formula $p$
+\end_inset
+
+ linearly independent solutions 
+\begin_inset Formula $\left\{ \mathbf{x}_{i}\right\} _{i=1}^{p}$
+\end_inset
+
+ for some 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+Suppose that 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,p}\left(\mathbb{R}\right)$
+\end_inset
+
+, and suppose that 
+\begin_inset Formula $\mathbf{B}\in\mathbf{M}_{p,n}\left(\mathbb{R}\right)$
+\end_inset
+
+.
+ Then, the 
+\emph on
+Wronskian
+\emph default
+ of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ is 
+\begin_inset Formula $\left\langle \mathbf{A},\mathbf{B}\right\rangle \coloneqq\mathbf{A}\mathbf{B}-\mathbf{B}\mathbf{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+range
+\emph default
+ of a matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, denoted 
+\begin_inset Formula $\text{range}\left(\mathbf{A}\right)$
+\end_inset
+
+, is the space spanned by the columns of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+null space
+\emph default
+ of a matrix 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$
+\end_inset
+
+, denoted 
+\begin_inset Formula $\text{null}\left(\mathbf{A}\right)$
+\end_inset
+
+, is the set of vectors 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\mathbf{A}\mathbf{x}=\mathbf{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Invertible Matrix Theorem]
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+.
+ Then, the following are equivalent:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{A}^{-1}$
+\end_inset
+
+ exists.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{rank}\left(\mathbf{A}\right)=m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{range}\left(\mathbf{A}\right)=\mathbb{R}^{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{null}\left(\mathbf{A}\right)=\mathbf{0}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Spectral Theorem]
+\end_layout
+
+\end_inset
+
+ A non-degenerate matrix 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+ has a decomposition of the form 
+\begin_inset Formula $\mathbf{A}=\mathbf{X}\boldsymbol{\Lambda}\mathbf{X}^{-1}$
+\end_inset
+
+, provided that 
+\begin_inset Formula $\mathbf{X}^{-1}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+ exists, and where 
+\begin_inset Formula $\boldsymbol{\Lambda}$
+\end_inset
+
+ is a diagonal matrix whose entries are the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+unitary matrix
+\emph default
+ 
+\begin_inset Formula $\mathbf{U}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+ has the property 
+\begin_inset Formula $\mathbf{U}^{-1}=\mathbf{U}^{\mathsf{H}}$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbf{A}^{\mathsf{H}}$
+\end_inset
+
+ denotes the Hermitian conjugate (conjugate transpose) of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Unitary Decomposition]
+\end_layout
+
+\end_inset
+
+ A symmetric matrix 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+ admits the unitary diagonalization 
+\begin_inset Formula $\mathbf{A}=\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{-1}$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbf{Q}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$
+\end_inset
+
+ is unitary.
+\end_layout
+
 \begin_layout Part
-Lecture notes
+Mathematical statistics
 \end_layout
 
 \begin_layout Chapter
@@ -15528,9 +15857,9 @@ arraystretch{2.5}
  
 \begin_inset Formula 
 \[
-\mathbf{H}_{\ell}\left(\boldsymbol{\theta}\right)=l''\left(\boldsymbol{\theta}\right)=\begin{vmatrix}\dfrac{\partial^{2}}{\partial\theta_{1}^{2}}\ell\left(\theta\right) & \cdots & \dfrac{\partial^{2}}{\partial\theta_{1}\theta_{k}}\ell\left(\theta\right)\\
+\mathbf{H}_{\ell}\left(\boldsymbol{\theta}\right)=l''\left(\boldsymbol{\theta}\right)=\begin{vmatrix}\dfrac{\partial^{2}}{\partial\theta_{1}^{2}}\ell\left(\boldsymbol{\theta}\right) & \cdots & \dfrac{\partial^{2}}{\partial\theta_{1}\theta_{k}}\ell\left(\boldsymbol{\theta}\right)\\
 \vdots & \ddots & \vdots\\
-\dfrac{\partial^{2}}{\partial\theta_{k}\theta_{1}}\ell\left(\theta\right) & \cdots & \dfrac{\partial^{2}}{\partial\theta_{k}^{2}}\ell\left(\theta\right)
+\dfrac{\partial^{2}}{\partial\theta_{k}\theta_{1}}\ell\left(\boldsymbol{\theta}\right) & \cdots & \dfrac{\partial^{2}}{\partial\theta_{k}^{2}}\ell\left(\boldsymbol{\theta}\right)
 \end{vmatrix}.
 \]
 
@@ -18415,7 +18744,7 @@ Let
 , i.e.,
 \begin_inset Formula 
 \[
-f\left(x|\theta\right)=\theta e^{-\theta x},\quad x>0,\quad\theta>0.
+f\left(x|\theta\right)=\theta\mathrm{e}^{-\theta x},\quad x>0,\quad\theta>0.
 \]
 
 \end_inset
@@ -18459,7 +18788,7 @@ reference "exa:minimal-sufficient-exp-rv"
  is given by
 \begin_inset Formula 
 \[
-f\left(\mathbf{x}|\theta\right)=\theta^{n}e^{-\theta\sum_{i=1}^{n}x_{i}},
+f\left(\mathbf{x}|\theta\right)=\theta^{n}\mathrm{e}^{-\theta\sum_{i=1}^{n}x_{i}},
 \]
 
 \end_inset
@@ -18467,7 +18796,7 @@ f\left(\mathbf{x}|\theta\right)=\theta^{n}e^{-\theta\sum_{i=1}^{n}x_{i}},
 so that we have
 \begin_inset Formula 
 \[
-\log f\left(\mathbf{x}|\theta\right)=\log\theta^{n}e^{-\theta\sum_{i=1}^{n}x_{i}}=n\log\theta-\theta\sum_{i=1}^{n}x_{i}.
+\log f\left(\mathbf{x}|\theta\right)=\log\theta^{n}\mathrm{e}^{-\theta\sum_{i=1}^{n}x_{i}}=n\log\theta-\theta\sum_{i=1}^{n}x_{i}.
 \]
 
 \end_inset
@@ -18627,14 +18956,10 @@ We have
 
 \end_deeper
 \begin_layout Enumerate
-\begin_inset Formula $\tau\left(\theta\right)=\frac{1}{\theta}$
+\begin_inset Formula $\tau\left(\theta\right)=1/\theta$
 \end_inset
 
 .
-\begin_inset Separator latexpar
-\end_inset
-
-
 \end_layout
 
 \begin_deeper
@@ -45561,7 +45886,7 @@ We continue to consider the problem of fitting a linear regression, i.e.,
  solving the optimization 
 \begin_inset Formula 
 \[
-\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}}\left\Vert \mathbf{y}-\mathbf{B}\boldsymbol{\alpha}\right\Vert ,
+\hat{\boldsymbol{\alpha}}=\argmin_{\boldsymbol{\alpha}}\left\Vert \mathbf{y}-\mathbf{B}\boldsymbol{\alpha}\right\Vert _{2},
 \]
 
 \end_inset
@@ -45626,7 +45951,7 @@ bad
  by solving
 \begin_inset Formula 
 \[
-\hat{\boldsymbol{\beta}}=\argmin_{\boldsymbol{\beta}}\left\Vert \mathbf{y}-\mathbf{Q}\boldsymbol{\beta}\right\Vert ^{2},
+\hat{\boldsymbol{\beta}}=\argmin_{\boldsymbol{\beta}}\left\Vert \mathbf{y}-\mathbf{Q}\boldsymbol{\beta}\right\Vert _{2}^{2},
 \]
 
 \end_inset
@@ -45756,7 +46081,7 @@ Normalize
 \end_inset
 
 , i.e., set 
-\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{q}^{\left(1\right)}/\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert $
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{q}^{\left(1\right)}/\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert _{2}$
 \end_inset
 
 .
@@ -45788,7 +46113,7 @@ Normalize
 \end_inset
 
 , i.e., set 
-\begin_inset Formula $\mathbf{q}^{\left(2\right)}=\mathbf{q}^{\left(2\right)}/\left\Vert \mathbf{q}^{\left(2\right)}\right\Vert $
+\begin_inset Formula $\mathbf{q}^{\left(2\right)}=\mathbf{q}^{\left(2\right)}/\left\Vert \mathbf{q}^{\left(2\right)}\right\Vert _{2}$
 \end_inset
 
 .
@@ -45824,7 +46149,7 @@ Normalize
 \end_inset
 
 , i.e., set 
-\begin_inset Formula $\mathbf{q}^{\left(3\right)}=\mathbf{q}^{\left(3\right)}/\left\Vert \mathbf{q}^{\left(3\right)}\right\Vert $
+\begin_inset Formula $\mathbf{q}^{\left(3\right)}=\mathbf{q}^{\left(3\right)}/\left\Vert \mathbf{q}^{\left(3\right)}\right\Vert _{2}$
 \end_inset
 
 .
@@ -45998,7 +46323,7 @@ State
 \end_inset
 
  
-\begin_inset Formula $\mathbf{q}^{\left(i\right)}\gets\mathbf{w}^{\left(i\right)}/\left\Vert \mathbf{w}^{\left(i\right)}\right\Vert $
+\begin_inset Formula $\mathbf{q}^{\left(i\right)}\gets\mathbf{w}^{\left(i\right)}/\left\Vert \mathbf{w}^{\left(i\right)}\right\Vert _{2}$
 \end_inset
 
 
@@ -46083,7 +46408,7 @@ Gram-Schmidt Orthogonalization
 We now consider an intuitive argument for why Gram-Schmidt produces an orthonorm
 al basis.
  Suppose that we construct 
-\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{v}^{\left(1\right)}/\left\Vert \mathbf{v}^{\left(1\right)}\right\Vert $
+\begin_inset Formula $\mathbf{q}^{\left(1\right)}=\mathbf{v}^{\left(1\right)}/\left\Vert \mathbf{v}^{\left(1\right)}\right\Vert _{2}$
 \end_inset
 
 .
@@ -46318,16 +46643,16 @@ Clearly
 \end_inset
 
 , we see that 
-\begin_inset Formula $c=\left\Vert \mathbf{u}\right\Vert $
+\begin_inset Formula $c=\left\Vert \mathbf{u}\right\Vert _{2}$
 \end_inset
 
 , and that 
-\begin_inset Formula $\cos\theta=\left\Vert \mathbf{u}\right\Vert /\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \implies c=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta$
+\begin_inset Formula $\cos\theta=\left\Vert \mathbf{u}\right\Vert _{2}/\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\implies c=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\cos\theta$
 \end_inset
 
 .
  Thus, 
-\begin_inset Formula $\mathbf{u}=\left(\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta\right)\mathbf{q}^{\left(1\right)}$
+\begin_inset Formula $\mathbf{u}=\left(\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\cos\theta\right)\mathbf{q}^{\left(1\right)}$
 \end_inset
 
 .
@@ -46342,7 +46667,7 @@ Clearly
  can be written as 
 \begin_inset Formula 
 \[
-\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \left\Vert \mathbf{q}^{\left(1\right)}\right\Vert \cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cdot1\cdot\cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta,
+\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\left\Vert \mathbf{q}^{\left(1\right)}\right\Vert _{2}\cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\cdot1\cdot\cos\theta=\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\cos\theta,
 \]
 
 \end_inset
@@ -46353,7 +46678,7 @@ where the penultimate equality follows because
 
  has unit norm.
  Then, we see that 
-\begin_inset Formula $\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert \cos\theta=\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}$
+\begin_inset Formula $\left\Vert \mathbf{v}^{\left(2\right)}\right\Vert _{2}\cos\theta=\mathbf{v}^{\left(2\right)}\cdot\mathbf{q}^{\left(1\right)}$
 \end_inset
 
 , as given in algorithm 
@@ -47495,6 +47820,2446 @@ E & \approx\left|\sum_{i=0}^{n-1}\left(\int_{x_{i}}^{x_{i+1}}f\left(x_{i}\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Part
+Deterministic mathematical models
+\end_layout
+
+\begin_layout Chapter
+Ordinary differential equations
+\end_layout
+
+\begin_layout Section
+First order equations
+\end_layout
+
+\begin_layout Standard
+A differential equation of the form 
+\begin_inset Formula $x'\left(t\right)=f\left(x\left(t\right),t\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $x'\left(t\right)=\dif x/\dif t$
+\end_inset
+
+, is called a 
+\emph on
+first order equation
+\emph default
+ because the first derivative is the highest order derivative that appears
+ in the equation.
+ We may also have the 
+\emph on
+initial condition
+\emph default
+ 
+\begin_inset Formula $x\left(t_{0}\right)=x_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Separable equations
+\end_layout
+
+\begin_layout Standard
+If we can collect all the terms involving 
+\begin_inset Formula $x$
+\end_inset
+
+ on one side of the equation and all the terms involving 
+\begin_inset Formula $t$
+\end_inset
+
+ on the other, then the equation is said to be 
+\emph on
+separable
+\emph default
+.
+ Equivalently, a separable equation is one that may be written as 
+\begin_inset Formula $f\left(x,t\right)=M\left(x\right)N\left(t\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $M$
+\end_inset
+
+ and 
+\begin_inset Formula $N$
+\end_inset
+
+ are functions of 
+\begin_inset Formula $x$
+\end_inset
+
+ only and 
+\begin_inset Formula $t$
+\end_inset
+
+ only, respectively.
+ Separable equations can be solved by collecting terms in this manner, then
+ integrating both sides to obtain the 
+\emph on
+general solution
+\emph default
+.
+ If in addition we have an initial condition, we may determine the constant
+ of integration to obtain the 
+\emph on
+particular solution
+\emph default
+.
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $x'=t$
+\end_inset
+
+, with 
+\begin_inset Formula $x\left(0\right)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We obtain the general solution 
+\begin_inset Formula 
+\[
+\frac{\dif x}{\dif t}=t\implies1\dif x=t\dif t\implies\int1\dif x=\int t\dif t\implies x\left(t\right)=\frac{t^{2}}{2}+C,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $C\in\mathbb{R}$
+\end_inset
+
+ has 
+\begin_inset Quotes eld
+\end_inset
+
+absorbed
+\begin_inset Quotes erd
+\end_inset
+
+ the constants of integration on both sides of the equality.
+ Applying the initial value condition, we have
+\begin_inset Formula 
+\[
+x\left(0\right)=\frac{0^{2}}{2}+C=1\implies C=1,
+\]
+
+\end_inset
+
+so that the particular solution is 
+\begin_inset Formula $x\left(t\right)=t^{2}/2+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+First order linear equations
+\end_layout
+
+\begin_layout Standard
+A first order differential equation of the form 
+\begin_inset Formula $x'+h\left(t\right)x=g\left(t\right)$
+\end_inset
+
+ is called a 
+\emph on
+first order linear equation
+\emph default
+ because the equation is linear in 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Such equations can be solving by the 
+\emph on
+method of integrating factor
+\emph default
+.
+ Let 
+\begin_inset Formula $H\left(t\right)$
+\end_inset
+
+ be an antiderivative of 
+\begin_inset Formula $h\left(t\right)$
+\end_inset
+
+, and observe that 
+\begin_inset Formula 
+\begin{flalign*}
+\mathrm{e}^{H\left(t\right)}\left(x'+h\left(t\right)x\right) & =\mathrm{e}^{H\left(t\right)}x'+\mathrm{e}^{H\left(t\right)}h\left(t\right)x\\
+ & =\mathrm{e}^{H\left(t\right)}\frac{\dif}{\dif t}x+x\mathrm{e}^{H\left(t\right)}H'\left(t\right)\tag{\ensuremath{h\left(t\right)=H'\left(t\right)}}\\
+ & =\mathrm{e}^{H\left(t\right)}\frac{\dif}{\dif t}x+x\frac{\dif}{\dif t}\mathrm{e}^{H\left(t\right)}\tag{Chain Rule}\\
+ & =\left(x\mathrm{e}^{H\left(t\right)}\right)'.\tag{Product Rule}
+\end{flalign*}
+
+\end_inset
+
+Thus, the general solution is obtained by solving
+\begin_inset Formula 
+\begin{flalign*}
+\mathrm{e}^{H\left(t\right)}\left(x'+h\left(t\right)x\right) & =\left(x\mathrm{e}^{H\left(t\right)}\right)'\\
+ & =\mathrm{e}^{H\left(t\right)}g\left(t\right)\\
+\implies\int\left(x\mathrm{e}^{H\left(t\right)}\right)'\dif t & =\int\mathrm{e}^{H\left(t\right)}g\left(t\right)\dif t\\
+\implies x\mathrm{e}^{H\left(t\right)} & =\int\mathrm{e}^{H\left(t\right)}g\left(t\right)\dif t\tag{Fundamental Theorem of Calculus}\\
+\implies x\left(t\right) & =\mathrm{e}^{-H\left(t\right)}\int\mathrm{e}^{H\left(t\right)}g\left(t\right)\dif t.
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $x'-7x=1$
+\end_inset
+
+, with 
+\begin_inset Formula $x\left(0\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula $h\left(t\right)=-7$
+\end_inset
+
+, and observe that 
+\begin_inset Formula $H\left(t\right)=-7t$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(t\right)$
+\end_inset
+
+.
+ Multiplying both sides by 
+\begin_inset Formula $\mathrm{e}^{H\left(t\right)}$
+\end_inset
+
+ and applying the above result gives
+\begin_inset Formula 
+\[
+\mathrm{e}^{H\left(t\right)}\left(x'-7x\right)=\mathrm{e}^{H\left(t\right)}\implies\left(x\mathrm{e}^{-7t}\right)'=\mathrm{e}^{-7t}.
+\]
+
+\end_inset
+
+Integrating both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ gives the general solution
+\begin_inset Formula 
+\[
+\int\left(x\mathrm{e}^{-7t}\right)'\dif t=\int\mathrm{e}^{-7t}\dif t\implies x\left(t\right)=\mathrm{e}^{7t}\left(-\frac{1}{7}\mathrm{e}^{-7t}+C\right)=-\frac{1}{7}+C\mathrm{e}^{7t}.
+\]
+
+\end_inset
+
+Applying the initial value condition, we have
+\begin_inset Formula 
+\[
+x\left(0\right)=-\frac{1}{7}+C\mathrm{e}^{0}=0\implies C=\frac{1}{7},
+\]
+
+\end_inset
+
+so that the particular solution is 
+\begin_inset Formula 
+\[
+x\left(t\right)=\frac{1}{7}\left(\mathrm{e}^{7t}-1\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Terminal velocity]
+\end_layout
+
+\end_inset
+
+ Suppose a sky diver with terminal velocity 
+\begin_inset Formula $v_{T}=200$
+\end_inset
+
+ ft/sec steps out of a hovering helicopter and drops straight down subject
+ to 
+\begin_inset Formula $v'\left(t\right)=\alpha\left(v_{T}-v\left(t\right)\right)$
+\end_inset
+
+.
+ Find the velocity 
+\begin_inset Formula $v\left(t\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+The sky diver is subject to gravitational acceleration and air resistance,
+ with the resulting acceleration governed by 
+\begin_inset Formula $v'\left(t\right)=\alpha\left(v_{T}-v\left(t\right)\right)$
+\end_inset
+
+, and where we will take the constant of gravitational acceleration to be
+ 
+\begin_inset Formula $G=32\text{ ft/sec}^{2}$
+\end_inset
+
+.
+ Taking downward motion to be positive, we see that 
+\begin_inset Formula 
+\[
+\alpha v_{T}=G\implies\alpha=\frac{G}{v_{T}}=\frac{32\text{ ft/sec}^{2}}{200\text{ ft/sec}}=\frac{32}{200}\text{sec}^{-1}.
+\]
+
+\end_inset
+
+Then, 
+\begin_inset Formula 
+\[
+v'\left(t\right)=\frac{G}{v_{T}}\left(v_{T}-v\left(t\right)\right)=G-\frac{G}{v_{T}}v\left(t\right)\implies v'\left(t\right)+\frac{G}{v_{T}}v\left(t\right)=G.
+\]
+
+\end_inset
+
+This is a first order linear equation with 
+\begin_inset Formula $h\left(t\right)=G/v_{T}$
+\end_inset
+
+ and 
+\begin_inset Formula $g\left(t\right)=G$
+\end_inset
+
+.
+ Observe that 
+\begin_inset Formula $H\left(t\right)=Gt/v_{T}$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(t\right)$
+\end_inset
+
+.
+ Multiplying both sides by 
+\begin_inset Formula $\mathrm{e}^{H\left(t\right)}$
+\end_inset
+
+ and applying the result above gives
+\begin_inset Formula 
+\[
+\mathrm{e}^{H\left(t\right)}\left(v'+\frac{G}{v_{T}}v\left(t\right)\right)=\mathrm{e}^{H\left(t\right)}G\implies\left(v\left(t\right)\mathrm{e}^{Gt/v_{T}}\right)'=G\mathrm{e}^{Gt/v_{T}}.
+\]
+
+\end_inset
+
+Integrating both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ gives the general solution
+\begin_inset Formula 
+\[
+\int\left(v\left(t\right)\mathrm{e}^{Gt/v_{T}}\right)'\dif t=\int G\mathrm{e}^{Gt/v_{T}}\dif t\implies v\left(t\right)=\mathrm{e}^{-Gt/v_{T}}\left(v_{T}\mathrm{e}^{Gt/v_{T}}+C\right)=v_{T}+C\mathrm{e}^{-Gt/v_{T}}.
+\]
+
+\end_inset
+
+At time 
+\begin_inset Formula $t=0$
+\end_inset
+
+, the sky diver is just stepping out of the helicopter, hence has velocity
+ 
+\begin_inset Formula $v_{0}=0$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+v\left(0\right)=v_{T}+C\mathrm{e}^{-G\cdot0/v_{T}}=0\implies C=-v_{T}.
+\]
+
+\end_inset
+
+Then, the particular solution is 
+\begin_inset Formula 
+\begin{flalign*}
+v\left(t\right) & =v_{T}-v_{T}\mathrm{e}^{-Gt/v_{T}}\\
+ & =v_{T}\left(1-\mathrm{e}^{-Gt/v_{T}}\right)\\
+ & =200\frac{\text{ft}}{\text{sec}}\left(1-\exp\left\{ -32\frac{\text{ft}}{\text{sec}^{2}}\cdot t\text{ sec}\cdot\frac{1}{200}\frac{\text{sec}}{\text{ft}}\right\} \right)\\
+ & =200\frac{\text{ft}}{\text{sec}}\left(1-\mathrm{e}^{-32t/200}\right)\\
+ & =200\left(1-\mathrm{e}^{-0.16t}\right)\frac{\text{ft}}{\text{sec}}.
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Second order equations
+\end_layout
+
+\begin_layout Standard
+The general second order linear equation is of the form 
+\begin_inset Formula 
+\[
+y''+p\left(x\right)y'+q\left(x\right)y=g\left(x\right).
+\]
+
+\end_inset
+
+The equation is called 
+\emph on
+homogeneous
+\emph default
+ if 
+\begin_inset Formula $g\left(x\right)=0$
+\end_inset
+
+ and nonhomogeneous otherwise.
+\end_layout
+
+\begin_layout Subsection
+Homogeneous, constant coefficients
+\end_layout
+
+\begin_layout Standard
+Suppose that 
+\begin_inset Formula $p\left(x\right)=b$
+\end_inset
+
+ and 
+\begin_inset Formula $q\left(x\right)=c$
+\end_inset
+
+, where 
+\begin_inset Formula $b,c\in\mathbb{R}$
+\end_inset
+
+, and suppose that 
+\begin_inset Formula $g\left(x\right)=0$
+\end_inset
+
+.
+ Then, solutions are of the form 
+\begin_inset Formula $\mathrm{e}^{rx}$
+\end_inset
+
+, where 
+\begin_inset Formula $r$
+\end_inset
+
+ is a root of the characteristic equation 
+\begin_inset Formula $r^{2}+br+c=0$
+\end_inset
+
+.
+ There will generally be two roots, denoted 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+, so that the general solution has the form 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{r_{1}x}+c_{2}\mathrm{e}^{r_{2}x}$
+\end_inset
+
+.
+ In the case that 
+\begin_inset Formula $r_{1}=r_{2}$
+\end_inset
+
+, then the second solution defaults to 
+\begin_inset Formula $x\mathrm{e}^{rx}$
+\end_inset
+
+, where 
+\begin_inset Formula $r$
+\end_inset
+
+ is the single root.
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $y''-y'-2y=0$
+\end_inset
+
+, with 
+\begin_inset Formula $y\left(0\right)=y'\left(0\right)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+This is a homogenous equation with constant coefficients 
+\begin_inset Formula $b=-1$
+\end_inset
+
+ and 
+\begin_inset Formula $c=-2$
+\end_inset
+
+, so that solutions are of the form 
+\begin_inset Formula $\mathrm{e}^{rx}$
+\end_inset
+
+, where 
+\begin_inset Formula $r$
+\end_inset
+
+ is a root of the characteristic equation 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-r-2=\left(r-2\right)\left(r+1\right)=0,
+\]
+
+\end_inset
+
+so that the roots are 
+\begin_inset Formula $r_{1}=2$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-1$
+\end_inset
+
+.
+ Then, the general solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{2x}+c_{2}\mathrm{e}^{-x}$
+\end_inset
+
+, so that 
+\begin_inset Formula $y'=2c_{1}\mathrm{e}^{2x}-c_{2}\mathrm{e}^{-x}$
+\end_inset
+
+.
+ Applying the initial value conditions, we have 
+\begin_inset Formula 
+\[
+y\left(0\right)=c_{1}\mathrm{e}^{0}+c_{2}\mathrm{e}^{0}=1\implies c_{1}=1-c_{2}\quad\text{and}\quad y'\left(0\right)=2c_{1}\mathrm{e}^{0}-c_{2}\mathrm{e}^{0}=1\implies c_{1}=\frac{1+c_{2}}{2},
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+1-c_{2}=\frac{1+c_{2}}{2}\implies2-2c_{2}=1+c_{2}\implies3c_{2}=1\implies c_{2}=\frac{1}{3}\ \text{and}\ c_{1}=\frac{1}{2}+\frac{1/3}{2}=\frac{2}{3}.
+\]
+
+\end_inset
+
+Then, the particular solution is 
+\begin_inset Formula 
+\[
+y\left(x\right)=\frac{2}{3}\mathrm{e}^{2x}+\frac{1}{3}\mathrm{e}^{-x}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $y''-2y'+y=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+This is a homogeneous equation with constant coefficients 
+\begin_inset Formula $b=-2$
+\end_inset
+
+ and 
+\begin_inset Formula $c=1$
+\end_inset
+
+, so that solutions are of the form 
+\begin_inset Formula $\mathrm{e}^{rx}$
+\end_inset
+
+, where 
+\begin_inset Formula $r$
+\end_inset
+
+ is a root of the characteristic equation 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-2r+1=\left(r-1\right)\left(r-1\right)=0,
+\]
+
+\end_inset
+
+so that the single root (with multiplicity 2) is 
+\begin_inset Formula $r=1$
+\end_inset
+
+.
+ Then, the general solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}x\mathrm{e}^{x}$
+\end_inset
+
+.
+ The constants 
+\begin_inset Formula $c_{1},c_{2}$
+\end_inset
+
+ can be found using initial conditions.
+\end_layout
+
+\begin_layout Standard
+The roots of 
+\begin_inset Formula $r^{2}+br+c=0$
+\end_inset
+
+ may be complex, e.g., 
+\begin_inset Formula $r_{1}=\alpha+\iota\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=\alpha-\iota\beta$
+\end_inset
+
+, where 
+\begin_inset Formula $\iota=\sqrt{-1}$
+\end_inset
+
+.
+ In this case, the general solution has the form 
+\begin_inset Formula 
+\[
+y\left(x\right)=c_{1}\mathrm{e}^{\alpha x}\cos\left(\beta x\right)+c_{2}\mathrm{e}^{\alpha x}\sin\left(\beta x\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $y''+2y'+5y=0$
+\end_inset
+
+, with 
+\begin_inset Formula $y\left(0\right)=1$
+\end_inset
+
+ and 
+\begin_inset Formula $y'\left(0\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We have 
+\begin_inset Formula $b=2$
+\end_inset
+
+ and 
+\begin_inset Formula $c=5$
+\end_inset
+
+, so that the characteristic equation is 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}+2r+5=0\implies r=\frac{-2\pm\sqrt{4-20}}{2}=\frac{-2\pm4\iota}{2}=-1\pm2\iota,
+\]
+
+\end_inset
+
+so that the roots are 
+\begin_inset Formula $r_{1}=-1+2\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-1-2\iota$
+\end_inset
+
+.
+ Then, the general solution is 
+\begin_inset Formula 
+\[
+y\left(x\right)=c_{1}\mathrm{e}^{\left(-1+2\iota\right)x}+c_{2}\mathrm{e}^{\left(-1-2\iota\right)x}=c_{1}\mathrm{e}^{-x}\mathrm{e}^{2\iota x}+c_{2}\mathrm{e}^{-x}\mathrm{e}^{-2\iota x}.
+\]
+
+\end_inset
+
+Applying Euler's Formula gives
+\begin_inset Formula 
+\begin{flalign*}
+y\left(x\right) & =c_{1}\mathrm{e}^{-x}\left(\cos\left(2x\right)+\iota\sin\left(2x\right)\right)+c_{2}\mathrm{e}^{-x}\left(\cos\left(-2x\right)+\iota\sin\left(-2x\right)\right)\\
+ & =c_{1}\mathrm{e}^{-x}\cos\left(2x\right)+c_{1}\mathrm{e}^{-x}\iota\sin\left(2x\right)+c_{2}\mathrm{e}^{-x}\cos\left(2x\right)-c_{2}\mathrm{e}^{-x}\iota\sin\left(2x\right)\\
+ & =\left(c_{1}+c_{2}\right)\mathrm{e}^{-x}\cos\left(2x\right)+\iota\left(c_{1}-c_{2}\right)\mathrm{e}^{-x}\sin\left(2x\right).
+\end{flalign*}
+
+\end_inset
+
+Noting that 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ are arbitrary constants, we may redefine them to yield 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{-x}\cos\left(2x\right)+c_{2}\mathrm{e}^{-x}\sin\left(2x\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\begin{flalign*}
+y' & =\frac{\dif}{\dif x}\mathrm{e}^{-x}\left(c_{1}\cos\left(2x\right)+c_{2}\sin\left(2x\right)\right)\\
+ & =-\mathrm{e}^{-x}\left(c_{1}\cos\left(2x\right)+c_{2}\sin\left(2x\right)\right)+\mathrm{e}^{-x}\left(-2c_{1}\sin\left(2x\right)+2c_{2}\cos\left(2x\right)\right)\\
+ & =\mathrm{e}^{-x}\left(-c_{1}\cos\left(2x\right)-c_{2}\sin\left(2x\right)-2c_{1}\sin\left(2x\right)+2c_{2}\cos\left(2x\right)\right)\\
+ & =\mathrm{e}^{-x}\left(\left(2c_{2}-c_{1}\right)\cos\left(2x\right)-\left(2c_{1}+c_{2}\right)\sin\left(2x\right)\right),
+\end{flalign*}
+
+\end_inset
+
+so that applying the initial value conditions gives
+\begin_inset Formula 
+\[
+y\left(0\right)=c_{1}\mathrm{e}^{0}\cos\left(0\right)+c_{2}\mathrm{e}^{0}\sin\left(0\right)=c_{1}=1
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+y'\left(0\right)=-\mathrm{e}^{0}\left(\left(2c_{2}-c_{1}\right)\cos\left(0\right)-\left(2c_{1}+c_{2}\right)\sin\left(0\right)\right)=-2c_{2}+c_{1}=-2c_{2}+1=0\implies c_{2}=\frac{1}{2}.
+\]
+
+\end_inset
+
+Then, the particular solution is 
+\begin_inset Formula 
+\[
+y\left(x\right)=\mathrm{e}^{-x}\cos\left(2x\right)+\frac{1}{2}\mathrm{e}^{-x}\sin\left(2x\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Nonhomogeneous equations
+\end_layout
+
+\begin_layout Standard
+Suppose that 
+\begin_inset Formula $g\left(x\right)\neq0$
+\end_inset
+
+.
+ The general solution will be of the form 
+\begin_inset Formula $y=y_{h}+y_{p}$
+\end_inset
+
+, where 
+\begin_inset Formula $y_{p}$
+\end_inset
+
+ is a particular solution to the nonhomogeneous equation and 
+\begin_inset Formula $y_{h}$
+\end_inset
+
+ is the general solution of the homogeneous equation.
+ Suppose that the forcing term 
+\begin_inset Formula $g\left(x\right)$
+\end_inset
+
+ has the form 
+\begin_inset Formula $g\left(x\right)=K\mathrm{e}^{mx}$
+\end_inset
+
+ for some 
+\begin_inset Formula $K,m\in\mathbb{R}$
+\end_inset
+
+.
+ Then, the particular solution will have the form 
+\begin_inset Formula $y_{p}=Ax^{s}\mathrm{e}^{mx}$
+\end_inset
+
+, where 
+\begin_inset Formula $A\in\mathbb{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ is the smallest of 
+\begin_inset Formula $\left\{ 0,1,2\right\} $
+\end_inset
+
+ such that 
+\begin_inset Formula $x^{s}\mathrm{e}^{mx}$
+\end_inset
+
+ is not a solution of the homogeneous equation.
+\end_layout
+
+\begin_layout Example
+Find the solution to 
+\begin_inset Formula $y''-3y'+2y=10\mathrm{e}^{3x}$
+\end_inset
+
+, with initial conditions 
+\begin_inset Formula $y\left(0\right)=y'\left(0\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We have 
+\begin_inset Formula $b=-3$
+\end_inset
+
+ and 
+\begin_inset Formula $c=2$
+\end_inset
+
+, so that the characteristic equation is 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-3r+2=\left(r-1\right)\left(r-2\right)=0,
+\]
+
+\end_inset
+
+so that the roots are 
+\begin_inset Formula $r_{1}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=2$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{2x}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $m=3$
+\end_inset
+
+, so that 
+\begin_inset Formula $y_{p}=Ax^{s}\mathrm{e}^{3x}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $s=0$
+\end_inset
+
+, then 
+\begin_inset Formula $y_{p}=A\mathrm{e}^{3x}$
+\end_inset
+
+, so that 
+\begin_inset Formula $y_{p}'=3A\mathrm{e}^{3x}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{p}''=9A\mathrm{e}^{3x}$
+\end_inset
+
+.
+ Then, the homogeneous equation becomes 
+\begin_inset Formula 
+\[
+y''-3y'+2y=9A\mathrm{e}^{3x}-3\left(3A\mathrm{e}^{3x}\right)+2\left(A\mathrm{e}^{3x}\right)=2A\mathrm{e}^{3x}\neq0,
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $y_{p}=A\mathrm{e}^{3x}$
+\end_inset
+
+ is not a solution of the homogeneous equation.
+ Hence, we will take 
+\begin_inset Formula $s=0$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\[
+y''-3y'+2y=2A\mathrm{e}^{3x}=10\mathrm{e}^{3x}\implies A=5,
+\]
+
+\end_inset
+
+so that the general solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{2x}+5\mathrm{e}^{3x}$
+\end_inset
+
+.
+ Noting that 
+\begin_inset Formula 
+\[
+y'\left(x\right)=c_{1}\mathrm{e}^{x}+2c_{2}\mathrm{e}^{2x}+15\mathrm{e}^{3x},
+\]
+
+\end_inset
+
+applying the initial value conditions gives 
+\begin_inset Formula 
+\[
+y\left(0\right)=c_{1}+c_{2}+5=0\implies c_{1}=-c_{2}-5
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+y'\left(0\right)=c_{1}+2c_{2}+15=0\implies c_{1}=-2c_{2}-15,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+-c_{2}-5=-2c_{2}-15\implies c_{2}=-10\implies c_{1}=5.
+\]
+
+\end_inset
+
+Then, the particular solution of the nonhomogeneous equation is 
+\begin_inset Formula 
+\[
+y\left(x\right)=5\mathrm{e}^{x}-10\mathrm{e}^{2x}+5\mathrm{e}^{3x}=5\mathrm{e}^{x}\left(1-2\mathrm{e}^{x}+\mathrm{e}^{2x}\right)=5\mathrm{e}^{x}\left(\mathrm{e}^{x}-1\right)^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Find the solution to 
+\begin_inset Formula $y''-3y'+2y=10\mathrm{e}^{2x}$
+\end_inset
+
+, with initial conditions 
+\begin_inset Formula $y\left(0\right)=y'\left(0\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+The homogeneous solution is again 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{2x}$
+\end_inset
+
+, and we also have 
+\begin_inset Formula $y_{p}=Ax^{s}\mathrm{e}^{3x}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $m=2$
+\end_inset
+
+, so that 
+\begin_inset Formula $y_{p}=Ax^{s}\mathrm{e}^{2x}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $s=0$
+\end_inset
+
+, then 
+\begin_inset Formula $y_{p}=A\mathrm{e}^{2x}$
+\end_inset
+
+, so that 
+\begin_inset Formula $y_{p}'=2A\mathrm{e}^{2x}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{p}''=4A\mathrm{e}^{2x}$
+\end_inset
+
+.
+ Then, the homogeneous equation becomes
+\begin_inset Formula 
+\[
+y''-3y'+2y=4A\mathrm{e}^{2x}-3\left(2A\mathrm{e}^{2x}\right)+2\left(A\mathrm{e}^{2x}\right)=0,
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $y_{p}=A\mathrm{e}^{2x}$
+\end_inset
+
+ is a solution of the homogeneous equation.
+ If 
+\begin_inset Formula $s=1$
+\end_inset
+
+, then 
+\begin_inset Formula $y_{p}=Ax\mathrm{e}^{2x}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+y_{p}'=A\left(\mathrm{e}^{2x}+2x\mathrm{e}^{2x}\right)=A\mathrm{e}^{2x}+2Ax\mathrm{e}^{2x}\ \text{and}\ y_{p}''=2A\mathrm{e}^{2x}+2A\left(\mathrm{e}^{2x}+2x\mathrm{e}^{2x}\right)=4A\mathrm{e}^{2x}+4Ax\mathrm{e}^{2x}.
+\]
+
+\end_inset
+
+Then, the homogeneous equation becomes
+\begin_inset Formula 
+\[
+y''-3y'+2y=4A\mathrm{e}^{2x}+4Ax\mathrm{e}^{2x}-3\left(A\mathrm{e}^{2x}+2Ax\mathrm{e}^{2x}\right)+2Ax\mathrm{e}^{2x}=A\mathrm{e}^{2x}\neq0,
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $y_{p}=Ax\mathrm{e}^{2x}$
+\end_inset
+
+ is not a solution of the homogeneous equation.
+ Hence, we will take 
+\begin_inset Formula $s=1$
+\end_inset
+
+, so that the nonhomogeneous equation becomes 
+\begin_inset Formula 
+\begin{flalign*}
+y''-3y'+2y & =A\mathrm{e}^{2x}=10\mathrm{e}^{2x}\implies A=10,
+\end{flalign*}
+
+\end_inset
+
+so that the general solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{2x}+10x\mathrm{e}^{2x}$
+\end_inset
+
+.
+ Noting that 
+\begin_inset Formula 
+\[
+y'\left(x\right)=c_{1}\mathrm{e}^{x}+2c_{2}\mathrm{e}^{x}+10\left(\mathrm{e}^{2x}+2x\mathrm{e}^{2x}\right),
+\]
+
+\end_inset
+
+applying the initial value conditions gives 
+\begin_inset Formula 
+\[
+y\left(0\right)=c_{1}+c_{2}=0\implies c_{1}=-c_{2}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+y'\left(0\right)=c_{1}+2c_{2}+10=0\implies c_{1}=-2c_{2}-10,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+-c_{2}=-2c_{2}-10\implies c_{2}-10\implies c_{1}=10.
+\]
+
+\end_inset
+
+Then, the particular solution of the nonhomogeneous equation is 
+\begin_inset Formula 
+\[
+y\left(x\right)=10\mathrm{e}^{x}-10\mathrm{e}^{2x}+10x\mathrm{e}^{2x}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now suppose that the forcing term 
+\begin_inset Formula $g\left(x\right)$
+\end_inset
+
+ has the form 
+\begin_inset Formula $g\left(x\right)=\mathrm{e}^{mx}\left(K\cos\left(\gamma x\right)+M\sin\left(\gamma x\right)\right)$
+\end_inset
+
+ for some 
+\begin_inset Formula $K,M,m,\gamma\in\mathbb{R}$
+\end_inset
+
+.
+ Then, the particular solution will have the form 
+\begin_inset Formula $y_{p}=x^{s}\mathrm{e}^{mx}\left(A\cos\left(\gamma x\right)+B\sin\left(\gamma x\right)\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $A,B\in\mathbb{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ is the smallest of 
+\begin_inset Formula $\left\{ 0,1,2\right\} $
+\end_inset
+
+ such that no term in 
+\begin_inset Formula $y_{p}$
+\end_inset
+
+ is a solution of the homogeneous equation.
+\end_layout
+
+\begin_layout Example
+Solve 
+\begin_inset Formula $y''-2y'+y=5\cos\left(x\right)$
+\end_inset
+
+, with initial conditions 
+\begin_inset Formula $y\left(0\right)=y'\left(0\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We have 
+\begin_inset Formula $b=-2$
+\end_inset
+
+ and 
+\begin_inset Formula $c=1$
+\end_inset
+
+, so that the characteristic equation is 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-2r+1=\left(r-1\right)\left(r-1\right)=0,
+\]
+
+\end_inset
+
+so that the single root (with multiplicity 2) is 
+\begin_inset Formula $r=1$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula $y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}x\mathrm{e}^{x}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $m=0$
+\end_inset
+
+, 
+\begin_inset Formula $K=5$
+\end_inset
+
+, 
+\begin_inset Formula $M=0$
+\end_inset
+
+, and 
+\begin_inset Formula $\gamma=1$
+\end_inset
+
+, so that the particular solution will be of the form
+\begin_inset Formula 
+\[
+y_{p}=x^{s}\left(A\cos\left(x\right)+B\sin\left(x\right)\right).
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $s=0$
+\end_inset
+
+, then 
+\begin_inset Formula $y_{p}=A\cos x+B\sin\left(x\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $y_{p}'=-A\sin x+B\cos\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{p}''=-A\cos\left(x\right)-B\sin\left(x\right)$
+\end_inset
+
+.
+ We consider each term of the particular solution separately.
+ For 
+\begin_inset Formula $A\cos\left(x\right)$
+\end_inset
+
+, the homogeneous equation is
+\begin_inset Formula 
+\[
+y''-2y'+y=-A\cos\left(x\right)+2A\sin\left(x\right)+A\cos\left(x\right)=2A\sin\left(x\right),
+\]
+
+\end_inset
+
+which will not in general be equal to zero.
+ For 
+\begin_inset Formula $B\sin\left(x\right)$
+\end_inset
+
+, the homogeneous equation is
+\begin_inset Formula 
+\[
+y''-2y'+y=-B\sin\left(x\right)-2B\cos\left(x\right)+B\sin\left(x\right)=-2B\cos\left(x\right),
+\]
+
+\end_inset
+
+which will also not in general be equal to zero.
+ Hence, we will take 
+\begin_inset Formula $s=0$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\begin{flalign*}
+y''-2y'+y & =-A\cos\left(x\right)-B\sin\left(x\right)-2\left(-A\sin\left(x\right)+B\cos\left(x\right)\right)+A\cos\left(x\right)+B\sin\left(x\right)\\
+ & =2A\sin\left(x\right)-2B\cos\left(x\right)\\
+ & =5\cos\left(x\right),
+\end{flalign*}
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $A=0$
+\end_inset
+
+ and 
+\begin_inset Formula $B=-5/2$
+\end_inset
+
+.
+ Then, the general solution is
+\begin_inset Formula 
+\[
+y\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}x\mathrm{e}^{x}-\frac{5}{2}\sin\left(x\right).
+\]
+
+\end_inset
+
+Noting that
+\begin_inset Formula 
+\[
+y'\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\left(\mathrm{e}^{x}+x\mathrm{e}^{x}\right)-\frac{5}{2}\cos\left(x\right),
+\]
+
+\end_inset
+
+applying the initial value conditions gives 
+\begin_inset Formula 
+\[
+y\left(0\right)=c_{1}=0\quad\text{and}\quad y'\left(0\right)=c_{1}+c_{2}-\frac{5}{2}=0\implies c_{2}=\frac{5}{2}.
+\]
+
+\end_inset
+
+Then, the particular solution of the nonhomogeneous equation is
+\begin_inset Formula 
+\[
+y\left(x\right)=\frac{5}{2}x\mathrm{e}^{x}-\frac{5}{2}\sin\left(x\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Systems of ordinary differential equations
+\end_layout
+
+\begin_layout Standard
+A system of ODEs is a vector equation of the form 
+\begin_inset Formula $\mathbf{x}\left(t\right)=\mathbf{f}\left(t,\mathbf{x}\left(t\right)\right)$
+\end_inset
+
+, where both 
+\begin_inset Formula $\mathbf{x}\left(t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{f}\left(t,\mathbf{x}\left(t\right)\right)$
+\end_inset
+
+ may have complex-valued components.
+ To make the problem well posed, we typically include an initial condition
+ of the form 
+\begin_inset Formula $\mathbf{x}\left(t_{0}\right)=\mathbf{x}_{0}$
+\end_inset
+
+, where 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{x}_{0}$
+\end_inset
+
+ are constant.
+\end_layout
+
+\begin_layout Subsection
+Linear autonomous systems with constant coefficients
+\end_layout
+
+\begin_layout Standard
+A 
+\emph on
+linear autonomous system
+\emph default
+ is one that is linear in the unknowns and in which the time variable 
+\begin_inset Formula $t$
+\end_inset
+
+ enters only implicitly through the unknowns.
+ Such systems can be expressed in the form
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}\mathbf{x}\left(t\right)=\mathbf{A}\mathbf{x}\left(t\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is a matrix with constant coefficients.
+ Suppose that 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+ is an eigenvector of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ with corresponding eigenvalue 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, and consider the function 
+\begin_inset Formula $\mathbf{x}\left(t\right)=\mathrm{e}^{\lambda t}\mathbf{q}$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}\mathbf{x}\left(t\right)=\lambda\mathrm{e}^{\lambda t}\mathbf{q}\quad\text{and}\quad\mathbf{A}\mathbf{x}\left(t\right)=\mathbf{A}\left(\mathrm{e}^{\lambda t}\right)\mathbf{q}=\mathrm{e}^{\lambda t}\mathbf{A}\mathbf{q}=\lambda\mathrm{e}^{\lambda t}\mathbf{q}\implies\frac{\dif}{\dif t}\mathbf{x}\left(t\right)=\mathbf{A}\mathbf{x}\left(t\right),
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $\mathbf{x}\left(t\right)=\mathrm{e}^{\lambda t}\mathbf{q}$
+\end_inset
+
+ is a solution to the system.
+ The general solution of such a system is given by
+\begin_inset Formula 
+\[
+\mathbf{x}\left(t\right)=c_{1}\mathrm{e}^{\lambda_{1}t}\mathbf{q}_{1}+\cdots+c_{n}\mathrm{e}^{\lambda_{n}t}\mathbf{q}_{n}=\sum_{i=1}^{n}c_{i}\mathrm{e}^{\lambda_{i}t}\mathbf{q}_{i},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is an arbitrary coefficient (which may be determined given initial values)
+ and 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i\text{th}$
+\end_inset
+
+ eigenvalue of 
+\begin_inset Formula $\mathbf{A}\in\mathbf{M}_{n,n}\left(\mathbb{R}\right)$
+\end_inset
+
+ with corresponding eigenvector 
+\begin_inset Formula $\mathbf{q}_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Find the unique solution to the system
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}\mathbf{x}\left(t\right)=\begin{bmatrix}1 & 1\\
+4 & 1
+\end{bmatrix}\mathbf{x}\left(t\right),\quad\text{with}\ \mathbf{x}\left(0\right)=\begin{bmatrix}3\\
+5
+\end{bmatrix}.
+\]
+
+\end_inset
+
+We begin by finding the eigenvalues of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, which are obtained by finding the roots of the characteristic equation
+\begin_inset Formula 
+\begin{flalign*}
+\det\left(\mathbf{A}-\lambda\mathbf{I}_{2}\right) & =\det\left(\begin{bmatrix}1 & 1\\
+4 & 1
+\end{bmatrix}-\lambda\begin{bmatrix}1 & 0\\
+0 & 1
+\end{bmatrix}\right)\\
+ & =\det\left(\begin{bmatrix}1-\lambda & 1\\
+4 & 1-\lambda
+\end{bmatrix}\right)\\
+ & =\left(1-\lambda\right)\left(1-\lambda\right)-4\\
+ & =\lambda^{2}-2\lambda-3\\
+ & =\left(\lambda-3\right)\left(\lambda+1\right).
+\end{flalign*}
+
+\end_inset
+
+We see that the roots of the characteristic equation, i.e., the eigenvalues
+ of the matrix, are 
+\begin_inset Formula $\lambda_{1}=3$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{2}=-1$
+\end_inset
+
+.
+ We now find the eigenvector corresponding to 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ by solving 
+\begin_inset Formula 
+\[
+\mathbf{A}\mathbf{x}-\lambda_{1}\mathbf{x}=\mathbf{A}\mathbf{x}-\lambda_{1}\mathbf{I}_{2}\mathbf{x}=\left(\mathbf{A}-\lambda_{1}\mathbf{I}_{2}\right)\mathbf{x}=\mathbf{0},
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc|c}
+1-\lambda_{1} & 1 & 0\\
+4 & 1-\lambda_{1} & 0
+\end{array}\right]\sim\left[\begin{array}{cc|c}
+-2 & 1 & 0\\
+4 & -2 & 0
+\end{array}\right]\begin{array}{c}
+\div-2\\
++2R_{1}
+\end{array}\sim\left[\begin{array}{cc|c}
+1 & -1/2 & 0\\
+0 & 0 & 0
+\end{array}\right]\implies x_{1}=\frac{1}{2}x_{2}.
+\]
+
+\end_inset
+
+Choose 
+\begin_inset Formula $x_{2}=2$
+\end_inset
+
+, so that the eigenvector corresponding to 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\mathbf{x}_{1}=\begin{bmatrix}1 & 2\end{bmatrix}^{\mathsf{T}}$
+\end_inset
+
+.
+ Similarly, we have
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc|c}
+1-\lambda_{2} & 1 & 0\\
+4 & 1-\lambda_{2} & 0
+\end{array}\right]\sim\left[\begin{array}{cc|c}
+2 & 1 & 0\\
+4 & 2 & 0
+\end{array}\right]\begin{array}{c}
+\div2\\
+-2R_{1}
+\end{array}\sim\left[\begin{array}{cc|c}
+1 & 1/2 & 0\\
+0 & 0 & 0
+\end{array}\right]\implies x_{1}=-\frac{1}{2}x_{2}.
+\]
+
+\end_inset
+
+Choose 
+\begin_inset Formula $x_{2}=-2$
+\end_inset
+
+, so that the eigenvector corresponding to 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+ is 
+\begin_inset Formula $\mathbf{x}_{2}=\begin{bmatrix}1 & -2\end{bmatrix}^{\mathsf{T}}$
+\end_inset
+
+.
+ Thus, the general solution to the autonomous system is
+\begin_inset Formula 
+\[
+\mathbf{x}\left(t\right)=c_{1}\mathrm{e}^{\lambda_{1}t}\mathbf{x}_{1}+c_{2}\mathrm{e}^{\lambda_{2}t}\mathbf{x}_{2}=c_{1}\mathrm{e}^{3t}\begin{bmatrix}1\\
+2
+\end{bmatrix}+c_{2}\mathrm{e}^{-t}\begin{bmatrix}1\\
+-2
+\end{bmatrix}.
+\]
+
+\end_inset
+
+Applying the initial value condition gives 
+\begin_inset Formula 
+\[
+\mathbf{x}\left(0\right)=c_{1}\begin{bmatrix}1\\
+2
+\end{bmatrix}+c_{2}\begin{bmatrix}1\\
+-2
+\end{bmatrix}=\begin{bmatrix}3\\
+5
+\end{bmatrix}\implies\begin{bmatrix}1 & 1\\
+2 & -2
+\end{bmatrix}\begin{bmatrix}c_{1}\\
+c_{2}
+\end{bmatrix}=\begin{bmatrix}3\\
+5
+\end{bmatrix},
+\]
+
+\end_inset
+
+so that we must solve the linear system
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc|c}
+1 & 1 & 3\\
+2 & -2 & 5
+\end{array}\right]\begin{array}{c}
+\\
+-2R_{1}
+\end{array}\sim\left[\begin{array}{cc|c}
+1 & 1 & 3\\
+0 & -4 & -1
+\end{array}\right]\begin{array}{c}
++R_{2}/4\\
+\div-4
+\end{array}\sim\left[\begin{array}{cc|c}
+1 & 0 & 11/4\\
+0 & 1 & 1/4
+\end{array}\right],
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $c_{1}=11/4$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}=1/4$
+\end_inset
+
+.
+ Then, the unique solution to the autonomous system is
+\begin_inset Formula 
+\[
+\mathbf{x}\left(t\right)=\frac{11}{4}\mathrm{e}^{3t}\begin{bmatrix}1\\
+2
+\end{bmatrix}+\frac{1}{4}\mathrm{e}^{-t}\begin{bmatrix}1\\
+-2
+\end{bmatrix}=\mathrm{e}^{3t}\begin{bmatrix}11/4\\
+11/2
+\end{bmatrix}+\mathrm{e}^{-t}\begin{bmatrix}1/4\\
+-1/2
+\end{bmatrix}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Higher order ODEs
+\end_layout
+
+\begin_layout Standard
+A single differential equation of higher order can be converted to a system.
+ We can express a higher order equation as
+\begin_inset Formula 
+\[
+\frac{\dif^{n}y}{\dif t^{n}}=f\left(t,y,y',\ldots,y^{\left(n-1\right)}\right).
+\]
+
+\end_inset
+
+Define 
+\begin_inset Formula 
+\begin{flalign*}
+x_{1} & =y\\
+x_{2} & =y'\\
+\vdots & \quad\vdots\\
+x_{n} & =y^{\left(n-1\right)},
+\end{flalign*}
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+x_{n}'=f\left(t,x_{1},x_{2},\ldots,x_{n}\right),
+\]
+
+\end_inset
+
+which yields the system of ODEs
+\begin_inset Formula 
+\[
+\begin{cases}
+x_{1}' & =x_{2}\\
+x_{2}' & =x_{3}\\
+x_{n-1}' & =x_{n}\\
+x_{n}' & =f\left(t,x_{1},x_{2},\ldots,x_{n}\right)
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Transform the third order nonhomogeneous ODE 
+\begin_inset Formula $y'''=y''+2y'-\sin\left(t\right)$
+\end_inset
+
+ into a first order linear system.
+\end_layout
+
+\begin_layout Example
+Set 
+\begin_inset Formula $x_{1}=y$
+\end_inset
+
+, set 
+\begin_inset Formula $x_{2}=y'$
+\end_inset
+
+, and set 
+\begin_inset Formula $x_{3}=y''$
+\end_inset
+
+, so that 
+\begin_inset Formula $x_{3}'=y'''=y''+2y'-\sin\left(t\right)$
+\end_inset
+
+, to obtain the system
+\begin_inset Formula 
+\[
+x_{1}'=x_{2},\quad x_{2}'=y''=x_{3},\quad\text{and}\quad x_{3}'=x_{3}+2x_{2}-\sin\left(t\right),
+\]
+
+\end_inset
+
+which can be written as the first order linear system
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}'\\
+x_{2}'\\
+x_{3}'
+\end{bmatrix}=\begin{bmatrix}x_{2}\\
+x_{3}\\
+2x_{2}+x_{3}-\sin\left(t\right)
+\end{bmatrix}=\begin{bmatrix}0 & 1 & 0\\
+0 & 0 & 1\\
+0 & 2 & 1
+\end{bmatrix}\begin{bmatrix}x_{1}\\
+x_{2}\\
+x_{3}
+\end{bmatrix}+\begin{bmatrix}0\\
+0\\
+-\sin\left(t\right)
+\end{bmatrix}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Numerical solutions to differential equations
+\end_layout
+
+\begin_layout Standard
+Not all differential equations can be solved in closed form.
+ Consider 
+\begin_inset Formula $x'=\exp\left\{ -x^{2}\right\} $
+\end_inset
+
+, and observe that 
+\begin_inset Formula $\exp\left\{ -x^{2}\right\} $
+\end_inset
+
+ has no closed form antiderivative.
+ Differential equations such as these are typically solved numerically.
+\end_layout
+
+\begin_layout Subsection
+Euler's method
+\end_layout
+
+\begin_layout Standard
+Consider the slope field associated with the differential equation 
+\begin_inset Formula $y'=f\left(t,y\right)$
+\end_inset
+
+.
+ The most natural computational procedure is to choose an initial point
+ 
+\begin_inset Formula $\left(t_{0},y_{0}\right)$
+\end_inset
+
+ and then move from that point in the direction indicated by the slope field.
+ After moving a short distance, re-evaluate the direction at the point 
+\begin_inset Formula $\left(t_{1},y_{1}\right)$
+\end_inset
+
+, and move a short distance in that direction.
+ Repeat this process for the desired solution interval.
+ More formally, given the initial value problem for the first order equation
+ 
+\begin_inset Formula $y'=f\left(t,y\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $y\left(t_{0}\right)=y_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in\left[a,b\right]$
+\end_inset
+
+, define a grid of 
+\begin_inset Formula $n+1$
+\end_inset
+
+ points
+\begin_inset Formula 
+\[
+a=t_{0}<t_{1}<\cdots<t_{n}=b
+\]
+
+\end_inset
+
+for the independent variable 
+\begin_inset Formula $t$
+\end_inset
+
+ with equal step size 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ From the formal definition of the first derivative
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}y\left(t\right)=\lim_{h\rightarrow0}\frac{y\left(t+h\right)-y\left(t\right)}{h},
+\]
+
+\end_inset
+
+we have the first-order approximation
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}y\left(t\right)\approx\frac{y\left(t+h\right)-y\left(t\right)}{h}-\frac{h}{2}y''\left(c\right)
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $c\in\left[t,t+h\right]$
+\end_inset
+
+; this approximation is called the 
+\emph on
+two-point forward difference
+\emph default
+.
+ Disregarding the second term on the right-hand side leads to the further
+ approximation
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif t}y\left(t\right)=y'\left(t\right)\approx\frac{y\left(t+h\right)-y\left(t\right)}{h}\implies y\left(t+h\right)-y\left(t\right)\approx hy'\left(t\right)=hf\left(t,y\left(t\right)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Euler's method]
+\end_layout
+
+\end_inset
+
+ The solution 
+\begin_inset Formula $y$
+\end_inset
+
+ to the initial value problem 
+\begin_inset Formula $y'=f\left(t,y\left(t\right)\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $y\left(t_{0}\right)=y_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in\left[a,b\right]$
+\end_inset
+
+ can be found by the sequence
+\begin_inset Formula 
+\[
+y_{j+1}=y_{j}+hf\left(t_{j},y_{j}\left(t\right)\right)
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $j\in\left\{ 0,1,\ldots,n-1\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $y_{j}=y\left(t_{j}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $h=\left(b-a\right)/n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+foo
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\mathbf{x}\in\mathbb{R}^{n}$
+\end_inset
+
+ be the vector whose 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ entry is the 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ solution obtained by Euler's method to the initial value problem 
+\begin_inset Formula $y'=f\left(t,y\left(t\right)\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $y\left(t_{0}\right)=y_{0}$
+\end_inset
+
+, and let 
+\begin_inset Formula $\mathbf{x}_{\text{e}}\in\mathbb{R}^{n}$
+\end_inset
+
+ be the vector whose 
+\begin_inset Formula $j\text{th}$
+\end_inset
+
+ entry is the exact solution to the initial value problem at 
+\begin_inset Formula $t_{j}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\left(\mathbf{x}_{e}\right)_{j}=y\left(t_{j}\right)$
+\end_inset
+
+.
+ The 
+\emph on
+local error
+\emph default
+ associated with the numerical solution is
+\begin_inset Formula 
+\[
+E_{\text{loc}}=\left\Vert \mathbf{x}-\mathbf{x}_{\text{e}}\right\Vert _{\infty},
+\]
+
+\end_inset
+
+and the 
+\emph on
+global error
+\emph default
+ is
+\begin_inset Formula 
+\[
+E_{\text{global}}=\left\Vert \mathbf{x}-\mathbf{x}_{\text{e}}\right\Vert _{2}.
+\]
+
+\end_inset
+
+We also define the 
+\emph on
+relative error
+\emph default
+ as
+\begin_inset Formula 
+\[
+E_{\text{rel}}=\frac{\left\Vert \mathbf{x}-\mathbf{x}_{\text{e}}\right\Vert _{2}}{\left\Vert \mathbf{x}_{\text{e}}\right\Vert _{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Consider a numerical solution to an initial value problem.
+ A solution with 
+\begin_inset Formula $p$
+\end_inset
+
+ digits of 
+\emph on
+precision
+\emph default
+ if the local error of the solution satisfies 
+\begin_inset Formula 
+\[
+E_{\text{loc}}<\frac{1}{2}\cdot10^{-p}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Dimensionless equations and scaling
+\end_layout
+
+\begin_layout Standard
+Many physical problems can be expressed in clearer and more unified form
+ if the variables corresponding to physical units are replaced by dimensionless
+ equivalents.
+ It often happens that this process of rescaling sheds light on the physical
+ process that the equations describe.
+ It is frequently the case that essential characteristics of physical systems
+ can be inferred from dimensionless analysis, whcih does not involve actually
+ solving the given system.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Buckingham Pi Theorem]
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $f\left(q_{1},q_{2},\ldots,q_{m}\right)=0$
+\end_inset
+
+ be a unit-free law where 
+\begin_inset Formula $\left[q_{i}\right]=L_{1}^{\alpha_{1_{i}}}L_{2}^{\alpha_{2_{i}}}\cdots L_{n}^{\alpha_{n_{i}}}$
+\end_inset
+
+.
+ Suppose the fundamental matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ has rank 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Then there exist 
+\begin_inset Formula $m-r$
+\end_inset
+
+ independent dimensionless quantities 
+\begin_inset Formula $\pi_{1},\ldots\pi_{m-r}$
+\end_inset
+
+ which can be formed from 
+\begin_inset Formula $q_{1},\ldots,q_{m}$
+\end_inset
+
+ and a physical law 
+\begin_inset Formula $F\left(\pi_{1},\ldots,\pi_{m-r}\right)=0$
+\end_inset
+
+ that is equivalent to 
+\begin_inset Formula $f\left(q_{1},q_{2},\ldots,q_{m}\right)=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Bead falling in dense liquid]
+\end_layout
+
+\end_inset
+
+ A small sphere of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ and density 
+\begin_inset Formula $\rho$
+\end_inset
+
+ falls with constant velocity in a liquid of density 
+\begin_inset Formula $\rho_{\ell}$
+\end_inset
+
+ and viscosity 
+\begin_inset Formula $\mu$
+\end_inset
+
+ (units 
+\begin_inset Formula $\text{mass}/\left(\text{length}\cdot\text{time}\right)$
+\end_inset
+
+) under the influence of gravity 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ An empirical formula is 
+\begin_inset Formula 
+\[
+v=\frac{2r^{2}\rho g}{9\mu}\left(1-\frac{\rho_{\ell}}{\rho}\right).
+\]
+
+\end_inset
+
+Can this be deduced from dimensional analysis?
+\end_layout
+
+\begin_layout Example
+The physical dimensions in this problem are length 
+\begin_inset Formula $L$
+\end_inset
+
+, mass 
+\begin_inset Formula $M$
+\end_inset
+
+, and time 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ We can express the variables in terms of these units as
+\begin_inset Formula 
+\[
+\left[r\right]=L,\quad\left[v\right]=\frac{L}{T},\quad\left[\rho\right]=\frac{M}{L^{3}},\quad\left[g\right]=\frac{L}{T^{2}},\quad\left[\rho_{\ell}\right]=\frac{M}{L^{3}},\quad\text{and}\quad\left[\mu\right]=\frac{M}{LT}.
+\]
+
+\end_inset
+
+The postulated physical law is of the form 
+\begin_inset Formula $f\left(v,r,\rho,g,\rho_{\ell},\mu\right)=0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\pi$
+\end_inset
+
+ be a dimensionless combination of all variables in the problem.
+ The possible forms of 
+\begin_inset Formula $\pi$
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+\pi=r^{\alpha_{1}}\rho^{\alpha_{2}}v^{\alpha_{3}}g^{\alpha_{4}}\rho_{\ell}^{\alpha_{5}}\mu^{\alpha_{6}}.
+\]
+
+\end_inset
+
+Setting the units equal gives
+\begin_inset Formula 
+\[
+\pi=L^{\alpha_{1}}\left(\frac{M}{L^{3}}\right)^{\alpha_{2}}\left(\frac{L}{T}\right)^{\alpha_{3}}\left(\frac{L}{T^{2}}\right)^{\alpha_{4}}\left(\frac{M}{L^{3}}\right)^{\alpha_{5}}\left(\frac{M}{LT}\right)^{\alpha_{6}},
+\]
+
+\end_inset
+
+which leads to the system
+\begin_inset Formula 
+\begin{flalign*}
+L:\quad & \alpha_{1}-3\alpha_{2}+\alpha_{3}+\alpha_{4}-3\alpha_{5}-\alpha_{6}=0\\
+M:\quad & \alpha_{2}+\alpha_{5}+\alpha_{6}=0\\
+T:\quad & -\alpha_{3}-2\alpha_{4}-\alpha_{6}=0.
+\end{flalign*}
+
+\end_inset
+
+Equivalently, we have
+\begin_inset Formula 
+\[
+\begin{bmatrix}1 & -3 & 1 & 1 & -3 & -1\\
+0 & 1 & 0 & 0 & 1 & 1\\
+0 & 0 & -1 & -2 & 0 & -1
+\end{bmatrix}\begin{bmatrix}\alpha_{1}\\
+\alpha_{2}\\
+\alpha_{3}\\
+\alpha_{4}\\
+\alpha_{5}\\
+\alpha_{6}
+\end{bmatrix}=\mathbf{0},
+\]
+
+\end_inset
+
+which we solve as
+\begin_inset Formula 
+\begin{flalign*}
+\left[\begin{array}{cccccc|c}
+1 & -3 & 1 & 1 & -3 & -1 & 0\\
+0 & 1 & 0 & 0 & 1 & 1 & 0\\
+0 & 0 & -1 & -2 & 0 & -1 & 0
+\end{array}\right]\begin{array}{c}
++3R_{2}\\
+\\
+\times-1
+\end{array} & \sim\left[\begin{array}{cccccc|c}
+1 & 0 & 1 & 1 & 0 & 2 & 0\\
+0 & 1 & 0 & 0 & 1 & 1 & 0\\
+0 & 0 & 1 & 2 & 0 & 1 & 0
+\end{array}\right]\begin{array}{c}
+-R_{3}\\
+\\
+\\
+\end{array}\\
+ & \sim\left[\begin{array}{cccccc|c}
+1 & 0 & 0 & -1 & 0 & 1 & 0\\
+0 & 1 & 0 & 0 & 1 & 1 & 0\\
+0 & 0 & 1 & 2 & 0 & 1 & 0
+\end{array}\right],
+\end{flalign*}
+
+\end_inset
+
+so that 
+\begin_inset Formula $\alpha_{1}=\alpha_{4}-\alpha_{6}$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha_{2}=-\alpha_{5}-\alpha_{6}$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha_{3}=-2\alpha_{4}-\alpha_{6}$
+\end_inset
+
+.
+ We can express the solution as
+\begin_inset Formula 
+\[
+\begin{bmatrix}\alpha_{1}\\
+\alpha_{2}\\
+\alpha_{3}\\
+\alpha_{4}\\
+\alpha_{5}\\
+\alpha_{6}
+\end{bmatrix}=\alpha_{4}\begin{bmatrix}1\\
+0\\
+-2\\
+1\\
+0\\
+0
+\end{bmatrix}+\alpha_{5}\begin{bmatrix}0\\
+-1\\
+0\\
+0\\
+1\\
+0
+\end{bmatrix}+\alpha_{6}\begin{bmatrix}-1\\
+-1\\
+-1\\
+0\\
+0\\
+1
+\end{bmatrix},
+\]
+
+\end_inset
+
+so that the independent vectors
+\begin_inset Formula 
+\[
+\left\{ \begin{bmatrix}1\\
+0\\
+-2\\
+1\\
+0\\
+0
+\end{bmatrix},\begin{bmatrix}0\\
+-1\\
+0\\
+0\\
+1\\
+0
+\end{bmatrix},\begin{bmatrix}-1\\
+-1\\
+-1\\
+0\\
+0\\
+1
+\end{bmatrix}\right\} 
+\]
+
+\end_inset
+
+span the solution set.
+ These vectors give the dimensionless combinations
+\begin_inset Formula 
+\[
+\pi_{1}=rv^{-2}g=\frac{rg}{v^{2}},\quad\pi_{2}=\rho^{-1}\rho_{\ell}=\frac{\rho_{\ell}}{\rho},\quad\text{and}\quad\pi_{3}=r^{-1}\rho^{-1}v^{-1}\mu=\frac{\mu}{r\rho v}.
+\]
+
+\end_inset
+
+Observe that the empirical law can be written as
+\begin_inset Formula 
+\[
+v=\frac{2r^{2}\rho g}{9\mu}\left(1-\frac{\rho_{\ell}}{\rho}\right)\implies9\mu v=2r^{2}\rho g\left(1-\pi_{2}\right)\implies\frac{\mu}{r\rho v}=\frac{2rg}{9v^{2}}\left(1-\pi_{2}\right)\implies\pi_{3}=\frac{2}{9}\pi_{1}\left(1-\pi_{2}\right).
+\]
+
+\end_inset
+
+The final expression involves only dimensionless quantities, so it follows
+ that the empirical law can be deduced from dimensionless analysis.
+\end_layout
+
+\begin_layout Definition
+A law 
+\begin_inset Formula $f\left(q_{1},q_{2},\ldots,q_{m}\right)=0$
+\end_inset
+
+ will be called 
+\emph on
+unit-free
+\emph default
+ if for all choices of 
+\begin_inset Formula $\bar{L}_{i}=\lambda_{i}L_{i}$
+\end_inset
+
+, the law is equivalent to 
+\begin_inset Formula $f\left(\bar{q}_{1},\bar{q}_{2},\ldots,\bar{q}_{m}\right)=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Unit-free assumption]
+\end_layout
+
+\end_inset
+
+ Show that the physical law 
+\begin_inset Formula $f\left(x,t,g\right)=x-gt^{2}/2=0$
+\end_inset
+
+ is unit-free.
+\end_layout
+
+\begin_layout Example
+The physical dimensions in this problem are length 
+\begin_inset Formula $L$
+\end_inset
+
+ and time 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ We can express the variables in terms of these units as
+\begin_inset Formula 
+\[
+\left[x\right]=L,\quad\left[t\right]=T,\quad\text{and}\quad\left[g\right]=\frac{L}{T^{2}}.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\bar{L}=\lambda_{1}L$
+\end_inset
+
+, and let 
+\begin_inset Formula $\bar{T}=\lambda_{2}T$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+\bar{x}=\lambda_{1}x,\quad\bar{t}=\lambda_{2}t,\quad\text{and}\quad g=\frac{\lambda_{1}}{\lambda_{2}^{2}}g.
+\]
+
+\end_inset
+
+Then,
+\begin_inset Formula 
+\[
+f\left(\bar{x},\bar{t},\bar{g}\right)=\bar{x}-\frac{1}{2}\bar{g}\bar{t}^{2}=\lambda_{1}x-\frac{1}{2}\left(\frac{\lambda_{1}}{\lambda_{2}^{2}}g\cdot\lambda_{2}^{2}t^{2}\right)=\lambda_{1}x-\frac{\lambda_{1}}{2}gt^{2}=\lambda_{1}\left(x-\frac{1}{2}gt^{2}\right)=0,
+\]
+
+\end_inset
+
+i.e., this relation is unit-free.
 \end_layout
 
 \end_body
