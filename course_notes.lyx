@@ -74,7 +74,7 @@ knitr
 \use_package cancel 1
 \use_package esint 1
 \use_package mathdots 1
-\use_package mathtools 1
+\use_package mathtools 2
 \use_package mhchem 1
 \use_package stackrel 1
 \use_package stmaryrd 1
@@ -16412,7 +16412,7 @@ The idea behind the EM algorithm is to iterate between taking an expectation
 \end_inset
 
  such that 
-\begin_inset Formula $f\left(\mathbf{y}|\theta\right)=\int f\left(\mathbf{y},\mathbf{z}|\theta\right)\mbox{d}z$
+\begin_inset Formula $f\left(\mathbf{y}|\theta\right)=\int f\left(\mathbf{y},\mathbf{z}|\theta\right)\dif z$
 \end_inset
 
  and such that the likelihood based on 
@@ -16429,7 +16429,7 @@ The idea behind the EM algorithm is to iterate between taking an expectation
 \end_inset
 
  is called the augmented (or latent, or missing) data, and 
-\begin_inset Formula $L\left(\theta|\mathbf{y},\mathbf{z}\right)=f\left(\mathbf{y},\mathbf{z}|\theta\right)$
+\begin_inset Formula $\mathcal{L}\left(\theta|\mathbf{y},\mathbf{z}\right)=f\left(\mathbf{y},\mathbf{z}|\theta\right)$
 \end_inset
 
  is the complete-data likelihood.
@@ -16474,7 +16474,7 @@ E-step:
  Calculate
 \begin_inset Formula 
 \begin{flalign*}
-J\left(\theta|\theta^{\left(j\right)}\right) & =\E\left[\log L\left(\theta|\mathbf{y},\mathbf{z}\right)|\theta^{\left(j\right)},\mathbf{y}\right]\\
+J\left(\theta|\theta^{\left(j\right)}\right) & =\E\left[\log\mathcal{L}\left(\theta|\mathbf{y},\mathbf{z}\right)|\theta^{\left(j\right)},\mathbf{y}\right]\\
  & =\E\left[\log f\left(y_{1},\ldots,y_{n},z_{1},\ldots,z_{n}|\theta\right)|\theta^{\left(j\right)},Y_{1}=y_{1},\ldots,Y_{n}=y_{n}\right]
 \end{flalign*}
 
@@ -16572,7 +16572,7 @@ where
 The incomplete-data likelihood is given by
 \begin_inset Formula 
 \[
-L\left(\boldsymbol{\theta}|\mathbf{y}\right)=\prod_{i=1}^{n}\left[\left(1-p\right)\phi\left(y_{i}|\mu_{0},\sigma_{0}\right)+p\phi\left(y_{i}|\mu_{1},\sigma_{1}\right)\right],
+\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{y}\right)=\prod_{i=1}^{n}\left[\left(1-p\right)\phi\left(y_{i}|\mu_{0},\sigma_{0}\right)+p\phi\left(y_{i}|\mu_{1},\sigma_{1}\right)\right],
 \]
 
 \end_inset
@@ -16580,7 +16580,7 @@ L\left(\boldsymbol{\theta}|\mathbf{y}\right)=\prod_{i=1}^{n}\left[\left(1-p\righ
 so that the log-likelihood is given by
 \begin_inset Formula 
 \[
-\log L\left(\boldsymbol{\theta}|\mathbf{y}\right)=\sum_{i=1}^{n}\log\left[\left(1-p\right)\phi\left(y_{i}|\mu_{0},\sigma_{0}\right)+p\phi\left(y_{i}|\mu_{1},\sigma_{1}\right)\right].
+\log\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{y}\right)=\sum_{i=1}^{n}\log\left[\left(1-p\right)\phi\left(y_{i}|\mu_{0},\sigma_{0}\right)+p\phi\left(y_{i}|\mu_{1},\sigma_{1}\right)\right].
 \]
 
 \end_inset
@@ -16594,8 +16594,8 @@ The sum inside the logarithm makes this difficult to maximize.
 \begin_inset Formula 
 \[
 Z_{i}=\begin{cases}
-0, & \text{if }Y_{i}\sim N\left(\mu_{0},\sigma_{0}^{2}\right)\\
-1, & \text{if }Y_{i}\sim N\left(\mu_{1},\sigma_{1}^{2}\right)
+0, & \text{if }Y_{i}\sim\mathcal{N}\left(\mu_{0},\sigma_{0}^{2}\right)\\
+1, & \text{if }Y_{i}\sim\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)
 \end{cases}.
 \]
 
@@ -16611,10 +16611,9 @@ Then, we can write the joint density of
 
  as
 \begin_inset Formula 
-\begin{flalign*}
-f_{\mathbf{Y}}\left(\mathbf{y}|\theta,z_{i}=j\right) & =\phi\left(y_{i}|\mu_{j},\sigma_{j}\right)\\
- & =\frac{1}{\sqrt{2\pi\sigma_{j}^{2}}}e^{-\left(y_{i}-\mu_{j}\right)^{2}/\left(2\sigma_{j}^{2}\right)}.
-\end{flalign*}
+\[
+f_{\mathbf{Y}}\left(\mathbf{y}|\theta,z_{i}=j\right)=\phi\left(y_{i}|\mu_{j},\sigma_{j}\right)=\frac{1}{\sqrt{2\pi\sigma_{j}^{2}}}e^{-\left(y_{i}-\mu_{j}\right)^{2}/\left(2\sigma_{j}^{2}\right)}.
+\]
 
 \end_inset
 
@@ -16682,7 +16681,7 @@ where
  Then, the complete-data likelihood is given by
 \begin_inset Formula 
 \begin{flalign*}
-L\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right) & =\prod_{i=1}^{n}f_{\mathbf{Y},\mathbf{Z}}\left(y_{i},z_{i}|\boldsymbol{\theta}\right)\\
+\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right) & =\prod_{i=1}^{n}f_{\mathbf{Y},\mathbf{Z}}\left(y_{i},z_{i}|\boldsymbol{\theta}\right)\\
  & =\prod_{i=1}^{n}\left[\frac{1}{\sqrt{2\pi\sigma_{j}^{2}}}e^{-\left(y_{i}-\mu_{j}\right)^{2}/\left(2\sigma_{j}^{2}\right)}\cdot P\left(\left\{ Z_{i}=j\right\} \right)\right]\\
  & =\prod_{i=1}^{n}\left[\left[\frac{1}{\sqrt{2\pi\sigma_{0}^{2}}}e^{-\left(y_{i}-\mu_{0}\right)^{2}/\left(2\sigma_{0}^{2}\right)}\cdot\left(1-p\right)\right]^{1-z_{i}}\cdot\left[\frac{1}{\sqrt{2\pi\sigma_{1}^{2}}}e^{-\left(y_{i}-\mu_{1}\right)^{2}/\left(2\sigma_{1}^{2}\right)}\cdot p\right]^{z_{i}}\right],
 \end{flalign*}
@@ -16692,7 +16691,7 @@ L\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right) & =\prod_{i=1}^{n}f_{\ma
 so that the log-likelihood is given by
 \begin_inset Formula 
 \begin{flalign*}
-\log L\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right) & =\log\prod_{i=1}^{n}\left[\left[\frac{1}{\sqrt{2\pi\sigma_{0}^{2}}}e^{-\left(y_{i}-\mu_{0}\right)^{2}/\left(2\sigma_{0}^{2}\right)}\cdot\left(1-p\right)\right]^{1-z_{i}}\cdot\left[\frac{1}{\sqrt{2\pi\sigma_{1}^{2}}}e^{-\left(y_{i}-\mu_{1}\right)^{2}/\left(2\sigma_{1}^{2}\right)}\cdot p\right]^{z_{i}}\right]\\
+\log\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right) & =\log\prod_{i=1}^{n}\left[\left[\frac{1}{\sqrt{2\pi\sigma_{0}^{2}}}e^{-\left(y_{i}-\mu_{0}\right)^{2}/\left(2\sigma_{0}^{2}\right)}\cdot\left(1-p\right)\right]^{1-z_{i}}\cdot\left[\frac{1}{\sqrt{2\pi\sigma_{1}^{2}}}e^{-\left(y_{i}-\mu_{1}\right)^{2}/\left(2\sigma_{1}^{2}\right)}\cdot p\right]^{z_{i}}\right]\\
  & =\sum_{i=1}^{n}\left\{ \left(1-z_{i}\right)\log\left[\frac{1-p}{\sqrt{2\pi\sigma_{0}^{2}}}e^{-\left(y_{i}-\mu_{0}\right)^{2}/\left(2\sigma_{0}^{2}\right)}\right]+z_{i}\log\left[\frac{p}{\sqrt{2\pi\sigma_{1}^{2}}}e^{-\left(y_{i}-\mu_{1}\right)^{2}/\left(2\sigma_{1}^{2}\right)}\right]\right\} .
 \end{flalign*}
 
@@ -16702,7 +16701,7 @@ We will now find the expected value of the complete-data log likelihood
  (the E-step).
 \begin_inset Formula 
 \begin{flalign*}
-J\left(\boldsymbol{\theta}|\boldsymbol{\theta}^{\left(j\right)}\right) & =\E\left[\log L\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right)|\mathbf{y},\boldsymbol{\theta}^{\left(j\right)}\right]\\
+J\left(\boldsymbol{\theta}|\boldsymbol{\theta}^{\left(j\right)}\right) & =\E\left[\log\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{y},\mathbf{z}\right)|\mathbf{y},\boldsymbol{\theta}^{\left(j\right)}\right]\\
  & =\sum_{i=1}^{n}\left\{ \E\left[1-z_{i}|\mathbf{y},\boldsymbol{\theta}^{\left(j\right)}\right]\log\left[\frac{1-p}{\sqrt{2\pi\sigma_{0}^{2}}}e^{-\left(y_{i}-\mu_{0}\right)^{2}/\left(2\sigma_{0}^{2}\right)}\right]+\E\left[z_{i}|\mathbf{y},\boldsymbol{\theta}^{\left(j\right)}\right]\log\left[\frac{p}{\sqrt{2\pi\sigma_{1}^{2}}}e^{-\left(y_{i}-\mu_{1}\right)^{2}/\left(2\sigma_{1}^{2}\right)}\right]\right\} 
 \end{flalign*}
 
@@ -47827,6 +47826,2380 @@ Deterministic mathematical models
 \end_layout
 
 \begin_layout Chapter
+Optimization
+\end_layout
+
+\begin_layout Section
+Classical multivariable optima
+\end_layout
+
+\begin_layout Standard
+A real-valued, differentiable function 
+\begin_inset Formula $f$
+\end_inset
+
+ of a real variable 
+\begin_inset Formula $x$
+\end_inset
+
+ on a closed interval 
+\begin_inset Formula $\left[a,b\right]$
+\end_inset
+
+ achieves both a maximum and a minimum on 
+\begin_inset Formula $\left[a,b\right]$
+\end_inset
+
+, and any extreme must be at an endpoint or an interior 
+\emph on
+critical point
+\emph default
+ 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ where 
+\begin_inset Formula $f'\left(x_{0}\right)=0$
+\end_inset
+
+.
+ To understand the behavior of 
+\begin_inset Formula $f$
+\end_inset
+
+ around 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+, we can apply a second-order Taylor series expansion, which gives
+\begin_inset Formula 
+\[
+f\left(x\right)\approx f\left(x_{0}\right)+f'\left(x_{0}\right)\left(x-x_{0}\right)+\frac{1}{2}f''\left(x_{0}\right)\left(x-x_{0}\right)^{2}.
+\]
+
+\end_inset
+
+Now, by assumption, 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ is a critical point, hence 
+\begin_inset Formula $f'\left(x_{0}\right)=0$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+f\left(x\right)\approx f\left(x_{0}\right)+\frac{1}{2}f''\left(x_{0}\right)\left(x-x_{0}\right)^{2}.
+\]
+
+\end_inset
+
+If the 
+\begin_inset Formula $f''$
+\end_inset
+
+ term is positive, then 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ will be greater than 
+\begin_inset Formula $f\left(x_{0}\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ will be a local minimum.
+ If the 
+\begin_inset Formula $f''$
+\end_inset
+
+ term is negative, then 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ will be less than 
+\begin_inset Formula $f\left(x_{0}\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ will be a local maximum.
+ The quantity 
+\begin_inset Formula $\left(x-x_{0}\right)^{2}$
+\end_inset
+
+ will be nonnegative, hence we can characterize 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ by inspecting 
+\begin_inset Formula $f''\left(x_{0}\right)$
+\end_inset
+
+, which leads to the single variable 
+\emph on
+second derivative test
+\emph default
+: if 
+\begin_inset Formula $f''\left(x_{0}\right)>0$
+\end_inset
+
+, then 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ is a local minimum, and if 
+\begin_inset Formula $f''\left(x_{0}\right)<0$
+\end_inset
+
+, then 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ is a local maximum.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $f$
+\end_inset
+
+ is a function of two variables, e.g., 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, then a stationary or critical point occurs at the point 
+\begin_inset Formula $\left(x_{0},y_{0}\right)$
+\end_inset
+
+ if both partial derivatives are zero, i.e., if 
+\begin_inset Formula $f_{x}\left(x_{0},y_{0}\right)=f_{y}\left(x_{0},y_{0}\right)=0$
+\end_inset
+
+.
+ To classify the critical point, we first calculate determinant of the Hessian
+ matrix of 
+\begin_inset Formula $f$
+\end_inset
+
+ i.e., 
+\begin_inset Formula 
+\[
+D\left(x,y\right)=\det\left(\begin{bmatrix}f_{xx} & f_{xy}\\
+f_{yx} & f_{yy}
+\end{bmatrix}\right)=f_{xx}\left(x,y\right)f_{yy}\left(x,y\right)-f_{xy}\left(x,y\right)f_{yx}\left(x,y\right)=f_{xx}\left(x,y\right)f_{yy}\left(x,y\right)-\left(f_{xy}\left(x,y\right)\right)^{2},
+\]
+
+\end_inset
+
+where the final equality follows from our assumption that 
+\begin_inset Formula $f$
+\end_inset
+
+ has continuous second partial derivatives.
+ This leads the two-variable second derivative test: if 
+\begin_inset Formula $\left(x_{0},y_{0}\right)$
+\end_inset
+
+ is a critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $f_{x}\left(x_{0},y_{0}\right)=f_{y}\left(x_{0},y_{0}\right)=0$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $D\left(x_{0},y_{0}\right)>0$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{xx}\left(x_{0},y_{0}\right)<0$
+\end_inset
+
+, then 
+\begin_inset Formula $\left(x_{0},y_{0}\right)$
+\end_inset
+
+ is a local maximum.
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $D\left(x_{0},y_{0}\right)>0$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{xx}\left(x_{0},y_{0}\right)>0$
+\end_inset
+
+, then 
+\begin_inset Formula $\left(x_{0},y_{0}\right)$
+\end_inset
+
+ is a local minimum.
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $D\left(x_{0},y_{0}\right)<0$
+\end_inset
+
+, then 
+\begin_inset Formula $\left(x_{0},y_{0}\right)$
+\end_inset
+
+ is a saddle point.
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $D\left(x_{0},y_{0}\right)=0$
+\end_inset
+
+, then the test is inconclusive.
+\end_layout
+
+\begin_layout Example
+Find and characterize the critical points of the following functions.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x,y\right)=x^{2}-y^{2}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $f_{x}=2x$
+\end_inset
+
+, which will be equal to zero if and only if 
+\begin_inset Formula $x=0$
+\end_inset
+
+, and 
+\begin_inset Formula $f_{y}=-2y$
+\end_inset
+
+, which will similarly be zero only in the case that 
+\begin_inset Formula $y=0$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $\left(0,0\right)$
+\end_inset
+
+ is the single critical point of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+f_{xx}=2,\quad f_{yy}=-2,\quad\text{and}\quad f_{xy}=f_{yx}=0,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $D\left(0,0\right)=-4-0=-4$
+\end_inset
+
+.
+ Applying the second derivative test, we see that 
+\begin_inset Formula $\left(0,0\right)$
+\end_inset
+
+ is a saddle point.
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x,y\right)=x^{2}y^{2}-y^{2}-x^{2}+1$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $f_{x}=2xy^{2}-2x$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{y}=2yx^{2}-2y$
+\end_inset
+
+.
+ Setting 
+\begin_inset Formula $f_{x}$
+\end_inset
+
+ equal to zero, we have
+\begin_inset Formula 
+\[
+0=2xy^{2}-2x=2x\left(y^{2}-1\right)=2x\left(y-1\right)\left(y+1\right),
+\]
+
+\end_inset
+
+which will be zero if either 
+\begin_inset Formula $x=0$
+\end_inset
+
+ or 
+\begin_inset Formula $y=\pm1$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $x=0$
+\end_inset
+
+, then setting 
+\begin_inset Formula $f_{y}=0$
+\end_inset
+
+ and substituting yields
+\begin_inset Formula 
+\[
+f_{y}\left(0,y\right)=2y\cdot0-2y=-2y=0\implies y=0.
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $y=1$
+\end_inset
+
+, then 
+\begin_inset Formula 
+\[
+f_{y}\left(x,1\right)=2x^{2}-2=0\implies2x^{2}=2\implies x=\pm1,
+\]
+
+\end_inset
+
+and if 
+\begin_inset Formula $y=-1$
+\end_inset
+
+, then
+\begin_inset Formula 
+\[
+f_{y}\left(x,-1\right)=-2x^{2}+2=0\implies2x^{2}=2\implies x=\pm1.
+\]
+
+\end_inset
+
+Thus, we obtain the critical points 
+\begin_inset Formula $\left\{ \left(0,0\right),\left(1,1\right),\left(-1,1\right),\left(1,-1\right),\left(-1,-1\right)\right\} $
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+f_{xx}=2y^{2}-2=2\left(y^{2}-1\right),\quad f_{yy}=2x^{2}-2=2\left(x^{2}-1\right),\quad\text{and}\quad f_{xy}=4xy,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+D\left(x,y\right)=f_{xx}f_{yy}-f_{xy}^{2}=4\left(y^{2}-1\right)\left(x^{2}-1\right)-16x^{2}y^{2}=4\left(\left(y^{2}-1\right)\left(x^{2}-1\right)-4x^{2}y^{2}\right).
+\]
+
+\end_inset
+
+Then, 
+\begin_inset Formula $D\left(0,0\right)=4$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{xx}\left(0,0\right)=-2$
+\end_inset
+
+, so that 
+\begin_inset Formula $\left(0,0\right)$
+\end_inset
+
+ is a local maximum.
+ Observe that 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ appear in 
+\begin_inset Formula $D\left(x,y\right)$
+\end_inset
+
+ only in squared form, hence the result obtained for 
+\begin_inset Formula $\left(1,1\right)$
+\end_inset
+
+ will be the same as the result for all 
+\begin_inset Formula $\left(\pm1,\pm1\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $D\left(1,1\right)=-16$
+\end_inset
+
+, so that each of 
+\begin_inset Formula $\left(\pm1,\pm1\right)$
+\end_inset
+
+ is a saddle point.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Calculus of variations
+\end_layout
+
+\begin_layout Standard
+The calculus of variations, or variational method, lays out a pathway to
+ finding extremals for functionals, which are real-valued mappings defined
+ on sets of functions.
+ The simplest example is perhaps the arc length of a function 
+\begin_inset Formula $y=f\left(x\right)$
+\end_inset
+
+ from 
+\begin_inset Formula $\left(a,f\left(a\right)\right)$
+\end_inset
+
+ to 
+\begin_inset Formula $\left(b,f\left(b\right)\right)$
+\end_inset
+
+ on an interval 
+\begin_inset Formula $\left[a,b\right]$
+\end_inset
+
+, which is given by
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}\sqrt{1+\left(f'x\right)^{2}}\dif x,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is the corresponding arc length functional.
+ In one dimension, the function that minimizes the arc length is a straight
+ line, though in higher dimensions, the picture becomes more complicated.
+\end_layout
+
+\begin_layout Subsection
+The Lagrangian
+\end_layout
+
+\begin_layout Standard
+We will be interested in functionals of the form
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x
+\]
+
+\end_inset
+
+for functions in some admissible set 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ and where 
+\begin_inset Formula $L=L\left(x_{1},x_{2},x_{3}\right)$
+\end_inset
+
+ is known as the 
+\emph on
+Lagrangian
+\emph default
+ associated with 
+\begin_inset Formula $J$
+\end_inset
+
+.
+ 
+\begin_inset Formula $L$
+\end_inset
+
+ is generally assumed to be twice differentiable in all variables.
+ We also assume that 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ is a normed linear space, e.g., 
+\begin_inset Formula $\mathcal{C}^{1}\left[a,b\right]$
+\end_inset
+
+.
+ Then, to say that 
+\begin_inset Formula $J$
+\end_inset
+
+ has a local minimum at 
+\begin_inset Formula $f_{0}\in\mathcal{A}$
+\end_inset
+
+ will mean that 
+\begin_inset Formula $J\left[f_{0}\right]\leq J\left[f\right]$
+\end_inset
+
+ for all 
+\begin_inset Formula $f$
+\end_inset
+
+ in a norm-based neighborhood of 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For a given functional 
+\begin_inset Formula $J$
+\end_inset
+
+ and a point 
+\begin_inset Formula $f_{0}\in\mathcal{A}$
+\end_inset
+
+, let 
+\begin_inset Formula $h$
+\end_inset
+
+ be a function such that 
+\begin_inset Formula $f_{0}+\epsilon h\in\mathcal{A}$
+\end_inset
+
+ for all sufficiently small and positive 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ Then, the total change in 
+\begin_inset Formula $J$
+\end_inset
+
+ at 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ due to 
+\begin_inset Formula $\epsilon h$
+\end_inset
+
+, denoted 
+\begin_inset Formula $\Delta J$
+\end_inset
+
+, is defined as
+\begin_inset Formula 
+\[
+\Delta J\left[f_{0},h\right]\coloneqq J\left[f_{0}+h\right]-J\left[f_{0}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+For some functional 
+\begin_inset Formula $J$
+\end_inset
+
+, a point in the admissible set 
+\begin_inset Formula $f_{0}\in\mathcal{A}$
+\end_inset
+
+, and a function 
+\begin_inset Formula $h$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $f_{0}+\epsilon h\in\mathcal{A}$
+\end_inset
+
+, the 
+\emph on
+first variation
+\emph default
+ or 
+\emph on
+Gâteaux derivative
+\emph default
+ of 
+\begin_inset Formula $J$
+\end_inset
+
+ at 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ in the direction 
+\begin_inset Formula $h$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+\delta J\left[f_{0},h\right]\coloneqq\left[\frac{\dif}{\dif\epsilon}J\left[f_{0}+\epsilon h\right]\right|_{\epsilon=0}=\lim_{\epsilon\rightarrow0}\frac{J\left[f_{0}+\epsilon h\right]-J\left[f_{0}\right]}{\epsilon}=\lim_{\epsilon\rightarrow0}\frac{\Delta J\left[f_{0},\epsilon h\right]}{\epsilon}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Find the Gâteaux derivative for the functional 
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}1+\left(f'\left(x\right)\right)^{2}\dif x,
+\]
+
+\end_inset
+
+and find the extremal for 
+\begin_inset Formula $h\left(x\right)=x\left(1-x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Noting that the derivative of 
+\begin_inset Formula $f\left(x\right)+\epsilon h\left(x\right)$
+\end_inset
+
+ is 
+\begin_inset Formula $f'\left(x\right)+\epsilon h'\left(x\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{flalign*}
+J\left[f+\epsilon h\right] & =\int_{0}^{1}1+\left(\left(f\left(x\right)+\epsilon h\left(x\right)\right)'\right)^{2}\dif x\\
+ & =\int_{0}^{1}1+\left(f'\left(x\right)+\epsilon h'\left(x\right)\right)^{2}\dif x\\
+ & =\int_{0}^{1}1+\left(f'\left(x\right)\right)^{2}+2\epsilon f'\left(x\right)h'\left(x\right)+\epsilon^{2}\left(h'\left(x\right)\right)^{2}\dif x\\
+ & =\int_{0}^{1}\left(1+\left(f'\left(x\right)\right)^{2}\right)\dif x+2\epsilon\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(h'\left(x\right)\right)^{2}\dif x,
+\end{flalign*}
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+\Delta J\left[f,\epsilon h\right]=J\left[f+\epsilon h\right]-J\left[f\right]=2\epsilon\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(h'\left(x\right)\right)^{2}\dif x.
+\]
+
+\end_inset
+
+Then, the Gâteaux derivative is
+\begin_inset Formula 
+\begin{flalign*}
+\delta J\left[f,h\right] & =\lim_{\epsilon\rightarrow0}\frac{\Delta J\left[f,\epsilon h\right]}{\epsilon}\\
+ & =\lim_{\epsilon\rightarrow0}\frac{1}{\epsilon}\left(2\epsilon\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(h'\left(x\right)\right)^{2}\dif x\right)\\
+ & =\lim_{\epsilon\rightarrow0}\left(2\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x+\epsilon\int_{0}^{1}\left(h'\left(x\right)\right)^{2}\dif x\right)\\
+ & =2\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x+0\\
+ & =2\int_{0}^{1}f'\left(x\right)h'\left(x\right)\dif x.
+\end{flalign*}
+
+\end_inset
+
+For 
+\begin_inset Formula $h\left(x\right)=x\left(1-x\right)$
+\end_inset
+
+, we have 
+\begin_inset Formula $h'\left(x\right)=1-2x$
+\end_inset
+
+.
+ Setting 
+\begin_inset Formula $\delta J\left[f,h\right]$
+\end_inset
+
+ equal to zero gives
+\begin_inset Formula 
+\[
+0=2\int_{0}^{1}f'\left(x\right)\left(1-2x\right)\dif x.
+\]
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $f\left(x\right)=c_{1}x+c_{2}$
+\end_inset
+
+ for some 
+\begin_inset Formula $c_{1},c_{2}\in\mathbb{R}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $f$
+\end_inset
+
+ is linear.
+ Then, 
+\begin_inset Formula $f'\left(x\right)=c_{1}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+0=2\int_{0}^{1}c_{1}\left(1-2x\right)\dif x=2c_{1}\int_{0}^{1}1-2x\dif x=2c_{1}\left[x-x^{2}\right|_{0}^{1}=2c_{1}\left(0-0\right)=0,
+\]
+
+\end_inset
+
+i.e., the equality holds.
+ It follows that 
+\begin_inset Formula $f\left(x\right)=c_{1}x+c_{2}$
+\end_inset
+
+ is the minimal function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Find the Gâteaux derivative for the functional 
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}\left(1+x\right)\left(f'\left(x\right)\right)^{2}\dif x,
+\]
+
+\end_inset
+
+and find the extremal for 
+\begin_inset Formula $h\left(x\right)=x\left(1-x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We have
+\begin_inset Formula 
+\begin{flalign*}
+J\left[f+\epsilon h\right] & =\int_{0}^{1}\left(1+x\right)\left(f'\left(x\right)+\epsilon h'\left(x\right)\right)^{2}\dif x\\
+ & =\int_{0}^{1}\left(1+x\right)\left[\left(f'\left(x\right)\right)^{2}+2\epsilon f'\left(x\right)h'\left(x\right)+\epsilon^{2}\left(h'\left(x\right)\right)^{2}\right]\dif x\\
+ & =\int_{0}^{1}\left(1+x\right)\left(f'\left(x\right)\right)^{2}\dif x+2\epsilon\int_{0}^{1}\left(1+x\right)f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(1+x\right)\left(h'\left(x\right)\right)^{2}\dif x,
+\end{flalign*}
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+\Delta J\left[f,\epsilon h\right]=J\left[f+\epsilon h\right]-J\left[f\right]=2\epsilon\int_{0}^{1}\left(1+x\right)f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(1+x\right)\left(h'\left(x\right)\right)^{2}\dif x.
+\]
+
+\end_inset
+
+Then, 
+\begin_inset Formula 
+\begin{flalign*}
+\delta J\left[f,h\right] & =\lim_{\epsilon\rightarrow0}\frac{\Delta J\left[f,\epsilon h\right]}{\epsilon}\\
+ & =\lim_{\epsilon\rightarrow0}\frac{1}{\epsilon}\left(2\epsilon\int_{0}^{1}\left(1+x\right)f'\left(x\right)h'\left(x\right)\dif x+\epsilon^{2}\int_{0}^{1}\left(1+x\right)\left(h'\left(x\right)\right)^{2}\dif x\right)\\
+ & =\lim_{\epsilon\rightarrow0}\left(2\int_{0}^{1}\left(1+x\right)f'\left(x\right)h'\left(x\right)\dif x+\epsilon\int_{0}^{1}\left(1+x\right)\left(h'\left(x\right)\right)^{2}\dif x\right)\\
+ & =2\int_{0}^{1}\left(1+x\right)f'\left(x\right)h'\left(x\right)\dif x.
+\end{flalign*}
+
+\end_inset
+
+For 
+\begin_inset Formula $h\left(x\right)=x\left(1-x\right)$
+\end_inset
+
+, we have 
+\begin_inset Formula $h'\left(x\right)=1-2x$
+\end_inset
+
+.
+ Setting 
+\begin_inset Formula $\delta J\left[f,h\right]$
+\end_inset
+
+ equal to zero gives
+\begin_inset Formula 
+\[
+0=2\int_{0}^{1}\left(1+x\right)f'\left(x\right)\left(1-2x\right)\dif x.
+\]
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $f\left(x\right)=c\log\left(1+x\right)$
+\end_inset
+
+ for some 
+\begin_inset Formula $c\in\mathbb{R}$
+\end_inset
+
+, so that 
+\begin_inset Formula $f'\left(x\right)=c/\left(1+x\right)$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+0=2\int_{0}^{1}\left(1+x\right)\left(\frac{c}{1+x}\right)\left(1-2x\right)\dif x=2c\int_{0}^{1}\left(1-2x\right)\dif x=2c\cdot0=0,
+\]
+
+\end_inset
+
+i.e., the equality holds.
+ It follows that 
+\begin_inset Formula $f\left(x\right)=c\log\left(1+x\right)$
+\end_inset
+
+ is the minimal function.
+\end_layout
+
+\begin_layout Subsection
+Euler's equation
+\end_layout
+
+\begin_layout Standard
+Suppose that a functional has a Lagrangian of the form 
+\begin_inset Formula $L\left(x,f\left(x\right),f'\left(x\right)\right)$
+\end_inset
+
+.
+ Euler's method can be used to find the extremals of the functional.
+ We begin by stating a lemma necessary for the proof of the method.
+\end_layout
+
+\begin_layout Lemma
+The Gâteaux derivative of a functional 
+\begin_inset Formula $J$
+\end_inset
+
+ with Lagrangian 
+\begin_inset Formula $L$
+\end_inset
+
+ can be approximated by the equation
+\begin_inset Formula 
+\[
+\delta J\left[f,h\right]=\lim_{\epsilon\rightarrow0}\frac{\Delta J\left[f,\epsilon h\right]}{\epsilon}\approx\int_{a}^{b}h\left(x\right)\left[L_{f}\left(x,f\left(x\right),f'\left(x\right)\right)+h'\left(x\right)L_{f'}\left(x,f\left(x\right),f'\left(x\right)\right)\right]\dif x,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $L_{f}$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{f'}$
+\end_inset
+
+ denote the derivatives of 
+\begin_inset Formula $L$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $f'$
+\end_inset
+
+, respectively.
+\end_layout
+
+\begin_layout Proof
+[proof goes here]Letting 
+\begin_inset Formula $y=f\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $z=f'\left(x\right)$
+\end_inset
+
+, we will apply a second-order Taylor series expansion to the Lagrangian
+ around the base point 
+\begin_inset Formula $\left(x,y+\Delta y,z+\Delta z\right)$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+L\left(x,y+\Delta y,z+\Delta z\right)\approx L\left(\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Euler's method]
+\end_layout
+
+\end_inset
+
+ The extremals of the functional 
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x
+\]
+
+\end_inset
+
+are obtained by solving
+\begin_inset Formula 
+\[
+L_{f}-\frac{\dif}{\dif x}L_{f'}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional 
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}xf\left(x\right)f'\left(x\right)\dif x.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+The Lagrangian is 
+\begin_inset Formula $L=xff'$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+L_{f}=xf',\quad L_{f'}=xf,\quad\text{and}\quad\frac{\dif}{\dif x}L_{f'}=f+xf'.
+\]
+
+\end_inset
+
+Then, Euler's method implies that the extremals of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ are obtained by solving
+\begin_inset Formula 
+\[
+0=L_{f}-\frac{\dif}{\dif x}L_{f'}=xf'-f-xf'=-f\implies f\left(x\right)=0.
+\]
+
+\end_inset
+
+Thus, the only possibility for the extremal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is 
+\begin_inset Formula $f\left(x\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}\left(f'\left(x\right)\right)^{2}+3f\left(x\right)+2x\dif x.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+The Lagrangian is 
+\begin_inset Formula $L=\left(f'\right)^{2}+3f+2x$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+L_{f}=3,\quad L_{f'}=2f',\quad\text{and}\quad\frac{\dif}{\dif x}L_{f'}=2f''.
+\]
+
+\end_inset
+
+Then, Euler's method implies that the extremals of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ are obtained by solving
+\begin_inset Formula 
+\[
+0=L_{f}-\frac{\dif}{\dif x}L_{f'}=3-2f''\implies f''\left(x\right)=\frac{3}{2}.
+\]
+
+\end_inset
+
+We have 
+\begin_inset Formula $b=c=0$
+\end_inset
+
+, so that the roots of the characteristic equation are 
+\begin_inset Formula $r_{1}=r_{2}=0$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula $f_{h}\left(x\right)=c_{1}\mathrm{e}^{0}+xc_{2}\mathrm{e}^{0}=c_{1}+xc_{2}$
+\end_inset
+
+ for some 
+\begin_inset Formula $c_{1},c_{2}\in\mathbb{R}$
+\end_inset
+
+, where we have introduced a factor of 
+\begin_inset Formula $x$
+\end_inset
+
+ into the second term to create linear independence between the solutions.
+ We will apply the method of undetermined coefficients to find the particular
+ solution.
+ The forcing term is 
+\begin_inset Formula $3/2$
+\end_inset
+
+, so we will seek 
+\begin_inset Formula $f_{p}\left(x\right)$
+\end_inset
+
+ as a multiple of the lowest integral power of 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 1 (ignoring the multiplicative constant 
+\begin_inset Formula $3/2$
+\end_inset
+
+) does not duplicate any of the terms in 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+.
+ We see that 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+ includes both a constant and first-order term, so we must multiply 1 by
+ 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+ to avoid duplication.
+ Then, 
+\begin_inset Formula $f_{p}\left(x\right)=Ax^{2}$
+\end_inset
+
+, so that 
+\begin_inset Formula $f_{p}'=2Ax$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{p}''=2A$
+\end_inset
+
+.
+ Then, the nonhomogeneous system becomes
+\begin_inset Formula 
+\[
+2A=\frac{3}{2}\implies A=\frac{3}{4},
+\]
+
+\end_inset
+
+so that the general solution is
+\begin_inset Formula 
+\[
+f\left(x\right)=f_{h}\left(x\right)+f_{p}\left(x\right)=\frac{3}{4}x^{2}+c_{2}x+c_{1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the Lagrangian takes certain forms, the Euler's method solution may
+ be simplified.
+\end_layout
+
+\begin_layout Subsubsection
+Case 1: Lagrangian does not depend on 
+\begin_inset Formula $f'\left(x\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, 
+\begin_inset Formula $L_{f'}=0$
+\end_inset
+
+, so that Euler's equation becomes
+\begin_inset Formula 
+\[
+0=L_{f}-\frac{\dif}{\dif x}L_{f'}=L_{f}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}x^{2}+\left(f\left(x\right)\right)^{2}\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=x^{2}+f^{2}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $f'$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving 
+\begin_inset Formula $0=L_{f}=2f$
+\end_inset
+
+, so that 
+\begin_inset Formula $f\left(x\right)=0$
+\end_inset
+
+ is the minimal.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}x^{2}\left(f\left(x\right)\right)^{2}+4f\left(x\right)\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=x^{2}f^{2}+4f$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $f'$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving 
+\begin_inset Formula 
+\[
+0=L_{f}=2x^{2}f+4\implies x^{2}f\left(x\right)=-2,
+\]
+
+\end_inset
+
+so that the minimal is 
+\begin_inset Formula $f\left(x\right)=-2/x^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Case 2: Lagrangian does not depend on 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, 
+\begin_inset Formula $L_{f}=0$
+\end_inset
+
+, so that Euler's equation becomes
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif x}L_{f'}=0\implies\int\left(\frac{\dif}{\dif x}L_{f'}\right)\dif x=\int0\dif x\implies L_{f'}=C
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $C\in\mathbb{R}$
+\end_inset
+
+.
+ This case also applies when the Lagrangian depends only on 
+\begin_inset Formula $L_{f'}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}\frac{\left(f'\left(x\right)\right)^{2}}{x^{3}}\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=\left(f'\right)^{2}/x^{3}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $f$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving
+\begin_inset Formula 
+\[
+C=L_{f'}=\frac{2f'}{x^{3}}\implies2f'=Cx^{3}\implies\int f'\left(x\right)\dif x=\frac{C}{2}\int x^{3}\dif x,
+\]
+
+\end_inset
+
+which leads to the solution
+\begin_inset Formula 
+\[
+f\left(x\right)=\frac{C}{2}\left(\frac{1}{4}x^{4}+C_{2}\right)=\frac{C}{8}x^{4}+C_{2}=C_{1}x^{4}+C_{2},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $C_{1}=C/8$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Arc length]
+\end_layout
+
+\end_inset
+
+ Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}\sqrt{1+\left(f'\left(x\right)\right)^{2}}\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=\sqrt{1+\left(f'\right)^{2}}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $f$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving
+\begin_inset Formula 
+\[
+C=L_{f'}=\frac{2f'}{2\sqrt{1+\left(f'\right)^{2}}}=\frac{f'}{\sqrt{1+\left(f'\right)^{2}}},
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula 
+\begin{flalign*}
+f' & =C\sqrt{1+\left(f'\right)^{2}}\\
+\implies\left(f'\right)^{2} & =C^{2}\left(1+\left(f'\right)^{2}\right)\\
+\implies C^{2} & =\left(f'\right)^{2}-C^{2}\left(f'\right)^{2}\\
+ & =\left(f'\right)^{2}\left(1-C^{2}\right)\\
+\implies f' & =\sqrt{\frac{C^{2}}{1-C^{2}}}.
+\end{flalign*}
+
+\end_inset
+
+Setting 
+\begin_inset Formula $C_{1}=\sqrt{C^{2}/\left(1-C^{2}\right)}$
+\end_inset
+
+, we have the ODE 
+\begin_inset Formula 
+\[
+f'\left(x\right)=C_{1}\implies\int f'\left(x\right)\dif x=\int C_{1}\dif x,
+\]
+
+\end_inset
+
+which leads to the solution 
+\begin_inset Formula $f\left(x\right)=C_{1}x+C_{2}$
+\end_inset
+
+, i.e., the shortest curve between two points (in the Cartesian plane) is
+ a line.
+\end_layout
+
+\begin_layout Subsubsection
+Case 3: Lagrangian does not depend on 
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, we can apply the chain rule when differentiating 
+\begin_inset Formula $L_{f'}$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif x}L_{f'}=\frac{\partial L_{f'}}{\partial f}\frac{\partial f}{\partial x}+\frac{\partial L_{f'}}{\partial f'}\frac{\partial f'}{\partial x}=L_{f'f}\cdot f'+L_{f'f'}\cdot f''.
+\]
+
+\end_inset
+
+Then, the extremals may be obtained by using Euler's method, i.e., 
+\begin_inset Formula 
+\[
+0=L_{f}-\frac{\dif}{\dif x}L_{f'}=L_{f}-L_{f'f}\cdot f'-L_{f'f'}\cdot f''.
+\]
+
+\end_inset
+
+Alternatively, we can multiply this equation by 
+\begin_inset Formula $f'$
+\end_inset
+
+ to obtain
+\end_layout
+
+\begin_layout Standard
+FIX THIS DERIVATION
+\begin_inset Formula 
+\[
+0\cdot f'=f'\cdot L_{f}-L_{f'f}\cdot f'-L_{f'f'}\cdot f''\implies0=L_{f}\cdot f'-L_{f'f}\cdot\left(f'\right)^{2}-L_{f'f'}\cdot f''f'=\frac{\dif}{\dif x}\left(L-L_{f'}f'\right),
+\]
+
+\end_inset
+
+which implies that the extremals may equivalently be obtained by solving
+\begin_inset Formula 
+\[
+\int\frac{\dif}{\dif x}\left(L-L_{f'}f'\right)\dif x=\int0\dif x\implies L-L_{f'}f'=C.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}\left(f\left(x\right)\right)^{2}+\left(f'\left(x\right)\right)^{2}\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=f^{2}+\left(f'\right)^{2}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $x$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving 
+\begin_inset Formula 
+\[
+0=L_{f}-L_{f'f}\cdot f'-L_{f'f'}\cdot f''=2f-0\cdot f'-2f''=-2f''+2f\implies f''-f=0.
+\]
+
+\end_inset
+
+This is a homogeneous second-order ODE, which can be solved by finding the
+ roots of the characteristic equation.
+ We have 
+\begin_inset Formula $b=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c=-1$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-1=0\implies r^{2}=1\implies r=\pm1,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-1$
+\end_inset
+
+.
+ Then, the general solution is 
+\begin_inset Formula $f\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{-x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}5f\left(x\right)f'\left(x\right)+\left(f'\left(x\right)\right)^{2}-4\left(f\left(x\right)\right)^{2}\dif x.
+\]
+
+\end_inset
+
+The Lagrangian 
+\begin_inset Formula $L=5ff'+\left(f'\right)^{2}-4f^{2}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $x$
+\end_inset
+
+, hence the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ is obtained by solving 
+\begin_inset Formula 
+\[
+0=L_{f}-L_{f'f}\cdot f'-L_{f'f'}\cdot f''=5f'-8f-5f'-2f''=-2f''-8f\implies f''+4f=0.
+\]
+
+\end_inset
+
+The roots of the characteristic equation are
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}+4=0\implies r^{2}=-4\implies r=\pm\sqrt{-4}=\pm2\iota,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=2\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-2\iota$
+\end_inset
+
+.
+ Then, the general solution is 
+\begin_inset Formula 
+\begin{flalign*}
+f\left(x\right) & =c_{1}\mathrm{e}^{2\iota x}+c_{2}\mathrm{e}^{-2\iota x}\\
+ & =c_{1}\left(\cos\left(2x\right)+\iota\sin\left(2x\right)\right)+c_{2}\left(\cos\left(-2x\right)+\iota\sin\left(-2x\right)\right)\tag{Euler's Formula}\\
+ & =c_{1}\cos\left(2x\right)+\iota c_{1}\sin\left(2x\right)+c_{2}\cos\left(2x\right)-\iota c_{2}\sin\left(2x\right)\\
+ & =\left(c_{1}+c_{2}\right)\cos\left(2x\right)+\iota\left(c_{1}-c_{2}\right)\sin\left(2x\right)\\
+ & =c_{1}\cos\left(2x\right)+c_{2}\sin\left(2x\right),
+\end{flalign*}
+
+\end_inset
+
+where we have redefined the arbitrary constants 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Standard
+The resultant solutions to the functionals can be written in general form,
+ e.g., 
+\begin_inset Formula $f\left(x\right)=c_{1}x+c_{2}$
+\end_inset
+
+.
+ To find an explicit solution, we will require additional information in
+ the form of boundary conditions.
+\end_layout
+
+\begin_layout Definition
+For a functional of the form
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x,
+\]
+
+\end_inset
+
+the 
+\emph on
+boundary conditions
+\emph default
+ are defined as 
+\begin_inset Formula $f\left(a\right)=y_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $f\left(b\right)=y_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}\sqrt{1+\left(f'\left(x\right)\right)^{2}}\dif x
+\]
+
+\end_inset
+
+that satisfies the boundary conditions 
+\begin_inset Formula $f\left(0\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $f\left(1\right)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+The minimal is 
+\begin_inset Formula $f\left(x\right)=c_{1}x+c_{2}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\[
+0=f\left(0\right)=c_{2}\implies c_{2}=0\quad\text{and}\quad1=f\left(1\right)=c_{1}+c_{2}=c_{1}\implies c_{1}=1,
+\]
+
+\end_inset
+
+so that the particular solution is 
+\begin_inset Formula $f\left(x\right)=x$
+\end_inset
+
+.
+ This accords with our geometric intuition: the line that passes through
+ 
+\begin_inset Formula $\left(0,0\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(1,1\right)$
+\end_inset
+
+ must have slope 1 and intercept 0.
+\end_layout
+
+\begin_layout Standard
+The concept of a boundary condition will differ somewhat from the initial
+ conditions used to find particular solutions to ODEs.
+ In particular, it is possible that the function that minimizes the functional
+ fails to satisfy the boundary conditions.
+\end_layout
+
+\begin_layout Example
+Use Euler's method to find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{0}^{1}xf\left(x\right)f'\left(x\right)\dif x
+\]
+
+\end_inset
+
+that satisfies the boundary conditions 
+\begin_inset Formula $f\left(0\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $f\left(1\right)=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+The minimal is 
+\begin_inset Formula $f\left(x\right)=0$
+\end_inset
+
+, which we see satisfies the first boundary condition, but not the second.
+\end_layout
+
+\begin_layout Subsection
+Applied examples
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cost functional]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Brachistochrone problem]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Lagrange multipliers
+\end_layout
+
+\begin_layout Standard
+The objective of the method of Lagrange multipliers is to optimize a function
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ subject to a constraint of the form 
+\begin_inset Formula $\varphi=0$
+\end_inset
+
+, where 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ is a function of the same variables as 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ We will assume that, in the two-dimensional case, the partial derivative
+ with respect to 
+\begin_inset Formula $y$
+\end_inset
+
+ evaluated at an extremum is non-zero, and in the three-dimensional case,
+ that the partial derivative with respect to 
+\begin_inset Formula $z$
+\end_inset
+
+ evaluated at an extremum is non-zero.
+\end_layout
+
+\begin_layout Subsection
+Two-dimensional case
+\end_layout
+
+\begin_layout Standard
+Suppose that we would like to find the extrema of 
+\begin_inset Formula $f\left(x,y\right)$
+\end_inset
+
+ subject to the constraint 
+\begin_inset Formula $\varphi\left(x,y\right)=0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\lambda\in\mathbb{R}$
+\end_inset
+
+ be the Lagrange multiplier, and form the auxiliary function 
+\begin_inset Formula $F\left(x,y,\lambda\right)=f\left(x,y\right)+\lambda\varphi\left(x,y\right)$
+\end_inset
+
+.
+ The critical points of 
+\begin_inset Formula $F$
+\end_inset
+
+ are solutions of the simultaneous equations 
+\begin_inset Formula $F_{x}=0$
+\end_inset
+
+, 
+\begin_inset Formula $F_{y}=0$
+\end_inset
+
+, and 
+\begin_inset Formula $F_{\lambda}=0$
+\end_inset
+
+.
+ Observe that the condition 
+\begin_inset Formula $F_{\lambda}=0$
+\end_inset
+
+ is equivalent to the constraint 
+\begin_inset Formula $\varphi\left(x,y\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Find the extremes of 
+\begin_inset Formula $f\left(x,y\right)=x^{2}+xy+y^{2}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $y=x-1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We have 
+\begin_inset Formula $\varphi\left(x,y\right)=y-x+1$
+\end_inset
+
+, so that the auxiliary function is
+\begin_inset Formula 
+\[
+F\left(x,y,\lambda\right)=f\left(x,y\right)+\lambda\varphi\left(x,y\right)=x^{2}+xy+y^{2}+\lambda\left(y-x+1\right).
+\]
+
+\end_inset
+
+The optima 
+\begin_inset Formula $\left(x^{\star},y^{\star}\right)$
+\end_inset
+
+ will occur at points that satisfy
+\begin_inset Formula 
+\[
+\left\{ \left(x,y\right):F_{x}\left(x,y\right)=0,F_{y}\left(x,y\right)=0,\text{ and }F_{\lambda}\left(x,y\right)=0\right\} ,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $F_{z}$
+\end_inset
+
+ denotes the partial derivative of 
+\begin_inset Formula $F$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+F_{x}=2x+y-\lambda,\quad F_{y}=x+2y+\lambda,\quad\text{and}\quad F_{\lambda}=y-x+1.
+\]
+
+\end_inset
+
+Setting these equal to zero and adding the first equation to the second
+ yields 
+\begin_inset Formula 
+\[
+0+0=F_{x}+F_{y}=2x+y-\lambda+x+2y+\lambda=3x+3y\implies3x=-3y\implies x=-y.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substituting into the third equation gives 
+\begin_inset Formula 
+\[
+0=y+y+1=2y+1\implies y=-\frac{1}{2}\implies x=\frac{1}{2}.
+\]
+
+\end_inset
+
+Observe that the point 
+\begin_inset Formula $\left(1,0\right)$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $y=x-1$
+\end_inset
+
+, and observe also that 
+\begin_inset Formula $f\left(1,0\right)=1$
+\end_inset
+
+.
+ The solution 
+\begin_inset Formula $\left(x^{\star},y^{\star}\right)=\left(1/2,-1/2\right)$
+\end_inset
+
+ obtained by the method of Lagrange multipliers is unique, and we have 
+\begin_inset Formula 
+\[
+f\left(x^{\star},y^{\star}\right)=\frac{1}{4}-\frac{1}{4}+\frac{1}{4}=\frac{1}{4}<1,
+\]
+
+\end_inset
+
+so it follows that 
+\begin_inset Formula $\left(1/2,-1/2\right)$
+\end_inset
+
+ is a minimum.
+\end_layout
+
+\begin_layout Example
+Find and characterize the extremes of 
+\begin_inset Formula $f\left(x,y\right)=\left(x-1\right)^{2}y^{2}-y^{2}-\left(x-1\right)^{2}+1$
+\end_inset
+
+ subject to 
+\begin_inset Formula $x+y=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We have 
+\begin_inset Formula $\varphi\left(x,y\right)=x+y-1$
+\end_inset
+
+, so that the auxiliary function is
+\begin_inset Formula 
+\[
+F\left(x,y,\lambda\right)=f\left(x,y\right)+\lambda\varphi\left(x,y\right)=\left(x-1\right)^{2}y^{2}-y^{2}-\left(x-1\right)^{2}+\lambda\left(x+y-1\right).
+\]
+
+\end_inset
+
+The partial derivatives of 
+\begin_inset Formula $F$
+\end_inset
+
+ are
+\begin_inset Formula 
+\[
+F_{x}=2y^{2}\left(x-1\right)-2\left(x-1\right)+\lambda=2\left(x-1\right)\left(y^{2}-1\right)+\lambda,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F_{y}=2y\left(x-1\right)^{2}-2y+\lambda=2y\left(\left(x-1\right)^{2}-1\right)+\lambda,\quad\text{and}\quad F_{\lambda}=x+y-1.
+\]
+
+\end_inset
+
+Setting 
+\begin_inset Formula $F_{\lambda}=0$
+\end_inset
+
+ yields 
+\begin_inset Formula $-y=x-1$
+\end_inset
+
+.
+ Setting 
+\begin_inset Formula $F_{x}=0$
+\end_inset
+
+ and substituting, we have
+\begin_inset Formula 
+\[
+0=-2y\left(y^{2}-1\right)+\lambda\implies\lambda=2y\left(y^{2}-1\right).
+\]
+
+\end_inset
+
+Noting that 
+\begin_inset Formula $\left(1-x\right)^{2}=\left(x-1\right)^{2}=\left(-y\right)^{2}=y^{2}$
+\end_inset
+
+, setting 
+\begin_inset Formula $F_{y}=0$
+\end_inset
+
+ and substituting gives 
+\begin_inset Formula 
+\[
+0=2y\left(y^{2}-1\right)+2y\left(y^{2}-1\right)=4y\left(y^{2}-1\right)\implies y\left(y^{2}-1\right)=y\left(y-1\right)\left(y+1\right)=0,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $y^{\star}\in\left\{ 1,0,-1\right\} $
+\end_inset
+
+, hence the extrema of 
+\begin_inset Formula $f$
+\end_inset
+
+ are 
+\begin_inset Formula $\left\{ \left(0,1\right),\left(1,0\right),\left(2,-1\right)\right\} $
+\end_inset
+
+.
+ Define the 
+\emph on
+bordered Hessian matrix
+\emph default
+ by
+\begin_inset Formula 
+\[
+\mathbf{H}_{F}\left(x,y,\lambda\right)=\begin{bmatrix}0 & -g_{x} & -g_{y}\\
+-g_{x} & F_{xx} & F_{xy}\\
+-g_{y} & F_{yx} & F_{yy}
+\end{bmatrix},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g\left(x,y\right)=x+y$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $g\left(x,y\right)-1=\varphi\left(x,y\right)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\left(x^{\star},y^{\star},\lambda^{\star}\right)$
+\end_inset
+
+ is a critical point of 
+\begin_inset Formula $F$
+\end_inset
+
+ obtained by the method of Lagrange multipliers, it can be shown that 
+\begin_inset Formula $\left(x^{\star},y^{\star},\lambda^{\star}\right)$
+\end_inset
+
+ is a local maximum if 
+\begin_inset Formula $\det\left(\mathbf{H}_{F}\left(x^{\star},y^{\star},\lambda^{\star}\right)\right)>0$
+\end_inset
+
+, and that 
+\begin_inset Formula $\left(x^{\star},y^{\star},\lambda^{\star}\right)$
+\end_inset
+
+ is a local minimum if 
+\begin_inset Formula $\det\left(\mathbf{H}_{F}\left(x^{\star},y^{\star},\lambda^{\star}\right)\right)<0$
+\end_inset
+
+.
+ The determinant of 
+\begin_inset Formula $\mathbf{H}_{F}$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{flalign*}
+\det\left(\mathbf{H}_{F}\right) & =\det\left(\begin{bmatrix}0 & -g_{x} & -g_{y}\\
+-g_{x} & F_{xx} & F_{xy}\\
+-g_{y} & F_{yx} & F_{yy}
+\end{bmatrix}\right)\\
+ & =0\begin{vmatrix}F_{xx} & F_{xy}\\
+F_{yx} & F_{yy}
+\end{vmatrix}-\left(-g_{x}\right)\begin{vmatrix}-g_{x} & -g_{y}\\
+F_{yx} & F_{yy}
+\end{vmatrix}+\left(-g_{y}\right)\begin{vmatrix}-g_{x} & -g_{y}\\
+F_{xx} & F_{xy}
+\end{vmatrix}\\
+ & =g_{x}\begin{vmatrix}-g_{x} & -g_{y}\\
+F_{yx} & F_{yy}
+\end{vmatrix}-g_{y}\begin{vmatrix}-g_{x} & -g_{y}\\
+F_{xx} & F_{xy}
+\end{vmatrix}\\
+ & =g_{x}\left(-g_{x}F_{yy}+g_{y}F_{yx}\right)-g_{y}\left(-g_{x}F_{xy}+g_{y}F_{xx}\right)\\
+ & =-g_{x}^{2}F_{yy}+g_{x}g_{y}F_{yx}+g_{y}g_{x}F_{xy}-g_{y}^{2}F_{xx}\\
+ & =2g_{x}g_{y}F_{xy}-g_{x}^{2}F_{yy}-g_{y}^{2}F_{xx}.\tag{\ensuremath{F_{xy}=F_{yx}}}
+\end{flalign*}
+
+\end_inset
+
+We have 
+\begin_inset Formula $g_{x}=1$
+\end_inset
+
+, 
+\begin_inset Formula $g_{y}=1$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+F_{xx}=2\left(y^{2}-1\right),\quad F_{yy}=2\left(\left(x-1\right)^{2}-1\right),\quad\text{and}\quad F_{xy}=4y\left(x-1\right)=F_{yx},
+\]
+
+\end_inset
+
+where the final equality follows from the fact that 
+\begin_inset Formula $F$
+\end_inset
+
+ is a polynomial, hence has continuous second partial derivatives.
+ Thus,
+\begin_inset Formula 
+\[
+\det\left(\mathbf{H}_{F}\right)=8y\left(x-1\right)-2\left(\left(x-1\right)^{2}-1\right)-2\left(y^{2}-1\right).
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $\left(0,1\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\det\left(\mathbf{H}_{F}\left(0,1\right)\right)=8\left(-1\right)-2\left(\left(-1\right)^{2}-1\right)-2\left(1-1\right)=-8-0-0=-8,
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $\left(0,1\right)$
+\end_inset
+
+ is a local minimum.
+ For 
+\begin_inset Formula $\left(1,0\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\det\left(\mathbf{H}_{F}\left(1,0\right)\right)=0-2\left(0-1\right)-2\left(0-1\right)=2+2=4,
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $\left(1,0\right)$
+\end_inset
+
+ is a local maximum.
+ For 
+\begin_inset Formula $\left(2,-1\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\det\left(\mathbf{H}_{F}\left(2,-1\right)\right)=-8\left(1\right)-2\left(1-1\right)-2\left(0\right)=-8,
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $\left(2,-1\right)$
+\end_inset
+
+ is a local minimum.
+\end_layout
+
+\begin_layout Subsection
+Three-dimensional case
+\end_layout
+
+\begin_layout Standard
+Suppose that we would like to find the extrema of 
+\begin_inset Formula $f\left(x,y,z\right)$
+\end_inset
+
+ subject to a constraint of the form 
+\begin_inset Formula $\varphi\left(x,y,z\right)=0$
+\end_inset
+
+.
+ Similar to the two-dimensional case, we will form the auxiliary function
+ 
+\begin_inset Formula $F\left(x,y,z,\lambda\right)=f\left(x,y,z\right)+\lambda\varphi\left(x,y,z\right)$
+\end_inset
+
+.
+ The critical points of 
+\begin_inset Formula $F$
+\end_inset
+
+ are solutions of the simultaneous equations 
+\begin_inset Formula $F_{x}=0$
+\end_inset
+
+, 
+\begin_inset Formula $F_{y}=0$
+\end_inset
+
+, 
+\begin_inset Formula $F_{z}=0$
+\end_inset
+
+, and 
+\begin_inset Formula $F_{\lambda}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Minimize 
+\begin_inset Formula $x^{2}+y^{2}+z^{2}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $2x+3y-z=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We have 
+\begin_inset Formula $\varphi\left(x,y,z\right)=2x+3y-z-1$
+\end_inset
+
+, so that the auxiliary function is
+\begin_inset Formula 
+\[
+F\left(x,y,z,\lambda\right)=f\left(x,y,z\right)+\lambda\varphi\left(x,y,z\right)=x^{2}+y^{2}+z^{2}+\lambda\left(2x+3y-z-1\right).
+\]
+
+\end_inset
+
+We have
+\begin_inset Formula 
+\[
+F_{x}=2x+2\lambda,\quad F_{y}=2y+3\lambda,\quad F_{z}=2z-\lambda,\quad\text{and}\quad F_{\lambda}=2x+3y-z-1.
+\]
+
+\end_inset
+
+Setting these equal to zero, the first three equations yield
+\begin_inset Formula 
+\[
+x=-\lambda,\quad y=-\frac{3}{2}\lambda,\quad\text{and}\quad z=\frac{1}{2}\lambda.
+\]
+
+\end_inset
+
+Setting 
+\begin_inset Formula $F_{\lambda}=0$
+\end_inset
+
+ and substituting, we have
+\begin_inset Formula 
+\[
+0=-2\lambda-\frac{9}{2}\lambda-\frac{1}{2}\lambda-1\implies7\lambda=-1\implies\lambda=-\frac{1}{7}\implies\left(x,y,z\right)=\left(\frac{1}{7},-\frac{3}{14},-\frac{1}{14}\right).
+\]
+
+\end_inset
+
+Observe that the point 
+\begin_inset Formula $\left(0,0,-1\right)$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $2x+3y-z=1$
+\end_inset
+
+, and observe also that 
+\begin_inset Formula $f\left(0,0,-1\right)=1$
+\end_inset
+
+.
+ The solution 
+\begin_inset Formula $\left(x^{\star},y^{\star},z^{\star}\right)=\left(1/7,-3/14,-1/14\right)$
+\end_inset
+
+ obtained by the method of Lagrange multipliers is unique, and we have
+\begin_inset Formula 
+\[
+f\left(x^{\star},y^{\star},z^{\star}\right)=\frac{1}{49}+\frac{9}{196}+\frac{1}{196}=\frac{14}{196}=\frac{1}{14}<1,
+\]
+
+\end_inset
+
+so it follows that 
+\begin_inset Formula $\left(x^{\star},y^{\star},z^{\star}\right)$
+\end_inset
+
+ is a minimum.
+\end_layout
+
+\begin_layout Subsection
+Economic motivation
+\end_layout
+
+\begin_layout Standard
+We now present a classical consumer choice problem.
+ FINISH PROBLEM
+\end_layout
+
+\begin_layout Chapter
 Ordinary differential equations
 \end_layout
 
@@ -49864,6 +52237,2160 @@ E_{\text{loc}}<\frac{1}{2}\cdot10^{-p}.
 \end_layout
 
 \begin_layout Chapter
+Partial differential equations
+\end_layout
+
+\begin_layout Section
+Basic PDEs
+\end_layout
+
+\begin_layout Standard
+A number of PDEs can be treated as ODEs.
+ Recall that if the partial derivative of a function 
+\begin_inset Formula $f$
+\end_inset
+
+ with respect to a variable 
+\begin_inset Formula $x$
+\end_inset
+
+ is zero, then the function does not depend on 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial x}F\left(x,t\right)=0\implies F\left(x,t\right)=F\left(t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+First order basic PDEs
+\end_layout
+
+\begin_layout Standard
+We begin by solving PDEs that are similar to separable ODEs.
+ 
+\end_layout
+
+\begin_layout Example
+Find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ of the following PDEs, where 
+\begin_inset Formula $u_{x}$
+\end_inset
+
+ denotes the partial derivative of 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{t}=0$
+\end_inset
+
+.
+ It follows from our statement above that
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}u\left(x,t\right)=0\implies u\left(x,t\right)=F\left(x\right),
+\]
+
+\end_inset
+
+i.e., 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ is a function of 
+\begin_inset Formula $x$
+\end_inset
+
+ alone.
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{t}=x^{2}-t^{2}$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}u\left(x,t\right)=x^{2}-t^{2}\implies\int\frac{\partial}{\partial t}u\left(x,t\right)\dif t=\int x^{2}-t^{2}\dif t\implies u\left(x,t\right)=tx^{2}-\frac{1}{3}t^{3}+C\left(x\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $C\left(x\right)$
+\end_inset
+
+ is a function that depends on 
+\begin_inset Formula $x$
+\end_inset
+
+ alone.
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $uu_{t}=2x-t$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+u\left(x,t\right)\frac{\partial}{\partial t}u\left(x,t\right)=2x-t\implies\int u\left(x,t\right)\frac{\partial}{\partial t}u\left(x,t\right)\dif t=\int2x-t\dif t.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $u=u\left(x,t\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\frac{\dif u}{\dif t}=\frac{\dif}{\dif t}u\left(x,t\right)=\frac{\partial}{\partial t}u\left(x,t\right)\frac{\dif}{\dif t}t\implies\dif u=\frac{\partial}{\partial t}u\left(x,t\right)\dif t.
+\]
+
+\end_inset
+
+Then, the general solution is given by
+\begin_inset Formula 
+\[
+\int u\dif u=\int2x-t\dif t\implies\frac{1}{2}u^{2}=2xt-\frac{1}{2}t^{2}+C\left(x\right)\implies u\left(x,t\right)=\sqrt{4xt-t^{2}+2C\left(x\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u^{2}u_{x}=xt+2$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+\left(u\left(x,t\right)\right)^{2}\frac{\partial}{\partial x}u\left(x,t\right)=xt+2\implies\int\left(u\left(x,t\right)\right)^{2}\frac{\partial}{\partial x}u\left(x,t\right)\dif x=\int xt+2\dif x.
+\]
+
+\end_inset
+
+Letting 
+\begin_inset Formula $u=u\left(x,t\right)$
+\end_inset
+
+, it follows by symmetry from our result above that 
+\begin_inset Formula $\dif u=u_{x}\dif x$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+\int u^{2}\dif u=\int xt+2\dif x\implies\frac{1}{3}u^{3}=\frac{1}{2}tx^{2}+2x+C\left(t\right)\implies u\left(x,t\right)=\sqrt[3]{\frac{3}{2}tx^{2}+6x+3C\left(t\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We will solve the following examples, which resemble linear first order
+ ODEs, by applying the method of integrating factor.
+\end_layout
+
+\begin_layout Example
+Find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ of the following PDEs.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{x}+u=0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $h\left(x\right)=1$
+\end_inset
+
+, and observe that 
+\begin_inset Formula $H\left(x\right)=x$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(x\right)$
+\end_inset
+
+.
+ Multiplying both sides of the equation by 
+\begin_inset Formula $\mathrm{e}^{H\left(x\right)}$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+0=u_{x}\mathrm{e}^{x}+u\mathrm{e}^{x}=\frac{\partial}{\partial x}u\mathrm{e}^{x}\implies\int\frac{\partial}{\partial x}\left(u\mathrm{e}^{x}\right)\dif x=\int0\dif x\implies u\mathrm{e}^{x}=C\left(t\right),
+\]
+
+\end_inset
+
+which leads to the general solution 
+\begin_inset Formula $u\left(x,t\right)=\mathrm{e}^{-x}C\left(t\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{x}+ut^{2}=0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $h\left(x\right)=t^{2}$
+\end_inset
+
+, and observe that 
+\begin_inset Formula $H\left(x\right)=xt^{2}$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(x\right)$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+0=u_{x}\mathrm{e}^{xt^{2}}+ut^{2}\mathrm{e}^{xt^{2}}=\frac{\partial}{\partial x}u\mathrm{e}^{xt^{2}}\implies\int\frac{\partial}{\partial x}\left(u\mathrm{e}^{xt^{2}}\right)\dif x=\int0\dif x\implies u\mathrm{e}^{xt^{2}}=C\left(t\right),
+\]
+
+\end_inset
+
+which leads to the general solution 
+\begin_inset Formula $u\left(x,t\right)=C\left(t\right)\mathrm{e}^{-xt^{2}}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{t}+u=x$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $h\left(t\right)=1$
+\end_inset
+
+, and observe that 
+\begin_inset Formula $H\left(t\right)=t$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(t\right)$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+x\mathrm{e}^{t}=u_{t}\mathrm{e}^{t}+u\mathrm{e}^{t}=\frac{\partial}{\partial t}u\mathrm{e}^{t}\implies\int\left(u\mathrm{e}^{t}\right)\dif t=\int x\mathrm{e}^{t}\dif t\implies u\mathrm{e}^{t}=x\mathrm{e}^{t}+C\left(x\right),
+\]
+
+\end_inset
+
+which leads to the general solution 
+\begin_inset Formula $u\left(x,t\right)=x+C\left(x\right)\mathrm{e}^{-t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{t}+2\left(t-x\right)u=t-x$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $h\left(t\right)=2t-2x$
+\end_inset
+
+, and observe that 
+\begin_inset Formula $H\left(t\right)=t^{2}-2xt$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $h\left(t\right)$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+\left(t-x\right)\mathrm{e}^{t^{2}-2xt}=u_{t}\mathrm{e}^{t^{2}-2xt}+2\left(t-x\right)u\mathrm{e}^{t^{2}-2xt}=\frac{\partial}{\partial t}u\mathrm{e}^{t^{2}-2xt}.
+\]
+
+\end_inset
+
+Integrating both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+\int\frac{\partial}{\partial t}\left(u\mathrm{e}^{t^{2}-2xt}\right)\dif t=\int\left(t-x\right)\mathrm{e}^{t^{2}-2xt}\dif t\implies u\mathrm{e}^{t^{2}-2xt}=\frac{1}{2}\mathrm{e}^{t^{2}-2xt}+C\left(x\right),
+\]
+
+\end_inset
+
+which leads to the general solution
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\frac{1}{2}+C\left(x\right)\mathrm{e}^{2xt-t^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Second order basic PDEs
+\end_layout
+
+\begin_layout Standard
+As with first order basic PDEs, we can apply techniques from second order
+ ODEs to solve certain second order PDEs.
+ We can solve each of the examples below as if it were a nonhomogeneous
+ second order ODE.
+\end_layout
+
+\begin_layout Example
+Find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ for the following PDEs, where 
+\begin_inset Formula $u_{xx}$
+\end_inset
+
+ denotes the second partial derivative of 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{xx}+u=2t$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $b=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c=1$
+\end_inset
+
+, so that the characteristic equation is 
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}+1=0\implies r^{2}=-1\implies r=\pm\sqrt{-1}=\pm\iota,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-\iota$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula 
+\begin{flalign*}
+u_{h}\left(x,t\right) & =C_{1}\left(t\right)\mathrm{e}^{\iota x}+C_{2}\left(t\right)\mathrm{e}^{-\iota x}\\
+ & =C_{1}\left(t\right)\left(\cos\left(x\right)+\iota\sin\left(x\right)\right)+C_{2}\left(t\right)\left(\cos\left(-x\right)+\iota\sin\left(-x\right)\right)\tag{Euler's Formula}\\
+ & =C_{1}\left(t\right)\cos\left(x\right)+\iota C_{1}\left(t\right)\sin\left(x\right)+C_{2}\left(t\right)\cos\left(x\right)-\iota C_{2}\left(t\right)\sin\left(x\right)\\
+ & =\left(C_{1}\left(t\right)+C_{2}\left(t\right)\right)\cos\left(x\right)+\iota\left(C_{1}\left(t\right)-C_{2}\left(t\right)\right)\sin\left(x\right)\\
+ & =C_{1}\left(t\right)\cos\left(x\right)+C_{2}\left(t\right)\sin\left(x\right),
+\end{flalign*}
+
+\end_inset
+
+where we have redefined the arbitrary functions 
+\begin_inset Formula $C_{1}\left(t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{2}\left(t\right)$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $m=0$
+\end_inset
+
+, so that the particular solution is 
+\begin_inset Formula $u_{p}\left(x,t\right)=Ax^{s}\mathrm{e}^{0\cdot x}=Ax^{s}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $s=0$
+\end_inset
+
+, then 
+\begin_inset Formula $u_{p}=A$
+\end_inset
+
+, so that 
+\begin_inset Formula $\partial_{x}u_{p}=\partial_{xx}u_{p}=0$
+\end_inset
+
+.
+ Then, the homogeneous equation becomes 
+\begin_inset Formula $u_{xx}+u=0+A\neq0$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $u_{p}=A$
+\end_inset
+
+ is not a solution of the homogeneous equation.
+ Hence, we will take 
+\begin_inset Formula $s=0$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\[
+u_{xx}+u=A=2t\implies A=2t,
+\]
+
+\end_inset
+
+so that the general solution is given by
+\begin_inset Formula 
+\[
+u\left(x,t\right)=u_{h}\left(x,t\right)+u_{p}\left(x,t\right)=C_{1}\left(t\right)\cos\left(x\right)+C_{2}\left(t\right)\sin\left(x\right)+2t.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{tt}+4u=\sin\left(t\right)$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $b=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c=4$
+\end_inset
+
+, so that the characteristic equation is
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}+4=0\implies r^{2}=-4\implies r=\pm\sqrt{4\cdot-1}=\pm2\iota,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=2\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-2\iota$
+\end_inset
+
+.
+ Then, the homogeneous solution is
+\begin_inset Formula 
+\begin{flalign*}
+u_{h}\left(x,t\right) & =C_{1}\left(x\right)\mathrm{e}^{2\iota t}+C_{2}\left(x\right)\mathrm{e}^{-2\iota t}\\
+ & =C_{1}\left(x\right)\left(\cos\left(2t\right)+\iota\sin\left(2t\right)\right)+C_{2}\left(x\right)\left(\cos\left(-2t\right)+\iota\sin\left(-2t\right)\right)\\
+ & =C_{1}\left(x\right)\cos\left(2t\right)+\iota C_{1}\left(x\right)\sin\left(2t\right)+C_{2}\left(x\right)\cos\left(2t\right)-\iota C_{2}\left(x\right)\sin\left(2t\right)\\
+ & =\left(C_{1}\left(x\right)+C_{2}\left(x\right)\right)\cos\left(2t\right)+\iota\left(C_{1}\left(x\right)-C_{2}\left(x\right)\right)\sin\left(2t\right)\\
+ & =C_{1}\left(x\right)\cos\left(2t\right)+C_{2}\left(x\right)\sin\left(2t\right),
+\end{flalign*}
+
+\end_inset
+
+where we have again redefined the arbitrary functions 
+\begin_inset Formula $C_{1}\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{2}\left(x\right)$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $m=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma=1$
+\end_inset
+
+, so that the particular solution will be of the form 
+\begin_inset Formula $u_{p}\left(x,t\right)=t^{s}\left(A\cos\left(t\right)+B\sin\left(t\right)\right)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $s=0$
+\end_inset
+
+, then 
+\begin_inset Formula $u_{p}=A\cos\left(t\right)+B\sin\left(t\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\partial_{t}u_{p}=-A\sin\left(t\right)+B\cos\left(t\right)\quad\text{and}\quad\partial_{tt}u_{p}=-A\cos\left(t\right)-B\sin\left(t\right).
+\]
+
+\end_inset
+
+We consider each term of the particular solution separately.
+ For 
+\begin_inset Formula $A\cos\left(t\right)$
+\end_inset
+
+, the homogeneous equation is
+\begin_inset Formula 
+\[
+u_{tt}+4u=-A\cos\left(t\right)-B\sin\left(t\right)+4A\cos\left(t\right)=3A\cos\left(t\right)-B\sin\left(t\right),
+\]
+
+\end_inset
+
+which will not in general be equal to zero.
+ For 
+\begin_inset Formula $B\sin\left(t\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+u_{tt}+4u=-A\cos\left(t\right)-B\sin\left(t\right)+4B\sin\left(t\right)=-A\cos\left(t\right)+3B\sin\left(t\right),
+\]
+
+\end_inset
+
+which will also not in general be equal to zero.
+ Hence, we will take 
+\begin_inset Formula $s=0$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\[
+u_{tt}+4u=-A\cos\left(t\right)-B\sin\left(t\right)+4\left(A\cos\left(t\right)+B\sin\left(t\right)\right)=3A\cos\left(t\right)+3B\sin\left(t\right)=\sin\left(t\right),
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $A=0$
+\end_inset
+
+ and 
+\begin_inset Formula $B=1/3$
+\end_inset
+
+.
+ Then, the general solution is given by
+\begin_inset Formula 
+\[
+u\left(x,t\right)=u_{h}\left(x,t\right)+u_{p}\left(x,t\right)=C_{1}\left(x\right)\cos\left(2t\right)+C_{2}\left(x\right)\sin\left(2t\right)+\frac{1}{3}\sin\left(t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{tt}+2u_{t}-15u=xt^{2}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $b=2$
+\end_inset
+
+ and 
+\begin_inset Formula $c=-15$
+\end_inset
+
+, so that the characteristic equation is
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}+2r-15=\left(r+5\right)\left(r-3\right)=0,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=-5$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=3$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula 
+\[
+u_{h}\left(x,t\right)=C_{1}\left(x\right)\mathrm{e}^{-5t}+C_{2}\left(x\right)\mathrm{e}^{3t}.
+\]
+
+\end_inset
+
+To find the particular solution, we will apply the method of undetermined
+ coefficients.
+ The forcing term is 
+\begin_inset Formula $xt^{2}$
+\end_inset
+
+, which has derivatives (with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+) of 
+\begin_inset Formula $xt$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+ (ignoring multiplicative constants).
+ We will seek 
+\begin_inset Formula $u_{p}\left(x,t\right)$
+\end_inset
+
+ as a linear combination of these terms, i.e., 
+\begin_inset Formula $u_{p}=Axt^{2}+Bxt+Cx$
+\end_inset
+
+, so that 
+\begin_inset Formula $\partial_{t}u_{p}=2Axt+Bx$
+\end_inset
+
+ and 
+\begin_inset Formula $\partial_{tt}u_{p}=2Ax$
+\end_inset
+
+.
+ We see that none of the terms in 
+\begin_inset Formula $u_{p}$
+\end_inset
+
+ is included in 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\begin{flalign*}
+u_{tt}+2u_{t}-15u & =2Ax+2\left(2Axt+Bx\right)-15\left(Axt^{2}+Bxt+Cx\right)\\
+ & =-15Axt^{2}+\left(4A-15B\right)xt+\left(2A+2B-15C\right)x\\
+ & =xt^{2},
+\end{flalign*}
+
+\end_inset
+
+which leads to 
+\begin_inset Formula 
+\[
+-15A=1\implies A=-\frac{1}{15},\quad4A-15B=0\implies B=\frac{4}{15}A=-\frac{4}{15^{2}},
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+0=2A+2B-15C=-\frac{2}{15}-\frac{8}{15^{2}}-15C\implies C=-\frac{2}{15^{2}}-\frac{8}{15^{3}}=-\frac{38}{15^{3}}.
+\]
+
+\end_inset
+
+Then, the general solution is given by 
+\begin_inset Formula 
+\begin{flalign*}
+u\left(x,t\right) & =u_{h}\left(x,t\right)+u_{p}\left(x,t\right)\\
+ & =C_{1}\left(x\right)\mathrm{e}^{-5t}+C_{2}\left(x\right)\mathrm{e}^{3t}-\frac{1}{15}xt^{2}-\frac{4}{15^{2}}xt-\frac{38}{15^{3}}x\\
+ & =C_{1}\left(x\right)\mathrm{e}^{-5t}+C_{2}\left(x\right)\mathrm{e}^{3t}-x\left(\frac{225}{15^{3}}t^{2}+\frac{60}{15^{3}}t+\frac{38}{15^{3}}\right)\\
+ & =C_{1}\left(x\right)\mathrm{e}^{-5t}+C_{2}\left(x\right)\mathrm{e}^{3t}-\frac{\left(225t^{2}+60t+38\right)x}{3375}.
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Suppose that 
+\begin_inset Formula $u_{xx}+2u_{x}-15u=\sin\left(t\right)$
+\end_inset
+
+.
+ By symmetry, the homogeneous solution is
+\begin_inset Formula 
+\[
+u_{h}\left(x,t\right)=C_{1}\left(t\right)\mathrm{e}^{-5x}+C_{2}\left(t\right)\mathrm{e}^{3x}.
+\]
+
+\end_inset
+
+The forcing term is 
+\begin_inset Formula $\sin\left(t\right)$
+\end_inset
+
+, which has derivative 
+\begin_inset Formula $\cos\left(t\right)$
+\end_inset
+
+.
+ We will seek 
+\begin_inset Formula $u_{p}\left(x,t\right)$
+\end_inset
+
+ as a linear combination of these terms, i.e., 
+\begin_inset Formula $u_{p}\left(x,t\right)=A\cos\left(t\right)+B\sin\left(t\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $\partial_{x}u_{p}=\partial_{xx}u_{p}=0$
+\end_inset
+
+.
+ We see that none of the terms in 
+\begin_inset Formula $u_{p}$
+\end_inset
+
+ is included in 
+\begin_inset Formula $u_{h}$
+\end_inset
+
+, so that the nonhomogeneous equation becomes
+\begin_inset Formula 
+\[
+u_{xx}+2u_{x}-15u=0+2\cdot0-15\left(A\cos\left(t\right)+B\sin\left(t\right)\right)=-15A\cos\left(t\right)-15B\sin\left(t\right)=\sin\left(t\right),
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $A=0$
+\end_inset
+
+ and 
+\begin_inset Formula $B=-1/15$
+\end_inset
+
+.
+ Then, the general solution is given by
+\begin_inset Formula 
+\[
+u\left(x,t\right)=u_{h}\left(x,t\right)+u_{p}\left(x,t\right)=C_{1}\left(t\right)\mathrm{e}^{-5x}+C_{2}\left(t\right)\mathrm{e}^{3x}-\frac{1}{15}\sin\left(t\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+The method of characteristics
+\end_layout
+
+\begin_layout Subsection
+Second order PDE with boundary conditions
+\end_layout
+
+\begin_layout Standard
+We will find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ to the PDE 
+\begin_inset Formula $u_{tx}=f\left(x,t\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $x,t>0$
+\end_inset
+
+ that satisfies the auxiliary conditions 
+\begin_inset Formula $u\left(x,0\right)=g\left(x\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $x>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u\left(0,t\right)=h\left(t\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $t>0$
+\end_inset
+
+, where 
+\begin_inset Formula $f$
+\end_inset
+
+, 
+\begin_inset Formula $g$
+\end_inset
+
+, and 
+\begin_inset Formula $h$
+\end_inset
+
+ are well-behaved functions with 
+\begin_inset Formula $g\left(0\right)=h\left(0\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $g'\left(0\right)=h'\left(0\right)$
+\end_inset
+
+.
+ We begin by finding the homogeneous solution, i.e., the solution to
+\begin_inset Formula 
+\[
+0=\frac{\partial^{2}u_{1}}{\partial x\partial t}=\frac{\partial}{\partial x}\left(\frac{\partial u_{1}}{\partial t}\right),
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula $u_{1}^{\left(0,1\right)}$
+\end_inset
+
+ must be a function of 
+\begin_inset Formula $t$
+\end_inset
+
+ alone, i.e., 
+\begin_inset Formula $u_{1}^{\left(0,1\right)}=f_{1}\left(t\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $u_{1}^{\left(n,k\right)}$
+\end_inset
+
+ denotes the 
+\begin_inset Formula $n\text{th}$
+\end_inset
+
+ partial derivative of 
+\begin_inset Formula $u_{1}$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+ and the 
+\begin_inset Formula $k\text{th}$
+\end_inset
+
+ partial derivative with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Integrating both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+\int u_{1}^{\left(0,1\right)}\dif t=\int f_{1}\left(t\right)\dif t\implies u_{1}=F_{1}\left(t\right)+c_{1}\left(x\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ is an antiderivative of 
+\begin_inset Formula $f_{1}$
+\end_inset
+
+.
+ Assuming that 
+\begin_inset Formula $u_{1}\left(x,t\right)$
+\end_inset
+
+ has a continuous second derivative, it follows by symmetry that 
+\begin_inset Formula 
+\[
+u_{1}=G_{1}\left(x\right)+c_{2}\left(t\right),
+\]
+
+\end_inset
+
+so that the homogeneous solution is 
+\begin_inset Formula 
+\begin{equation}
+u_{1}\left(x,t\right)=F_{1}\left(t\right)+G_{1}\left(x\right),\label{eq:second-ord-pde-homogeneous}
+\end{equation}
+
+\end_inset
+
+where the functions 
+\begin_inset Formula $c_{1}\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}\left(t\right)$
+\end_inset
+
+ have been 
+\begin_inset Quotes eld
+\end_inset
+
+absorbed
+\begin_inset Quotes erd
+\end_inset
+
+ by the (arbitrary) antiderivatives 
+\begin_inset Formula $G_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+, respectively.
+ We have 
+\begin_inset Formula $x,t>0$
+\end_inset
+
+, so we obtain the particular solution by integrating 
+\begin_inset Formula $f\left(x,t\right)$
+\end_inset
+
+ over 
+\begin_inset Formula $\left(0,t\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(0,x\right]$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\[
+\int_{0}^{x}\int_{0}^{t}\frac{\partial^{2}u_{2}}{\partial x\partial t}\dif\tau\dif\xi=u_{2}\left(x,t\right)=\int_{0}^{x}\int_{0}^{t}f\left(\tau,\xi\right)\dif\tau\dif\xi.
+\]
+
+\end_inset
+
+Then, the general solution is 
+\begin_inset Formula 
+\[
+u\left(x,t\right)=u_{1}\left(x,t\right)+u_{2}\left(x,t\right)=F\left(t\right)+G\left(x\right)+\int_{0}^{x}\int_{0}^{t}f\left(\tau,\xi\right)\dif\tau\dif\xi,
+\]
+
+\end_inset
+
+where we have dropped the subscripts on 
+\begin_inset Formula $F$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ for clarity.
+ Now, the auxiliary condition 
+\begin_inset Formula $u\left(x,0\right)=g\left(x\right)$
+\end_inset
+
+ implies that
+\begin_inset Formula 
+\begin{flalign*}
+u\left(x,0\right) & =F\left(0\right)+G\left(x\right)+\int_{0}^{x}\int_{0}^{0}f\left(\tau,\xi\right)\dif\tau\dif\xi\\
+ & =F\left(0\right)+G\left(x\right)+\int_{0}^{x}0\dif\xi\\
+ & =F\left(0\right)+G\left(x\right)\\
+ & =g\left(x\right),
+\end{flalign*}
+
+\end_inset
+
+and by symmetry, the condition 
+\begin_inset Formula $u\left(0,t\right)=h\left(t\right)$
+\end_inset
+
+ implies that
+\begin_inset Formula 
+\[
+u\left(0,t\right)=F\left(t\right)+G\left(0\right)=h\left(t\right).
+\]
+
+\end_inset
+
+Observing that 
+\begin_inset Formula 
+\[
+G\left(x\right)=g\left(x\right)-F\left(0\right)\quad\text{and}\quad F\left(t\right)=h\left(t\right)-G\left(0\right),
+\]
+
+\end_inset
+
+it follows that
+\begin_inset Formula 
+\[
+G\left(0\right)=g\left(0\right)-F\left(0\right)\implies g\left(0\right)=F\left(0\right)+G\left(0\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+F\left(0\right)=h\left(0\right)-G\left(0\right)\implies h\left(0\right)=F\left(0\right)+G\left(0\right),
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $g\left(0\right)=h\left(0\right)$
+\end_inset
+
+.
+ Finally, noting that 
+\begin_inset Formula 
+\[
+F\left(t\right)+G\left(x\right)=h\left(t\right)-G\left(0\right)+g\left(x\right)-F\left(0\right)=h\left(t\right)+g\left(x\right)-\left(F\left(0\right)+G\left(0\right)\right)=h\left(t\right)+g\left(x\right)-h\left(0\right),
+\]
+
+\end_inset
+
+we can write the general solution as
+\begin_inset Formula 
+\begin{equation}
+u\left(x,t\right)=h\left(t\right)+g\left(x\right)-h\left(0\right)+\int_{0}^{x}\int_{0}^{t}f\left(\tau,\xi\right)\dif\tau\dif\xi.\label{eq:gen-soln-pde-boundary}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ to the PDE 
+\begin_inset Formula $u_{tx}=xt$
+\end_inset
+
+ for 
+\begin_inset Formula $x,t>0$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $u\left(x,0\right)=\sin\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $u\left(0,t\right)=\cos\left(t\right)-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:gen-soln-pde-boundary"
+
+\end_inset
+
+ implies that the general solution is given by
+\begin_inset Formula 
+\begin{flalign*}
+u\left(x,t\right) & =\cos\left(t\right)-1+\sin\left(x\right)-\left(\cos\left(0\right)-1\right)+\int_{0}^{x}\int_{0}^{t}\xi\tau\dif\tau\xi\\
+ & =\cos\left(t\right)-1+\sin\left(x\right)-\left(1-1\right)+\int_{0}^{x}\xi\left[\frac{1}{2}\tau^{2}\right|_{0}^{t}\dif\xi\\
+ & =\cos\left(t\right)-1+\sin\left(x\right)+\int_{0}^{x}\xi\left(\frac{1}{2}t^{2}-0\right)\dif\xi\\
+ & =\cos\left(t\right)-1+\sin\left(x\right)+\frac{1}{2}t^{2}\left[\frac{1}{2}\xi^{2}\right|_{0}^{x}\\
+ & =\cos\left(t\right)-1+\sin\left(x\right)+\frac{1}{4}x^{2}t^{2}.
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Chain rule
+\end_layout
+
+\begin_layout Standard
+If we have the coordinates 
+\begin_inset Formula $\left(x,y\right)$
+\end_inset
+
+, then we can always express a new set of coordinate 
+\begin_inset Formula $\left(\eta,\xi\right)$
+\end_inset
+
+ by the substitution 
+\begin_inset Formula $x=x\left(\eta,\xi\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $y=y\left(\eta,\xi\right)$
+\end_inset
+
+, or equivalently 
+\begin_inset Formula $\eta=\eta\left(x,y\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=\xi\left(x,y\right)$
+\end_inset
+
+.
+ Given a function 
+\begin_inset Formula $f=f\left(x,y\right)$
+\end_inset
+
+, it is sometimes more convenient to represent the function in the new coordinat
+es, i.e., 
+\begin_inset Formula $f\left(x\left(\eta,\xi\right),y\left(\eta,\xi\right)\right)=f\left(\eta,\xi\right)$
+\end_inset
+
+, which necessitates computing the partial derivatives of 
+\begin_inset Formula $f$
+\end_inset
+
+ with respect to the new coordinates.
+ These derivatives are obtained by the chain rule, i.e., 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial x}f\left(\eta,\xi\right)=\frac{\partial}{\partial\eta\left(x,y\right)}f\left(\eta\left(x,y\right),\xi\left(x,y\right)\right)\frac{\partial}{\partial x}\eta\left(x,y\right)+\frac{\partial}{\partial\xi\left(x,y\right)}f\left(\eta\left(x,y\right),\xi\left(x,y\right)\right)\frac{\partial}{\partial\xi}\xi\left(x,y\right),
+\]
+
+\end_inset
+
+or simplifying notation, 
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial x}=\frac{\partial f}{\partial\eta}\frac{\partial\eta}{\partial x}+\frac{\partial f}{\partial\xi}\frac{\partial\xi}{\partial x}.
+\]
+
+\end_inset
+
+By symmetry, we have
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial y}=\frac{\partial f}{\partial\eta}\frac{\partial\eta}{\partial y}+\frac{\partial f}{\partial\xi}\frac{\partial\xi}{\partial y}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Let
+\begin_inset Formula 
+\[
+f\left(x,y\right)=\frac{1}{\sqrt{x^{2}+y^{2}}},
+\]
+
+\end_inset
+
+and convert to polar coordinates, i.e., set 
+\begin_inset Formula $x=r\cos\left(\theta\right)$
+\end_inset
+
+ and set 
+\begin_inset Formula $y=r\sin\left(\theta\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $r\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta\in\left[0,2\pi\right]$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+f\left(r,\theta\right)=\frac{1}{\sqrt{\left(r\cos\left(\theta\right)\right)^{2}+\left(r\sin\left(\theta\right)\right)^{2}}}=\frac{1}{\sqrt{r^{2}\left(\cos^{2}\left(\theta\right)+\sin^{2}\left(\theta\right)\right)}}=\frac{1}{\sqrt{r^{2}}}=\frac{1}{r}.
+\]
+
+\end_inset
+
+The first derivatives in terms of the new coordinates 
+\begin_inset Formula $\left(r,\theta\right)$
+\end_inset
+
+ are 
+\begin_inset Formula 
+\begin{flalign}
+\frac{\partial f}{\partial x} & =\frac{\partial f}{\partial r}\frac{\partial r}{\partial x}+\frac{\partial f}{\partial\theta}\frac{\partial\theta}{\partial x}\quad\text{and}\quad\frac{\partial f}{\partial y}=\frac{\partial f}{\partial r}\frac{\partial r}{\partial y}+\frac{\partial f}{\partial\theta}\frac{\partial\theta}{\partial y}.\label{eq:partial-deriv-chain-rule}
+\end{flalign}
+
+\end_inset
+
+Noting that 
+\begin_inset Formula 
+\[
+x=r\cos\left(\theta\right)\implies x^{2}=r^{2}\cos^{2}\left(\theta\right)\quad\text{and}\quad y=r\sin\left(\theta\right)\implies y^{2}=r^{2}\sin^{2}\left(\theta\right),
+\]
+
+\end_inset
+
+we have 
+\begin_inset Formula 
+\[
+x^{2}+y^{2}=r^{2}\cos^{2}\left(\theta\right)+r^{2}\sin^{2}\left(\theta\right)=r^{2}\left(\cos^{2}\left(\theta\right)+\sin^{2}\left(\theta\right)\right)\implies r^{2}=x^{2}+y^{2}\implies r=\sqrt{x^{2}+y^{2}}.
+\]
+
+\end_inset
+
+Similarly, we have
+\begin_inset Formula 
+\[
+\frac{y}{x}=\frac{r\sin\left(\theta\right)}{r\cos\left(\theta\right)}=\tan\left(\theta\right)\implies\theta=\arctan\left(\frac{y}{x}\right).
+\]
+
+\end_inset
+
+Then, the necessary partial derivatives are 
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial r}=-\frac{1}{r^{2}},\quad\frac{\partial f}{\partial\theta}=0,\quad\frac{\partial r}{\partial x}=\frac{1}{2\sqrt{x^{2}+y^{2}}}\cdot2x=\frac{x}{\sqrt{x^{2}+y^{2}}},\quad\text{and}\quad\frac{\partial r}{\partial y}=\frac{y}{\sqrt{x^{2}+y^{2}}},
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial x}=-\frac{1}{r^{2}}\cdot\frac{x}{\sqrt{x^{2}+y^{2}}}+0\cdot\frac{\partial\theta}{\partial x}=-\frac{r\cos\left(\theta\right)}{r^{3}}=-\frac{\cos\left(\theta\right)}{r^{2}}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial y}=-\frac{1}{r^{2}}\cdot\frac{y}{\sqrt{x^{2}+y^{2}}}+0\cdot\frac{\partial\theta}{\partial y}=-\frac{r\sin\left(\theta\right)}{r^{3}}=-\frac{\sin\left(\theta\right)}{r^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a function of 
+\begin_inset Formula $\left(x,t\right)$
+\end_inset
+
+, let 
+\begin_inset Formula $\eta=x+ct$
+\end_inset
+
+, and let 
+\begin_inset Formula $\xi=x-ct$
+\end_inset
+
+ for some 
+\begin_inset Formula $c\in\mathbb{R}$
+\end_inset
+
+.
+ Find expressions for 
+\begin_inset Formula $F_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{t}$
+\end_inset
+
+ with respect to the partial derivatives of the new coordinates 
+\begin_inset Formula $\left(\eta,\xi\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+From 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:partial-deriv-chain-rule"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial F}{\partial x} & =\frac{\partial F}{\partial\eta}\frac{\partial\eta}{\partial x}+\frac{\partial F}{\partial\xi}\frac{\partial\xi}{\partial x}=F_{\eta}+F_{\xi}\quad\text{and}\quad\frac{\partial F}{\partial t}=\frac{\partial F}{\partial\eta}\frac{\partial\eta}{\partial t}+\frac{\partial F}{\partial\xi}\frac{\partial\xi}{\partial t}=cF_{\eta}-cF_{\xi}=c\left(F_{\eta}-F_{\xi}\right).
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The advection equation
+\end_layout
+
+\begin_layout Standard
+The advection equation, a special case of the wave equation, models the
+ behavior of acoustic waves and is defined as 
+\begin_inset Formula $u_{t}+cu_{x}=0$
+\end_inset
+
+, where 
+\begin_inset Formula $c$
+\end_inset
+
+ represents wave speed.
+ The general solution to this equation is obtained from the chain rule.
+ Define the new variables 
+\begin_inset Formula $\eta=x+ct$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=x-ct$
+\end_inset
+
+, and observe that
+\begin_inset Formula 
+\[
+0=u_{t}+cu_{x}=c\left(u_{\eta}-u_{\xi}\right)+c\left(u_{\eta}+u_{\xi}\right)=2cu_{\eta}.
+\]
+
+\end_inset
+
+Now, if the partial derivative of 
+\begin_inset Formula $u\left(\eta,\xi\right)$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $\eta$
+\end_inset
+
+ is zero, then it follows that 
+\begin_inset Formula $u\left(\eta,\xi\right)$
+\end_inset
+
+ is a function of 
+\begin_inset Formula $\xi$
+\end_inset
+
+ only, i.e., 
+\begin_inset Formula $u\left(\eta,\xi\right)=F\left(\xi\right)$
+\end_inset
+
+, so that the general solution is 
+\begin_inset Formula $u\left(x,t\right)=F\left(x-ct\right)$
+\end_inset
+
+.
+ The lines 
+\begin_inset Formula $x-ct=k$
+\end_inset
+
+ for some 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+ are called 
+\emph on
+characteristic curves
+\emph default
+.
+\end_layout
+
+\begin_layout Example
+Show that the following are solutions to the advection equation.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $u\left(x,t\right)=\cos\left(x-ct\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+u_{x}=-\sin\left(x-ct\right)\ \text{and}\ u_{t}=c\sin\left(x-ct\right)\implies u_{t}+cu_{x}=c\sin\left(x-ct\right)-c\sin\left(x-ct\right)=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $u\left(x,t\right)=\sin\left(x-ct\right)$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+u_{x}=\cos\left(x-ct\right)\ \text{and}\ u_{t}=-c\cos\left(x-ct\right)\implies u_{t}+cu_{x}=-c\cos\left(x-ct\right)+c\cos\left(x-ct\right)=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $u\left(x,t\right)=\mathrm{e}^{\iota\left(x-ct\right)}$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+u_{x}=\iota\mathrm{e}^{\iota\left(x-ct\right)}\ \text{and}\ u_{t}=-c\iota\mathrm{e}^{\iota\left(x-ct\right)}\implies u_{t}+cu_{x}=-c\iota\mathrm{e}^{\iota\left(x-ct\right)}+c\iota\mathrm{e}^{\iota\left(x-ct\right)}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The typical wave behavior is given by the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+.
+ We will now see how to use the general solution to set boundary conditions
+ like 
+\begin_inset Formula $u\left(x,0\right)=f\left(x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Find the solution 
+\begin_inset Formula $u\left(x,t\right)$
+\end_inset
+
+ to the advection equation with boundary condition 
+\begin_inset Formula $u\left(x,0\right)=f\left(x\right)$
+\end_inset
+
+ for the following functions 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x\right)=\cos\left(x\right)$
+\end_inset
+
+.
+ The general solution is 
+\begin_inset Formula $u\left(x,t\right)=F\left(x-ct\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+F\left(x\right)=F\left(x-c\cdot0\right)=u\left(x,0\right)=\cos\left(x\right)\implies u\left(x,t\right)=\cos\left(x-ct\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x\right)=x+3$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+F\left(x\right)=u\left(x,0\right)=x+3\implies u\left(x,t\right)=x-ct+3.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x\right)=1/\left(1+x^{2}\right)$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+F\left(x\right)=u\left(x,0\right)=\frac{1}{1+x^{2}}\implies u\left(x,t\right)=\frac{1}{1+\left(x-ct\right)^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+In the previous examples, and in our general solution to the advection equation,
+ we have assumed that the wave speed 
+\begin_inset Formula $c$
+\end_inset
+
+ is constant.
+ Suppose now that 
+\begin_inset Formula $x$
+\end_inset
+
+ is a function of 
+\begin_inset Formula $t$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $x=x\left(t\right)$
+\end_inset
+
+.
+ Then, it follows from the chain rule that
+\begin_inset Formula 
+\[
+\frac{\dif u}{\dif t}=\frac{\partial}{\partial t}u\left(x\left(t\right),t\right)=\frac{\partial u}{\partial x}\frac{\partial x}{\partial t}+\frac{\partial u}{\partial t}\frac{\partial t}{\partial t}=\frac{\partial x}{\partial t}u_{x}+u_{t},
+\]
+
+\end_inset
+
+which implies that 
+\begin_inset Formula 
+\[
+\frac{\partial x}{\partial t}=c\left(x,t\right).
+\]
+
+\end_inset
+
+In this case, although we cannot find a general solution using a change
+ of variable, the equation for the characteristic curves 
+\begin_inset Formula $x_{t}=c\left(x,t\right)$
+\end_inset
+
+ holds.
+\end_layout
+
+\begin_layout Example
+Solve the advection equation with 
+\begin_inset Formula $u_{t}+t^{2}u_{x}=0$
+\end_inset
+
+ and boundary condition 
+\begin_inset Formula $u\left(x,0\right)=\cos\left(x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We have
+\begin_inset Formula 
+\[
+\frac{\partial x}{\partial t}=c\left(x,t\right)=t^{2}\implies\int\frac{\partial x}{\partial t}\dif t=\int t^{2}\dif t\implies x\left(t\right)=\frac{1}{3}t^{3}+K\implies K=x\left(t\right)-\frac{1}{3}t^{3}
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $K\in\mathbb{R}$
+\end_inset
+
+.
+ Noting that the solution 
+\begin_inset Formula $u\left(x\left(t\right),t\right)$
+\end_inset
+
+ at the characteristic is constant, applying the boundary condition gives
+\begin_inset Formula 
+\[
+u\left(x\left(0\right),0\right)=\cos\left(x\left(0\right)\right)=\cos\left(\frac{1}{3}\cdot0+K\right)=\cos\left(K\right)=\cos\left(x\left(t\right)-\frac{1}{3}t^{3}\right),
+\]
+
+\end_inset
+
+so that the general solution is
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\cos\left(x-\frac{1}{3}t^{3}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Solve the advection equation with 
+\begin_inset Formula $u_{t}-2tx^{2}u_{x}=0$
+\end_inset
+
+ and boundary condition 
+\begin_inset Formula $u\left(x,0\right)=\cos\left(x\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+We have
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\frac{\partial x}{\partial t}=-2tx^{2}\implies\frac{1}{x^{2}}\frac{\partial x}{\partial t}=-2t\implies\int\frac{1}{x^{2}}\frac{\partial x}{\partial t}\dif t=\int-2t\dif t\implies-\frac{1}{x}=-t^{2}+K,
+\]
+
+\end_inset
+
+which leads to 
+\begin_inset Formula 
+\[
+x\left(t\right)\left(t^{2}-K\right)=1\implies x\left(t\right)=\frac{1}{t^{2}-K}\quad\text{and}\quad K=t^{2}-\frac{1}{x\left(t\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Applying the boundary condition gives
+\begin_inset Formula 
+\[
+u\left(x\left(0\right),0\right)=\cos\left(x\left(0\right)\right)=\cos\left(\frac{1}{0-K}\right)=\cos\left(\frac{1}{K}\right)=\cos\left(\frac{1}{t^{2}-1/x\left(t\right)}\right)=\cos\left(\frac{x\left(t\right)}{x\left(t\right)t^{2}-1}\right)
+\]
+
+\end_inset
+
+so that the general solution is 
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\cos\left(\frac{x}{xt^{2}-1}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The wave equation
+\end_layout
+
+\begin_layout Standard
+The one-dimensional wave equation is defined as 
+\begin_inset Formula $u_{tt}-c^{2}u_{xx}=0$
+\end_inset
+
+, and is the most general way of modeling the physical behavior of waves.
+ Define the variables 
+\begin_inset Formula $\eta=x+ct$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=x-ct$
+\end_inset
+
+, and observe that for some function 
+\begin_inset Formula $F\left(x,t\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial^{2}F}{\partial x^{2}} & =\frac{\partial}{\partial x}\left(\frac{\partial F}{\partial x}\right)\\
+ & =\frac{\partial}{\partial x}\left(\frac{\partial}{\partial x}F\left(\eta,\xi\right)\right)\\
+ & =\frac{\partial}{\partial x}\left(\frac{\partial F}{\partial\eta}\frac{\partial\eta}{\partial x}+\frac{\partial F}{\partial\xi}\frac{\partial\xi}{\partial x}\right)\tag{chain rule}\\
+ & =\frac{\partial}{\partial x}\left(\frac{\partial F}{\partial\eta}\cdot1+\frac{\partial F}{\partial\xi}\cdot1\right)\\
+ & =\frac{\partial}{\partial\eta}\left(\frac{\partial F}{\partial\eta}+\frac{\partial F}{\partial\xi}\right)\frac{\partial\eta}{\partial x}+\frac{\partial}{\partial\xi}\left(\frac{\partial F}{\partial\eta}+\frac{\partial F}{\partial\xi}\right)\frac{\partial\xi}{\partial x}\tag{chain rule}\\
+ & =\frac{\partial}{\partial\eta}\left(\frac{\partial F}{\partial\eta}+\frac{\partial F}{\partial\xi}\right)\cdot1+\frac{\partial}{\partial\xi}\left(\frac{\partial F}{\partial\eta}+\frac{\partial F}{\partial\xi}\right)\cdot1\\
+ & =\frac{\partial^{2}F}{\partial\eta^{2}}+\frac{\partial^{2}F}{\partial\eta\partial\xi}+\frac{\partial^{2}F}{\partial\xi\partial\eta}+\frac{\partial^{2}F}{\partial\xi^{2}}\\
+ & =\frac{\partial^{2}F}{\partial\eta^{2}}+2\frac{\partial^{2}F}{\partial\eta\partial\xi}+\frac{\partial^{2}F}{\partial\xi^{2}},
+\end{flalign*}
+
+\end_inset
+
+where the final equality follows from our assumption that 
+\begin_inset Formula $F$
+\end_inset
+
+ has continuous second partial derivatives.
+ Similarly, we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{flalign*}
+\frac{\partial^{2}F}{\partial t^{2}} & =\frac{\partial}{\partial t}\left(\frac{\partial F}{\partial\eta}\frac{\partial\eta}{\partial t}+\frac{\partial F}{\partial\xi}\frac{\partial\xi}{\partial t}\right)\\
+ & =\frac{\partial}{\partial t}\left(\frac{\partial F}{\partial\eta}\cdot c-\frac{\partial F}{\partial\xi}\cdot c\right)\\
+ & =c\frac{\partial}{\partial t}\left(\frac{\partial F}{\partial\eta}-\frac{\partial F}{\partial\xi}\right)\\
+ & =c\left[\frac{\partial}{\partial\eta}\left(\frac{\partial F}{\partial\eta}-\frac{\partial F}{\partial\xi}\right)\frac{\partial\eta}{\partial t}+\frac{\partial}{\partial\xi}\left(\frac{\partial F}{\partial\eta}-\frac{\partial F}{\partial\xi}\right)\frac{\partial\xi}{\partial t}\right]\\
+ & =c\left[\frac{\partial}{\partial\eta}\left(\frac{\partial F}{\partial\eta}-\frac{\partial F}{\partial\xi}\right)\cdot c-\frac{\partial}{\partial\xi}\left(\frac{\partial F}{\partial\eta}-\frac{\partial F}{\partial\xi}\right)c\right]\\
+ & =c^{2}\left(\frac{\partial^{2}F}{\partial\eta^{2}}-\frac{\partial^{2}F}{\partial\eta\partial\xi}-\frac{\partial^{2}F}{\partial\xi\partial\eta}+\frac{\partial^{2}F}{\partial\xi^{2}}\right)\\
+ & =c^{2}\left(\frac{\partial^{2}F}{\partial\eta^{2}}-2\frac{\partial^{2}F}{\partial\eta\partial\xi}+\frac{\partial^{2}F}{\partial\xi^{2}}\right).
+\end{flalign*}
+
+\end_inset
+
+For 
+\begin_inset Formula $F=u\left(x,t\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+0=\frac{\partial^{2}u}{\partial t^{2}}-c^{2}\frac{\partial^{2}u}{\partial x^{2}}=c^{2}\left(\frac{\partial^{2}u}{\partial\eta^{2}}-2\frac{\partial^{2}u}{\partial\eta\partial\xi}+\frac{\partial^{2}u}{\partial\xi^{2}}\right)-c^{2}\left(\frac{\partial^{2}u}{\partial\eta^{2}}+2\frac{\partial^{2}u}{\partial\eta\partial\xi}+\frac{\partial^{2}u}{\partial\xi^{2}}\right)=-4c^{2}\frac{\partial^{2}u}{\partial\eta\partial\xi},
+\]
+
+\end_inset
+
+which implies that the general solution of the wave equation satisfies
+\begin_inset Formula 
+\[
+\frac{\partial^{2}u}{\partial\eta\partial\xi}=0.
+\]
+
+\end_inset
+
+This is a second-order homogeneous PDE, so it follows from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:second-ord-pde-homogeneous"
+
+\end_inset
+
+ that 
+\begin_inset Formula $u\left(\eta,\xi\right)=F\left(\xi\right)+G\left(\eta\right)$
+\end_inset
+
+, which leads to the general solution
+\begin_inset Formula 
+\[
+u\left(x,t\right)=F\left(x-ct\right)+G\left(x+ct\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Show that the following are solutions to the wave equation.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $u\left(x,t\right)=\cos\left(x-ct\right)+\cos\left(x+ct\right)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+u_{tt}=\frac{\partial}{\partial t}\left(c\sin\left(x-ct\right)-c\sin\left(x+ct\right)\right)=-c^{2}\cos\left(x-ct\right)-c^{2}\cos\left(x+ct\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+u_{xx}=\frac{\partial}{\partial x}\left(-\sin\left(x-ct\right)-\sin\left(x+ct\right)\right)=-\cos\left(x-ct\right)-\cos\left(x+ct\right),
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+u_{tt}-c^{2}u_{xx}=-c^{2}\cos\left(x-ct\right)-c^{2}\cos\left(x+ct\right)+c^{2}\cos\left(x-ct\right)+c^{2}\cos\left(x+ct\right)=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $u\left(x,t\right)=\sin\left(x-ct\right)+\sin\left(x+ct\right)$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+u_{tt}=\frac{\partial}{\partial t}\left(-c\cos\left(x-ct\right)+c\cos\left(x+ct\right)\right)=-c^{2}\sin\left(x-ct\right)-c^{2}\sin\left(x+ct\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+u_{xx}=\frac{\partial}{\partial x}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right)=-\sin\left(x-ct\right)-\sin\left(x+ct\right),
+\]
+
+\end_inset
+
+so that
+\begin_inset Formula 
+\[
+u_{tt}-c^{2}u_{xx}=-c^{2}\sin\left(x-ct\right)-c^{2}\sin\left(x+ct\right)+c^{2}\sin\left(x-ct\right)+c^{2}\sin\left(x+ct\right)=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Boundary conditions
+\end_layout
+
+\begin_layout Standard
+The boundary conditions for the wave equation as given by 
+\begin_inset Formula $u\left(x,0\right)=f\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{t}\left(x,0\right)=g\left(x\right)$
+\end_inset
+
+, which correspond to the position and speed of the wave at time 
+\begin_inset Formula $t=0$
+\end_inset
+
+.
+ From the general solution, we have
+\begin_inset Formula 
+\[
+u\left(x,0\right)=F\left(x-c\cdot0\right)+G\left(x+c\cdot0\right)=F\left(x\right)+G\left(x\right)=f\left(x\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+u_{t}\left(x,t\right)=-cF'\left(x-ct\right)+cG'\left(x+ct\right)\implies u_{t}\left(x,0\right)=-cF'\left(x\right)+cG'\left(x\right)=g\left(x\right).
+\]
+
+\end_inset
+
+Integrating this last expression, we obtain
+\begin_inset Formula 
+\begin{flalign*}
+\int_{0}^{x}g\left(y\right)\dif y & =\int_{0}^{x}-cF'\left(y\right)+cG'\left(y\right)\dif y\\
+ & =\left[-cF\left(y\right)+cG\left(y\right)\right|_{0}^{x}\\
+ & =-cF\left(x\right)+cG\left(x\right)+cF\left(0\right)-cG\left(0\right)\\
+\implies cF\left(x\right)-cG\left(x\right) & =cF\left(0\right)-cG\left(0\right)-\int_{0}^{x}g\left(y\right)\dif y\\
+\implies F\left(x\right)-G\left(x\right) & =F\left(0\right)-G\left(0\right)-\frac{1}{c}\int_{0}^{x}g\left(y\right)\dif y.
+\end{flalign*}
+
+\end_inset
+
+Adding this to our expression for 
+\begin_inset Formula $u\left(x,0\right)$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{flalign*}
+F\left(x\right)+G\left(x\right)+F\left(x\right)-G\left(x\right) & =f\left(x\right)+F\left(0\right)-G\left(0\right)-\frac{1}{c}\int_{0}^{x}g\left(y\right)\dif y\\
+\implies2F\left(x\right) & =f\left(x\right)+F\left(0\right)-G\left(0\right)-\frac{1}{c}\int_{0}^{x}g\left(y\right)\dif y\\
+\implies F\left(x\right) & =\frac{1}{2}f\left(x\right)-\frac{1}{2c}\int_{0}^{x}g\left(y\right)\dif y+\frac{1}{2}\left(F\left(0\right)-G\left(0\right)\right),
+\end{flalign*}
+
+\end_inset
+
+and taking the difference gives
+\begin_inset Formula 
+\begin{flalign*}
+F\left(x\right)+G\left(x\right)-F\left(x\right)+G\left(x\right) & =f\left(x\right)-F\left(0\right)+G\left(0\right)+\frac{1}{c}\int_{0}^{x}g\left(y\right)\dif y\\
+\implies2G\left(x\right) & =f\left(x\right)-F\left(0\right)+G\left(0\right)+\frac{1}{c}\int_{0}^{x}g\left(y\right)\dif y\\
+\implies G\left(x\right) & =\frac{1}{2}f\left(x\right)+\frac{1}{2c}\int_{0}^{x}g\left(y\right)\dif y-\frac{1}{2}\left(F\left(0\right)-G\left(0\right)\right).
+\end{flalign*}
+
+\end_inset
+
+Substituting these results into the general solution, we have
+\begin_inset Formula 
+\begin{flalign*}
+u\left(x,t\right) & =F\left(x-ct\right)+G\left(x+ct\right)\\
+ & =\frac{1}{2}f\left(x-ct\right)-\frac{1}{2c}\int_{0}^{x-ct}g\left(y\right)\dif y+\frac{1}{2}f\left(x+ct\right)+\frac{1}{2c}\int_{0}^{x+ct}g\left(y\right)\dif y\\
+ & =\frac{1}{2}\left(f\left(x-ct\right)+f\left(x+ct\right)\right)+\frac{1}{2c}\left(\int_{0}^{x+ct}g\left(y\right)\dif y-\int_{0}^{x-ct}g\left(y\right)\dif y\right)\\
+ & =\frac{1}{2}\left(f\left(x-ct\right)+f\left(x+ct\right)\right)+\frac{1}{2c}\left(\int_{0}^{x-ct}g\left(y\right)\dif y+\int_{x-ct}^{x+ct}g\left(y\right)\dif y-\int_{0}^{x-ct}g\left(y\right)\dif y\right)\\
+ & =\frac{1}{2}\left(f\left(x-ct\right)+f\left(x+ct\right)\right)+\frac{1}{2c}\int_{x-ct}^{x+ct}g\left(y\right)\dif y,
+\end{flalign*}
+
+\end_inset
+
+where the final equality is referred to as 
+\emph on
+D'Alembert's solution
+\emph default
+.
+\end_layout
+
+\begin_layout Example
+Find the solution to the wave equation with the given boundary conditions
+ 
+\begin_inset Formula $u\left(x,0\right)=f\left(x\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{t}\left(x,0\right)=g\left(x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x\right)=\cos\left(x\right)$
+\end_inset
+
+ and let 
+\begin_inset Formula $g\left(x\right)=0$
+\end_inset
+
+.
+ D'Alembert's solution gives
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\frac{1}{2}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right)+\frac{1}{2c}\int_{x-ct}^{x+ct}0\dif y=\frac{1}{2}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $f\left(x\right)=\cos\left(x\right)$
+\end_inset
+
+ and let 
+\begin_inset Formula $g\left(x\right)=\sin\left(x\right)$
+\end_inset
+
+.
+ D'Alembert's solution gives
+\begin_inset Formula 
+\begin{flalign*}
+u\left(x,t\right) & =\frac{1}{2}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right)+\frac{1}{2c}\int_{x-ct}^{x+ct}\sin\left(y\right)\dif y\\
+ & =\frac{1}{2}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right)+\frac{1}{2c}\left[-\cos\left(y\right)\right|_{x-ct}^{x+ct}\\
+ & =\frac{1}{2}\left(\cos\left(x-ct\right)+\cos\left(x+ct\right)\right)+\frac{1}{2c}\left(-\cos\left(x+ct\right)+\cos\left(x-ct\right)\right)\\
+ & =\frac{1}{2c}\left(c\cos\left(x-ct\right)+\cos\left(x-ct\right)+c\cos\left(x+ct\right)-\cos\left(x+ct\right)\right)\\
+ & =\frac{1}{2c}\left[\left(c+1\right)\cos\left(x-ct\right)+\left(c-1\right)\cos\left(x+ct\right)\right].
+\end{flalign*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $g\left(x\right)=0$
+\end_inset
+
+ and let
+\begin_inset Formula 
+\[
+f\left(x\right)=\begin{cases}
+1, & -1\leq x\leq1\\
+0, & \text{otherwise}
+\end{cases}.
+\]
+
+\end_inset
+
+Noting that 
+\begin_inset Formula 
+\[
+-1\leq x+ct\leq1\implies-1-ct\leq x\leq1-ct\ \text{and}\ -1\leq x-ct\leq1\implies-1+ct\leq x\leq1+ct,
+\]
+
+\end_inset
+
+we can set
+\begin_inset Formula 
+\[
+f\left(x-ct\right)=\begin{cases}
+1, & -1+ct\leq x\leq1+ct\\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+f\left(x+ct\right)=\begin{cases}
+1, & -1-ct\leq x\leq1-ct\\
+0, & \text{otherwise}
+\end{cases},
+\]
+
+\end_inset
+
+which leads to the solution
+\begin_inset Formula 
+\[
+u\left(x,t\right)=\frac{1}{2}\left(f\left(x-ct\right)+f\left(x+ct\right)\right)+\frac{1}{2c}\int_{x-ct}^{x+ct}0\dif y=\frac{1}{2}\left(f\left(x-ct\right)+f\left(x+ct\right)\right).
+\]
+
+\end_inset
+
+The region between 
+\begin_inset Formula $x+ct=-1$
+\end_inset
+
+ and 
+\begin_inset Formula $x-ct=1$
+\end_inset
+
+ is called the 
+\emph on
+region of influence
+\emph default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Chapter
 Dimensionless equations and scaling
 \end_layout
 
@@ -49874,7 +54401,7 @@ Many physical problems can be expressed in clearer and more unified form
  It often happens that this process of rescaling sheds light on the physical
  process that the equations describe.
  It is frequently the case that essential characteristics of physical systems
- can be inferred from dimensionless analysis, whcih does not involve actually
+ can be inferred from dimensionless analysis, which does not involve actually
  solving the given system.
 \end_layout
 
