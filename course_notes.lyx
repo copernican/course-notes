@@ -50199,6 +50199,237 @@ We now present a classical consumer choice problem.
  FINISH PROBLEM
 \end_layout
 
+\begin_layout Section
+Variation subject to constraints
+\end_layout
+
+\begin_layout Standard
+We can also apply the method of Lagrange multipliers to functionals of the
+ form
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x
+\]
+
+\end_inset
+
+for functions 
+\begin_inset Formula $f$
+\end_inset
+
+ in the admissible set 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ We wish to find the extremals of the functional subject to a constraint
+ of the form 
+\begin_inset Formula $\varphi\left(x,f\right)=0$
+\end_inset
+
+.
+ Let
+\begin_inset Formula 
+\[
+\tilde{L}\left(x,f,f'\right)=L\left(x,f,f'\right)+\lambda\varphi\left(\lambda,f\right),
+\]
+
+\end_inset
+
+and define the functional
+\begin_inset Formula 
+\[
+F\left[f,\lambda\right]\coloneqq\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x+\lambda\int_{a}^{b}\varphi\left(x,f\left(x\right)\right)\dif x=\int_{a}^{b}\tilde{L}\left(x,f\left(x\right),f'\left(x\right)\right)\dif x.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:euler-lagrange-functional"
+
+\end_inset
+
+The extremals of the functional 
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}L\left(x,f\left(x\right),f'\left(x\right)\right)\dif x
+\]
+
+\end_inset
+
+with constraint 
+\begin_inset Formula $\varphi\left(x,f\right)=0$
+\end_inset
+
+ such that 
+\begin_inset Formula $\varphi_{x}\neq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\varphi_{f}\neq0$
+\end_inset
+
+ are obtained by solving
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif x}L_{f'}-L_{f}=\lambda\varphi_{f}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+[proof goes here]
+\end_layout
+
+\begin_layout Example
+Find the minimal for the functional
+\begin_inset Formula 
+\[
+J\left[f\right]=\int_{a}^{b}\left(f\left(x\right)\right)^{2}+\left(f'\left(x\right)\right)^{2}\dif x
+\]
+
+\end_inset
+
+with constraint 
+\begin_inset Formula $\varphi\left(x,f\right)=x^{2}f-x$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+The Lagrangian is 
+\begin_inset Formula $L=f^{2}+\left(f'\right)^{2}$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+L_{f}=2f,\quad L_{f'}=2f',\quad\text{and}\quad\frac{\dif}{\dif x}L_{f'}=2f''.
+\]
+
+\end_inset
+
+Noting that 
+\begin_inset Formula $\varphi_{f}=x^{2}$
+\end_inset
+
+, it follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "thm:euler-lagrange-functional"
+
+\end_inset
+
+ that the minimal of 
+\begin_inset Formula $J\left[f\right]$
+\end_inset
+
+ subject to 
+\begin_inset Formula $\varphi\left(x,f\right)=0$
+\end_inset
+
+ is obtained by solving
+\begin_inset Formula 
+\[
+\frac{\dif}{\dif x}L_{f'}-L_{f}=\lambda\varphi_{f}\implies2f''-2f=\lambda x^{2}\implies f''-f=\frac{\lambda}{2}x^{2}.
+\]
+
+\end_inset
+
+This is a second-order nonhomogeneous ODE, so we will apply the method of
+ undetermined coefficients.
+ We have 
+\begin_inset Formula $b=0$
+\end_inset
+
+ and 
+\begin_inset Formula $c=-1$
+\end_inset
+
+, so that the characteristic equation becomes
+\begin_inset Formula 
+\[
+r^{2}+br+c=r^{2}-1=0\implies r^{2}=1\implies r=\pm1,
+\]
+
+\end_inset
+
+i.e., the roots are 
+\begin_inset Formula $r_{1}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}=-1$
+\end_inset
+
+.
+ Then, the homogeneous solution is 
+\begin_inset Formula 
+\[
+f_{h}\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{-x}.
+\]
+
+\end_inset
+
+The forcing term 
+\begin_inset Formula $x^{2}$
+\end_inset
+
+ has derivatives (ignoring multiplicative constants) of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 1, so we will seek the particular solution as a linear combination
+ of these terms, i.e., 
+\begin_inset Formula $f_{p}=Ax^{2}+Bx+C$
+\end_inset
+
+, so that 
+\begin_inset Formula $f_{p}'=2Ax+B$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{p}''=2A$
+\end_inset
+
+.
+ We observe that none of the terms in 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+ is duplicated in 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+, so that the nonhomogeneous system becomes
+\begin_inset Formula 
+\[
+\frac{\lambda}{2}x^{2}=2A-Ax^{2}-Bx-C=-Ax^{2}-Bx+\left(2A-C\right)\implies A=-\frac{\lambda}{2},B=0,C=2A=-\lambda.
+\]
+
+\end_inset
+
+Then, the general solution is given by
+\begin_inset Formula 
+\[
+f\left(x\right)=f_{h}\left(x\right)+f_{p}\left(x\right)=c_{1}\mathrm{e}^{x}+c_{2}\mathrm{e}^{-x}-\frac{\lambda}{2}x^{2}-\lambda.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Ordinary differential equations
 \end_layout
