@@ -1,0 +1,62 @@
+--- 
+title: "A Master's Companion"
+author: "Sean Wilson"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Notes and supporting material for selected courses from Georgetown's Master of Science in Mathematics and Statistics program"
+---
+
+# Analysis {#analysis}
+
+## Upper bounds and suprema
+
+This section is drawn from @lay2005analysis.
+
+```{theorem, label = "inequality-of-reals"}
+Let $x,y\in\mathbb{R}$ such that $x\leq y+\epsilon$ for every $\epsilon>0$. Then $x\leq y$.
+```
+
+```{definition}
+Let $\mathcal{S}$ be a subset of $\mathbb{R}$. If there exists a real number $m$ such that $m\geq s$ for all $s\in \mathcal{S}$, then $m$ is called an *upper bound* for $\mathcal{S}$, and we say that $\mathcal{S}$ is bounded above. If $m\leq s$ for all $s\in \mathcal{S}$, then $m$ is a *lower bound* for $\mathcal{S}$ and $\mathcal{S}$ is bounded below. The set $\mathcal{S}$ is said to be *bounded* if it is bounded above and bounded below.
+
+If an upper bound $m$ for $\mathcal{S}$ is a member of $\mathcal{S}$, then $m$ is called the *maximum* (or largest element) of $\mathcal{S}$, and we write $m=\max \mathcal{S}$.
+
+Similarly, if a lower bound of $\mathcal{S}$ is a member of $\mathcal{S}$, then it is called the *minimum* (or least element) of $\mathcal{S}$, denoted by $\min \mathcal{S}$.
+
+A set may have upper or lower bounds, or it may have neither. If $m$ is an upper bound for $\mathcal{S}$, then any number greater than $m$ is also an upper bound. While a set may have many upper and lower bounds, if it has a maximum or a minimum, then those values are unique. Thus we speak of *an* upper bound and *the* maximum.
+```
+
+```{definition}
+Let $\mathcal{S}$ be a nonempty subset of $\mathbb{R}$. If $\mathcal{S}$ is bounded above, then the least upper bound of $\mathcal{S}$ is called its *supremum* and is denoted by $\sup \mathcal{S}$. Thus $m=\sup \mathcal{S}$ iff
+
+1. $m\geq s$, for all $s\in \mathcal{S}$, and
+2. if $m'<m$, then there exists $s'\in \mathcal{S}$ such that $s'>m'$.
+
+If $\mathcal{S}$ is bounded below, then the greatest lower bound of $\mathcal{S}$ is called its *infimum* and is denoted by $\inf \mathcal{S}$.
+```
+
+```{definition, name = "completeness axiom"}
+Every nonempty subset $\mathcal{S}$ of $\mathbb{R}$ that is bounded above has a least upper bound. That is, $\sup \mathcal{S}$ exists and is a real number.
+```
+
+```{theorem}
+Given nonempty subsets $\mathcal{A}$ and $\mathcal{B}$ of $\mathbb{R}$, let $\mathcal{C}$ denote the set
+$$
+\mathcal{C}=\left\{ x+y:x\in \mathcal{A}\text{ and }y\in \mathcal{B}\right\} .
+$$
+If $\mathcal{A}$ and $\mathcal{B}$ have suprema, then $\mathcal{C}$ has a supremum and $\sup \mathcal{C}=\sup \mathcal{A}+\sup \mathcal{B}$.
+```
+
+```{proof}
+Let $\sup \mathcal{A}=a$ and $\sup \mathcal{B}=b$. If $z\in \mathcal{C}$, then $z=x+y$ for some $x\in \mathcal{A}$ and $y\in \mathcal{B}$. Thus $z=x+y\leq a+b$, so $a+b$ is an upper bound for $\mathcal{C}$. By the completeness axiom, $\mathcal{C}$ has at least an upper bound, say $\sup \mathcal{C}=c$. We must show that $c=a+b$. Since $c$ is the least upper bound for $\mathcal{C}$, we have $c\leq a+b$.
+
+To see that $a+b\leq c$, choose any $\epsilon>0$. Since $a=\sup \mathcal{A}$, $a-\epsilon$ is not an upper bound for $\mathcal{A}$, and there must exist $x\in \mathcal{A}$ such that $a-\epsilon<x$. Similarly, since $b=\sup \mathcal{B}$, there exists $y\in \mathcal{B}$ such that $b-\epsilon<y$. Combining these inequalities, we have
+$$
+a+b-2\epsilon<x+y\leq c.
+$$
+That is, $a+b<c+2\epsilon$ for every $\epsilon>0$. Thus, by Theorem \@ref(thm:inequality-of-reals), $a+b\leq c$. Finally, since $c\leq a+b$ and $c\geq a+b$, we conclude that $c=a+b$.
+```
