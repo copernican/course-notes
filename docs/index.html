@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Master’s Companion" />
+  
+  <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+<meta name="author" content="Sean Wilson">
+
+
+<meta name="date" content="2018-02-11">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="probability-theory.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+$$
+\usepackage{amsthm}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
+$$
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Master's Companion</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Analysis</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#upper-bounds-and-suprema"><i class="fa fa-check"></i><b>1.1</b> Upper bounds and suprema</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="probability-theory.html"><a href="probability-theory.html"><i class="fa fa-check"></i><b>2</b> Probability theory</a><ul>
+<li class="chapter" data-level="2.1" data-path="probability-theory.html"><a href="probability-theory.html#background-material"><i class="fa fa-check"></i><b>2.1</b> Background material</a></li>
+<li class="chapter" data-level="2.2" data-path="probability-theory.html"><a href="probability-theory.html#transformations-and-expectations"><i class="fa fa-check"></i><b>2.2</b> Transformations and expectations</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="probability-theory.html"><a href="probability-theory.html#distributions-of-functions-of-a-random-variable"><i class="fa fa-check"></i><b>2.2.1</b> Distributions of functions of a random variable</a></li>
+<li class="chapter" data-level="2.2.2" data-path="probability-theory.html"><a href="probability-theory.html#expected-values"><i class="fa fa-check"></i><b>2.2.2</b> Expected values</a></li>
+<li class="chapter" data-level="2.2.3" data-path="probability-theory.html"><a href="probability-theory.html#moments-and-moment-generating-functions"><i class="fa fa-check"></i><b>2.2.3</b> Moments and moment generating functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="probability-theory.html"><a href="probability-theory.html#multiple-random-variables"><i class="fa fa-check"></i><b>2.3</b> Multiple random variables</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="probability-theory.html"><a href="probability-theory.html#conditional-distributions-and-independence"><i class="fa fa-check"></i><b>2.3.1</b> Conditional distributions and independence</a></li>
+<li class="chapter" data-level="2.3.2" data-path="probability-theory.html"><a href="probability-theory.html#covariance-and-correlation"><i class="fa fa-check"></i><b>2.3.2</b> Covariance and correlation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Master’s Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">A Master’s Companion</h1>
+<h4 class="author"><em>Sean Wilson</em></h4>
+<h4 class="date"><em>2018-02-11</em></h4>
+</div>
+<div id="analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Analysis</h1>
+<div id="upper-bounds-and-suprema" class="section level2">
+<h2><span class="header-section-number">1.1</span> Upper bounds and suprema</h2>
+<p>This section is drawn from <span class="citation">Lay (<a href="#ref-lay2005analysis">2005</a>)</span>.</p>
+
+<div class="theorem">
+<span id="thm:inequality-of-reals" class="theorem"><strong>Theorem 1.1  </strong></span>Let <span class="math inline">\(x,y\in\mathbb{R}\)</span> such that <span class="math inline">\(x\leq y+\epsilon\)</span> for every <span class="math inline">\(\epsilon&gt;0\)</span>. Then <span class="math inline">\(x\leq y\)</span>.
+</div>
+
+
+<div class="definition">
+<p><span id="def:unnamed-chunk-1" class="definition"><strong>Definition 1.1  </strong></span>Let <span class="math inline">\(\mathcal{S}\)</span> be a subset of <span class="math inline">\(\mathbb{R}\)</span>. If there exists a real number <span class="math inline">\(m\)</span> such that <span class="math inline">\(m\geq s\)</span> for all <span class="math inline">\(s\in \mathcal{S}\)</span>, then <span class="math inline">\(m\)</span> is called an <em>upper bound</em> for <span class="math inline">\(\mathcal{S}\)</span>, and we say that <span class="math inline">\(\mathcal{S}\)</span> is bounded above. If <span class="math inline">\(m\leq s\)</span> for all <span class="math inline">\(s\in \mathcal{S}\)</span>, then <span class="math inline">\(m\)</span> is a <em>lower bound</em> for <span class="math inline">\(\mathcal{S}\)</span> and <span class="math inline">\(\mathcal{S}\)</span> is bounded below. The set <span class="math inline">\(\mathcal{S}\)</span> is said to be <em>bounded</em> if it is bounded above and bounded below.</p>
+<p>If an upper bound <span class="math inline">\(m\)</span> for <span class="math inline">\(\mathcal{S}\)</span> is a member of <span class="math inline">\(\mathcal{S}\)</span>, then <span class="math inline">\(m\)</span> is called the <em>maximum</em> (or largest element) of <span class="math inline">\(\mathcal{S}\)</span>, and we write <span class="math inline">\(m=\max \mathcal{S}\)</span>.</p>
+<p>Similarly, if a lower bound of <span class="math inline">\(\mathcal{S}\)</span> is a member of <span class="math inline">\(\mathcal{S}\)</span>, then it is called the <em>minimum</em> (or least element) of <span class="math inline">\(\mathcal{S}\)</span>, denoted by <span class="math inline">\(\min \mathcal{S}\)</span>.</p>
+A set may have upper or lower bounds, or it may have neither. If <span class="math inline">\(m\)</span> is an upper bound for <span class="math inline">\(\mathcal{S}\)</span>, then any number greater than <span class="math inline">\(m\)</span> is also an upper bound. While a set may have many upper and lower bounds, if it has a maximum or a minimum, then those values are unique. Thus we speak of <em>an</em> upper bound and <em>the</em> maximum.
+</div>
+
+
+<div class="definition">
+<p><span id="def:unnamed-chunk-2" class="definition"><strong>Definition 1.2  </strong></span>Let <span class="math inline">\(\mathcal{S}\)</span> be a nonempty subset of <span class="math inline">\(\mathbb{R}\)</span>. If <span class="math inline">\(\mathcal{S}\)</span> is bounded above, then the least upper bound of <span class="math inline">\(\mathcal{S}\)</span> is called its <em>supremum</em> and is denoted by <span class="math inline">\(\sup \mathcal{S}\)</span>. Thus <span class="math inline">\(m=\sup \mathcal{S}\)</span> iff</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(m\geq s\)</span>, for all <span class="math inline">\(s\in \mathcal{S}\)</span>, and</li>
+<li>if <span class="math inline">\(m&#39;&lt;m\)</span>, then there exists <span class="math inline">\(s&#39;\in \mathcal{S}\)</span> such that <span class="math inline">\(s&#39;&gt;m&#39;\)</span>.</li>
+</ol>
+If <span class="math inline">\(\mathcal{S}\)</span> is bounded below, then the greatest lower bound of <span class="math inline">\(\mathcal{S}\)</span> is called its <em>infimum</em> and is denoted by <span class="math inline">\(\inf \mathcal{S}\)</span>.
+</div>
+
+
+<div class="definition">
+<span id="def:unnamed-chunk-3" class="definition"><strong>Definition 1.3  (completeness axiom)  </strong></span>Every nonempty subset <span class="math inline">\(\mathcal{S}\)</span> of <span class="math inline">\(\mathbb{R}\)</span> that is bounded above has a least upper bound. That is, <span class="math inline">\(\sup \mathcal{S}\)</span> exists and is a real number.
+</div>
+
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-4" class="theorem"><strong>Theorem 1.2  </strong></span>Given nonempty subsets <span class="math inline">\(\mathcal{A}\)</span> and <span class="math inline">\(\mathcal{B}\)</span> of <span class="math inline">\(\mathbb{R}\)</span>, let <span class="math inline">\(\mathcal{C}\)</span> denote the set
+<span class="math display">\[
+\mathcal{C}=\left\{ x+y:x\in \mathcal{A}\text{ and }y\in \mathcal{B}\right\} .
+\]</span>
+If <span class="math inline">\(\mathcal{A}\)</span> and <span class="math inline">\(\mathcal{B}\)</span> have suprema, then <span class="math inline">\(\mathcal{C}\)</span> has a supremum and <span class="math inline">\(\sup \mathcal{C}=\sup \mathcal{A}+\sup \mathcal{B}\)</span>.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> Let <span class="math inline">\(\sup \mathcal{A}=a\)</span> and <span class="math inline">\(\sup \mathcal{B}=b\)</span>. If <span class="math inline">\(z\in \mathcal{C}\)</span>, then <span class="math inline">\(z=x+y\)</span> for some <span class="math inline">\(x\in \mathcal{A}\)</span> and <span class="math inline">\(y\in \mathcal{B}\)</span>. Thus <span class="math inline">\(z=x+y\leq a+b\)</span>, so <span class="math inline">\(a+b\)</span> is an upper bound for <span class="math inline">\(\mathcal{C}\)</span>. By the completeness axiom, <span class="math inline">\(\mathcal{C}\)</span> has at least an upper bound, say <span class="math inline">\(\sup \mathcal{C}=c\)</span>. We must show that <span class="math inline">\(c=a+b\)</span>. Since <span class="math inline">\(c\)</span> is the least upper bound for <span class="math inline">\(\mathcal{C}\)</span>, we have <span class="math inline">\(c\leq a+b\)</span>.</p>
+To see that <span class="math inline">\(a+b\leq c\)</span>, choose any <span class="math inline">\(\epsilon&gt;0\)</span>. Since <span class="math inline">\(a=\sup \mathcal{A}\)</span>, <span class="math inline">\(a-\epsilon\)</span> is not an upper bound for <span class="math inline">\(\mathcal{A}\)</span>, and there must exist <span class="math inline">\(x\in \mathcal{A}\)</span> such that <span class="math inline">\(a-\epsilon&lt;x\)</span>. Similarly, since <span class="math inline">\(b=\sup \mathcal{B}\)</span>, there exists <span class="math inline">\(y\in \mathcal{B}\)</span> such that <span class="math inline">\(b-\epsilon&lt;y\)</span>. Combining these inequalities, we have
+<span class="math display">\[
+a+b-2\epsilon&lt;x+y\leq c.
+\]</span>
+That is, <span class="math inline">\(a+b&lt;c+2\epsilon\)</span> for every <span class="math inline">\(\epsilon&gt;0\)</span>. Thus, by Theorem <a href="index.html#thm:inequality-of-reals">1.1</a>, <span class="math inline">\(a+b\leq c\)</span>. Finally, since <span class="math inline">\(c\leq a+b\)</span> and <span class="math inline">\(c\geq a+b\)</span>, we conclude that <span class="math inline">\(c=a+b\)</span>.
+</div>
+
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-lay2005analysis">
+<p>Lay, S.R. 2005. <em>Analysis: With an Introduction to Proof</em>. Pearson Prentice Hall. <a href="https://books.google.com/books?id=k4k\_AQAAIAAJ" class="uri">https://books.google.com/books?id=k4k\_AQAAIAAJ</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="probability-theory.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["course-notes.pdf", "course-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
