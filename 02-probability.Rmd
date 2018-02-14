@@ -402,3 +402,289 @@ $$
 
 The value $\rho_{XY}$ is also called the *correlation coefficient*.
 ```
+
+```{theorem, label = "cov-of-ind-rvs"}
+If $X$ and $Y$ are independent random variables, then $\Cov\left(X,Y\right)=0$ and $\rho_{XY}=0$.
+
+(This is Theorem 4.5.5 from @casella2002statistical; the following proof is given there.)
+```
+
+```{proof}
+Since $X$ and $Y$ are independent, we have $\E\left[XY\right]=\E\left[X\right]\E\left[Y\right]$. Thus
+
+\begin{align*}
+\E\left[\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right] & =\E\left[XY-\mu_{Y}X-\mu_{X}Y+\mu_{X}\mu_{Y}\right] \\
+	& =\E\left[XY\right]-\mu_{Y}\E\left[X\right]-\mu_{X}\E\left[Y\right]+\mu_{X}\mu_{Y} \\
+	& =\E\left[X\right]\E\left[Y\right]-\E\left[Y\right]\E\left[X\right]-\E\left[X\right]\E\left[Y\right]+\E\left[X\right]\E\left[Y\right] \\
+	& =0
+\end{align*}
+  
+and
+
+$$
+\rho_{XY}=\frac{\Cov\left(X,Y\right)}{\sigma_{X}\sigma_{Y}}=\frac{0}{\sigma_{X}\sigma_{Y}}=0.
+$$
+```
+
+```{theorem, label = "variance-of-ind-rvs"}
+If $X$ and $Y$ are any two random variables and $a$ and $b$ are any two constants, then
+
+$$
+\Var\left(aX+bY\right)=a^{2}\Var\left(X\right)+b^{2}\Var\left(Y\right)+2ab\Cov\left(X,Y\right).
+$$
+  
+If $X$ and $Y$ are independent random variables, then
+
+$$
+\Var\left(aX+bY\right)=a^{2}\Var\left(X\right)+b^{2}\Var\left(Y\right).
+$$
+  
+(This is Theorem 4.5.6 from @casella2002statistical; the following proof is given there.)
+```
+
+```{proof}
+We have
+
+\begin{align*}
+\Var\left(aX+bY\right) & =\E\left[\left(\left(aX+bY\right)-\E\left[aX+bY\right]\right)^{2}\right] \\
+	& =\E\left[\left(aX+bY-a\E\left[X\right]-b\E\left[Y\right]\right)^{2}\right] \\
+	& =\E\left[\left(aX+bY-a\mu_{X}-b\mu_{Y}\right)^{2}\right] \\
+	& =\E\left[\left(a\left(X-\mu_{X}\right)+b\left(Y-\mu_{Y}\right)\right)^{2}\right] \\
+	& =\E\left[\left(a\left(X-\mu_{X}\right)\right)^{2}-2ab\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)+\left(b\left(Y-\mu_{Y}\right)\right)^{2}\right] \\
+	& =\E\left[a^{2}\left(X-\mu_{X}\right)^{2}\right]-\E\left[2ab\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right]+\E\left[b^{2}\left(Y-\mu_{Y}\right)^{2}\right] \\
+	& =a^{2}\E\left[\left(X-\mu_{X}\right)^{2}\right]-2ab\E\left[\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right]+b^{2}\E\left[\left(Y-\mu_{Y}\right)^{2}\right] \\
+	& =a^{2}\Var\left(X\right)+b^{2}\Var\left(Y\right)-2ab\Cov\left(X,Y\right).
+\end{align*}
+  
+If $X$ and $Y$ are independent, it follows from Theorem \@ref(thm:cov-of-ind-rvs) that $\Cov\left(X,Y\right)=0$ and the second equality is immediate from the first.
+```
+
+```{theorem, label = "correlation-values"}
+For any random variables $X$ and $Y$,
+
+1. $-1\leq\rho_{XY}\leq 1$.
+2. $\left|\rho_{XY}\right|=1$ if and only if there exist numbers $a\neq 0$ and $b$ such that $P\left(\left\{ Y=aX+b\right\} \right)=1$. If $\rho_{XY}=1$, then $a>0$, and if $\rho_{XY}=-1$, then $a<0$.
+
+(This is Theorem 4.5.7 from @casella2002statistical; the following proof is given there.)
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+### Multivariate distributions
+
+```{theorem, label = "mgf-of-sum-of-multiple-ind-rvs"}
+Let $X_{1},\ldots,X_{n}$ be mutually independent random variables with mgfs $M_{X_{1}}\left(t\right),\ldots M_{X_{n}}\left(t\right)$. Let $Z=X_{1}+\cdots+X_{n}$. Then the mgf of $Z$ is
+
+$$
+M_{Z}\left(t\right)=M_{X_{1}}\left(t\right)\cdot\cdots\cdot M_{X_{n}}\left(t\right).
+$$
+  
+In particular, if $X_{1},\ldots,X_{n}$ all have the same distribution with mgf $M_{X}\left(t\right)$, then $M_{Z}\left(t\right)=\left(M_{X}\left(t\right)\right)^{n}$.
+
+(This is Theorem 4.6.7 from @casella2002statistical, which is a generalization of Theorem \@ref(thm:mgf-of-sum-of-two-ind-rvs)).
+```
+
+### Inequalities
+
+```{lemma, label = "youngs-inequality", name = "Young's Inequality"}
+Let $a$ and $b$ be any positive numbers, and let $p$ and $q$ be any positive numbers (necessarily greater than 1) satisfying
+
+$$
+\frac{1}{p}+\frac{1}{q}=1.
+$$
+  
+Then
+
+$$
+\frac{1}{p}a^{p}+\frac{1}{q}b^{q}\geq ab
+$$
+  
+with equality if and only if $a^{p}=b^{q}$.
+
+(This is Lemma 4.7.1 from @casella2002statistical; the following proof is given there).
+```
+
+```{proof}
+Fix $b$, and consider the function
+
+$$
+g\left(a\right)=\frac{1}{p}a^{p}+\frac{1}{q}b^{q}-ab.
+$$
+  
+To minimize $g\left(a\right)$, differentiate and set equal to $0$:
+  
+$$
+\frac{\dif}{\dif a}g\left(a\right)=0\implies a^{p-1}-b=0\implies b=a^{p-1}.
+$$
+  
+We will evaluate the second derivative of $g$ with respect to $a$ at 
+
+$$
+b=a^{p-1}\implies b^{1/\left(p-1\right)}=\left(a^{p-1}\right)^{1/\left(p-1\right)}\implies a=b^{1/\left(p-1\right)}
+$$
+  
+to verify that this is a minimum.
+
+\begin{align*}
+\frac{\dif^{2}}{\dif a^{2}}\left[g\left(a\right)\right|_{a=b^{1/\left(p-1\right)}} & =\frac{\dif}{\dif a}\left[a^{p-1}-b\right|_{a=b^{1/\left(p-1\right)}} \\
+	& =\left[\left(p-1\right)a^{p-2}\right|_{a=b^{1/\left(p-1\right)}} \\
+	& =\left(p-1\right)\left(b^{1/\left(p-1\right)}\right)^{p-2} \\
+	& =\left(p-1\right)b^{\left(p-2\right)/\left(p-1\right)} \\
+	& =\left(p-1\right)b^{\left(p-1-1\right)/\left(p-1\right)} \\
+	& =\left(p-1\right)b^{\left[\left(p-1\right)/\left(p-1\right)\right]-1/\left(p-1\right)} \\
+	& =\left(p-1\right)b^{1-1/\left(p-1\right)}
+\end{align*}
+
+We have $p>1$ and $b>0$, so that $p-1>0$ and $b^{1-1/\left(p-1\right)}>0$. It follows that $b=a^{p-1}$ is a minimum. We have
+
+$$
+\frac{1}{p}+\frac{1}{q}=1\implies\frac{1}{q}=1-\frac{1}{p}=\frac{p-1}{p}\implies q\left(p-1\right)=p,
+$$
+
+so that the value of $g\left(a\right)$ at the minimum is
+
+$$
+\frac{1}{p}a^{p}+\frac{1}{q}\left(a^{p-1}\right)^{q}-aa^{p-1}=\frac{1}{p}a^{p}+\frac{1}{q}a^{p}-a^{p}=a^{p}\left(\frac{1}{p}+\frac{1}{q}-1\right)=a^{p}\left(1-1\right)=0.
+$$
+
+Hence the minimum is $0$ and the inequality is established. The domain of $g$ is $\left\{ a:0<a<\infty\right\}$ and we have $p>1$, so that for some fixed $b$, $g'\left(a\right)=a^{p-1}-b$ is increasing in $a$. Thus, the minimum we found is unique, so that equality holds only if $a^{p-1}=b$, which is equivalent to 
+
+$$
+a^{p-1}=b\implies a^{p/q}=b\implies\left(a^{p/q}\right)^{q}=b^{q}\implies a^{p}=b^{q}.
+$$
+```
+
+```{theorem, name = "Hölder's Inequality"}
+Let $X$ and $Y$ be any two random variables, and let $p$ and $q$ satisfy Lemma \@ref(lem:youngs-inequality). Then
+
+$$
+\left|\E\left[XY\right]\right|\leq
+\E\left[\left|XY\right|\right]\leq
+\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}.
+$$
+  
+(This is Theorem 4.7.2 from @casella2002statistical; the following proof is given there.)
+```
+
+```{proof}
+The first inequality follows from $-\left|XY\right|\leq XY\leq\left|XY\right|$ and Theorem \@ref(thm:properties-of-expectation). To prove the second inequality, define
+
+$$
+a=\frac{\left|X\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}}\quad\text{and}\quad b=\frac{\left|Y\right|}{\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}.
+$$
+  
+Applying Lemma \@ref(lem:youngs-inequality), we get
+
+\begin{align*}
+\frac{1}{p}a^{p}+\frac{1}{q}b^{q}	& \geq ab \\
+\implies\frac{1}{p}\left(\frac{\left|X\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}}\right)^{p}+\frac{1}{q}\left(\frac{\left|Y\right|}{\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}\right)^{q}	& \geq\frac{\left|X\right|\left|Y\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}} \\
+\implies\frac{1}{p}\frac{\left|X\right|^{p}}{\E\left[\left|X\right|^{p}\right]}+\frac{1}{q}\frac{\left|Y\right|^{q}}{\E\left[\left|Y\right|^{q}\right]}	& \geq\frac{\left|XY\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}.
+\end{align*}
+  
+Taking the expectation of both sides gives
+
+\begin{align*}
+\E\left[\frac{1}{p}\frac{\left|X\right|^{p}}{\E\left[\left|X\right|^{p}\right]}+\frac{1}{q}\frac{\left|Y\right|^{q}}{\E\left[\left|Y\right|^{q}\right]}\right]	& \geq\E\left[\frac{\left|XY\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}\right] \\
+\implies\frac{1}{p\E\left[\left|X\right|^{p}\right]}\E\left[\left|X\right|^{p}\right]+\frac{1}{q\E\left[\left|Y\right|^{q}\right]}\E\left[\left|Y\right|^{q}\right]	& \geq\E\left[\frac{\left|XY\right|}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}\right] \\
+\implies\frac{1}{p}+\frac{1}{q}	& \geq\frac{1}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}\E\left[\left|XY\right|\right] \\
+\implies1	& \geq\frac{1}{\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}}\E\left[\left|XY\right|\right] \\
+\implies\E\left[\left|XY\right|\right] & \leq\left(\E\left[\left|X\right|^{p}\right]\right)^{1/p}\left(\E\left[\left|Y\right|^{q}\right]\right)^{1/q}.
+\end{align*}
+```
+
+Perhaps the most famous special case of Hölder's Inequality is that for which $p=q=2$.
+
+```{theorem, label = "cauchy-schwarz-inequality", name = "Cauchy-Schwarz Inequality"}
+For any two random variables $X$ and $Y$,
+
+$$
+\left|\E\left[XY\right]\right|\leq\E\left[\left|XY\right|\right]\leq\left(\E\left[\left|X\right|^{2}\right]\right)^{1/2}\left(\E\left[\left|Y\right|^{2}\right]\right)^{1/2}.
+$$
+  
+(This is Theorem 4.7.3 from @casella2002statistical.)
+```
+
+## Properties of a random sample
+
+### Sums of random variables from a random sample
+
+```{definition}
+The *sample variance* is the statistic defined by
+
+$$
+S^{2}=\frac{1}{n-1}\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}.
+$$
+
+The sample *standard deviation* is the statistic defined by $S=\sqrt{S^{2}}$.
+```
+
+```{theorem, label = "computing-sums-rand-samples"}
+Let $x_{1},\ldots,x_{n}$ be any numbers and $\bar{x}=\left(x_{1}+\cdots+x_{n}\right)/n$. Then
+
+1. $\min_{a}\sum_{i=1}^{n}\left(x_{i}-a\right)^{2}=\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}$,
+2. $\left(n-1\right)s^{2}=\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}=\sum_{i=1}^{n}x_{i}^{2}-n\bar{x}^{2}$.
+
+(This is Theorem 5.2.4 from @casella2002statistical.; the following proof is given there.)
+```
+
+```{proof}
+To prove part (1), add and subtract $\bar{x}$ to get
+
+\begin{align*}
+\sum_{i=1}^{n}\left(x_{i}-a\right)^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}+\bar{x}-a\right)^{2} \\
+ & =\sum_{i=1}^{n}\left[\left(x_{i}-\bar{x}\right)+\left(\bar{x}-a\right)\right]\left[\left(x_{i}-\bar{x}\right)+\left(\bar{x}-a\right)\right] \\
+ & =\sum_{i=1}^{n}\left[\left(x_{i}-\bar{x}\right)^{2}+\left(x_{i}-\bar{x}\right)\left(\bar{x}-a\right)+\left(\bar{x}-a\right)\left(x_{i}-\bar{x}\right)+\left(\bar{x}-a\right)^{2}\right] \\
+	& =\sum_{i=1}^{n}\left[\left(x_{i}-\bar{x}\right)^{2}+2\left(x_{i}-\bar{x}\right)\left(\bar{x}-a\right)+\left(\bar{x}-a\right)^{2}\right] \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+\sum_{i=1}^{n}\left[2\left(x_{i}-\bar{x}\right)\left(\bar{x}-a\right)\right]+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+2\sum_{i=1}^{n}\left(x_{i}\bar{x}-ax_{i}-\bar{x}^{2}+a\bar{x}\right)+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+2\left(\bar{x}\sum_{i=1}^{n}x_{i}-a\sum_{i=1}^{n}x_{i}-\sum_{i=1}^{n}\bar{x}^{2}+\sum_{i=1}^{n}a\bar{x}\right)+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+2\left(\bar{x}\left(n\bar{x}\right)-a\left(n\bar{x}\right)-n\bar{x}^{2}+na\bar{x}\right)+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+2\left(n\bar{x}^{2}-na\bar{x}-n\bar{x}^{2}+na\bar{x}\right)+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+2\left(0\right)+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2}.
+\end{align*}
+
+It is now clear that the right-hand side is minimized at $a=\bar{x}$. To prove part (2), take $a=0$ in the above, i.e.,
+
+\begin{align*}
+\sum_{i=1}^{n}\left(x_{i}-a\right)^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+\sum_{i=1}^{n}\left(\bar{x}-a\right)^{2} \\
+\implies\sum_{i=1}^{n}\left(x_{i}-0\right)^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+\sum_{i=1}^{n}\left(\bar{x}-0\right)^{2} \\
+\implies\sum_{i=1}^{n}x_{i}^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}+\sum_{i=1}^{n}\bar{x}^{2} \\
+\implies\sum_{i=1}^{n}x_{i}^{2}-\sum_{i=1}^{n}\bar{x}^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \\
+\implies\sum_{i=1}^{n}x_{i}^{2}-n\bar{x}^{2}	& =\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}.
+\end{align*}
+
+The sample variance is defined as
+
+$$
+s^{2}=\frac{1}{n-1}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}\implies\left(n-1\right)s^{2}=\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2},
+$$
+  
+so the final equality of part (2) holds.
+```
+
+### Sampling from the normal distribution
+
+```{theorem, label = "rand-sample-from-normal-dist"}
+Let $X_{1},\ldots,X_{n}$ be a random sample from a $\mathcal{N}\left(\mu,\sigma^{2}\right)$ distribution, and let $\bar{X}=\left(1/n\right)\sum_{i=1}^{n}X_{i}$ and $S^{2}=\left[1/\left(n-1\right)\right]\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}$. Then
+
+1. $\bar{X}$ and $S^{2}$ are independent random variables,
+2. $\bar{X}$ has a $\mathcal{N}\left(\mu,\sigma^{2}/n\right)$ distribution,
+3. $\left(n-1\right)S^{2}/\sigma^{2}$ has a chi-squared distribution with $n-1$ degrees of freedom.
+
+(This is Theorem 5.3.1 from @casella2002statistical.; the following proof is given there.)
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+```{definition, label = "t-distribution"}
+Let $X_{1},\ldots,X_{n}$ be a random sample from a $\mathcal{N}\left(\mu,\sigma^{2}\right)$ distribution. The quantity $\left(\bar{X}-\mu\right)/\left(S/\sqrt{n}\right)$ has *Student's $t$ distribution with $n-1$ degrees of freedom.* Equivalently, a random variable $T$ has Student's $t$ distribution with $p$ degrees of freedom, and we write $T\sim t_{p}$ if it has pdf
+
+$$
+f_{T}\left(t\right)=\frac{\Gamma\left(\frac{p+1}{2}\right)}{\Gamma\left(\frac{p}{2}\right)}\frac{1}{\left(p\pi\right)^{1/2}}\frac{1}{\left(1+t^{2}/p\right)^{\left(p+1\right)/2}},\quad-\infty<t<\infty.
+$$
+```
