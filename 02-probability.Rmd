@@ -688,3 +688,235 @@ $$
 f_{T}\left(t\right)=\frac{\Gamma\left(\frac{p+1}{2}\right)}{\Gamma\left(\frac{p}{2}\right)}\frac{1}{\left(p\pi\right)^{1/2}}\frac{1}{\left(1+t^{2}/p\right)^{\left(p+1\right)/2}},\quad-\infty<t<\infty.
 $$
 ```
+
+### Order statistics
+
+The order statistics of a random sample $X_{1},\ldots,X_{n}$ are the sample values placed in ascending order. They are denoted by $X_{\left(1\right)},\ldots,X_{\left(n\right)}$. The order statistics are random variables that satisfy $X_{\left(1\right)}\leq\ldots\leq X_{\left(n\right)}$, and in particular, $X_{\left(1\right)}=\underset{1\leq i\leq n}{\min}X_{i}$ and $X_{\left(n\right)}=\underset{1\leq i\leq n}{\max}X_{i}$.
+
+```{theorem, label = "order-stat-discrete"}
+Let $X_{1},\ldots,X_{n}$ be a random sample from a discrete distribution with pmf $f_{X}\left(x_{i}\right)=p_{i}$, where $x_{1}<x_{2}<\cdots$ are the possible values of $X$ in ascending order. Define 
+
+\begin{align*}
+P_{0}	& =0 \\
+P_{1}	& =p_{1} \\
+P_{2}	& =p_{1}+p_{2} \\
+	& \vdots \\
+P_{i}	& =p_{1}+p_{2}+\cdots+p_{i} \\
+	& \vdots
+\end{align*}
+
+Let $X_{\left(1\right)},\ldots,X_{\left(n\right)}$ denote the order statistics from the sample. Then
+
+$$
+P\left(\left\{ X_{\left(j\right)}\leq x_{i}\right\} \right)=\sum_{k=j}^{n}\binom{n}{k}P_{i}^{k}\left(1-P_{i}\right)^{n-k}
+$$
+  
+and
+
+$$
+P\left(\left\{ X_{\left(j\right)}=x_{i}\right\} \right)=\sum_{k=j}^{n}\binom{n}{k}\left[P_{i}^{k}\left(1-P_{i}\right)^{n-k}-P_{i-1}^{k}\left(1-P_{i-1}\right)^{n-k}\right].
+$$
+  
+(This is Theorem 5.4.3 from @casella2002statistical.)
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+```{theorem, label = "order-stat-continuous"}
+Let $X_{\left(1\right)},\ldots,X_{\left(n\right)}$ denote the order statistics of a random sample, $X_{1},\ldots,X_{n}$, from a continuous population with cdf $F_{X}\left(x\right)$ and pdf $f_{X}\left(x\right)$. Then the pdf of $X_{\left(j\right)}$ is
+
+$$
+f_{X_{\left(j\right)}}\left(x\right)=\frac{n!}{\left(j-1\right)!\left(n-j\right)!}f_{X}\left(x\right)\left[F_{X}\left(x\right)\right]^{j-1}\left[1-F_{X}\left(x\right)\right]^{n-j}.
+$$
+  
+(This is Theorem 5.4.4 from @casella2002statistical.)
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+```{theorem, label = "order-stat-joint-pdf"}
+Let $X_{\left(1\right)},\ldots,X_{\left(n\right)}$ denote the order statistics of a random sample, $X_{1},\ldots,X_{n}$, from a continuous population with cdf $F_{X}\left(x\right)$ and pdf $f_{X}\left(x\right)$. Then the joint pdf of $X_{\left(i\right)} and X_{\left(j\right)}$, $1\leq i<j\leq n$, is
+
+\begin{align*}
+f_{X_{\left(i\right)},X_{\left(j\right)}}\left(u,v\right)	& =\frac{n!}{\left(i-1\right)!\left(j-1-i\right)!\left(n-j\right)!}f_{X}\left(u\right)f_{X}\left(v\right) \\
+ &\quad\times\left[F_{X}\left(u\right)\right]^{i-1}\left[F_{X}\left(v\right)-F_{X}\left(u\right)\right]^{j-1-i}\left[1-F_{X}\left(v\right)\right]^{n-j}
+\end{align*}
+  
+for $-\infty<u<v<\infty$.
+
+(This is Theorem 5.4.6 from @casella2002statistical.)
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+### Convergence concepts
+
+```{theorem, label = "strong-lln", name = "Strong Law of Large Numbers"}
+Let $X_{1},X_{2},\ldots$ be iid random variables with $\E\left[X_{i}\right]=\mu$ and $\Var\left(X_{i}\right)=\sigma^{2}<\infty$, and define $\bar{X}_{n}=\left(1/n\right)\sum_{i=1}^{n}X_{i}$. Then, for every $\epsilon>0$, 
+
+$$
+P\left(\lim_{n\rightarrow\infty}\left|\bar{X}_{n}-\mu\right|<\epsilon\right)=1;
+$$
+  
+that is, $\bar{X}_{n}$ converges almost surely to $\mu$.
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+```{theorem, label = "central-limit", name = "Central Limit Theorem"}
+Let $X_{1},X_{2},\ldots$ be a sequence of iid random variables whose mgfs exist in a neighborhood of $0$ (that is, $M_{X_{i}}\left(t\right)$ exists for $\left|t\right|<h$, for some positive $h$). Let $\E\left[X_{i}\right]=\mu$ and $\Var\left(X_{i}\right)=\sigma^{2}>0$. (Both $\mu$ and $\sigma^{2}$ are finite since the mgf exists.) Define $\bar{X}_{n}=\left(1/n\right)\sum_{i=1}^{n}X_{i}$. Let $G_{n}\left(x\right)$ denote the cdf of $\sqrt{n}\left(\bar{X}-\mu\right)/\sigma$. Then, for any $x\in\mathbb{R}$, 
+
+$$
+\lim_{n\rightarrow\infty}G_{n}\left(x\right)=\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-y^{2}/2}\dif y;
+$$
+  
+that is, $\sqrt{n}\left(\bar{X}_{n}-\mu\right)/\sigma$ has a limiting standard normal distribution.
+
+(This is Theorem 5.5.14 from @casella2002statistical; the following proof is given there.)
+```
+
+```{proof}
+Let $Z\sim\mathcal{N}\left(0,1\right)$, so that the mgf of $Z$ given by $M_{Z}\left(t\right)=\mathrm{e}^{0\cdot t+\left(1\cdot t^{2}\right)/2}=\mathrm{e}^{t^{2}/2}$. We will show that, for $\left|t\right|<h$, the mgf of $\sqrt{n}\left(\bar{X}_{n}-\mu\right)/\sigma$ converges to $\mathrm{e}^{t^{2}/2}$.
+
+Define $Y_{i}=\left(X_{i}-\mu\right)/\sigma$, and let $M_{Y}\left(t\right)$ denote the common mgf of the $Y_{i}\text{'s}$, which exists for $\left|t\right|<\sigma h$ and is given by Theorem \@ref(thm:mgf-affine-transform). We have
+
+$$
+\frac{X_{i}-\mu}{\sigma}=Y_{i}\implies X_{i}-\mu=\sigma Y_{i}\implies X_{i}=\sigma Y_{i}+\mu,
+$$
+
+so that 
+
+\begin{align*}
+\frac{\sqrt{n}\left(\bar{X}_{n}-\mu\right)}{\sigma}	& =\frac{\sqrt{n}\left(\frac{1}{n}\sum_{i=1}^{n}X_{i}-\mu\right)}{\sigma} \\
+	& =\frac{\sqrt{n}}{\sigma}\left[\frac{1}{n}\sum_{i=1}^{n}\left(\sigma Y_{i}+\mu\right)-\mu\right] \\
+	& =\frac{\sqrt{n}}{\sigma}\left[\frac{1}{n}\left(\sigma\sum_{i=1}^{n}Y_{i}+n\mu\right)-\mu\right] \\
+	& =\frac{\sqrt{n}}{\sigma}\left[\frac{\sigma}{n}\sum_{i=1}^{n}Y_{i}+\mu-\mu\right] \\
+	& =\frac{\sqrt{n}}{\sigma}\left(\frac{\sigma}{n}\sum_{i=1}^{n}Y_{i}\right) \\
+	& =\frac{1}{\sqrt{n}}\sum_{i=1}^{n}Y_{i}.
+\end{align*}
+
+Then, from the properties of mgfs (see Theorems \@ref(thm:mgf-affine-transform) and \@ref(thm:mgf-of-sum-of-multiple-ind-rvs)), we have
+
+$$
+M_{\sqrt{n}\left(\bar{X}_{n}-\mu\right)/\sigma}\left(t\right)=M_{\sum_{i=1}^{n}Y_{i}/\sqrt{n}}\left(t\right)=M_{\sum_{i=1}^{n}Y_{i}}\left(\frac{t}{\sqrt{n}}\right)=\left(M_{Y}\left(\frac{t}{\sqrt{n}}\right)\right)^{n}.
+$$
+
+We now expand $M_{Y}\left(t/\sqrt{n}\right)$ in a Taylor series (power series) around 0. We have
+
+$$
+M_{Y}\left(\frac{t}{\sqrt{n}}\right)=\sum_{k=0}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\frac{\left(t/\sqrt{n}\right)^{k}}{k!},
+$$
+
+where $M_{Y}^{\left(k\right)}\left(0\right)=\left(\dif^{k}/\dif t^{k}\right)M_{Y}\left(t\right)\vert_{t=0}$. Since the mgfs exist for $\left|t\right|<h$, the power series expansion is valid if $t<\sqrt{n}\sigma h$. 
+
+We have 
+
+\begin{align*}
+M_{Y}^{\left(0\right)} & =\E\left[Y^{0}\right]=\E\left[1\right]=1, \\
+M_{Y}^{\left(1\right)} & =\E\left[Y^{1}\right]=\E\left[\frac{X-\mu}{\sigma}\right]=\frac{1}{\sigma}\left(\E\left[X\right]-\E\left[\mu\right]\right)=\frac{1}{\sigma}\left(\mu-\mu\right)=0,
+\end{align*}
+
+and, noting that 
+
+$$
+\Var\left(X\right)=\E\left[X^{2}\right]-\left(\E\left[X\right]\right)^{2}\implies\sigma^{2}=\E\left[X^{2}\right]-\mu^{2}\implies\E\left[X^{2}\right]=\mu^{2}+\sigma^{2},
+$$
+
+we have 
+
+\begin{align*}
+M_{Y}^{\left(2\right)} & =\E\left[Y^{2}\right] \\
+	& =\E\left[\left(\frac{X-\mu}{\sigma}\right)^{2}\right] \\
+	& =\frac{1}{\sigma^{2}}\E\left[X^{2}-2\mu X+\mu^{2}\right] \\
+	& =\frac{1}{\sigma^{2}}\left(\E\left[X^{2}\right]-2\mu\E\left[X\right]+\E\left[\mu^{2}\right]\right) \\
+	& =\frac{1}{\sigma^{2}}\left(\mu^{2}+\sigma^{2}-2\mu^{2}+\mu^{2}\right) \\
+	& =\frac{1}{\sigma^{2}}\left(\sigma^{2}\right) \\
+	& =1.
+\end{align*}
+
+(By construction, the mean and variance of Y are 0 and 1, respectively.) Then, we have
+
+\begin{align*}
+M_{Y}\left(\frac{t}{\sqrt{n}}\right)	& =\sum_{k=0}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\left(\frac{t/\sqrt{n}}{k!}\right)^{k} \\
+	& =1\frac{\left(t\sqrt{n}\right)^{0}}{0!}+0\frac{\left(t\sqrt{n}\right)}{1!}+1\frac{\left(t\sqrt{n}\right)^{2}}{2!}+\sum_{k=3}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\frac{\left(t/\sqrt{n}\right)^{k}}{k!} \\
+	& =T_{2}\left(\frac{t}{\sqrt{n}}\right)+R_{2}\left(\frac{t}{\sqrt{n}}\right),
+\end{align*}
+
+where 
+
+$$
+T_{2}\left(\frac{t}{\sqrt{n}}\right)=1+\frac{\left(t/\sqrt{n}\right)^{2}}{2!}\quad\text{and}\quad R_{2}\left(\frac{t}{\sqrt{n}}\right)=\sum_{k=3}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\frac{\left(t/\sqrt{n}\right)^{k}}{k!}.
+$$
+
+We have $n>0$, so for fixed $t\neq 0$, the quantity $t/\sqrt{n}\rightarrow 0$ as $n\rightarrow\infty$. Then, noting that $M_{Y}^{\left(2\right)}\left(0\right)$ exists, it follows from Theorem \@ref(thm:taylor) that
+
+$$
+\lim_{t/\sqrt{n}\rightarrow0}\frac{M_{Y}\left(t/\sqrt{n}\right)-T_{2}\left(t/\sqrt{n}\right)}{\left(t/\sqrt{n}-0\right)^{2}}=0\implies\lim_{n\rightarrow\infty}\frac{R_{2}\left(t/\sqrt{n}\right)}{\left(t/\sqrt{n}\right)^{2}}=0.
+$$
+
+Since $t$ is fixed, we also have
+
+$$
+\lim_{n\rightarrow\infty}\frac{R_{2}\left(t/\sqrt{n}\right)}{\left(1/\sqrt{n}\right)^{2}}=\lim_{n\rightarrow\infty}nR_{2}\left(\frac{t}{\sqrt{n}}\right)=0,
+$$
+
+and this is also true at $t=0$ since 
+
+$$
+R_{2}\left(\frac{0}{\sqrt{n}}\right)=R_{2}\left(0\right)=\sum_{k=3}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\frac{0^{k}}{k!}=\sum_{k=3}^{\infty}M_{Y}^{\left(k\right)}\left(0\right)\cdot0=0.
+$$
+
+Thus, for any fixed $t$, we can write
+
+\begin{align*}
+\lim_{n\rightarrow\infty}\left(M_{Y}\left(\frac{t}{\sqrt{n}}\right)\right)^{n}	 & =\lim_{n\rightarrow\infty}\left[1+\frac{\left(t/\sqrt{n}\right)^{2}}{2}+R_{2}\left(\frac{t}{\sqrt{n}}\right)\right]^{n} \\
+	& =\lim_{n\rightarrow\infty}\left[1+\frac{t^{2}}{2n}+R_{2}\left(\frac{t}{\sqrt{n}}\right)\right]^{n} \\
+	& =\lim_{n\rightarrow\infty}\left[1+\frac{1}{n}\left(\frac{t^{2}}{2}+nR_{2}\left(\frac{t}{\sqrt{n}}\right)\right)\right]^{n}.
+\end{align*}
+
+Setting $a_{n}=\left(t^{2}/2\right)+nR_{2}\left(t/\sqrt{n}\right)$, we have
+
+$$
+\lim_{n\rightarrow\infty}a_{n}=\lim_{n\rightarrow\infty}\left[\frac{t^{2}}{2}+nR_{2}\left(\frac{t}{\sqrt{n}}\right)\right]=\lim_{n\rightarrow\infty}\frac{t^{2}}{2}+\lim_{n\rightarrow\infty}nR_{2}\left(\frac{t}{\sqrt{n}}\right)=\frac{t^{2}}{2}+0=\frac{t^{2}}{2},
+$$
+
+i.e., the sequence $a_{1},a_{2},\ldots$ converges to $a=t^{2}/2$ as $n\rightarrow\infty$. It follows from Lemma \@ref(lem:limit-sequence-exponential) that
+
+$$
+\lim_{n\rightarrow\infty}\left(M_{Y}\left(\frac{t}{\sqrt{n}}\right)\right)^{n}=\lim_{n\rightarrow\infty}\left[1+\frac{1}{n}\left(\frac{t^{2}}{2}+nR_{2}\left(\frac{t}{\sqrt{n}}\right)\right)\right]^{n}=\lim_{n\rightarrow\infty}\left[1+\frac{a_{n}}{n}\right]^{n}=\mathrm{e}^{a}=\mathrm{e}^{t^{2}/2}.
+$$
+
+Since $\mathrm{e}^{t^{2}/2}$ is the mgf of the $\mathcal{N}\left(0,1\right)$ distribution, the theorem is proved.
+```
+
+```{definition, label = "taylor-polynomial"}
+If a function $g\left(x\right)$ has derivatives of order $r$, that is, $g^{\left(r\right)}\left(x\right)=\frac{\dif^{r}}{\dif x^{r}}g\left(x\right)$ exists, then for any constant $a$, the *Taylor polynomial of order $r$ about $a$* is
+
+$$
+T_{r}\left(x\right)=\sum_{i=0}^{r}\frac{g^{\left(i\right)}\left(a\right)}{i!}\left(x-a\right)^{i}.
+$$
+```
+
+```{theorem, label = "taylor"}
+If 
+
+$$
+g^{\left(r\right)}\left(a\right)=\frac{\dif^{r}}{\dif x^{r}}g\left(x\right)\Bigr\vert_{x=a}
+$$
+  
+exists, then
+
+$$
+\lim_{x\rightarrow a}\frac{g\left(x\right)-T_{r}\left(x\right)}{\left(x-a\right)^{r}}=0.
+$$
+  
+(This is Theorem 5.5.21 from @casella2002statistical).
+```
