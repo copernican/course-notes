@@ -1,0 +1,146 @@
+# Linear algebra
+
+```{theorem, name = "Fredholm Alternative"}
+Let $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$, let $\mathbf{x}\in\mathbb{R}^{n}$, and let $\mathbf{b}\in\mathbb{R}^{m}$. Then, there are two mutually exclusive possibilities:
+
+1. The system $\mathbf{A}\mathbf{x}=\mathbf{b}$ has a unique solution $\mathbf{x}$ for each $\mathbf{b}$. In particular, the system has the solution $\mathbf{x}=\mathbf{0}$ for $\mathbf{b}=\mathbf{0}$.
+2. The homogeneous equation $\mathbf{A}\mathbf{x}=\mathbf{0}$ has exactly $p$ linearly independent solutions $\left\{ \mathbf{x}_{i}\right\} _{i=1}^{p}$ for some $p\geq 1$.
+```
+
+```{definition}
+Suppose that $\mathbf{A}\in\mathbf{M}_{m,p}\left(\mathbb{R}\right)$, and suppose that $\mathbf{B}\in\mathbf{M}_{p,n}\left(\mathbb{R}\right)$. Then, the *Wronskian* of $\mathbf{A}$ and $\mathbf{B}$ is $\left\langle \mathbf{A},\mathbf{B}\right\rangle \coloneqq\mathbf{A}\mathbf{B}-\mathbf{B}\mathbf{A}$.
+```
+
+```{definition}
+The *range* of a matrix $\mathbf{A}$, denoted $\text{range}\left(\mathbf{A}\right)$, is the space spanned by the columns of $\mathbf{A}$.
+```
+
+```{definition}
+The *null space* of a matrix $\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)$, denoted $\text{null}\left(\mathbf{A}\right)$, is the set of vectors $\mathbf{x}\in\mathbb{R}^{n}$ that satisfy $\mathbf{A}\mathbf{x}=\mathbf{0}$.
+```
+
+```{theorem, name = "Invertible Matrix Theorem"}
+Let $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$. Then, the following are equivalent:
+  
+1. $\mathbf{A}^{-1}$ exists.
+2. $\mathrm{rank}\left(\mathbf{A}\right)=m$.
+3. $\mathrm{range}\left(\mathbf{A}\right)=\mathbb{R}^{m}$.
+4. $\mathrm{null}\left(\mathbf{A}\right)=\mathbf{0}$.
+```
+
+```{theorem}
+If $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}$ are eigenvectors that correspond to distinct eigenvalues $\left\{ \lambda_{i}\right\} _{i=1}^{r}$ of an $n\times n$ matrix $\mathbf{A}$, then the set $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}$ is linearly independent.
+```
+
+```{proof}
+Suppose that the set $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}$ is linearly dependent, and let $p\in\left\{ 1,\ldots,r\right\}$ be the least index such that $\mathbf{v}_{p+1}$ is a linear combination of the preceding (linearly independent) vectors $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{p}$. Then, there exist weights $\left\{ c_{i}\right\} _{i=1}^{p}$ such that
+
+$$
+\mathbf{v}_{p+1}=c_{1}\mathbf{v}_{1}+\cdots+c_{p}\mathbf{v}_{p}=\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}.
+$$
+  
+Left-multiplying each side of this equality by $\mathbf{A}$ gives
+
+$$
+\mathbf{A}\mathbf{v}_{p+1}=
+  \mathbf{A}\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=
+  \sum_{i=1}^{p}c_{i}\mathbf{A}\mathbf{v}_{i}
+\implies\lambda_{p+1}\mathbf{v}_{p+1}
+=\sum_{i=1}^{p}c_{i}\lambda_{i}\mathbf{v}_{i}.
+$$
+  
+Noting that 
+
+$$
+\lambda_{p+1}\mathbf{v}_{p+1}=\lambda_{p+1}\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=\sum_{i=1}^{p}c_{i}\lambda_{p+1}\mathbf{v}_{i},
+$$
+  
+subtracting one equation from the other yields
+
+$$
+\lambda_{p+1}\mathbf{v}_{p+1}-\lambda_{p+1}\mathbf{v}_{p+1}=\sum_{i=1}^{p}c_{i}\lambda_{i}\mathbf{v}_{i}-\sum_{i=1}^{p}c_{i}\lambda_{p+1}\mathbf{v}_{i}\implies\mathbf{0}=\sum_{i=1}^{p}c_{i}\left(\lambda_{i}-\lambda_{p+1}\right)\mathbf{v}_{i}.
+$$
+  
+By definition, an eigenvector is nonzero, and by construction, the set $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{p}$ is linearly independent. Thus, all of the weights $c_{i}\left(\lambda_{i}-\lambda_{p+1}\right)$ must be zero. Because the eigenvalues are distinct, it cannot be the case that any factor $\lambda_{i}-\lambda_{p+1}$ is zero, so it follows that $c_{i}=0$ for $i\in\left\{ 1,\ldots,p\right\}$. But if this is the case, then 
+
+$$
+\mathbf{v}_{p+1}=\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=\sum_{i=1}^{p}0\mathbf{v}_{i}=\mathbf{0},
+$$
+  
+which contradicts the fact that $\mathbf{v}_{p+1}$ is an eigenvector, hence nonzero. Thus, $\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}$ cannot be linearly dependent, and therefore must be linearly independent.
+```
+
+```{proposition}
+A scalar $\lambda$ is an eigenvalue of an $n\times n$ matrix $\mathbf{A}$ if and only if $\lambda$ satisfies the characteristic equation $\det\left(\mathbf{A}-\lambda\mathbf{I}\right)=0$.
+```
+
+```{proposition, label = "num-eigenvalues"}
+An $n\times n$ matrix $\mathbf{A}$ has exactly $n$ eigenvalues, including multiplicities.
+```
+
+```{proof}
+The determinant of $\mathbf{A}-\lambda\mathbf{I}$ for $\lambda\in\mathbb{C}$ is a polynomial in $\lambda$ of degree at most $n$. It follows from the Fundamental Theorem of Algebra that the characteristic equation $\det\left(\mathbf{A}-\lambda\mathbf{I}\right)=0$ has exactly $n$ complex roots, including multiplicities. The previous proposition implies that each such root is an eigenvalue of $\mathbf{A}$.
+```
+
+```{theorem}
+A real, symmetric $n\times n$ matrix $\mathbf{A}$ has $n$ real eigenvalues, including multiplicities.
+```
+
+```{proof}
+Let $\mathbf{x}\in\mathbb{C}^{n}$, and define $q=\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}$. Observe that
+
+\begin{align*}
+\bar{q}	& =\overline{\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}} \\
+	& =\overline{\bar{\mathbf{x}}^{\mathsf{T}}}\bar{\mathbf{A}}\bar{\mathbf{x}} \\
+	& =\bar{\bar{\mathbf{x}}}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}\tag{$\mathbf{A}$ is real} \\
+	& =\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}} \\
+	& =\left(\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}\right)^{\mathsf{T}}\tag{$\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}$ is a scalar} \\
+	& =\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}\left(\mathbf{x}^{\mathsf{T}}\right)^{\mathsf{T}} \\
+	& =\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}\tag{$\mathbf{A}$ is symmetric} \\
+	& =q,
+\end{align*}
+
+hence $q$ is real. Now suppose that $\mathbf{x}$ is an eigenvector of $\mathbf{A}$ with associated eigenvalue $\lambda$. Then,
+
+$$
+q=
+  \bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}=
+  \bar{\mathbf{x}}^{\mathsf{T}}\lambda\mathbf{x}=
+  \lambda\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{x}=
+  \lambda
+    \begin{bmatrix}
+      \bar{x}_{1} & \bar{x}_{2} & \cdots & \bar{x}_{n}
+    \end{bmatrix}
+    \begin{bmatrix}
+      x_{1}\\
+      x_{2}\\
+      \vdots\\
+      x_{n}
+    \end{bmatrix}=
+  \lambda\left(\bar{x}_{1}x_{1}+\bar{x}_{2}x_{2}+\cdots+\bar{x}_{n}x_{n}\right).
+$$
+  
+Now, we can write some $c\in\mathbb{C}$ as the sum of its real and complex parts, i.e., $c=a+\iota b$, where $a,b\in\mathbb{R}$, so that 
+
+$$
+\bar{c}c=\overline{\left(a+\iota b\right)}\left(a+\iota b\right)=\left(a-\iota b\right)\left(a+\iota b\right)=a^{2}+\iota ab-\iota ab-\iota^{2}b^{2}=a^{2}+b^{2}.
+$$
+
+$a$ and $b$ are real, so it follows that $\bar{c}c$ is real, hence that each $\bar{x}_{i}x_{i}$ is real. $q$ is real, and $\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{x}$ is real, so it follows that $\lambda$ must also be real. From Proposition \@ref(prp:num-eigenvalues), $\mathbf{A}$ has exactly $n$ eigenvalues, and we have shown that each eigenvalue $\lambda$ is real, proving the theorem.
+```
+
+```{theorem, name = "Spectral Theorem"}
+A non-degenerate matrix $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ has a decomposition of the form $\mathbf{A}=\mathbf{X}\boldsymbol{\Lambda}\mathbf{X}^{-1}$, provided that $\mathbf{X}^{-1}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ exists, and where $\boldsymbol{\Lambda}$ is a diagonal matrix whose entries are the eigenvalues of $\mathbf{A}$.
+```
+
+```{proof}
+PROOF GOES HERE
+```
+
+```{definition}
+A *unitary matrix* $\mathbf{U}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ has the property $\mathbf{U}^{-1}=\mathbf{U}^{\mathsf{H}}$, where $\mathbf{A}^{\mathsf{H}}$ denotes the Hermitian conjugate (conjugate transpose) of $\mathbf{A}$.
+```
+
+```{theorem, name = "Unitary Decomposition"}
+A symmetric matrix $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ admits the unitary diagonalization $\mathbf{A}=\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{-1}$, where $\mathbf{Q}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ is unitary.
+```
