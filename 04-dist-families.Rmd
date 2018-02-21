@@ -1,0 +1,196 @@
+# (PART) Mathematical statistics {-} 
+
+# Common families of distributions
+
+## Exponential families {#defn-exp-family}
+
+A family of pdfs (or pmfs) indexed by a parameter $\boldsymbol{\theta}$ is called a $k$-parameter exponential family if it can be expressed as
+
+$$
+f\left(x|\boldsymbol{\theta}\right)=h\left(x\right)c\left(\boldsymbol{\theta}\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\boldsymbol{\theta}\right)t_{j}\left(x\right)\right\}
+$$
+
+where $h\left(x\right)\geq 0$, $c\left(\boldsymbol{\theta}\right)\geq 0$, and $t_{1}\left(x\right),\ldots,t_{k}\left(x\right)$ are real-valued functions of $x$, and $\omega_{1}\left(\boldsymbol{\theta}\right),\ldots,\omega_{k}\left(\boldsymbol{\theta}\right)$ are real-valued functions of the possibly vector-valued parameter $\boldsymbol{\theta}$. I.e., $f\left(x|\boldsymbol{\theta}\right)$ can be expressed in three parts: a part that depends only on the random variable(s), a part that depends only on the parameter(s), and a part that depends on both the random variable(s) and the parameter(s). Most of the parametric models you may have studied are exponential families, e.g., normal, gamma, beta, binomial, negative binomial, Poisson, and multinomial. The uniform distribution is not an exponential family (see Example \@ref(exm:exp-family-uniform) below).
+
+```{example, label = "logistic-regression", name = "Logistic regression"}
+TO DO: this example doesn't make sense here, move it.
+
+For $Y_{1},Y_{2},\ldots,Y_{n}$, let $Y_{i}\sim\text{Bernoulli}\left(p\right)$, i.e., 
+
+$$
+Y_{i}=\begin{cases}
+0, & \text{if no event}\\
+1, & \text{if event.}
+\end{cases}
+$$
+  
+Then the logistic regression model is
+
+$$
+\log\left(\frac{p}{1-p}\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}
+$$
+  
+where $\log\left(p/\left(1-p\right)\right)$ is called the logit link.
+```
+
+```{example, label = "exp-family-binomial", name = "Binomial random variables"}
+Let $X\sim\mathcal{B}\left(n,p\right)$, where $p\in\left(0,1\right)$. Recall that $X$ represents the number of successes in $n$ i.i.d. Bernoulli trials and its pmf is given by
+
+$$
+f\left(x|p\right)	=\binom{n}{x}p^{x}\left(1-p\right)^{n-x}
+$$
+
+for $x=0,1,\ldots,n$ and $f\left(x|p\right)=0$ otherwise. Express $f\left(x|p\right)$ in exponential family form.
+
+\begin{align*}
+f\left(x|p\right)	& =\binom{n}{x}p^{x}\left(1-p\right)^{n-x} \\
+	& =\binom{n}{x}p^{x}\left(1-p\right)^{n}\left(1-p\right)^{-x} \\
+	& =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p^{x}}{\left(1-p\right)^{x}}\right) \\
+	& =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p}{1-p}\right)^{x} \\
+	& =\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ \log\left(\frac{p}{1-p}\right)^{x}\right\} \\
+	& =\underbrace{\binom{n}{x}}_{h\left(x\right)}\underbrace{\left(1-p\right)^{n}}_{c\left(p\right)}\exp\left\{ \underbrace{x}_{t_{1}\left(x\right)}\underbrace{\log\left(\frac{p}{1-p}\right)}_{\omega_{1}\left(p\right)}\right\} 
+\end{align*}
+```
+
+```{example, label = "exp-family-poisson", name = "Poisson random variables"}
+Let $X\sim\text{Poisson}\left(\lambda\right)$, where $\lambda>0$. Recall that $X$ represents the frequency with which a specified event occurs given some fixed dimension, such as space or time, and its pmf is given by
+
+$$
+f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}
+$$
+  
+for $x=0,1,2,\ldots$ and $f\left(x|\lambda\right)=0$ otherwise. Express $f\left(x|\lambda\right)$ in exponential family form.
+
+$$
+f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}=\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ \log\left(\lambda^{x}\right)\right\} =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\}
+$$
+  
+Then, we have $h\left(x\right)=1/x!$, $c\left(\lambda\right)=\mathrm{e}^{-\lambda}$, $t_{1}\left(x\right)=x$, and $\omega_{1}\left(\lambda\right)=\log\lambda$. In a Poisson regression, we have $\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}$.
+```
+
+```{example, label = "exp-family-normal", name = "Normal random variables"}
+Let $X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)$, where $\mu\in\mathbb{R}$ and $\sigma>0$. A pdf for $X$ is given by
+
+$$
+f\left(x|\mu,\sigma^{2}\right)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\}
+$$
+  
+for $x\in\mathbb{R}$. Express $f\left(x|\mu,\sigma^{2}\right)$ in exponential family form.
+
+Suppose $\sigma$ is known.
+
+\begin{align*}
+f\left(x|\mu\right)	& =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
+	& =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{-2\mu x}{2\sigma^{2}}\right\} \\
+	& =\underbrace{\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} }_{c\left(\mu\right)}\exp\left\{ \underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{1}\left(\mu\right)}\cdot\underbrace{x}_{t_{1}\left(x\right)}\right\} \\
+\end{align*}
+
+Suppose $\sigma$ is unknown.
+
+\begin{align*}
+f\left(x|\mu,\sigma^{2}\right) & =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\} \\
+	& =\frac{1}{\sqrt{2\pi}}\left(\sigma^{2}\right)^{-1/2}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
+	& =\frac{1}{\sqrt{2\pi}}\exp\left\{ \log\left(\sigma^{2}\right)^{-1/2}\right\} \exp\left\{ -\frac{x^{2}-2\mu x}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \\
+	& =\underbrace{\frac{1}{\sqrt{2\pi}}}_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} }_{c\left(\mu,\sigma^{2}\right)}\exp\left\{ \underbrace{\frac{1}{\sigma^{2}}}_{\omega_{1}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{\left(-\frac{x^{2}}{2}\right)}_{t_{1}\left(x\right)}+\underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{2}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{x}_{t_{2}\left(x\right)}\right\}
+\end{align*}
+
+Thus, in the case that $\sigma$ is unknown, $f\left(x|\mu,\sigma^{2}\right)$ is a two-parameter exponential family, i.e., we have $k=2$ for $\sum_{j=1}^{k}\omega_{j}\left(\theta\right)t_{j}\left(x\right)$.
+```
+
+```{definition}
+The indicator function of a set $\mathcal{A}$, denoted by $I_{\mathcal{A}}\left(x\right)$, is the function
+
+$$
+I_{\mathcal{A}}\left(x\right)=
+  \begin{cases}
+    1, & x\in \mathcal{A}\\
+    0, & x\notin \mathcal{A}
+\end{cases}.
+$$
+```
+
+```{example, label = "exp-family-uniform", name = "Uniform random variables"}
+Let $X\sim\mathcal{U}\left(0,\theta\right)$, where $\theta>0$. A pdf for $X$ is given by 
+
+$$
+f\left(x|\theta\right)=\frac{1}{\theta-0}=\frac{1}{\theta}
+$$
+  
+for $0<x<\theta$. Express $f\left(x|\theta\right)$ in exponential family form, if possible.
+
+Let $\mathcal{A}=\left\{ x:x\in\left(0,\theta\right)\right\}$ and let $I_{\mathcal{A}}$ be the indicator function of $\mathcal{A}$.Then, we can write $f\left(x|\theta\right)$ as
+
+$$
+f\left(x|\theta\right)=
+  \frac{1}{\theta}I_{A}\left(x\right)=
+  \frac{1}{\theta}I_{\left(0,\theta\right)}\left(x\right).
+$$
+  
+Notice that $I_{\left(0,\theta\right)}\left(x\right)$ is not a function of $x$ exclusively, not a function of $\theta$ exclusively, and cannot be written as an exponential. Because the entire pdf must be incorporated into $h\left(x\right)$, $c\left(\theta\right)$, $t_{j}\left(x\right)$, and $\omega_{j}\left(\theta\right)$, it follows that the family of pdfs given by $f\left(x|\theta\right)$ is not an exponential family.
+```
+
+```{example, label = "3-param-exp-family", name = "Three-parameter exponential family distribution"}
+Consider the family of distributions with densities
+
+$$
+f\left(x|\theta\right)	=\frac{2}{\Gamma\left(1/4\right)}\exp\left[-\left(x-\theta\right)^{4}\right]
+$$
+  
+for $x\in\mathbb{R}$. Express $f\left(x|\theta\right)$ in exponential family form.
+
+Recall that the binomial theorem states that
+
+$$
+\left(x+y\right)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}y^{n-k},
+$$
+  
+so we have
+
+\begin{align*}
+f\left(x|\theta\right)	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left[-\left(x-\theta\right)^{4}\right] \\
+	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\sum_{k=0}^{4}\binom{4}{k}x^{k}\left(-\theta\right)^{4-k}\right\} \\
+	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\left[1\cdot1\cdot\theta^{4}-4x\theta^{3}+6x^{2}\theta^{2}-4x^{3}\theta+1\cdot x^{4}\cdot1\right]\right\} \\
+	& =\underbrace{\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -x^{4}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\theta^{4}\right\} }_{c\left(\theta\right)}\exp\left\{ \underbrace{4x^{3}}_{t_{1}\left(x\right)}\underbrace{\theta}_{\omega_{1}\left(\theta\right)}\underbrace{-6x^{2}}_{t_{2}\left(x\right)}\underbrace{\theta^{2}}_{\omega_{2}\left(\theta\right)}+\underbrace{4x}_{t_{3}\left(x\right)}\underbrace{\theta^{3}}_{\omega_{3}\left(\theta\right)}\right\}.
+\end{align*}
+```
+
+```{theorem}
+Random samples from $k$-parameter exponential families have joint distributions which are $k$-parameter exponential families.
+```
+
+```{proof}
+Suppose that a random variable $X$ has a pdf $f\left(x|\theta\right)$, and that $f$ is part of an exponential family, so that $f$ can be written as
+
+$$
+f=h\left(x\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x\right)\omega_{j}\left(\theta\right)\right\} .
+$$
+
+Now suppose that $X_{1},X_{2},\ldots,X_{n}$ is a random sample from a population having the distribution of $X$. It follows that the $X_{i}\text{'s}$ are independent and identically distributed, and that each $X_{i}$ has the same cdf as $X$, and therefore that $f\left(x|\theta\right)$ is a pdf for each $X_{i}$. Then, the joint pdf of the $X_{i}\text{'s}$ is given by
+
+\begin{align*}
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	& =\prod_{i=1}^{n}f\left(x_{i}|\theta\right) \\
+	& =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right] \\
+	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \tag{$\mathrm{e}^{x}\mathrm{e}^{y}=\mathrm{e}^{x+y}$}
+\end{align*}
+
+Then, let 
+
+$$
+h^{*}\left(x\right)=\prod_{i=1}^{n}h\left(x_{i}\right)\quad\text{and}\quad c^{*}\left(\theta\right)=\left[c\left(\theta\right)\right]^{n},
+$$
+  
+so that we have
+
+\begin{align*}
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \\
+	& =h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\left(\omega_{j}\left(\theta\right)\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\right)\right\} .
+\end{align*}
+
+Now, let $T_{j}\left(x\right)	=\sum_{i=1}^{n}t_{j}\left(x_{i}\right)$, so that 
+
+$$
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	=h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\theta\right)T_{j}\left(x\right)\right\} .
+$$
+  
+Thus, the joint pdf $f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)$ is a $k$-parameter exponential family.
+```
