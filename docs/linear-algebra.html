@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Master’s Companion" />
+  
+  <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+<meta name="author" content="Sean Wilson">
+
+
+<meta name="date" content="2018-02-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="probability-theory.html">
+<link rel="next" href="common-families-of-distributions.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+$$
+\usepackage{amsthm}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\coloneqq}{\mathrel{\mathop:}\mathrel{\mkern-1.2mu}=}
+$$
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Master's Companion</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="part"><span><b>I Background material</b></span></li>
+<li class="chapter" data-level="2" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2</b> Analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="analysis.html"><a href="analysis.html#upper-bounds-and-suprema"><i class="fa fa-check"></i><b>2.1</b> Upper bounds and suprema</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability-theory.html"><a href="probability-theory.html"><i class="fa fa-check"></i><b>3</b> Probability theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-theory.html"><a href="probability-theory.html#background-material"><i class="fa fa-check"></i><b>3.1</b> Background material</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-theory.html"><a href="probability-theory.html#transformations-and-expectations"><i class="fa fa-check"></i><b>3.2</b> Transformations and expectations</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="probability-theory.html"><a href="probability-theory.html#distributions-of-functions-of-a-random-variable"><i class="fa fa-check"></i><b>3.2.1</b> Distributions of functions of a random variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="probability-theory.html"><a href="probability-theory.html#expected-values"><i class="fa fa-check"></i><b>3.2.2</b> Expected values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="probability-theory.html"><a href="probability-theory.html#moments-and-moment-generating-functions"><i class="fa fa-check"></i><b>3.2.3</b> Moments and moment generating functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="probability-theory.html"><a href="probability-theory.html#multiple-random-variables"><i class="fa fa-check"></i><b>3.3</b> Multiple random variables</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="probability-theory.html"><a href="probability-theory.html#conditional-distributions-and-independence"><i class="fa fa-check"></i><b>3.3.1</b> Conditional distributions and independence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="probability-theory.html"><a href="probability-theory.html#covariance-and-correlation"><i class="fa fa-check"></i><b>3.3.2</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="probability-theory.html"><a href="probability-theory.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3.3</b> Multivariate distributions</a></li>
+<li class="chapter" data-level="3.3.4" data-path="probability-theory.html"><a href="probability-theory.html#inequalities"><i class="fa fa-check"></i><b>3.3.4</b> Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="probability-theory.html"><a href="probability-theory.html#properties-of-a-random-sample"><i class="fa fa-check"></i><b>3.4</b> Properties of a random sample</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="probability-theory.html"><a href="probability-theory.html#sums-of-random-variables-from-a-random-sample"><i class="fa fa-check"></i><b>3.4.1</b> Sums of random variables from a random sample</a></li>
+<li class="chapter" data-level="3.4.2" data-path="probability-theory.html"><a href="probability-theory.html#sampling-from-the-normal-distribution"><i class="fa fa-check"></i><b>3.4.2</b> Sampling from the normal distribution</a></li>
+<li class="chapter" data-level="3.4.3" data-path="probability-theory.html"><a href="probability-theory.html#order-statistics"><i class="fa fa-check"></i><b>3.4.3</b> Order statistics</a></li>
+<li class="chapter" data-level="3.4.4" data-path="probability-theory.html"><a href="probability-theory.html#convergence-concepts"><i class="fa fa-check"></i><b>3.4.4</b> Convergence concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>4</b> Linear algebra</a></li>
+<li class="part"><span><b>II Mathematical statistics</b></span></li>
+<li class="chapter" data-level="5" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html"><i class="fa fa-check"></i><b>5</b> Common families of distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#defn-exp-family"><i class="fa fa-check"></i><b>5.1</b> Exponential families</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#natural-parameters"><i class="fa fa-check"></i><b>5.1.1</b> Natural parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-and-scale-families"><i class="fa fa-check"></i><b>5.2</b> Location and scale families</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Master’s Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-algebra" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Linear algebra</h1>
+
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-39" class="theorem"><strong>Theorem 4.1  (Fredholm Alternative)  </strong></span>Let <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)\)</span>, let <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{n}\)</span>, and let <span class="math inline">\(\mathbf{b}\in\mathbb{R}^{m}\)</span>. Then, there are two mutually exclusive possibilities:</p>
+<ol style="list-style-type: decimal">
+<li>The system <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> has a unique solution <span class="math inline">\(\mathbf{x}\)</span> for each <span class="math inline">\(\mathbf{b}\)</span>. In particular, the system has the solution <span class="math inline">\(\mathbf{x}=\mathbf{0}\)</span> for <span class="math inline">\(\mathbf{b}=\mathbf{0}\)</span>.</li>
+<li>The homogeneous equation <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span> has exactly <span class="math inline">\(p\)</span> linearly independent solutions <span class="math inline">\(\left\{ \mathbf{x}_{i}\right\} _{i=1}^{p}\)</span> for some <span class="math inline">\(p\geq 1\)</span>.
+</div></li>
+</ol>
+
+<div class="definition">
+<span id="def:unnamed-chunk-40" class="definition"><strong>Definition 4.1  </strong></span>Suppose that <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,p}\left(\mathbb{R}\right)\)</span>, and suppose that <span class="math inline">\(\mathbf{B}\in\mathbf{M}_{p,n}\left(\mathbb{R}\right)\)</span>. Then, the <em>Wronskian</em> of <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> is <span class="math inline">\(\left\langle \mathbf{A},\mathbf{B}\right\rangle \coloneqq\mathbf{A}\mathbf{B}-\mathbf{B}\mathbf{A}\)</span>.
+</div>
+
+
+<div class="definition">
+<span id="def:unnamed-chunk-41" class="definition"><strong>Definition 4.2  </strong></span>The <em>range</em> of a matrix <span class="math inline">\(\mathbf{A}\)</span>, denoted <span class="math inline">\(\text{range}\left(\mathbf{A}\right)\)</span>, is the space spanned by the columns of <span class="math inline">\(\mathbf{A}\)</span>.
+</div>
+
+
+<div class="definition">
+<span id="def:unnamed-chunk-42" class="definition"><strong>Definition 4.3  </strong></span>The <em>null space</em> of a matrix <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,n}\left(\mathbb{R}\right)\)</span>, denoted <span class="math inline">\(\text{null}\left(\mathbf{A}\right)\)</span>, is the set of vectors <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{n}\)</span> that satisfy <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span>.
+</div>
+
+
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-43" class="theorem"><strong>Theorem 4.2  (Invertible Matrix Theorem)  </strong></span>Let <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span>. Then, the following are equivalent:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbf{A}^{-1}\)</span> exists.</li>
+<li><span class="math inline">\(\mathrm{rank}\left(\mathbf{A}\right)=m\)</span>.</li>
+<li><span class="math inline">\(\mathrm{range}\left(\mathbf{A}\right)=\mathbb{R}^{m}\)</span>.</li>
+<li><span class="math inline">\(\mathrm{null}\left(\mathbf{A}\right)=\mathbf{0}\)</span>.
+</div></li>
+</ol>
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-44" class="theorem"><strong>Theorem 4.3  </strong></span>If <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}\)</span> are eigenvectors that correspond to distinct eigenvalues <span class="math inline">\(\left\{ \lambda_{i}\right\} _{i=1}^{r}\)</span> of an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span>, then the set <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}\)</span> is linearly independent.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> Suppose that the set <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}\)</span> is linearly dependent, and let <span class="math inline">\(p\in\left\{ 1,\ldots,r\right\}\)</span> be the least index such that <span class="math inline">\(\mathbf{v}_{p+1}\)</span> is a linear combination of the preceding (linearly independent) vectors <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{p}\)</span>. Then, there exist weights <span class="math inline">\(\left\{ c_{i}\right\} _{i=1}^{p}\)</span> such that</p>
+<p><span class="math display">\[
+\mathbf{v}_{p+1}=c_{1}\mathbf{v}_{1}+\cdots+c_{p}\mathbf{v}_{p}=\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}.
+\]</span></p>
+<p>Left-multiplying each side of this equality by <span class="math inline">\(\mathbf{A}\)</span> gives</p>
+<p><span class="math display">\[
+\mathbf{A}\mathbf{v}_{p+1}=
+  \mathbf{A}\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=
+  \sum_{i=1}^{p}c_{i}\mathbf{A}\mathbf{v}_{i}
+\implies\lambda_{p+1}\mathbf{v}_{p+1}
+=\sum_{i=1}^{p}c_{i}\lambda_{i}\mathbf{v}_{i}.
+\]</span></p>
+<p>Noting that</p>
+<p><span class="math display">\[
+\lambda_{p+1}\mathbf{v}_{p+1}=\lambda_{p+1}\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=\sum_{i=1}^{p}c_{i}\lambda_{p+1}\mathbf{v}_{i},
+\]</span></p>
+<p>subtracting one equation from the other yields</p>
+<p><span class="math display">\[
+\lambda_{p+1}\mathbf{v}_{p+1}-\lambda_{p+1}\mathbf{v}_{p+1}=\sum_{i=1}^{p}c_{i}\lambda_{i}\mathbf{v}_{i}-\sum_{i=1}^{p}c_{i}\lambda_{p+1}\mathbf{v}_{i}\implies\mathbf{0}=\sum_{i=1}^{p}c_{i}\left(\lambda_{i}-\lambda_{p+1}\right)\mathbf{v}_{i}.
+\]</span></p>
+<p>By definition, an eigenvector is nonzero, and by construction, the set <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{p}\)</span> is linearly independent. Thus, all of the weights <span class="math inline">\(c_{i}\left(\lambda_{i}-\lambda_{p+1}\right)\)</span> must be zero. Because the eigenvalues are distinct, it cannot be the case that any factor <span class="math inline">\(\lambda_{i}-\lambda_{p+1}\)</span> is zero, so it follows that <span class="math inline">\(c_{i}=0\)</span> for <span class="math inline">\(i\in\left\{ 1,\ldots,p\right\}\)</span>. But if this is the case, then</p>
+<p><span class="math display">\[
+\mathbf{v}_{p+1}=\sum_{i=1}^{p}c_{i}\mathbf{v}_{i}=\sum_{i=1}^{p}0\mathbf{v}_{i}=\mathbf{0},
+\]</span></p>
+which contradicts the fact that <span class="math inline">\(\mathbf{v}_{p+1}\)</span> is an eigenvector, hence nonzero. Thus, <span class="math inline">\(\left\{ \mathbf{v}_{i}\right\} _{i=1}^{r}\)</span> cannot be linearly dependent, and therefore must be linearly independent.
+</div>
+
+
+<div class="proposition">
+<span id="prp:unnamed-chunk-46" class="proposition"><strong>Proposition 4.1  </strong></span>A scalar <span class="math inline">\(\lambda\)</span> is an eigenvalue of an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> if and only if <span class="math inline">\(\lambda\)</span> satisfies the characteristic equation <span class="math inline">\(\det\left(\mathbf{A}-\lambda\mathbf{I}\right)=0\)</span>.
+</div>
+
+
+<div class="proposition">
+<span id="prp:num-eigenvalues" class="proposition"><strong>Proposition 4.2  </strong></span>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> has exactly <span class="math inline">\(n\)</span> eigenvalues, including multiplicities.
+</div>
+
+
+<div class="proof">
+ <span class="proof"><em>Proof. </em></span> The determinant of <span class="math inline">\(\mathbf{A}-\lambda\mathbf{I}\)</span> for <span class="math inline">\(\lambda\in\mathbb{C}\)</span> is a polynomial in <span class="math inline">\(\lambda\)</span> of degree at most <span class="math inline">\(n\)</span>. It follows from the Fundamental Theorem of Algebra that the characteristic equation <span class="math inline">\(\det\left(\mathbf{A}-\lambda\mathbf{I}\right)=0\)</span> has exactly <span class="math inline">\(n\)</span> complex roots, including multiplicities. The previous proposition implies that each such root is an eigenvalue of <span class="math inline">\(\mathbf{A}\)</span>.
+</div>
+
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-48" class="theorem"><strong>Theorem 4.4  </strong></span>A real, symmetric <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(n\)</span> real eigenvalues, including multiplicities.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> Let <span class="math inline">\(\mathbf{x}\in\mathbb{C}^{n}\)</span>, and define <span class="math inline">\(q=\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}\)</span>. Observe that</p>
+<span class="math display">\[\begin{align*}
+\bar{q} &amp; =\overline{\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}} \\
+    &amp; =\overline{\bar{\mathbf{x}}^{\mathsf{T}}}\bar{\mathbf{A}}\bar{\mathbf{x}} \\
+    &amp; =\bar{\bar{\mathbf{x}}}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}\tag{$\mathbf{A}$ is real} \\
+    &amp; =\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}} \\
+    &amp; =\left(\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}\right)^{\mathsf{T}}\tag{$\mathbf{x}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{x}}$ is a scalar} \\
+    &amp; =\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}^{\mathsf{T}}\left(\mathbf{x}^{\mathsf{T}}\right)^{\mathsf{T}} \\
+    &amp; =\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}\tag{$\mathbf{A}$ is symmetric} \\
+    &amp; =q,
+\end{align*}\]</span>
+<p>hence <span class="math inline">\(q\)</span> is real. Now suppose that <span class="math inline">\(\mathbf{x}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}\)</span> with associated eigenvalue <span class="math inline">\(\lambda\)</span>. Then,</p>
+<p><span class="math display">\[
+q=
+  \bar{\mathbf{x}}^{\mathsf{T}}\mathbf{A}\mathbf{x}=
+  \bar{\mathbf{x}}^{\mathsf{T}}\lambda\mathbf{x}=
+  \lambda\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{x}=
+  \lambda
+    \begin{bmatrix}
+      \bar{x}_{1} &amp; \bar{x}_{2} &amp; \cdots &amp; \bar{x}_{n}
+    \end{bmatrix}
+    \begin{bmatrix}
+      x_{1}\\
+      x_{2}\\
+      \vdots\\
+      x_{n}
+    \end{bmatrix}=
+  \lambda\left(\bar{x}_{1}x_{1}+\bar{x}_{2}x_{2}+\cdots+\bar{x}_{n}x_{n}\right).
+\]</span></p>
+<p>Now, we can write some <span class="math inline">\(c\in\mathbb{C}\)</span> as the sum of its real and complex parts, i.e., <span class="math inline">\(c=a+\iota b\)</span>, where <span class="math inline">\(a,b\in\mathbb{R}\)</span>, so that</p>
+<p><span class="math display">\[
+\bar{c}c=\overline{\left(a+\iota b\right)}\left(a+\iota b\right)=\left(a-\iota b\right)\left(a+\iota b\right)=a^{2}+\iota ab-\iota ab-\iota^{2}b^{2}=a^{2}+b^{2}.
+\]</span></p>
+<span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are real, so it follows that <span class="math inline">\(\bar{c}c\)</span> is real, hence that each <span class="math inline">\(\bar{x}_{i}x_{i}\)</span> is real. <span class="math inline">\(q\)</span> is real, and <span class="math inline">\(\bar{\mathbf{x}}^{\mathsf{T}}\mathbf{x}\)</span> is real, so it follows that <span class="math inline">\(\lambda\)</span> must also be real. From Proposition <a href="linear-algebra.html#prp:num-eigenvalues">4.2</a>, <span class="math inline">\(\mathbf{A}\)</span> has exactly <span class="math inline">\(n\)</span> eigenvalues, and we have shown that each eigenvalue <span class="math inline">\(\lambda\)</span> is real, proving the theorem.
+</div>
+
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-50" class="theorem"><strong>Theorem 4.5  (Spectral Theorem)  </strong></span>A non-degenerate matrix <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span> has a decomposition of the form <span class="math inline">\(\mathbf{A}=\mathbf{X}\boldsymbol{\Lambda}\mathbf{X}^{-1}\)</span>, provided that <span class="math inline">\(\mathbf{X}^{-1}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span> exists, and where <span class="math inline">\(\boldsymbol{\Lambda}\)</span> is a diagonal matrix whose entries are the eigenvalues of <span class="math inline">\(\mathbf{A}\)</span>.
+</div>
+
+
+<div class="proof">
+ <span class="proof"><em>Proof. </em></span> PROOF GOES HERE
+</div>
+
+
+<div class="definition">
+<span id="def:unnamed-chunk-52" class="definition"><strong>Definition 4.4  </strong></span>A <em>unitary matrix</em> <span class="math inline">\(\mathbf{U}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span> has the property <span class="math inline">\(\mathbf{U}^{-1}=\mathbf{U}^{\mathsf{H}}\)</span>, where <span class="math inline">\(\mathbf{A}^{\mathsf{H}}\)</span> denotes the Hermitian conjugate (conjugate transpose) of <span class="math inline">\(\mathbf{A}\)</span>.
+</div>
+
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-53" class="theorem"><strong>Theorem 4.6  (Unitary Decomposition)  </strong></span>A symmetric matrix <span class="math inline">\(\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span> admits the unitary diagonalization <span class="math inline">\(\mathbf{A}=\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{-1}\)</span>, where <span class="math inline">\(\mathbf{Q}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)\)</span> is unitary.
+</div>
+
+
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="probability-theory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="common-families-of-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["course-notes.pdf", "course-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

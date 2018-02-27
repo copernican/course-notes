@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Master’s Companion" />
+  
+  <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+<meta name="author" content="Sean Wilson">
+
+
+<meta name="date" content="2018-02-26">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="linear-algebra.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+$$
+\usepackage{amsthm}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\coloneqq}{\mathrel{\mathop:}\mathrel{\mkern-1.2mu}=}
+$$
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Master's Companion</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="part"><span><b>I Background material</b></span></li>
+<li class="chapter" data-level="2" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2</b> Analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="analysis.html"><a href="analysis.html#upper-bounds-and-suprema"><i class="fa fa-check"></i><b>2.1</b> Upper bounds and suprema</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability-theory.html"><a href="probability-theory.html"><i class="fa fa-check"></i><b>3</b> Probability theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-theory.html"><a href="probability-theory.html#background-material"><i class="fa fa-check"></i><b>3.1</b> Background material</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-theory.html"><a href="probability-theory.html#transformations-and-expectations"><i class="fa fa-check"></i><b>3.2</b> Transformations and expectations</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="probability-theory.html"><a href="probability-theory.html#distributions-of-functions-of-a-random-variable"><i class="fa fa-check"></i><b>3.2.1</b> Distributions of functions of a random variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="probability-theory.html"><a href="probability-theory.html#expected-values"><i class="fa fa-check"></i><b>3.2.2</b> Expected values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="probability-theory.html"><a href="probability-theory.html#moments-and-moment-generating-functions"><i class="fa fa-check"></i><b>3.2.3</b> Moments and moment generating functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="probability-theory.html"><a href="probability-theory.html#multiple-random-variables"><i class="fa fa-check"></i><b>3.3</b> Multiple random variables</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="probability-theory.html"><a href="probability-theory.html#conditional-distributions-and-independence"><i class="fa fa-check"></i><b>3.3.1</b> Conditional distributions and independence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="probability-theory.html"><a href="probability-theory.html#covariance-and-correlation"><i class="fa fa-check"></i><b>3.3.2</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="probability-theory.html"><a href="probability-theory.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3.3</b> Multivariate distributions</a></li>
+<li class="chapter" data-level="3.3.4" data-path="probability-theory.html"><a href="probability-theory.html#inequalities"><i class="fa fa-check"></i><b>3.3.4</b> Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="probability-theory.html"><a href="probability-theory.html#properties-of-a-random-sample"><i class="fa fa-check"></i><b>3.4</b> Properties of a random sample</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="probability-theory.html"><a href="probability-theory.html#sums-of-random-variables-from-a-random-sample"><i class="fa fa-check"></i><b>3.4.1</b> Sums of random variables from a random sample</a></li>
+<li class="chapter" data-level="3.4.2" data-path="probability-theory.html"><a href="probability-theory.html#sampling-from-the-normal-distribution"><i class="fa fa-check"></i><b>3.4.2</b> Sampling from the normal distribution</a></li>
+<li class="chapter" data-level="3.4.3" data-path="probability-theory.html"><a href="probability-theory.html#order-statistics"><i class="fa fa-check"></i><b>3.4.3</b> Order statistics</a></li>
+<li class="chapter" data-level="3.4.4" data-path="probability-theory.html"><a href="probability-theory.html#convergence-concepts"><i class="fa fa-check"></i><b>3.4.4</b> Convergence concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>4</b> Linear algebra</a></li>
+<li class="part"><span><b>II Mathematical statistics</b></span></li>
+<li class="chapter" data-level="5" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html"><i class="fa fa-check"></i><b>5</b> Common families of distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#defn-exp-family"><i class="fa fa-check"></i><b>5.1</b> Exponential families</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#natural-parameters"><i class="fa fa-check"></i><b>5.1.1</b> Natural parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-and-scale-families"><i class="fa fa-check"></i><b>5.2</b> Location and scale families</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Master’s Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="common-families-of-distributions" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Common families of distributions</h1>
+<div id="defn-exp-family" class="section level2">
+<h2><span class="header-section-number">5.1</span> Exponential families</h2>
+<p>A family of pdfs (or pmfs) indexed by a parameter <span class="math inline">\(\boldsymbol{\theta}\)</span> is called a <span class="math inline">\(k\)</span>-parameter exponential family if it can be expressed as</p>
+<p><span class="math display">\[
+f\left(x|\boldsymbol{\theta}\right)=h\left(x\right)c\left(\boldsymbol{\theta}\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\boldsymbol{\theta}\right)t_{j}\left(x\right)\right\}
+\]</span></p>
+<p>where <span class="math inline">\(h\left(x\right)\geq 0\)</span>, <span class="math inline">\(c\left(\boldsymbol{\theta}\right)\geq 0\)</span>, and <span class="math inline">\(t_{1}\left(x\right),\ldots,t_{k}\left(x\right)\)</span> are real-valued functions of <span class="math inline">\(x\)</span>, and <span class="math inline">\(\omega_{1}\left(\boldsymbol{\theta}\right),\ldots,\omega_{k}\left(\boldsymbol{\theta}\right)\)</span> are real-valued functions of the possibly vector-valued parameter <span class="math inline">\(\boldsymbol{\theta}\)</span>. I.e., <span class="math inline">\(f\left(x|\boldsymbol{\theta}\right)\)</span> can be expressed in three parts: a part that depends only on the random variable(s), a part that depends only on the parameter(s), and a part that depends on both the random variable(s) and the parameter(s). Most of the parametric models you may have studied are exponential families, e.g., normal, gamma, beta, binomial, negative binomial, Poisson, and multinomial. The uniform distribution is not an exponential family (see Example <a href="common-families-of-distributions.html#exm:exp-family-uniform">5.5</a> below).</p>
+
+<div class="example">
+<p><span id="exm:logistic-regression" class="example"><strong>Example 5.1  (Logistic regression)  </strong></span>TO DO: this example doesn’t make sense here, move it.</p>
+<p>For <span class="math inline">\(Y_{1},Y_{2},\ldots,Y_{n}\)</span>, let <span class="math inline">\(Y_{i}\sim\text{Bernoulli}\left(p\right)\)</span>, i.e.,</p>
+<p><span class="math display">\[
+Y_{i}=\begin{cases}
+0, &amp; \text{if no event}\\
+1, &amp; \text{if event.}
+\end{cases}
+\]</span></p>
+<p>Then the logistic regression model is</p>
+<p><span class="math display">\[
+\log\left(\frac{p}{1-p}\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}
+\]</span></p>
+where <span class="math inline">\(\log\left(p/\left(1-p\right)\right)\)</span> is called the logit link.
+</div>
+
+
+<div class="example">
+<p><span id="exm:exp-family-binomial" class="example"><strong>Example 5.2  (Binomial random variables)  </strong></span>Let <span class="math inline">\(X\sim\mathcal{B}\left(n,p\right)\)</span>, where <span class="math inline">\(p\in\left(0,1\right)\)</span>. Recall that <span class="math inline">\(X\)</span> represents the number of successes in <span class="math inline">\(n\)</span> i.i.d. Bernoulli trials and its pmf is given by</p>
+<p><span class="math display">\[
+f\left(x|p\right)   =\binom{n}{x}p^{x}\left(1-p\right)^{n-x}
+\]</span></p>
+<p>for <span class="math inline">\(x=0,1,\ldots,n\)</span> and <span class="math inline">\(f\left(x|p\right)=0\)</span> otherwise. Express <span class="math inline">\(f\left(x|p\right)\)</span> in exponential family form.</p>
+<span class="math display">\[\begin{align*}
+f\left(x|p\right)   &amp; =\binom{n}{x}p^{x}\left(1-p\right)^{n-x} \\
+    &amp; =\binom{n}{x}p^{x}\left(1-p\right)^{n}\left(1-p\right)^{-x} \\
+    &amp; =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p^{x}}{\left(1-p\right)^{x}}\right) \\
+    &amp; =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p}{1-p}\right)^{x} \\
+    &amp; =\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ \log\left(\frac{p}{1-p}\right)^{x}\right\} \\
+    &amp; =\underbrace{\binom{n}{x}}_{h\left(x\right)}\underbrace{\left(1-p\right)^{n}}_{c\left(p\right)}\exp\left\{ \underbrace{x}_{t_{1}\left(x\right)}\underbrace{\log\left(\frac{p}{1-p}\right)}_{\omega_{1}\left(p\right)}\right\} 
+\end{align*}\]</span>
+</div>
+
+
+<div class="example">
+<p><span id="exm:exp-family-poisson" class="example"><strong>Example 5.3  (Poisson random variables)  </strong></span>Let <span class="math inline">\(X\sim\text{Poisson}\left(\lambda\right)\)</span>, where <span class="math inline">\(\lambda&gt;0\)</span>. Recall that <span class="math inline">\(X\)</span> represents the frequency with which a specified event occurs given some fixed dimension, such as space or time, and its pmf is given by</p>
+<p><span class="math display">\[
+f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}
+\]</span></p>
+<p>for <span class="math inline">\(x=0,1,2,\ldots\)</span> and <span class="math inline">\(f\left(x|\lambda\right)=0\)</span> otherwise. Express <span class="math inline">\(f\left(x|\lambda\right)\)</span> in exponential family form.</p>
+<p><span class="math display">\[
+f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}=\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ \log\left(\lambda^{x}\right)\right\} =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\}
+\]</span></p>
+Then, we have <span class="math inline">\(h\left(x\right)=1/x!\)</span>, <span class="math inline">\(c\left(\lambda\right)=\mathrm{e}^{-\lambda}\)</span>, <span class="math inline">\(t_{1}\left(x\right)=x\)</span>, and <span class="math inline">\(\omega_{1}\left(\lambda\right)=\log\lambda\)</span>. In a Poisson regression, we have <span class="math inline">\(\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}\)</span>.
+</div>
+
+
+<div class="example">
+<p><span id="exm:exp-family-normal" class="example"><strong>Example 5.4  (Normal random variables)  </strong></span>Let <span class="math inline">\(X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)\)</span>, where <span class="math inline">\(\mu\in\mathbb{R}\)</span> and <span class="math inline">\(\sigma&gt;0\)</span>. A pdf for <span class="math inline">\(X\)</span> is given by</p>
+<p><span class="math display">\[
+f\left(x|\mu,\sigma^{2}\right)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\}
+\]</span></p>
+<p>for <span class="math inline">\(x\in\mathbb{R}\)</span>. Express <span class="math inline">\(f\left(x|\mu,\sigma^{2}\right)\)</span> in exponential family form.</p>
+<p>Suppose <span class="math inline">\(\sigma\)</span> is known.</p>
+<span class="math display">\[\begin{align*}
+f\left(x|\mu\right) &amp; =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
+    &amp; =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{-2\mu x}{2\sigma^{2}}\right\} \\
+    &amp; =\underbrace{\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} }_{c\left(\mu\right)}\exp\left\{ \underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{1}\left(\mu\right)}\cdot\underbrace{x}_{t_{1}\left(x\right)}\right\} \\
+\end{align*}\]</span>
+<p>Suppose <span class="math inline">\(\sigma\)</span> is unknown.</p>
+<span class="math display">\[\begin{align*}
+f\left(x|\mu,\sigma^{2}\right) &amp; =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\} \\
+    &amp; =\frac{1}{\sqrt{2\pi}}\left(\sigma^{2}\right)^{-1/2}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
+    &amp; =\frac{1}{\sqrt{2\pi}}\exp\left\{ \log\left(\sigma^{2}\right)^{-1/2}\right\} \exp\left\{ -\frac{x^{2}-2\mu x}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \\
+    &amp; =\underbrace{\frac{1}{\sqrt{2\pi}}}_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} }_{c\left(\mu,\sigma^{2}\right)}\exp\left\{ \underbrace{\frac{1}{\sigma^{2}}}_{\omega_{1}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{\left(-\frac{x^{2}}{2}\right)}_{t_{1}\left(x\right)}+\underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{2}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{x}_{t_{2}\left(x\right)}\right\}
+\end{align*}\]</span>
+Thus, in the case that <span class="math inline">\(\sigma\)</span> is unknown, <span class="math inline">\(f\left(x|\mu,\sigma^{2}\right)\)</span> is a two-parameter exponential family, i.e., we have <span class="math inline">\(k=2\)</span> for <span class="math inline">\(\sum_{j=1}^{k}\omega_{j}\left(\theta\right)t_{j}\left(x\right)\)</span>.
+</div>
+
+
+<div class="definition">
+<p><span id="def:unnamed-chunk-54" class="definition"><strong>Definition 5.1  </strong></span>The indicator function of a set <span class="math inline">\(\mathcal{A}\)</span>, denoted by <span class="math inline">\(I_{\mathcal{A}}\left(x\right)\)</span>, is the function</p>
+<span class="math display">\[
+I_{\mathcal{A}}\left(x\right)=
+  \begin{cases}
+    1, &amp; x\in \mathcal{A}\\
+    0, &amp; x\notin \mathcal{A}
+\end{cases}.
+\]</span>
+</div>
+
+
+<div class="example">
+<p><span id="exm:exp-family-uniform" class="example"><strong>Example 5.5  (Uniform random variables)  </strong></span>Let <span class="math inline">\(X\sim\mathcal{U}\left(0,\theta\right)\)</span>, where <span class="math inline">\(\theta&gt;0\)</span>. A pdf for <span class="math inline">\(X\)</span> is given by</p>
+<p><span class="math display">\[
+f\left(x|\theta\right)=\frac{1}{\theta-0}=\frac{1}{\theta}
+\]</span></p>
+<p>for <span class="math inline">\(0&lt;x&lt;\theta\)</span>. Express <span class="math inline">\(f\left(x|\theta\right)\)</span> in exponential family form, if possible.</p>
+<p>Let <span class="math inline">\(\mathcal{A}=\left\{ x:x\in\left(0,\theta\right)\right\}\)</span> and let <span class="math inline">\(I_{\mathcal{A}}\)</span> be the indicator function of <span class="math inline">\(\mathcal{A}\)</span>.Then, we can write <span class="math inline">\(f\left(x|\theta\right)\)</span> as</p>
+<p><span class="math display">\[
+f\left(x|\theta\right)=
+  \frac{1}{\theta}I_{A}\left(x\right)=
+  \frac{1}{\theta}I_{\left(0,\theta\right)}\left(x\right).
+\]</span></p>
+Notice that <span class="math inline">\(I_{\left(0,\theta\right)}\left(x\right)\)</span> is not a function of <span class="math inline">\(x\)</span> exclusively, not a function of <span class="math inline">\(\theta\)</span> exclusively, and cannot be written as an exponential. Because the entire pdf must be incorporated into <span class="math inline">\(h\left(x\right)\)</span>, <span class="math inline">\(c\left(\theta\right)\)</span>, <span class="math inline">\(t_{j}\left(x\right)\)</span>, and <span class="math inline">\(\omega_{j}\left(\theta\right)\)</span>, it follows that the family of pdfs given by <span class="math inline">\(f\left(x|\theta\right)\)</span> is not an exponential family.
+</div>
+
+
+<div class="example">
+<p><span id="exm:3-param-exp-family" class="example"><strong>Example 5.6  (Three-parameter exponential family distribution)  </strong></span>Consider the family of distributions with densities</p>
+<p><span class="math display">\[
+f\left(x|\theta\right)  =\frac{2}{\Gamma\left(1/4\right)}\exp\left[-\left(x-\theta\right)^{4}\right]
+\]</span></p>
+<p>for <span class="math inline">\(x\in\mathbb{R}\)</span>. Express <span class="math inline">\(f\left(x|\theta\right)\)</span> in exponential family form.</p>
+<p>Recall that the binomial theorem states that</p>
+<p><span class="math display">\[
+\left(x+y\right)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}y^{n-k},
+\]</span></p>
+<p>so we have</p>
+<span class="math display">\[\begin{align*}
+f\left(x|\theta\right)  &amp; =\frac{2}{\Gamma\left(1/4\right)}\exp\left[-\left(x-\theta\right)^{4}\right] \\
+    &amp; =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\sum_{k=0}^{4}\binom{4}{k}x^{k}\left(-\theta\right)^{4-k}\right\} \\
+    &amp; =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\left[1\cdot1\cdot\theta^{4}-4x\theta^{3}+6x^{2}\theta^{2}-4x^{3}\theta+1\cdot x^{4}\cdot1\right]\right\} \\
+    &amp; =\underbrace{\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -x^{4}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\theta^{4}\right\} }_{c\left(\theta\right)}\exp\left\{ \underbrace{4x^{3}}_{t_{1}\left(x\right)}\underbrace{\theta}_{\omega_{1}\left(\theta\right)}\underbrace{-6x^{2}}_{t_{2}\left(x\right)}\underbrace{\theta^{2}}_{\omega_{2}\left(\theta\right)}+\underbrace{4x}_{t_{3}\left(x\right)}\underbrace{\theta^{3}}_{\omega_{3}\left(\theta\right)}\right\}.
+\end{align*}\]</span>
+</div>
+
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-55" class="theorem"><strong>Theorem 5.1  </strong></span>Random samples from <span class="math inline">\(k\)</span>-parameter exponential families have joint distributions which are <span class="math inline">\(k\)</span>-parameter exponential families.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> Suppose that a random variable <span class="math inline">\(X\)</span> has a pdf <span class="math inline">\(f\left(x|\theta\right)\)</span>, and that <span class="math inline">\(f\)</span> is part of an exponential family, so that <span class="math inline">\(f\)</span> can be written as</p>
+<p><span class="math display">\[
+f=h\left(x\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x\right)\omega_{j}\left(\theta\right)\right\} .
+\]</span></p>
+<p>Now suppose that <span class="math inline">\(X_{1},X_{2},\ldots,X_{n}\)</span> is a random sample from a population having the distribution of <span class="math inline">\(X\)</span>. It follows that the <span class="math inline">\(X_{i}\text{&#39;s}\)</span> are independent and identically distributed, and that each <span class="math inline">\(X_{i}\)</span> has the same cdf as <span class="math inline">\(X\)</span>, and therefore that <span class="math inline">\(f\left(x|\theta\right)\)</span> is a pdf for each <span class="math inline">\(X_{i}\)</span>. Then, the joint pdf of the <span class="math inline">\(X_{i}\text{&#39;s}\)</span> is given by</p>
+<span class="math display">\[\begin{align*}
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)   &amp; =\prod_{i=1}^{n}f\left(x_{i}|\theta\right) \\
+    &amp; =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right] \\
+    &amp; =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\}
+\end{align*}\]</span>
+<p>Then, let</p>
+<p><span class="math display">\[
+h^{*}\left(x\right)=\prod_{i=1}^{n}h\left(x_{i}\right)\quad\text{and}\quad c^{*}\left(\theta\right)=\left[c\left(\theta\right)\right]^{n},
+\]</span></p>
+<p>so that we have</p>
+<span class="math display">\[\begin{align*}
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)   &amp; =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \\
+    &amp; =h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\left(\omega_{j}\left(\theta\right)\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\right)\right\} .
+\end{align*}\]</span>
+<p>Now, let <span class="math inline">\(T_{j}\left(x\right) =\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\)</span>, so that</p>
+<p><span class="math display">\[
+f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)   =h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\theta\right)T_{j}\left(x\right)\right\} .
+\]</span></p>
+Thus, the joint pdf <span class="math inline">\(f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)\)</span> is a <span class="math inline">\(k\)</span>-parameter exponential family.
+</div>
+
+<div id="natural-parameters" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Natural parameters</h3>
+<p>An exponential family is sometimes reparametrized as</p>
+<p><span class="math display">\[
+f\left(x|\boldsymbol{\eta}\right)   =h\left(x\right)c^{*}\left(\boldsymbol{\eta}\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right),
+\]</span></p>
+<p>where the natural parameters are defined by <span class="math inline">\(\eta_{j}=\omega_{j}\left(\theta\right)\)</span> and the natural parameter space is</p>
+<p><span class="math display">\[
+\left\{ \boldsymbol{\eta}=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x&lt;\infty\right\}
+\]</span></p>
+<p>so that</p>
+<p><span class="math display">\[
+c^{*}\left(\boldsymbol{\eta}\right)=\frac{1}{\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\dif x\right\} },
+\]</span></p>
+<p>which ensures that the pdf integrates to 1.</p>
+
+<div class="example">
+<p><span id="exm:natural-param-binomial" class="example"><strong>Example 5.7  (Binomial random variables)  </strong></span>Express the pmf of <span class="math inline">\(X\sim\text{Binomial}\left(n,p\right)\)</span> using a natural parameterization.</p>
+<p>From Example <a href="common-families-of-distributions.html#exm:exp-family-binomial">5.2</a>, the pmf of <span class="math inline">\(X\)</span> can be written as</p>
+<p><span class="math display">\[
+f\left(x|p\right)   =\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ x\log\left(\frac{p}{1-p}\right)\right\} ,
+\]</span></p>
+<p>where <span class="math inline">\(k=1\)</span> and</p>
+<p><span class="math display">\[
+\omega_{1}\left(p\right)    =\log\frac{p}{1-p}.
+\]</span></p>
+<p>Then, let <span class="math inline">\(\eta=\omega_{1}\left(p\right)\)</span>, so that</p>
+<p><span class="math display">\[
+\mathrm{e}^{\eta}=\frac{p}{1-p}\implies p=\mathrm{e}^{\eta}\left(1-p\right)=\mathrm{e}^{\eta}-\mathrm{e}^{\eta}p\implies\mathrm{e}^{\eta}=p\left(1+\mathrm{e}^{\eta}\right)\implies p=\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}.
+\]</span></p>
+<p>Then, we have</p>
+<p><span class="math display">\[
+c\left(p\right)=\left(1-p\right)^{n}\implies c\left(\eta\right)=\left(1-\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}\right)^{n}=\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}
+\]</span></p>
+<p>and</p>
+<span class="math display">\[
+f\left(x|\eta\right)    =\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
+\]</span>
+</div>
+
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-57" class="example"><strong>Example 5.8  (Poisson random variables)  </strong></span>Express the pmf of <span class="math inline">\(X\sim\text{Poisson}\left(\lambda\right)\)</span> using a natural parameterization.</p>
+<p>From Example <a href="common-families-of-distributions.html#exm:exp-family-poisson">5.3</a>, the pmf of <span class="math inline">\(X\)</span> can be written as</p>
+<p><span class="math display">\[
+f\left(x|\lambda\right) =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\} ,
+\]</span></p>
+<p>where <span class="math inline">\(k=1\)</span> and <span class="math inline">\(\omega_{1}\left(\lambda\right) =\log\lambda\)</span>. Then, let <span class="math inline">\(\eta=\omega_{1}\left(\lambda\right)\)</span>, so that</p>
+<p><span class="math display">\[
+\eta=\log\lambda\implies\mathrm{e}^{\eta}=\exp\left(\log\lambda\right)\implies\mathrm{e}^{\eta}=\lambda.
+\]</span></p>
+<p>Then, we have <span class="math inline">\(c\left(\lambda\right)=\mathrm{e}^{-\lambda}\implies c\left(\eta\right)=\exp\left(-\mathrm{e}^{\eta}\right)\)</span> and</p>
+<span class="math display">\[
+f\left(x|\eta\right)    =\frac{1}{x!}\exp\left(-\mathrm{e}^{\eta}\right)\exp\left(x\eta\right).
+\]</span>
+</div>
+
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-58" class="example"><strong>Example 5.9  (Bernoulli random variables)  </strong></span>Express the pmf of <span class="math inline">\(X\sim\text{Bernoulli}\left(p\right)\)</span> using a natural parameterization.</p>
+<p>Noting that <span class="math inline">\(X\sim\text{Binomial}\left(1,p\right)\)</span>, from Example <a href="common-families-of-distributions.html#exm:natural-param-binomial">5.7</a>, we have</p>
+<p><span class="math display">\[
+f\left(x|\eta\right)    =\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
+\]</span></p>
+<p>With <span class="math inline">\(n=1\)</span>, we have</p>
+<span class="math display">\[
+f\left(x|\eta\right)=\binom{1}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=1\cdot\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=\frac{1}{1+\mathrm{e}^{\eta}}\exp\left(x\eta\right).
+\]</span>
+</div>
+
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-59" class="example"><strong>Example 5.10  (Normal random variables)  </strong></span>Express the pdf of <span class="math inline">\(X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)\)</span> using a natural parameterization, where <span class="math inline">\(\sigma&gt;0\)</span> is unknown.</p>
+<p>From Example <a href="common-families-of-distributions.html#exm:exp-family-normal">5.4</a>, we have</p>
+<p><span class="math display">\[
+f\left(x|\mu,\sigma^{2}\right)  =\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \exp\left\{ -x^{2}\frac{1}{2\sigma^{2}}+x\frac{\mu}{\sigma^{2}}\right\} .
+\]</span></p>
+<p>Then, let <span class="math inline">\(\eta_{1}=\omega_{1}\left(\mu,\sigma^{2}\right)\)</span>, so that</p>
+<p><span class="math display">\[
+\eta_{1}=\frac{1}{\sigma^{2}}\implies\sigma^{2}\eta_{1}=1\implies\sigma^{2}=\frac{1}{\eta_{1}}
+\]</span></p>
+<p>and let <span class="math inline">\(\eta_{2}=\omega_{2}\left(\mu,\sigma^{2}\right)\)</span>, so that</p>
+<p><span class="math display">\[
+\eta_{2}=\frac{\mu}{\sigma^{2}}\implies\mu=\sigma^{2}\eta_{2}=\frac{\eta_{2}}{\eta_{1}}.
+\]</span></p>
+<p>Then, we have</p>
+<span class="math display">\[\begin{align*}
+c\left(\mu,\sigma^{2}\right) &amp; =\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \\
+\implies c^{*}\left(\eta_{1},\eta_{2}\right)    &amp; =\exp\left\{ -\frac{\left(\frac{\eta_{2}}{\eta_{1}}\right)^{2}}{2\left(\frac{1}{\eta_{1}}\right)}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
+    &amp; =\exp\left\{ -\frac{\frac{\eta_{2}^{2}}{\eta_{1}^{2}}}{\frac{2}{\eta_{1}}}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
+    &amp; =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\frac{1}{\eta_{1}}\right)^{-1/2}\right\} \\
+    &amp; =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\left(\eta_{1}\right)^{-1}\right)^{-1/2}\right\} \\
+    &amp; =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\}
+\end{align*}\]</span>
+<p>and</p>
+<span class="math display">\[
+f\left(x|\eta_{1},\eta_{2}\right)   =\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\} \exp\left\{ -\frac{\eta_{1}x^{2}}{2}+\eta_{2}x\right\} .
+\]</span>
+</div>
+
+
+<div class="theorem">
+<p><span id="thm:expected-value-exp-family" class="theorem"><strong>Theorem 5.2  </strong></span>Let <span class="math inline">\(X\)</span> have density in an exponential family. Then,</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\E\left[t_{j}\left(X\right)\right]=-\dfrac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)\)</span>,</li>
+<li><span class="math inline">\(\Var\left(t_{j}\left(X\right)\right)=-\dfrac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)\)</span>,</li>
+</ol>
+<p>and the moment-generating function for <span class="math inline">\(\left(X_{1},\ldots,X_{k}\right)\)</span> is</p>
+<span class="math display">\[
+M_{\left(X_{1},\ldots,X_{k}\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\exp\left\{\sum_{j=1}^{k}s_{j}X_{j}\right\}\right].
+\]</span>
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> We begin with the pdf of an exponential family, i.e.,</p>
+<span class="math display">\[\begin{align*}
+1   &amp; =\int f\left(x|\theta\right)\dif x \\
+    &amp; =\int h\left(x\right)c\left(\theta\right)\exp\left(\sum_{i=1}^{k}\omega_{i}\left(\theta\right)t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x,
+\end{align*}\]</span>
+<p>where the second equality follows because <span class="math inline">\(f\)</span> is in an exponential family, and where the third equality is the natural parameterization of <span class="math inline">\(f\)</span>. Taking the derivative of both sides with repect to <span class="math inline">\(\eta_{j}\)</span> gives</p>
+<span class="math display">\[\begin{align*}
+\frac{\partial}{\partial\eta_{j}}1 &amp; =\frac{\partial}{\partial\eta_{j}}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+\implies0   &amp; =\int\frac{\partial}{\partial\eta_{j}}\left[h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x \\
+    &amp; =\int\left[h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\right]\dif x \\
+    &amp; =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; \quad+\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; \quad+\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{align*}\]</span>
+<p>where the final equality follows from the definition of expected value. Observe that for some differentiable function <span class="math inline">\(g\left(x\right)\)</span>, we have</p>
+<p><span class="math display">\[
+g&#39;\left(x\right)=\frac{g\left(x\right)}{g\left(x\right)}g&#39;\left(x\right)=g\left(x\right)\frac{\dif}{\dif x}\log\left(g\left(x\right)\right),
+\]</span></p>
+<p>which leads to</p>
+<span class="math display">\[\begin{align*}
+0   &amp; =\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right] \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right] \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\cdot1+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{align*}\]</span>
+<p>where the final equality follows from the fact that the integral of a pdf over its range of positivity is equal to <span class="math inline">\(1\)</span>. Then,</p>
+<span class="math display">\[\begin{align*}
+-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)   &amp; =\E\left[\frac{\partial}{\partial\eta_{j}}\eta_{1}t_{1}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{j}t_{j}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{k}t_{k}\left(X\right)\right] \\
+    &amp; =\E\left[0\cdot t_{1}\left(X\right)+\ldots+1\cdot t_{j}\left(X\right)+\ldots+0\cdot t_{k}\left(X\right)\right] \\
+    &amp; =\E\left[t_{j}\left(X\right)\right],
+\end{align*}\]</span>
+<p>proving the first claim. Then,</p>
+<span class="math display">\[\begin{align*}
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)   &amp; =\frac{\partial}{\partial\eta_{j}}\left(-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)\right) \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\E\left[t_{j}\left(X\right)\right] \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int t_{j}\left(x\right)h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x \\
+    &amp; =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; \quad+\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x.
+\end{align*}\]</span>
+<p>The first summand becomes</p>
+<span class="math display">\[\begin{align*}
+  &amp; \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\E\left[t_{j}\left(X\right)\right] \\
+    &amp; =\left(-\E\left[t_{j}\left(X\right)\right]\right)\E\left[t_{j}\left(X\right)\right] \\
+    &amp; =-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2},
+\end{align*}\]</span>
+<p>where the penultimate equality follows from the first part of the proof. The second summand becomes</p>
+<span class="math display">\[\begin{align*}
+  &amp; \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\frac{\partial}{\partial\eta_{1}}n_{1}t_{1}\left(x\right)+\cdots+\frac{\partial}{\partial\eta_{k}}n_{k}t_{k}\left(x\right)\right)\dif x \\
+    &amp; =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(0+\cdots+1\cdot t_{j}\left(x\right)+\cdots+0\right)\dif x \\
+    &amp; =\int\left(t_{j}\left(x\right)\right)^{2}h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+    &amp; =\E\left[\left(t_{j}\left(X\right)\right)^{2}\right].
+\end{align*}\]</span>
+<p>For some random variable <span class="math inline">\(Y\)</span> with defined second central moment, we have</p>
+<span class="math display">\[\begin{align*}
+\Var\left(Y\right) &amp; =\E\left[\left(Y-\E\left[Y\right]\right)^{2}\right] \\
+    &amp; =\E\left[Y^{2}-2Y\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\right] \\
+    &amp; =\E\left[Y^{2}\right]-2\E\left[Y\E\left[Y\right]\right]+\E\left[\left(\E\left[Y\right]\right)^{2}\right] \\
+    &amp; =\E\left[Y^{2}\right]-2\E\left[Y\right]\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\tag{$\E\left[Y\right]$ is constant} \\
+    &amp; =\E\left[Y^{2}\right]-2\left(\E\left[Y\right]\right)^{2}+\left(\E\left[Y\right]\right)^{2} \\
+    &amp; =\E\left[Y^{2}\right]-\left(\E\left[Y\right]\right)^{2}.
+\end{align*}\]</span>
+<p>It follows that</p>
+<p><span class="math display">\[
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)=-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2}+\E\left[\left(t_{j}\left(X\right)\right)^{2}\right]=\Var\left(t_{j}\left(X\right)\right),
+\]</span></p>
+proving the second claim.
+</div>
+
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-61" class="example"><strong>Example 5.11  (Expected value of a binomial random variable)  </strong></span>Find the expected value of <span class="math inline">\(X\sim\text{Binomial}\left(n,p\right)\)</span>.</p>
+<p>We will find <span class="math inline">\(\E\left[X\right]\)</span> by applying Theorem <a href="common-families-of-distributions.html#thm:expected-value-exp-family">5.2</a>. From Example <a href="common-families-of-distributions.html#exm:natural-param-binomial">5.7</a>, the pmf of <span class="math inline">\(X\)</span> is given by</p>
+<p><span class="math display">\[
+f\left(x|\eta\right)    =\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right),
+\]</span></p>
+<p>where <span class="math inline">\(\eta=\log\left(p/\left(1-p\right)\right)\)</span>, so that <span class="math inline">\(p=1/\left(1+\mathrm{e}^{\eta}\right)\)</span>. From the general form of a natural parameterization, we have <span class="math inline">\(k=1\)</span>, <span class="math inline">\(t\left(x\right)=x\)</span>, and <span class="math inline">\(c^{*}\left(\eta\right)=\left(1/\left(1+\mathrm{e}^{\eta}\right)\right)^{n}\)</span>. Then, we have</p>
+<span class="math display">\[\begin{align*}
+\E\left[X\right] &amp; =\E\left[t\left(X\right)\right] \\
+    &amp; =-\frac{\partial}{\partial\eta}\log\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n} \\
+    &amp; =-\frac{\partial}{\partial\eta}\log\left(1+\mathrm{e}^{\eta}\right)^{-n} \\
+    &amp; =-\frac{\partial}{\partial\eta}\left(-n\log\left(1+\mathrm{e}^{\eta}\right)\right) \\
+    &amp; =n\frac{\partial}{\partial\eta}\log\left(1+\mathrm{e}^{\eta}\right) \\
+    &amp; =n\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}} \\
+    &amp; =np.
+\end{align*}\]</span>
+</div>
+
+
+<div class="theorem">
+<p><span id="thm:mgf-natural-param" class="theorem"><strong>Theorem 5.3  </strong></span>If <span class="math inline">\(X\)</span> has a <span class="math inline">\(k\)</span>-parameter exponential family distribution indexed by the natural parameters, then for any <span class="math inline">\(\eta\)</span> on the interior of the natural parameter space, the mgf of <span class="math inline">\(\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)\)</span> exists and is given by</p>
+<p><span class="math display">\[
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right)  =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}
+\]</span></p>
+where <span class="math inline">\(\eta+s\)</span> is the vector <span class="math inline">\(\left(\eta_{1}+s_{1},\ldots,\eta_{k}+s_{k}\right)\)</span>.
+</div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> Suppose that <span class="math inline">\(X\)</span> is a <span class="math inline">\(k\)</span>-parameter exponential family distribution indexed by the natural parameters. Then, from Section <a href="common-families-of-distributions.html#natural-parameters">5.1.1</a>], it has a pdf given by</p>
+<p><span class="math display">\[
+f\left(x|\eta\right)    =h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} .
+\]</span></p>
+<p>It follows from Theorem <a href="common-families-of-distributions.html#thm:expected-value-exp-family">5.2</a> that</p>
+<p><span class="math display">\[
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right],
+\]</span></p>
+<p>with <span class="math inline">\(X_{i}\)</span> replaced by <span class="math inline">\(t_{i}\left(X\right)\)</span>. Then, we have</p>
+<span class="math display">\[\begin{align*}
+\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right] &amp; =\int\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)\right\} h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x \\
+    &amp; =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)+\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x \\
+    &amp; =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+    &amp; =\frac{c^{*}\left(\eta+s\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+    &amp; =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta+s\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+    &amp; =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot\int f\left(x|\eta+s\right)\dif x \\
+    &amp; =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot1 \\
+    &amp; =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)},
+\end{align*}\]</span>
+establishing the claim.
+</div>
+
+
+<div class="definition">
+<span id="def:unnamed-chunk-63" class="definition"><strong>Definition 5.2  </strong></span>A <em>curved exponential family</em> is a family of densities of the form given in Section <a href="common-families-of-distributions.html#defn-exp-family">5.1</a> for which the dimension of the vector <span class="math inline">\(\boldsymbol{\theta}\)</span> is equal to <span class="math inline">\(d&lt;k\)</span>, where <span class="math inline">\(k\)</span> is the number of terms in the sum in the exponent. If <span class="math inline">\(d=k\)</span>, the family is a <em>full exponential family</em>.
+</div>
+
+</div>
+</div>
+<div id="location-and-scale-families" class="section level2">
+<h2><span class="header-section-number">5.2</span> Location and scale families</h2>
+<p>Location families, scale families, and location-scale families are constructed by specifying a single pdf, <span class="math inline">\(f\left(x\right)\)</span>, called the standard pdf for the family. Then, all other pdfs in the family are generated by transforming the standard pdf in a prescribed way.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-algebra.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["course-notes.pdf", "course-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
