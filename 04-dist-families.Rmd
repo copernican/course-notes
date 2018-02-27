@@ -170,7 +170,7 @@ Now suppose that $X_{1},X_{2},\ldots,X_{n}$ is a random sample from a population
 \begin{align*}
 f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	& =\prod_{i=1}^{n}f\left(x_{i}|\theta\right) \\
 	& =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right] \\
-	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \tag{$\mathrm{e}^{x}\mathrm{e}^{y}=\mathrm{e}^{x+y}$}
+	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\}
 \end{align*}
 
 Then, let 
@@ -194,3 +194,315 @@ $$
   
 Thus, the joint pdf $f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)$ is a $k$-parameter exponential family.
 ```
+
+### Natural parameters {#natural-parameters}
+
+An exponential family is sometimes reparametrized as
+
+$$
+f\left(x|\boldsymbol{\eta}\right)	=h\left(x\right)c^{*}\left(\boldsymbol{\eta}\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right),
+$$
+
+where the natural parameters are defined by $\eta_{j}=\omega_{j}\left(\theta\right)$ and the natural parameter space is
+
+$$
+\left\{ \boldsymbol{\eta}=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x<\infty\right\}
+$$
+
+so that 
+
+$$
+c^{*}\left(\boldsymbol{\eta}\right)=\frac{1}{\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\dif x\right\} },
+$$
+
+which ensures that the pdf integrates to 1.
+
+```{example, label = "natural-param-binomial", name = "Binomial random variables"}
+Express the pmf of $X\sim\text{Binomial}\left(n,p\right)$ using a natural parameterization.
+
+From Example \@ref(exm:exp-family-binomial), the pmf of $X$ can be written as 
+
+$$
+f\left(x|p\right)	=\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ x\log\left(\frac{p}{1-p}\right)\right\} ,
+$$
+  
+where $k=1$ and 
+
+$$
+\omega_{1}\left(p\right)	=\log\frac{p}{1-p}.
+$$
+  
+Then, let $\eta=\omega_{1}\left(p\right)$, so that
+
+$$
+\mathrm{e}^{\eta}=\frac{p}{1-p}\implies p=\mathrm{e}^{\eta}\left(1-p\right)=\mathrm{e}^{\eta}-\mathrm{e}^{\eta}p\implies\mathrm{e}^{\eta}=p\left(1+\mathrm{e}^{\eta}\right)\implies p=\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}.
+$$
+  
+Then, we have
+
+$$
+c\left(p\right)=\left(1-p\right)^{n}\implies c\left(\eta\right)=\left(1-\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}\right)^{n}=\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}
+$$
+  
+and 
+
+$$
+f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
+$$
+```
+
+```{example, name = "Poisson random variables"}
+Express the pmf of $X\sim\text{Poisson}\left(\lambda\right)$ using a natural parameterization.
+
+From Example \@ref(exm:exp-family-poisson), the pmf of $X$ can be written as 
+
+$$
+f\left(x|\lambda\right)	=\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\} ,
+$$
+  
+where $k=1$ and $\omega_{1}\left(\lambda\right)	=\log\lambda$. Then, let $\eta=\omega_{1}\left(\lambda\right)$, so that
+
+$$
+\eta=\log\lambda\implies\mathrm{e}^{\eta}=\exp\left(\log\lambda\right)\implies\mathrm{e}^{\eta}=\lambda.
+$$
+  
+Then, we have $c\left(\lambda\right)=\mathrm{e}^{-\lambda}\implies c\left(\eta\right)=\exp\left(-\mathrm{e}^{\eta}\right)$ and
+
+$$
+f\left(x|\eta\right)	=\frac{1}{x!}\exp\left(-\mathrm{e}^{\eta}\right)\exp\left(x\eta\right).
+$$
+```
+
+```{example, name = "Bernoulli random variables"}
+Express the pmf of $X\sim\text{Bernoulli}\left(p\right)$ using a natural parameterization.
+
+Noting that $X\sim\text{Binomial}\left(1,p\right)$, from Example \@ref(exm:natural-param-binomial), we have
+
+$$
+f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
+$$
+  
+With $n=1$, we have
+
+$$
+f\left(x|\eta\right)=\binom{1}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=1\cdot\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=\frac{1}{1+\mathrm{e}^{\eta}}\exp\left(x\eta\right).
+$$
+```
+
+```{example, name = "Normal random variables"}
+Express the pdf of $X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)$ using a natural parameterization, where $\sigma>0$ is unknown.
+
+From Example \@ref(exm:exp-family-normal), we have
+
+$$
+f\left(x|\mu,\sigma^{2}\right)	=\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \exp\left\{ -x^{2}\frac{1}{2\sigma^{2}}+x\frac{\mu}{\sigma^{2}}\right\} .
+$$
+  
+Then, let $\eta_{1}=\omega_{1}\left(\mu,\sigma^{2}\right)$, so that
+
+$$
+\eta_{1}=\frac{1}{\sigma^{2}}\implies\sigma^{2}\eta_{1}=1\implies\sigma^{2}=\frac{1}{\eta_{1}}
+$$
+  
+and let $\eta_{2}=\omega_{2}\left(\mu,\sigma^{2}\right)$, so that
+
+$$
+\eta_{2}=\frac{\mu}{\sigma^{2}}\implies\mu=\sigma^{2}\eta_{2}=\frac{\eta_{2}}{\eta_{1}}.
+$$
+  
+Then, we have
+
+\begin{align*}
+c\left(\mu,\sigma^{2}\right) & =\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \\
+\implies c^{*}\left(\eta_{1},\eta_{2}\right)	& =\exp\left\{ -\frac{\left(\frac{\eta_{2}}{\eta_{1}}\right)^{2}}{2\left(\frac{1}{\eta_{1}}\right)}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
+	& =\exp\left\{ -\frac{\frac{\eta_{2}^{2}}{\eta_{1}^{2}}}{\frac{2}{\eta_{1}}}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
+	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\frac{1}{\eta_{1}}\right)^{-1/2}\right\} \\
+	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\left(\eta_{1}\right)^{-1}\right)^{-1/2}\right\} \\
+	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\}
+\end{align*}
+
+and
+ 
+$$
+f\left(x|\eta_{1},\eta_{2}\right)	=\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\} \exp\left\{ -\frac{\eta_{1}x^{2}}{2}+\eta_{2}x\right\} .
+$$
+```
+
+```{theorem, label = "expected-value-exp-family"}
+Let $X$ have density in an exponential family. Then,
+
+1. $\E\left[t_{j}\left(X\right)\right]=-\dfrac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)$,
+2. $\Var\left(t_{j}\left(X\right)\right)=-\dfrac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)$,
+
+and the moment-generating function for $\left(X_{1},\ldots,X_{k}\right)$ is
+
+
+$$
+M_{\left(X_{1},\ldots,X_{k}\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\exp\left\{\sum_{j=1}^{k}s_{j}X_{j}\right\}\right].
+$$
+```
+
+```{proof}
+We begin with the pdf of an exponential family, i.e., 
+
+\begin{align*}
+1	& =\int f\left(x|\theta\right)\dif x \\
+	& =\int h\left(x\right)c\left(\theta\right)\exp\left(\sum_{i=1}^{k}\omega_{i}\left(\theta\right)t_{i}\left(x\right)\right)\dif x \\
+	& =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x,
+\end{align*}
+
+where the second equality follows because $f$ is in an exponential family, and where the third equality is the natural parameterization of $f$. Taking the derivative of both sides with repect to $\eta_{j}$ gives 
+
+\begin{align*}
+\frac{\partial}{\partial\eta_{j}}1 & =\frac{\partial}{\partial\eta_{j}}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+\implies0	& =\int\frac{\partial}{\partial\eta_{j}}\left[h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x \\
+	& =\int\left[h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\right]\dif x \\
+	& =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& \quad+\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& \quad+\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\int h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{align*}
+
+where the final equality follows from the definition of expected value. Observe that for some differentiable function $g\left(x\right)$, we have
+
+$$
+g'\left(x\right)=\frac{g\left(x\right)}{g\left(x\right)}g'\left(x\right)=g\left(x\right)\frac{\dif}{\dif x}\log\left(g\left(x\right)\right),
+$$
+  
+which leads to 
+
+\begin{align*}
+0	& =\int h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right] \\
+	& =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\int h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right] \\
+	& =\frac{\partial}{\partial\eta_{j}}\left(\log c^{*}\left(\eta\right)\right)\cdot1+\E\left[\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(X\right)\right],
+\end{align*}
+
+where the final equality follows from the fact that the integral of a pdf over its range of positivity is equal to $1$. Then,
+
+\begin{align*}
+-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)	& =\E\left[\frac{\partial}{\partial\eta_{j}}\eta_{1}t_{1}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{j}t_{j}\left(X\right)+\ldots+\frac{\partial}{\partial\eta_{j}}\eta_{k}t_{k}\left(X\right)\right] \\
+	& =\E\left[0\cdot t_{1}\left(X\right)+\ldots+1\cdot t_{j}\left(X\right)+\ldots+0\cdot t_{k}\left(X\right)\right] \\
+	& =\E\left[t_{j}\left(X\right)\right],
+\end{align*}
+
+proving the first claim. Then,
+
+\begin{align*}
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)	& =\frac{\partial}{\partial\eta_{j}}\left(-\frac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)\right) \\
+	& =\frac{\partial}{\partial\eta_{j}}\E\left[t_{j}\left(X\right)\right] \\
+	& =\frac{\partial}{\partial\eta_{j}}\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\int t_{j}\left(x\right)h\left(x\right)\left[\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)+c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\right]\dif x \\
+	& =\int t_{j}\left(x\right)h\left(x\right)\frac{\partial}{\partial\eta_{j}}\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& \quad+\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x.
+\end{align*}
+
+The first summand becomes	
+
+\begin{align*}
+  & \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\frac{\partial}{\partial\eta_{j}}\log\left(c^{*}\left(\eta\right)\right)\E\left[t_{j}\left(X\right)\right] \\
+	& =\left(-\E\left[t_{j}\left(X\right)\right]\right)\E\left[t_{j}\left(X\right)\right] \\
+	& =-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2},
+\end{align*}
+
+where the penultimate equality follows from the first part of the proof. The second summand becomes 
+
+\begin{align*}
+  & \quad\,\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\sum_{i=1}^{k}\frac{\partial}{\partial\eta_{j}}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(\frac{\partial}{\partial\eta_{1}}n_{1}t_{1}\left(x\right)+\cdots+\frac{\partial}{\partial\eta_{k}}n_{k}t_{k}\left(x\right)\right)\dif x \\
+	& =\int t_{j}\left(x\right)h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\left(0+\cdots+1\cdot t_{j}\left(x\right)+\cdots+0\right)\dif x \\
+	& =\int\left(t_{j}\left(x\right)\right)^{2}h\left(x\right)c^{*}\left(\eta\right)\exp\left(\sum_{i=1}^{k}\eta_{i}t_{i}\left(x\right)\right)\dif x \\
+	& =\E\left[\left(t_{j}\left(X\right)\right)^{2}\right].
+\end{align*}
+
+For some random variable $Y$ with defined second central moment, we have
+
+\begin{align*}
+\Var\left(Y\right) & =\E\left[\left(Y-\E\left[Y\right]\right)^{2}\right] \\
+	& =\E\left[Y^{2}-2Y\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\right] \\
+	& =\E\left[Y^{2}\right]-2\E\left[Y\E\left[Y\right]\right]+\E\left[\left(\E\left[Y\right]\right)^{2}\right] \\
+	& =\E\left[Y^{2}\right]-2\E\left[Y\right]\E\left[Y\right]+\left(\E\left[Y\right]\right)^{2}\tag{$\E\left[Y\right]$ is constant} \\
+	& =\E\left[Y^{2}\right]-2\left(\E\left[Y\right]\right)^{2}+\left(\E\left[Y\right]\right)^{2} \\
+	& =\E\left[Y^{2}\right]-\left(\E\left[Y\right]\right)^{2}.
+\end{align*}
+
+It follows that 
+
+$$
+-\frac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)=-\left(\E\left[t_{j}\left(X\right)\right]\right)^{2}+\E\left[\left(t_{j}\left(X\right)\right)^{2}\right]=\Var\left(t_{j}\left(X\right)\right),
+$$
+  
+proving the second claim.
+```
+
+```{example, name = "Expected value of a binomial random variable"}
+Find the expected value of $X\sim\text{Binomial}\left(n,p\right)$.
+
+We will find $\E\left[X\right]$ by applying Theorem \@ref(thm:expected-value-exp-family). From Example \@ref(exm:natural-param-binomial), the pmf of $X$ is given by
+
+$$
+f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right),
+$$
+  
+where $\eta=\log\left(p/\left(1-p\right)\right)$, so that $p=1/\left(1+\mathrm{e}^{\eta}\right)$. From the general form of a natural parameterization, we have $k=1$, $t\left(x\right)=x$, and $c^{*}\left(\eta\right)=\left(1/\left(1+\mathrm{e}^{\eta}\right)\right)^{n}$. Then, we have 
+
+\begin{align*}
+\E\left[X\right] & =\E\left[t\left(X\right)\right] \\
+	& =-\frac{\partial}{\partial\eta}\log\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n} \\
+	& =-\frac{\partial}{\partial\eta}\log\left(1+\mathrm{e}^{\eta}\right)^{-n} \\
+	& =-\frac{\partial}{\partial\eta}\left(-n\log\left(1+\mathrm{e}^{\eta}\right)\right) \\
+	& =n\frac{\partial}{\partial\eta}\log\left(1+\mathrm{e}^{\eta}\right) \\
+	& =n\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}} \\
+	& =np.
+\end{align*}
+```
+
+```{theorem, label = "mgf-natural-param"}
+If $X$ has a $k$-parameter exponential family distribution indexed by the natural parameters, then for any $\eta$ on the interior of the natural parameter space, the mgf of $\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)$ exists and is given by 
+
+$$
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right)	=\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}
+$$
+  
+where $\eta+s$ is the vector $\left(\eta_{1}+s_{1},\ldots,\eta_{k}+s_{k}\right)$.
+```
+
+```{proof}
+Suppose that $X$ is a $k$-parameter exponential family distribution indexed by the natural parameters. Then, from Section \@ref(natural-parameters), it has a pdf given by
+
+$$
+f\left(x|\eta\right)	=h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} .
+$$
+  
+It follows from Theorem \@ref(thm:expected-value-exp-family) that
+
+$$
+M_{\left(t_{1}\left(X\right),\ldots,t_{k}\left(X\right)\right)}\left(s_{1},\ldots,s_{k}\right)=\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right],
+$$
+  
+with $X_{i}$ replaced by $t_{i}\left(X\right)$. Then, we have
+
+\begin{align*}
+\E\left[\mathrm{e}^{\sum_{j=1}^{k}s_{j}t_{j}\left(X\right)}\right] & =\int\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)\right\} h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x \\
+	& =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}s_{j}t_{j}\left(x\right)+\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x \\
+	& =\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+	& =\frac{c^{*}\left(\eta+s\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+	& =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\int h\left(x\right)c^{*}\left(\eta+s\right)\exp\left\{ \sum_{j=1}^{k}\left(s_{j}+\eta_{j}\right)t_{j}\left(x\right)\right\} \dif x \\
+	& =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot\int f\left(x|\eta+s\right)\dif x \\
+	& =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)}\cdot1 \\
+	& =\frac{c^{*}\left(\eta\right)}{c^{*}\left(\eta+s\right)},
+\end{align*}
+	
+establishing the claim.
+```
+
+```{definition}
+A *curved exponential family* is a family of densities of the form given in Section \@ref(defn-exp-family) for which the dimension of the vector $\boldsymbol{\theta}$ is equal to $d<k$, where $k$ is the number of terms in the sum in the exponent. If $d=k$, the family is a *full exponential family*.
+```
+
+## Location and scale families
+
+Location families, scale families, and location-scale families are constructed by specifying a single pdf, $f\left(x\right)$, called the standard pdf for the family. Then, all other pdfs in the family are generated by transforming the standard pdf in a prescribed way.
