@@ -1,0 +1,349 @@
+# PageRank
+
+## Motivation
+
+Imagine a web surfer who moves from page to page by clicking on links randomly with uniform probability. Suppose that the surfer is confined to a set of five pages defined by the following graph, where a link from page $i$ to page $j$ is represented by an arrow pointing from $i$ to $j$.
+
+```{r, echo = FALSE, message = FALSE}
+library(igraph)
+library(Matrix)
+library(purrr)
+library(readr)
+
+A <- matrix(
+  c(
+    0, 1, 1, 1, 0,
+    0, 0, 0, 1, 0,
+    0, 0, 0, 0, 1,
+    1, 0, 1, 0, 1,
+    0, 0, 0, 1, 0
+  ),
+  nrow = 5,
+  byrow = TRUE
+)
+
+gr <- igraph::graph_from_adjacency_matrix(A, mode = "directed")
+plot(gr)
+```
+
+If the surfer is currently on page $i$, we can represent the probability that the surfer moves to page $j$ by the $\left(i,j\right)\text{th}$ entry of the following _transition probability matrix_:
+
+$$
+\mathbf{A}=
+\begin{bmatrix}
+  0 & \frac{1}{3} & \frac{1}{3} & \frac{1}{3} & 0\\
+  0 & 0 & 0 & 1 & 0\\
+  0 & 0 & 0 & 0 & 1\\
+  \frac{1}{3} & 0 & \frac{1}{3} & 0 & \frac{1}{3}\\
+  0 & 0 & 0 & 1 & 0
+\end{bmatrix}
+$$
+
+```{proposition}
+Let $\mathbf{A}$ be a transition probability matrix as above.
+
+1. Let $\boldsymbol{\lambda}\in\mathbb{R}^{n}$ be the eigenvalues of $\mathbf{A}^{\mathsf{T}}$. Then, $\max_{i\in\left\{1,\ldots,n\right\}}\left |\lambda_{i}\right |=1$.
+2. Let $\mathbf{v}$ be the eigenvector with eigenvalue 1. Then, $v_{i}\geq 0$.
+3. If a web surfer surfs for a long time, then $P\left(\text{surfer ends on page }i\right)=v_{i}$, assuming $\sum_{i}v_{i}=1$.
+
+```
+
+In Google's PageRank algorithm, the page rank is determined by the values of $v_{i}$ in decreasing order.
+
+```{definition}
+For a given matrix, the eigenvalue with maximum absolute value is called the *dominant eigenvalue,* and the associated eigenvector is the *dominant eigenvector.*
+```
+
+To obtain a page's rank, we must compute the dominant eigenvector and eigenvalue.
+
+## Computing eigenpairs
+
+We now consider the problem of computing eigenvalues and eigenvectors. Recall that a scalar $\lambda$ is an eigenvalue of an $n\times n$ matrix $\mathbf{A}$ if and only if it satisfies the _characteristic equation_ $\det\left(\mathbf{A}-\lambda\mathbf{I}_{n}\right)=0$, where $\mathbf{I}_{n}$ is the $n$-dimensional identity matrix and $\det\left(\mathbf{M}\right)$ is the determinant of $\mathbf{M}$. If the characteristic equation is a polynomial of degree 4 or less, then an explicit algebraic solution may be obtained. If the characteristic equation is of degree 5 or higher, than an algebraic solution is impossible, and the eigenvalues must be approximted by numerical methods.
+
+In general, the computational complexity of computing the eigenvectors of a (square) $n$-dimensional matrix, e.g., by the _QR algorithm_, is $O\left(n^{3}\right)$, i.e., cubic in the dimension of the matrix. It is clear that for a network of even modest size, e.g., $10^{5}$, this problem will not be tractable. If we reduce the problem to computing the dominant eigenvector rather than all eigenvectors, then we can use a more efficient algorithm.
+
+## Algorithm
+
+We now present _power iteration_. Let $\mathbf{A}$ be an $n\times n$ matrix.
+
+1. Choose $\mathbf{v}^{\left(0\right)}\in\mathbb{R}^{n}$ such that $\mathbf{v}^{\left(0\right)}\neq\mathbf{0}$, and choose $\epsilon>0$.
+2. While $\left\Vert \mathbf{v}^{\left(i\right)}-\mathbf{v}^{\left(i-1\right)}\right\Vert \geq \epsilon$
+
+    a. $\mathbf{v}^{\left(i\right)}\gets\mathbf{A}\mathbf{v}^{\left(i-1\right)}$
+    b. $\mathbf{v}^{\left(i\right)}\gets\mathbf{v}^{\left(i\right)}/\sum_{j}v_{j}^{\left(i\right)}$
+    
+When the algorithm terminates, $\mathbf{v}^{\left(i\right)}$ will be (approximately) the dominant eigenvector of $\mathbf{A}$. We can then compute the dominant eigenvalue $\lambda_{\max}$ by the _Rayleigh quotient_, i.e., 
+
+$$
+\lambda_{\max}=\dfrac{\left(\mathbf{v}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{v}^{\left(i\right)}}{\left\Vert \mathbf{v}^{\left(i\right)}\right\Vert_{2}^{2}}.
+$$
+
+```{proof}
+We now present a proof sketch for power iteration.
+
+Let $\left\{\lambda_{i}\right\}_{i=1}^{n}$ be the eigenvalues of $\mathbf{A}$ such that $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$, and let $\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=1}^{n}$ be the corresponding eigenvectors.
+
+Suppose that the $\mathbf{w}^{\left(i\right)}$ form a basis for $\mathbb{R}^{n}$, and suppose that we begin power iteration with some $\mathbf{v}^{\left(0\right)}\in\mathbb{R}^{n}$. Because the $\mathbf{w}^{\left(i\right)}$ span $\mathbb{R}^{n}$, we can express $\mathbf{v}^{\left(0\right)}$ as a linear combination of the $\mathbf{w}^{\left(i\right)}$, i.e., 
+
+$$
+  \mathbf{v}^{\left(0\right)}=\sum_{i=1}^{n}c_{i}\mathbf{w}^{\left(i\right)}
+$$
+
+where $\left\{c_{i}\right\}_{i=1}^{n}\in\mathbb{R}^{n}$. At the first iteration of the algorithm, we left-multiply $\mathbf{v}^{\left(0\right)}$ by $\mathbf{A}$, which we can write as
+
+$$
+  \mathbf{v}^{\left(1\right)}=
+  \mathbf{A}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\mathbf{A}\mathbf{w}^{\left(i\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{w}^{\left(i\right)}
+$$
+  
+where the final equality follows because $\mathbf{w}^{\left(i\right)}$ is an eigenvector of $\mathbf{A}$. Observe that if $\mathbf{v}$ is an eigenvector of $\mathbf{A}$, then $c\mathbf{v}$ is also an eigenvector of $\mathbf{A}$ for some $c\in\mathbb{R}$. We have $c=\sum_{j}v_{j}^{\left(i\right)}$, so without loss of generality we will omit the normalization step of the algorithm.
+
+At the second iteration, we left-multiply $\mathbf{v}^{\left(1\right)}$ by $\mathbf{A}$, which we can write as
+
+$$
+  \mathbf{v}^{\left(2\right)}=
+  \mathbf{A}\mathbf{v}^{\left(1\right)}=
+  \mathbf{A}\mathbf{A}\mathbf{v}^{\left(0\right)}=
+  \mathbf{A}^{2}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{A}\mathbf{w}^{\left(i\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}^{2}\mathbf{w}^{\left(i\right)}.
+$$
+  
+We can see that $\mathbf{v}^{\left(M\right)}$ will have the form
+
+$$
+  \mathbf{v}^{\left(M\right)}=
+  \mathbf{A}^{M}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}^{M}\mathbf{w}^{\left(i\right)}=
+  c_{1}\lambda_{1}^{M}\mathbf{w}^{\left(1\right)}+
+  c_{2}\lambda_{2}^{M}\mathbf{w}^{\left(2\right)}+\cdots+
+  c_{n}\lambda_{n}^{M}\mathbf{w}^{\left(n\right)}.
+$$
+  
+We can factor out $\lambda_{1}^{M}$ to give
+
+$$
+  \mathbf{v}^{\left(M\right)}=
+  \lambda_{1}^{M}\left(
+    c_{1}\mathbf{w}^{\left(1\right)}+
+    c_{2}\left(\dfrac{\lambda_{2}}{\lambda_{1}}\right)^{M}\mathbf{w}^{\left(2\right)}+\cdots+
+    c_{n}\left(\dfrac{\lambda_{n}}{\lambda_{1}}\right)^{M}\mathbf{w}^{\left(n\right)}
+  \right)
+$$
+  
+By assumption, $\lambda_{1}$ is the largest eigenvalue of $\mathbf{A}$, so that
+
+$$
+  \left|\dfrac{\lambda_{i}}{\lambda_{1}}\right|<1,\quad i\in\left\{2,\ldots,n\right\}.
+$$
+  
+Thus,
+
+$$
+  M\rightarrow\infty\implies\left(\dfrac{\lambda_{i}}{\lambda_{1}}\right)^{M}\rightarrow 0,
+$$
+  
+so that for some large but finite $M$,
+
+$$
+  \mathbf{v}^{\left(M\right)}\approx
+  \lambda_{1}^{M}\left(
+    c_{1}\mathbf{w}^{\left(1\right)}+
+    c_{2}\cdot 0\cdot\mathbf{w}^{\left(2\right)}+\cdots+
+    c_{n}\cdot 0\cdot\mathbf{w}^{\left(n\right)}
+  \right)=
+  \lambda_{1}^{M}c_{1}\mathbf{w}^{\left(1\right)}.
+$$
+
+Let $\tilde{\mathbf{w}}^{\left(1\right)}=\lambda_{1}^{M}c_{1}\mathbf{w}^{\left(1\right)}$, so that $\mathbf{v}^{\left(M\right)}\approx\tilde{\mathbf{w}}^{\left(1\right)}$. The final step of the algorithm is to normalize $\mathbf{v}^{\left(M\right)}$, i.e., 
+  
+$$
+  \mathbf{v}^{\left(M\right)}\approx
+  \dfrac{\tilde{\mathbf{w}}^{\left(1\right)}}{\sum_{j}\tilde{w}_{j}^{\left(1\right)}}.
+$$
+  
+Thus, we see that $\mathbf{v}^{\left(M\right)}$ approximates the dominant eigenvector $\mathbf{w}^{\left(1\right)}$ of $\mathbf{A}$, completing the proof sketch.
+```
+
+## Considerations
+
+### Connection to Markov chains
+
+We can model the web surfer's behavior by a Markov chain with transition probability matrix $\mathbf{A}$. Suppose that $\boldsymbol{\pi}$ is the stationary distribution of the chain, so that
+
+$$
+\boldsymbol{\pi}^{\mathsf{T}}\mathbf{A}=\boldsymbol{\pi}^\mathsf{T}\implies
+\mathbf{A}^\mathsf{T}\boldsymbol{\pi}=\boldsymbol{\pi}.
+$$
+
+We can thus view power iteration as finding the stationary distribution of the Markov chain, the $j\text{th}$ element of which can be interpreted as the long-run proportion of time the chain spends in state $j$. Observe also that power iteration normalizes $\mathbf{v}^{\left(i\right)}$ such that its components sum to 1, as required for a probability distribution.
+
+### Calculating the dominant eigenvalue
+
+We stated above that we can find the eigenvalue corresponding to $\mathbf{w}^{\left(1\right)}$ by the Rayleigh quotient. We have
+
+$$
+\dfrac{\left(\mathbf{w}^{\left(1\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{w}^{\left(1\right)}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\dfrac{\lambda_{1}\left(\mathbf{w}^{\left(1\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(1\right)}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\lambda_{1}\dfrac{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\lambda_{1},
+$$
+
+as desired.
+
+### Computational complexity
+
+At each step of power iteration, we must compute $\mathbf{A}\mathbf{v}^{\left(i-1\right)}$. The first entry of this product is obtained by summing the product of the first row of $\mathbf{A}$ with $\mathbf{v}^{\left(i-1\right)}$, which requires $n$ multiplications. We have $\mathbf{A}\sim n\times n$, i.e., we must repeat this process $n$ times, so that computing $\mathbf{A}\mathbf{v}^{\left(i-1\right)}$ requires $n^{2}$ multiplications.
+
+Thus, each step of power iteration has $O\left(n^{2}\right)$ complexity. While this is an improvement over cubic complexity, it is still intractable for real-world problems, e.g., if we assume that the Internet has on the order of one billion web pages, i.e., $n=10^{9}$, then power iteration requires $10^{18}$ multiplications _at each step_. If we suppose that a typical laptop computer can execute on the order of one billion operations per second, then one step of power iteration on the Internet would require $10^{18}/10^{9}=10^{9}$ seconds, or roughly 32 years (to say nothing of the memory requirements).
+
+Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of $\mathbf{A}\mathbf{v}^{\left(i-1\right)}$ must be computed. If we _knew in advance_ the result of certain of these multiplications, we might not have perform them. In particular, if we knew that the $\left(i,j\right)\text{th}$ entry of $\mathbf{A}$ were zero, then we would also immediately know that the $j\text{th}$ summand in the product of the $i\text{th}$ row of $\mathbf{A}$ and $\mathbf{v}^{\left(i-1\right)}$ is zero, and we could avoid doing that multiplication.
+
+_Sparse matrices_ enable precisely this kind of savings: they represent matrices in such a way as to avoid multiplications by zero. It remains to consider the characteristics of the network of interest, so that we might determine whether a sparse representation would be advantageous. Suppose that each web page links to on the order of 10 other pages. In this case, only 10 entries of each row of $\mathbf{A}$ are nonzero, and the remaining $10^{9}-10$ entries are zero. We must perform just 10 multiplications per row, and $\mathbf{A}$ has $10^{9}$ rows, so that a single step of power iteration requires just $10^{10}$ multiplications, or roughly 10 seconds at $10^{9}$ operations per second.
+
+### Convergence
+
+The approximation $\mathbf{v}^{\left(M\right)}\approx\mathbf{w}^{\left(1\right)}$ depends on the terms involving the other eigenvectors $\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=2}^{n}$ shrinking toward the zero vector. The rate at which the $i\text{th}$ term converges to the zero vector is given by the ratio of $\lambda_{i}$ to $\lambda_{1}$. We assume that the eigenvalues are ordered by absolute value, hence the largest such term is $\lambda_{2}/\lambda_{1}$, and this term will determine the rate of convergence of power iteration, e.g., if this ratio is close to 1, then the algorithm may converge slowly.
+
+For large matrices, $\lambda_{2}/\lambda_{1}$ will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose $p\in\left[0,1\right]$. Then, assume that with probability $p$ the web surfer randomly, with uniform probability, jumps to any page in the network given in $\mathbf{A}$ and with probability $\left(1-p\right)$ the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing $\mathbf{A}$ by 
+
+$$
+\mathbf{M}=\left(1-p\right)\mathbf{A}+p\mathbf{B},
+$$
+
+where $\mathbf{B}$ is a matrix with all entries giben by $1/n$, which $n$ is again the number of pages in the network. Observe that if $p=0$ this is equivalent to the original model.
+
+The surfer's behavior under this model can similarly be modeled by a Markov chain whose stationary distribution $\mathbf{v}$ satisfies $\mathbf{M}^{\mathsf{T}}\mathbf{v}=\mathbf{v}$. We can again approximate the stationary distribution by power iteration. We must be careful in implementation because while $\mathbf{A}$ is typically sparse, $\mathbf{M}$ never is ($\mathbf{B}$ has all non-zero entries). It turns out that we can decompose $\mathbf{M}^{\mathsf{T}}\mathbf{v}$ as
+
+$$
+\mathbf{M}^{\mathsf{T}}\mathbf{v}=
+\left(1-p\right)\mathbf{A}^{\mathsf{T}}\mathbf{v}+\dfrac{p}{n}\mathbf{1}\sum_{i=1}^{n}v_{i},
+$$
+
+where $\mathbf{1}$ is the $n$-dimensional vector of ones. We now implement power iteration for this model.
+
+```{r}
+#' Modified power iteration
+#'
+#' @param A adjacency matrix of original network
+#' @param v0 starting vector
+#' @param p probability of jumping to any page in `A`
+#' @param tol iteration tolerance
+#' @param niter maximum number of iterations
+#'
+#' @return list containing the number of iterations to converge and the 
+#'  dominant eigenvector of `A`
+power_iter <- function(A, v0, p, tol = 1e-4, niter = 1e3) {
+  mag <- function(x) sqrt(sum(x ^ 2))
+  
+  # normalize v0 so that convergence can occur in a single iteration
+  v_old <- v0 / sum(v0)
+  
+  i <- 0
+  delta <- tol + 1
+  
+  # this term does not change from iteration to iteration
+  u <- (p / length(v0)) * rep(1, length(v0))
+  
+  while (i < niter && delta > tol) {
+    v_new <- (1 - p) * crossprod(A, v_old) + sum(v_old) * u
+    v_new <- v_new / sum(v_new)
+    delta <- mag(v_new - v_old)
+    v_old <- v_new
+    i <- i + 1
+  }
+  list(
+    niter = i,
+    v = as.vector(v_new)
+  )
+}
+```
+
+We will test our implementation using the General Relativity network from the Stanford Network Analysis Project. 
+
+```{r, message = FALSE}
+url <- "http://snap.stanford.edu/data/ca-GrQc.txt.gz"
+gr <- readr::read_tsv(url, skip = 4, col_names = c("from", "to"))
+gr
+```
+
+We now implement a function to perform power iteration, measure its runtime, and extract the name of the top node, i.e., $v_{\max}=\max_{j\in\left\{1,\ldots,n\right\}}v_{j}$. 
+
+```{r}
+#' Power iteration runtime and top node
+#' 
+#' @param A adjacency matrix for power iteration
+#' @param p probability of jumping to any page in `A`
+#' @param ... other arguments passed to `power_iter()`
+#' 
+#' @return list containing `p`, the name of the top node, the number of 
+#'   iterations required to converge, and the runtime
+top_node <- function(A, p, ...) {
+  runtime <- system.time(
+    pi_result <- power_iter(
+      A = A,
+      v0 = rep(1, nrow(A)),
+      p = p,
+      ...
+    )
+  )
+  # extract the (first) top-rated node
+  v_max <- (rownames(A))[which.max(pi_result$v)]
+  list(
+    p = p,
+    top_node = v_max,
+    niter = pi_result$niter,
+    time = runtime["elapsed"]
+  )
+}
+```
+
+Finally, we implement a function to perform power iteration for multiple values of $p$. Note that `gr` is an edgelist.
+
+```{r}
+#' Power iteration for multiple jump probabilities with sparse matrices
+#' 
+#' @param el data frame containing a symbolic edge list in the first two 
+#'  columns; passed to `igraph::graph_from_data_frame()`
+#' @param p vector of probabilities
+#' @param sparse whether to use sparse matrices
+#'
+#' @return a tibble containing a row for each value of `p`, the name of the 
+#'  top node, the number of iterations required to converge, and the runtime
+pagerank <- function(el, p, sparse = TRUE) {
+  graph <- igraph::graph_from_data_frame(el)
+  adj <- igraph::as_adjacency_matrix(graph, sparse = sparse)
+  purrr::map_dfr(p, top_node, A = adj)
+}
+```
+
+We are now ready to examine the impact of $p$.
+
+```{r}
+prob <- c(10 ^ -(6:2), 0.15, 0.5, 0.9, 0.99)
+pr_dense <- pagerank(gr, p = prob, sparse = FALSE)
+```
+
+We see that the top-rated node is 21012, and that 31 iterations were required for most values of $p$. As $p$ becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.
+
+```{r}
+pr_sparse <- pagerank(gr, p = prob)
+pr_sparse
+```
+
+We see that the same number of iterations are required to converge as in the dense case, but that the time required is decreased by roughly two orders of magnitude. Finally, observe that node 21012 is also the node with the largest number of adjacent vertices (connections) (note that the _ego graph_ of a vertex includes the vertex itself):
+
+```{r}
+graph <- igraph::graph_from_data_frame(gr)
+igraph::neighbors(graph, v = "21012")
+graph %>% igraph::ego_size() %>% max()
+```
+
+Finally, observe that PageRank is a variant of _eigenvector centrality_:
+
+```{r}
+ec <- igraph::eigen_centrality(graph)
+ec$vector[which.max(ec$vector)]
+```
