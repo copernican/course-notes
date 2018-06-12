@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Master’s Companion" />
+  
+  <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+<meta name="author" content="Sean Wilson">
+
+
+<meta name="date" content="2018-06-12">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="common-families-of-distributions.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+$$
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\coloneqq}{\mathrel{\mathop:}\mathrel{\mkern-1.2mu}=}
+$$
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Master's Companion</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="part"><span><b>I Background material</b></span></li>
+<li class="chapter" data-level="2" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2</b> Analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="analysis.html"><a href="analysis.html#upper-bounds-and-suprema"><i class="fa fa-check"></i><b>2.1</b> Upper bounds and suprema</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability-theory.html"><a href="probability-theory.html"><i class="fa fa-check"></i><b>3</b> Probability theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-theory.html"><a href="probability-theory.html#background-material"><i class="fa fa-check"></i><b>3.1</b> Background material</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-theory.html"><a href="probability-theory.html#transformations-and-expectations"><i class="fa fa-check"></i><b>3.2</b> Transformations and expectations</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="probability-theory.html"><a href="probability-theory.html#distributions-of-functions-of-a-random-variable"><i class="fa fa-check"></i><b>3.2.1</b> Distributions of functions of a random variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="probability-theory.html"><a href="probability-theory.html#expected-values"><i class="fa fa-check"></i><b>3.2.2</b> Expected values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="probability-theory.html"><a href="probability-theory.html#moments-and-moment-generating-functions"><i class="fa fa-check"></i><b>3.2.3</b> Moments and moment generating functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="probability-theory.html"><a href="probability-theory.html#multiple-random-variables"><i class="fa fa-check"></i><b>3.3</b> Multiple random variables</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="probability-theory.html"><a href="probability-theory.html#conditional-distributions-and-independence"><i class="fa fa-check"></i><b>3.3.1</b> Conditional distributions and independence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="probability-theory.html"><a href="probability-theory.html#covariance-and-correlation"><i class="fa fa-check"></i><b>3.3.2</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="probability-theory.html"><a href="probability-theory.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3.3</b> Multivariate distributions</a></li>
+<li class="chapter" data-level="3.3.4" data-path="probability-theory.html"><a href="probability-theory.html#inequalities"><i class="fa fa-check"></i><b>3.3.4</b> Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="probability-theory.html"><a href="probability-theory.html#properties-of-a-random-sample"><i class="fa fa-check"></i><b>3.4</b> Properties of a random sample</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="probability-theory.html"><a href="probability-theory.html#sums-of-random-variables-from-a-random-sample"><i class="fa fa-check"></i><b>3.4.1</b> Sums of random variables from a random sample</a></li>
+<li class="chapter" data-level="3.4.2" data-path="probability-theory.html"><a href="probability-theory.html#sampling-from-the-normal-distribution"><i class="fa fa-check"></i><b>3.4.2</b> Sampling from the normal distribution</a></li>
+<li class="chapter" data-level="3.4.3" data-path="probability-theory.html"><a href="probability-theory.html#order-statistics"><i class="fa fa-check"></i><b>3.4.3</b> Order statistics</a></li>
+<li class="chapter" data-level="3.4.4" data-path="probability-theory.html"><a href="probability-theory.html#convergence-concepts"><i class="fa fa-check"></i><b>3.4.4</b> Convergence concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>4</b> Linear algebra</a></li>
+<li class="part"><span><b>II Mathematical statistics</b></span></li>
+<li class="chapter" data-level="5" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html"><i class="fa fa-check"></i><b>5</b> Common families of distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#defn-exp-family"><i class="fa fa-check"></i><b>5.1</b> Exponential families</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#natural-parameters"><i class="fa fa-check"></i><b>5.1.1</b> Natural parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-and-scale-families"><i class="fa fa-check"></i><b>5.2</b> Location and scale families</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-families"><i class="fa fa-check"></i><b>5.2.1</b> Location families</a></li>
+<li class="chapter" data-level="5.2.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#scale-families"><i class="fa fa-check"></i><b>5.2.2</b> Scale families</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pagerank.html"><a href="pagerank.html"><i class="fa fa-check"></i><b>6</b> PageRank</a><ul>
+<li class="chapter" data-level="6.1" data-path="pagerank.html"><a href="pagerank.html#motivation"><i class="fa fa-check"></i><b>6.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.2" data-path="pagerank.html"><a href="pagerank.html#computing-eigenpairs"><i class="fa fa-check"></i><b>6.2</b> Computing eigenpairs</a></li>
+<li class="chapter" data-level="6.3" data-path="pagerank.html"><a href="pagerank.html#algorithm"><i class="fa fa-check"></i><b>6.3</b> Algorithm</a></li>
+<li class="chapter" data-level="6.4" data-path="pagerank.html"><a href="pagerank.html#considerations"><i class="fa fa-check"></i><b>6.4</b> Considerations</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="pagerank.html"><a href="pagerank.html#connection-to-markov-chains"><i class="fa fa-check"></i><b>6.4.1</b> Connection to Markov chains</a></li>
+<li class="chapter" data-level="6.4.2" data-path="pagerank.html"><a href="pagerank.html#calculating-the-dominant-eigenvalue"><i class="fa fa-check"></i><b>6.4.2</b> Calculating the dominant eigenvalue</a></li>
+<li class="chapter" data-level="6.4.3" data-path="pagerank.html"><a href="pagerank.html#computational-complexity"><i class="fa fa-check"></i><b>6.4.3</b> Computational complexity</a></li>
+<li class="chapter" data-level="6.4.4" data-path="pagerank.html"><a href="pagerank.html#convergence"><i class="fa fa-check"></i><b>6.4.4</b> Convergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Master’s Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pagerank" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> PageRank</h1>
+<div id="motivation" class="section level2">
+<h2><span class="header-section-number">6.1</span> Motivation</h2>
+<p>Imagine a web surfer who moves from page to page by clicking on links randomly with uniform probability. Suppose that the surfer is confined to a set of five pages defined by the following graph, where a link from page <span class="math inline">\(i\)</span> to page <span class="math inline">\(j\)</span> is represented by an arrow pointing from <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span>.</p>
+<p><img src="course-notes_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p>If the surfer is currently on page <span class="math inline">\(i\)</span>, we can represent the probability that the surfer moves to page <span class="math inline">\(j\)</span> by the <span class="math inline">\(\left(i,j\right)\text{th}\)</span> entry of the following <em>transition probability matrix</em>:</p>
+<p><span class="math display">\[
+\mathbf{A}=
+\begin{bmatrix}
+  0 &amp; \frac{1}{3} &amp; \frac{1}{3} &amp; \frac{1}{3} &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; 1\\
+  \frac{1}{3} &amp; 0 &amp; \frac{1}{3} &amp; 0 &amp; \frac{1}{3}\\
+  0 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]</span></p>
+
+<div class="proposition">
+<p><span id="prp:unnamed-chunk-67" class="proposition"><strong>Proposition 6.1  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a transition probability matrix as above.</p>
+<ol style="list-style-type: decimal">
+<li>Let <span class="math inline">\(\boldsymbol{\lambda}\in\mathbb{R}^{n}\)</span> be the eigenvalues of <span class="math inline">\(\mathbf{A}^{\mathsf{T}}\)</span>. Then, <span class="math inline">\(\max_{i\in\left\{1,\ldots,n\right\}}\left |\lambda_{i}\right |=1\)</span>.</li>
+<li>Let <span class="math inline">\(\mathbf{v}\)</span> be the eigenvector with eigenvalue 1. Then, <span class="math inline">\(v_{i}\geq 0\)</span>.</li>
+<li>If a web surfer surfs for a long time, then <span class="math inline">\(P\left(\text{surfer ends on page }i\right)=v_{i}\)</span>, assuming <span class="math inline">\(\sum_{i}v_{i}=1\)</span>.</li>
+</ol>
+</div>
+
+<p>In Google’s PageRank algorithm, the page rank is determined by the values of <span class="math inline">\(v_{i}\)</span> in decreasing order.</p>
+
+<div class="definition">
+<span id="def:unnamed-chunk-68" class="definition"><strong>Definition 6.1  </strong></span>For a given matrix, the eigenvalue with maximum absolute value is called the <em>dominant eigenvalue,</em> and the associated eigenvector is the <em>dominant eigenvector.</em>
+</div>
+
+<p>To obtain a page’s rank, we must compute the dominant eigenvector and eigenvalue.</p>
+</div>
+<div id="computing-eigenpairs" class="section level2">
+<h2><span class="header-section-number">6.2</span> Computing eigenpairs</h2>
+<p>We now consider the problem of computing eigenvalues and eigenvectors. Recall that a scalar <span class="math inline">\(\lambda\)</span> is an eigenvalue of an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> if and only if it satisfies the <em>characteristic equation</em> <span class="math inline">\(\det\left(\mathbf{A}-\lambda\mathbf{I}_{n}\right)=0\)</span>, where <span class="math inline">\(\mathbf{I}_{n}\)</span> is the <span class="math inline">\(n\)</span>-dimensional identity matrix and <span class="math inline">\(\det\left(\mathbf{M}\right)\)</span> is the determinant of <span class="math inline">\(\mathbf{M}\)</span>. If the characteristic equation is a polynomial of degree 4 or less, then an explicit algebraic solution may be obtained. If the characteristic equation is of degree 5 or higher, than an algebraic solution is impossible, and the eigenvalues must be approximted by numerical methods.</p>
+<p>In general, the computational complexity of computing the eigenvectors of a (square) <span class="math inline">\(n\)</span>-dimensional matrix, e.g., by the <em>QR algorithm</em>, is <span class="math inline">\(O\left(n^{3}\right)\)</span>, i.e., cubic in the dimension of the matrix. It is clear that for a network of even modest size, e.g., <span class="math inline">\(10^{5}\)</span>, this problem will not be tractable. If we reduce the problem to computing the dominant eigenvector rather than all eigenvectors, then we can use a more efficient algorithm.</p>
+</div>
+<div id="algorithm" class="section level2">
+<h2><span class="header-section-number">6.3</span> Algorithm</h2>
+<p>We now present <em>power iteration</em>. Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> matrix.</p>
+<ol style="list-style-type: decimal">
+<li>Choose <span class="math inline">\(\mathbf{v}^{\left(0\right)}\in\mathbb{R}^{n}\)</span> such that <span class="math inline">\(\mathbf{v}^{\left(0\right)}\neq\mathbf{0}\)</span>, and choose <span class="math inline">\(\epsilon&gt;0\)</span>.</li>
+<li><p>While <span class="math inline">\(\left\Vert \mathbf{v}^{\left(i\right)}-\mathbf{v}^{\left(i-1\right)}\right\Vert \geq \epsilon\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\mathbf{v}^{\left(i\right)}\gets\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span></li>
+<li><span class="math inline">\(\mathbf{v}^{\left(i\right)}\gets\mathbf{v}^{\left(i\right)}/\sum_{j}v_{j}^{\left(i\right)}\)</span></li>
+</ol></li>
+</ol>
+<p>When the algorithm terminates, <span class="math inline">\(\mathbf{v}^{\left(i\right)}\)</span> will be (approximately) the dominant eigenvector of <span class="math inline">\(\mathbf{A}\)</span>. We can then compute the dominant eigenvalue <span class="math inline">\(\lambda_{\max}\)</span> by the <em>Rayleigh quotient</em>, i.e.,</p>
+<p><span class="math display">\[
+\lambda_{\max}=\dfrac{\left(\mathbf{v}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{v}^{\left(i\right)}}{\left\Vert \mathbf{v}^{\left(i\right)}\right\Vert_{2}^{2}}.
+\]</span></p>
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> We now present a proof sketch for power iteration.</p>
+<p>Let <span class="math inline">\(\left\{\lambda_{i}\right\}_{i=1}^{n}\)</span> be the eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> such that <span class="math inline">\(\left|\lambda_{1}\right|&gt;\left|\lambda_{2}\right|&gt;\cdots&gt;\left|\lambda_{n}\right|\)</span>, and let <span class="math inline">\(\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=1}^{n}\)</span> be the corresponding eigenvectors.</p>
+<p>Suppose that the <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span> form a basis for <span class="math inline">\(\mathbb{R}^{n}\)</span>, and suppose that we begin power iteration with some <span class="math inline">\(\mathbf{v}^{\left(0\right)}\in\mathbb{R}^{n}\)</span>. Because the <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span> span <span class="math inline">\(\mathbb{R}^{n}\)</span>, we can express <span class="math inline">\(\mathbf{v}^{\left(0\right)}\)</span> as a linear combination of the <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span>, i.e.,</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(0\right)}=\sum_{i=1}^{n}c_{i}\mathbf{w}^{\left(i\right)}
+\]</span></p>
+<p>where <span class="math inline">\(\left\{c_{i}\right\}_{i=1}^{n}\in\mathbb{R}^{n}\)</span>. At the first iteration of the algorithm, we left-multiply <span class="math inline">\(\mathbf{v}^{\left(0\right)}\)</span> by <span class="math inline">\(\mathbf{A}\)</span>, which we can write as</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(1\right)}=
+  \mathbf{A}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\mathbf{A}\mathbf{w}^{\left(i\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{w}^{\left(i\right)}
+\]</span></p>
+<p>where the final equality follows because <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}\)</span>. Observe that if <span class="math inline">\(\mathbf{v}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}\)</span>, then <span class="math inline">\(c\mathbf{v}\)</span> is also an eigenvector of <span class="math inline">\(\mathbf{A}\)</span> for some <span class="math inline">\(c\in\mathbb{R}\)</span>. We have <span class="math inline">\(c=\sum_{j}v_{j}^{\left(i\right)}\)</span>, so without loss of generality we will omit the normalization step of the algorithm.</p>
+<p>At the second iteration, we left-multiply <span class="math inline">\(\mathbf{v}^{\left(1\right)}\)</span> by <span class="math inline">\(\mathbf{A}\)</span>, which we can write as</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(2\right)}=
+  \mathbf{A}\mathbf{v}^{\left(1\right)}=
+  \mathbf{A}\mathbf{A}\mathbf{v}^{\left(0\right)}=
+  \mathbf{A}^{2}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}\mathbf{A}\mathbf{w}^{\left(i\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}^{2}\mathbf{w}^{\left(i\right)}.
+\]</span></p>
+<p>We can see that <span class="math inline">\(\mathbf{v}^{\left(M\right)}\)</span> will have the form</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(M\right)}=
+  \mathbf{A}^{M}\mathbf{v}^{\left(0\right)}=
+  \sum_{i=1}^{n}c_{i}\lambda_{i}^{M}\mathbf{w}^{\left(i\right)}=
+  c_{1}\lambda_{1}^{M}\mathbf{w}^{\left(1\right)}+
+  c_{2}\lambda_{2}^{M}\mathbf{w}^{\left(2\right)}+\cdots+
+  c_{n}\lambda_{n}^{M}\mathbf{w}^{\left(n\right)}.
+\]</span></p>
+<p>We can factor out <span class="math inline">\(\lambda_{1}^{M}\)</span> to give</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(M\right)}=
+  \lambda_{1}^{M}\left(
+    c_{1}\mathbf{w}^{\left(1\right)}+
+    c_{2}\left(\dfrac{\lambda_{2}}{\lambda_{1}}\right)^{M}\mathbf{w}^{\left(2\right)}+\cdots+
+    c_{n}\left(\dfrac{\lambda_{n}}{\lambda_{1}}\right)^{M}\mathbf{w}^{\left(n\right)}
+  \right)
+\]</span></p>
+<p>By assumption, <span class="math inline">\(\lambda_{1}\)</span> is the largest eigenvalue of <span class="math inline">\(\mathbf{A}\)</span>, so that</p>
+<p><span class="math display">\[
+  \left|\dfrac{\lambda_{i}}{\lambda_{1}}\right|&lt;1,\quad i\in\left\{2,\ldots,n\right\}.
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+  M\rightarrow\infty\implies\left(\dfrac{\lambda_{i}}{\lambda_{1}}\right)^{M}\rightarrow 0,
+\]</span></p>
+<p>so that for some large but finite <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(M\right)}\approx
+  \lambda_{1}^{M}\left(
+    c_{1}\mathbf{w}^{\left(1\right)}+
+    c_{2}\cdot 0\cdot\mathbf{w}^{\left(2\right)}+\cdots+
+    c_{n}\cdot 0\cdot\mathbf{w}^{\left(n\right)}
+  \right)=
+  \lambda_{1}^{M}c_{1}\mathbf{w}^{\left(1\right)}.
+\]</span></p>
+<p>Let <span class="math inline">\(\tilde{\mathbf{w}}^{\left(1\right)}=\lambda_{1}^{M}c_{1}\mathbf{w}^{\left(1\right)}\)</span>, so that <span class="math inline">\(\mathbf{v}^{\left(M\right)}\approx\tilde{\mathbf{w}}^{\left(1\right)}\)</span>. The final step of the algorithm is to normalize <span class="math inline">\(\mathbf{v}^{\left(M\right)}\)</span>, i.e.,</p>
+<p><span class="math display">\[
+  \mathbf{v}^{\left(M\right)}\approx
+  \dfrac{\tilde{\mathbf{w}}^{\left(1\right)}}{\sum_{j}\tilde{w}_{j}^{\left(1\right)}}.
+\]</span></p>
+Thus, we see that <span class="math inline">\(\mathbf{v}^{\left(M\right)}\)</span> approximates the dominant eigenvector <span class="math inline">\(\mathbf{w}^{\left(1\right)}\)</span> of <span class="math inline">\(\mathbf{A}\)</span>, completing the proof sketch.
+</div>
+
+</div>
+<div id="considerations" class="section level2">
+<h2><span class="header-section-number">6.4</span> Considerations</h2>
+<div id="connection-to-markov-chains" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Connection to Markov chains</h3>
+<p>We can model the web surfer’s behavior by a Markov chain with transition probability matrix <span class="math inline">\(\mathbf{A}\)</span>. Suppose that <span class="math inline">\(\boldsymbol{\pi}\)</span> is the stationary distribution of the chain, so that</p>
+<p><span class="math display">\[
+\boldsymbol{\pi}^{\mathsf{T}}\mathbf{A}=\boldsymbol{\pi}^\mathsf{T}\implies
+\mathbf{A}^\mathsf{T}\boldsymbol{\pi}=\boldsymbol{\pi}.
+\]</span></p>
+<p>We can thus view power iteration as finding the stationary distribution of the Markov chain, the <span class="math inline">\(j\text{th}\)</span> element of which can be interpreted as the long-run proportion of time the chain spends in state <span class="math inline">\(j\)</span>. Observe also that power iteration normalizes <span class="math inline">\(\mathbf{v}^{\left(i\right)}\)</span> such that its components sum to 1, as required for a probability distribution.</p>
+</div>
+<div id="calculating-the-dominant-eigenvalue" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> Calculating the dominant eigenvalue</h3>
+<p>We stated above that we can find the eigenvalue corresponding to <span class="math inline">\(\mathbf{w}^{\left(1\right)}\)</span> by the Rayleigh quotient. We have</p>
+<p><span class="math display">\[
+\dfrac{\left(\mathbf{w}^{\left(1\right)}\right)^{\mathsf{T}}\mathbf{A}\mathbf{w}^{\left(1\right)}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\dfrac{\lambda_{1}\left(\mathbf{w}^{\left(1\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(1\right)}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\lambda_{1}\dfrac{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}{\left\Vert\mathbf{w}^{\left(1\right)}\right\Vert_{2}^{2}}=
+\lambda_{1},
+\]</span></p>
+<p>as desired.</p>
+</div>
+<div id="computational-complexity" class="section level3">
+<h3><span class="header-section-number">6.4.3</span> Computational complexity</h3>
+<p>At each step of power iteration, we must compute <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span>. The first entry of this product is obtained by summing the product of the first row of <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(\mathbf{v}^{\left(i-1\right)}\)</span>, which requires <span class="math inline">\(n\)</span> multiplications. We have <span class="math inline">\(\mathbf{A}\sim n\times n\)</span>, i.e., we must repeat this process <span class="math inline">\(n\)</span> times, so that computing <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span> requires <span class="math inline">\(n^{2}\)</span> multiplications.</p>
+<p>Thus, each step of power iteration has <span class="math inline">\(O\left(n^{2}\right)\)</span> complexity. While this is an improvement over cubic complexity, it is still intractable for real-world problems, e.g., if we assume that the Internet has on the order of one billion web pages, i.e., <span class="math inline">\(n=10^{9}\)</span>, then power iteration requires <span class="math inline">\(10^{18}\)</span> multiplications <em>at each step</em>. If we suppose that a typical laptop computer can execute on the order of one billion operations per second, then one step of power iteration on the Internet would require <span class="math inline">\(10^{18}/10^{9}=10^{9}\)</span> seconds, or roughly 32 years (to say nothing of the memory requirements).</p>
+<p>Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span> must be computed. If we <em>knew in advance</em> the result of certain of these multiplications, we might not have perform them. In particular, if we knew that the <span class="math inline">\(\left(i,j\right)\text{th}\)</span> entry of <span class="math inline">\(\mathbf{A}\)</span> were zero, then we would also immediately know that the <span class="math inline">\(j\text{th}\)</span> summand in the product of the <span class="math inline">\(i\text{th}\)</span> row of <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{v}^{\left(i-1\right)}\)</span> is zero, and we could avoid doing that multiplication.</p>
+<p><em>Sparse matrices</em> enable precisely this kind of savings: they represent matrices in such a way as to avoid multiplications by zero. It remains to consider the characteristics of the network of interest, so that we might determine whether a sparse representation would be advantageous. Suppose that each web page links to on the order of 10 other pages. In this case, only 10 entries of each row of <span class="math inline">\(\mathbf{A}\)</span> are nonzero, and the remaining <span class="math inline">\(10^{9}-10\)</span> entries are zero. We must perform just 10 multiplications per row, and <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(10^{9}\)</span> rows, so that a single step of power iteration requires just <span class="math inline">\(10^{10}\)</span> multiplications, or roughly 10 seconds at <span class="math inline">\(10^{9}\)</span> operations per second.</p>
+</div>
+<div id="convergence" class="section level3">
+<h3><span class="header-section-number">6.4.4</span> Convergence</h3>
+<p>The approximation <span class="math inline">\(\mathbf{v}^{\left(M\right)}\approx\mathbf{w}^{\left(1\right)}\)</span> depends on the terms involving the other eigenvectors <span class="math inline">\(\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=2}^{n}\)</span> shrinking toward the zero vector. The rate at which the <span class="math inline">\(i\text{th}\)</span> term converges to the zero vector is given by the ratio of <span class="math inline">\(\lambda_{i}\)</span> to <span class="math inline">\(\lambda_{1}\)</span>. We assume that the eigenvalues are ordered by absolute value, hence the largest such term is <span class="math inline">\(\lambda_{2}/\lambda_{1}\)</span>, and this term will determine the rate of convergence of power iteration, e.g., if this ratio is close to 1, then the algorithm may converge slowly.</p>
+<p>For large matrices, <span class="math inline">\(\lambda_{2}/\lambda_{1}\)</span> will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose <span class="math inline">\(p\in\left[0,1\right]\)</span>. Then, assume that with probability <span class="math inline">\(p\)</span> the web surfer randomly, with uniform probability, jumps to any page in the network given in <span class="math inline">\(\mathbf{A}\)</span> and with probability <span class="math inline">\(\left(1-p\right)\)</span> the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing <span class="math inline">\(\mathbf{A}\)</span> by</p>
+<p><span class="math display">\[
+\mathbf{M}=\left(1-p\right)\mathbf{A}+p\mathbf{B},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{B}\)</span> is a matrix with all entries giben by <span class="math inline">\(1/n\)</span>, which <span class="math inline">\(n\)</span> is again the number of pages in the network. Observe that if <span class="math inline">\(p=0\)</span> this is equivalent to the original model.</p>
+<p>The surfer’s behavior under this model can similarly be modeled by a Markov chain whose stationary distribution <span class="math inline">\(\mathbf{v}\)</span> satisfies <span class="math inline">\(\mathbf{M}^{\mathsf{T}}\mathbf{v}=\mathbf{v}\)</span>. We can again approximate the stationary distribution by power iteration. We must be careful in implementation because while <span class="math inline">\(\mathbf{A}\)</span> is typically sparse, <span class="math inline">\(\mathbf{M}\)</span> never is (<span class="math inline">\(\mathbf{B}\)</span> has all non-zero entries). It turns out that we can decompose <span class="math inline">\(\mathbf{M}^{\mathsf{T}}\mathbf{v}\)</span> as</p>
+<p><span class="math display">\[
+\mathbf{M}^{\mathsf{T}}\mathbf{v}=
+\left(1-p\right)\mathbf{A}^{\mathsf{T}}\mathbf{v}+\dfrac{p}{n}\mathbf{1}\sum_{i=1}^{n}v_{i},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{1}\)</span> is the <span class="math inline">\(n\)</span>-dimensional vector of ones. We now implement power iteration for this model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Modified power iteration</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @param A adjacency matrix of original network</span>
+<span class="co">#&#39; @param v0 starting vector</span>
+<span class="co">#&#39; @param p probability of jumping to any page in `A`</span>
+<span class="co">#&#39; @param tol iteration tolerance</span>
+<span class="co">#&#39; @param niter maximum number of iterations</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return list containing the number of iterations to converge and the </span>
+<span class="co">#&#39;  dominant eigenvector of `A`</span>
+power_iter &lt;-<span class="st"> </span><span class="cf">function</span>(A, v0, p, <span class="dt">tol =</span> <span class="fl">1e-4</span>, <span class="dt">niter =</span> <span class="fl">1e3</span>) {
+  mag &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sqrt</span>(<span class="kw">sum</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))
+  
+  <span class="co"># normalize v0 so that convergence can occur in a single iteration</span>
+  v_old &lt;-<span class="st"> </span>v0 <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(v0)
+  
+  i &lt;-<span class="st"> </span><span class="dv">0</span>
+  delta &lt;-<span class="st"> </span>tol <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  
+  <span class="co"># this term does not change from iteration to iteration</span>
+  u &lt;-<span class="st"> </span>(p <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(v0)) <span class="op">*</span><span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">length</span>(v0))
+  
+  <span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span>niter <span class="op">&amp;&amp;</span><span class="st"> </span>delta <span class="op">&gt;</span><span class="st"> </span>tol) {
+    v_new &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p) <span class="op">*</span><span class="st"> </span><span class="kw">crossprod</span>(A, v_old) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(v_old) <span class="op">*</span><span class="st"> </span>u
+    v_new &lt;-<span class="st"> </span>v_new <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(v_new)
+    delta &lt;-<span class="st"> </span><span class="kw">mag</span>(v_new <span class="op">-</span><span class="st"> </span>v_old)
+    v_old &lt;-<span class="st"> </span>v_new
+    i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  }
+  <span class="kw">list</span>(
+    <span class="dt">niter =</span> i,
+    <span class="dt">v =</span> <span class="kw">as.vector</span>(v_new)
+  )
+}</code></pre></div>
+<p>We will test our implementation using the General Relativity network from the Stanford Network Analysis Project.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url &lt;-<span class="st"> &quot;http://snap.stanford.edu/data/ca-GrQc.txt.gz&quot;</span>
+gr &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_tsv</span>(url, <span class="dt">skip =</span> <span class="dv">4</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;from&quot;</span>, <span class="st">&quot;to&quot;</span>))
+gr</code></pre></div>
+<pre><code>## # A tibble: 28,980 x 2
+##     from    to
+##    &lt;int&gt; &lt;int&gt;
+##  1  3466   937
+##  2  3466  5233
+##  3  3466  8579
+##  4  3466 10310
+##  5  3466 15931
+##  6  3466 17038
+##  7  3466 18720
+##  8  3466 19607
+##  9 10310  1854
+## 10 10310  3466
+## # ... with 28,970 more rows</code></pre>
+<p>We now implement a function to perform power iteration, measure its runtime, and extract the name of the top node, i.e., <span class="math inline">\(v_{\max}=\max_{j\in\left\{1,\ldots,n\right\}}v_{j}\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Power iteration runtime and top node</span>
+<span class="co">#&#39; </span>
+<span class="co">#&#39; @param A adjacency matrix for power iteration</span>
+<span class="co">#&#39; @param p probability of jumping to any page in `A`</span>
+<span class="co">#&#39; @param ... other arguments passed to `power_iter()`</span>
+<span class="co">#&#39; </span>
+<span class="co">#&#39; @return list containing `p`, the name of the top node, the number of </span>
+<span class="co">#&#39;   iterations required to converge, and the runtime</span>
+top_node &lt;-<span class="st"> </span><span class="cf">function</span>(A, p, ...) {
+  runtime &lt;-<span class="st"> </span><span class="kw">system.time</span>(
+    pi_result &lt;-<span class="st"> </span><span class="kw">power_iter</span>(
+      <span class="dt">A =</span> A,
+      <span class="dt">v0 =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(A)),
+      <span class="dt">p =</span> p,
+      ...
+    )
+  )
+  <span class="co"># extract the (first) top-rated node</span>
+  v_max &lt;-<span class="st"> </span>(<span class="kw">rownames</span>(A))[<span class="kw">which.max</span>(pi_result<span class="op">$</span>v)]
+  <span class="kw">list</span>(
+    <span class="dt">p =</span> p,
+    <span class="dt">top_node =</span> v_max,
+    <span class="dt">niter =</span> pi_result<span class="op">$</span>niter,
+    <span class="dt">time =</span> runtime[<span class="st">&quot;elapsed&quot;</span>]
+  )
+}</code></pre></div>
+<p>Finally, we implement a function to perform power iteration for multiple values of <span class="math inline">\(p\)</span>. Note that <code>gr</code> is an edgelist.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Power iteration for multiple jump probabilities with sparse matrices</span>
+<span class="co">#&#39; </span>
+<span class="co">#&#39; @param el data frame containing a symbolic edge list in the first two </span>
+<span class="co">#&#39;  columns; passed to `igraph::graph_from_data_frame()`</span>
+<span class="co">#&#39; @param p vector of probabilities</span>
+<span class="co">#&#39; @param sparse whether to use sparse matrices</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return a tibble containing a row for each value of `p`, the name of the </span>
+<span class="co">#&#39;  top node, the number of iterations required to converge, and the runtime</span>
+pagerank &lt;-<span class="st"> </span><span class="cf">function</span>(el, p, <span class="dt">sparse =</span> <span class="ot">TRUE</span>) {
+  graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(el)
+  adj &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_adjacency_matrix</span>(graph, <span class="dt">sparse =</span> sparse)
+  purrr<span class="op">::</span><span class="kw">map_dfr</span>(p, top_node, <span class="dt">A =</span> adj)
+}</code></pre></div>
+<p>We are now ready to examine the impact of <span class="math inline">\(p\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="op">-</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">2</span>), <span class="fl">0.15</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>, <span class="fl">0.99</span>)
+pr_dense &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>We see that the top-rated node is 21012, and that 31 iterations were required for most values of <span class="math inline">\(p\)</span>. As <span class="math inline">\(p\)</span> becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_sparse &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob)
+pr_sparse</code></pre></div>
+<pre><code>## # A tibble: 9 x 4
+##          p top_node niter   time
+##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1 0.000001 21012       31 0.045 
+## 2 0.00001  21012       31 0.035 
+## 3 0.0001   21012       31 0.037 
+## 4 0.001    21012       31 0.0330
+## 5 0.01     21012       31 0.0360
+## 6 0.15     21012       31 0.032 
+## 7 0.5      21012       31 0.035 
+## 8 0.9      21012       30 0.0340
+## 9 0.99     21012        4 0.004</code></pre>
+<p>We see that the same number of iterations are required to converge as in the dense case, but that the time required is decreased by roughly two orders of magnitude. Finally, observe that node 21012 is also the node with the largest number of adjacent vertices (connections) (note that the <em>ego graph</em> of a vertex includes the vertex itself):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(gr)
+igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span class="dt">v =</span> <span class="st">&quot;21012&quot;</span>)</code></pre></div>
+<pre><code>## + 81/5242 vertices, named, from f9a88f7:
+##  [1] 10243 6610  22691 2980  18866 25758 11241 13597 3409  15538 570  
+## [12] 8503  18719 9889  773   9341  21847 6179  1997  2741  13060 14807
+## [23] 24955 45    4511  21281 23293 9482  15003 20635 22457 19423 5134 
+## [34] 3372  23452 23628 2404  22421 18894 18208 1234  25053 18543 4164 
+## [45] 7956  12365 17655 25346 1653  9785  21508 14540 12781 1186  345  
+## [56] 2212  231   46    19961 2952  6830  8879  11472 12496 12851 15659
+## [67] 17692 20108 20562 22887 6774  4513  25251 12503 22937 23363 5578 
+## [78] 1841  16611 2450  8049</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">ego_size</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">max</span>()</code></pre></div>
+<pre><code>## [1] 82</code></pre>
+<p>Finally, observe that PageRank is a variant of <em>eigenvector centrality</em>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ec &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">eigen_centrality</span>(graph)
+ec<span class="op">$</span>vector[<span class="kw">which.max</span>(ec<span class="op">$</span>vector)]</code></pre></div>
+<pre><code>## 21012 
+##     1</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="common-families-of-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["course-notes.pdf", "course-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
