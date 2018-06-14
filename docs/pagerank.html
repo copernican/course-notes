@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-06-12">
+<meta name="date" content="2018-06-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -211,7 +211,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol>
 </div>
 
-<p>In Google’s PageRank algorithm, the page rank is determined by the values of <span class="math inline">\(v_{i}\)</span> in decreasing order.</p>
+<p>In Google’s PageRank algorithm, described in <span class="citation">Page et al. (<a href="#ref-page1999">1999</a>)</span>, the page rank is determined by the values of <span class="math inline">\(v_{i}\)</span> in decreasing order.</p>
 
 <div class="definition">
 <span id="def:unnamed-chunk-68" class="definition"><strong>Definition 6.1  </strong></span>For a given matrix, the eigenvalue with maximum absolute value is called the <em>dominant eigenvalue,</em> and the associated eigenvector is the <em>dominant eigenvector.</em>
@@ -335,23 +335,23 @@ Thus, we see that <span class="math inline">\(\mathbf{v}^{\left(M\right)}\)</spa
 <h3><span class="header-section-number">6.4.3</span> Computational complexity</h3>
 <p>At each step of power iteration, we must compute <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span>. The first entry of this product is obtained by summing the product of the first row of <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(\mathbf{v}^{\left(i-1\right)}\)</span>, which requires <span class="math inline">\(n\)</span> multiplications. We have <span class="math inline">\(\mathbf{A}\sim n\times n\)</span>, i.e., we must repeat this process <span class="math inline">\(n\)</span> times, so that computing <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span> requires <span class="math inline">\(n^{2}\)</span> multiplications.</p>
 <p>Thus, each step of power iteration has <span class="math inline">\(O\left(n^{2}\right)\)</span> complexity. While this is an improvement over cubic complexity, it is still intractable for real-world problems, e.g., if we assume that the Internet has on the order of one billion web pages, i.e., <span class="math inline">\(n=10^{9}\)</span>, then power iteration requires <span class="math inline">\(10^{18}\)</span> multiplications <em>at each step</em>. If we suppose that a typical laptop computer can execute on the order of one billion operations per second, then one step of power iteration on the Internet would require <span class="math inline">\(10^{18}/10^{9}=10^{9}\)</span> seconds, or roughly 32 years (to say nothing of the memory requirements).</p>
-<p>Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span> must be computed. If we <em>knew in advance</em> the result of certain of these multiplications, we might not have perform them. In particular, if we knew that the <span class="math inline">\(\left(i,j\right)\text{th}\)</span> entry of <span class="math inline">\(\mathbf{A}\)</span> were zero, then we would also immediately know that the <span class="math inline">\(j\text{th}\)</span> summand in the product of the <span class="math inline">\(i\text{th}\)</span> row of <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{v}^{\left(i-1\right)}\)</span> is zero, and we could avoid doing that multiplication.</p>
+<p>Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of <span class="math inline">\(\mathbf{A}\mathbf{v}^{\left(i-1\right)}\)</span> must be computed. If we <em>knew in advance</em> the result of certain of these multiplications, we might not have to perform them. In particular, if we knew that the <span class="math inline">\(\left(i,j\right)\text{th}\)</span> entry of <span class="math inline">\(\mathbf{A}\)</span> were zero, then we would also immediately know that the <span class="math inline">\(j\text{th}\)</span> summand in the product of the <span class="math inline">\(i\text{th}\)</span> row of <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{v}^{\left(i-1\right)}\)</span> is zero, and we could avoid doing that multiplication.</p>
 <p><em>Sparse matrices</em> enable precisely this kind of savings: they represent matrices in such a way as to avoid multiplications by zero. It remains to consider the characteristics of the network of interest, so that we might determine whether a sparse representation would be advantageous. Suppose that each web page links to on the order of 10 other pages. In this case, only 10 entries of each row of <span class="math inline">\(\mathbf{A}\)</span> are nonzero, and the remaining <span class="math inline">\(10^{9}-10\)</span> entries are zero. We must perform just 10 multiplications per row, and <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(10^{9}\)</span> rows, so that a single step of power iteration requires just <span class="math inline">\(10^{10}\)</span> multiplications, or roughly 10 seconds at <span class="math inline">\(10^{9}\)</span> operations per second.</p>
 </div>
 <div id="convergence" class="section level3">
 <h3><span class="header-section-number">6.4.4</span> Convergence</h3>
 <p>The approximation <span class="math inline">\(\mathbf{v}^{\left(M\right)}\approx\mathbf{w}^{\left(1\right)}\)</span> depends on the terms involving the other eigenvectors <span class="math inline">\(\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=2}^{n}\)</span> shrinking toward the zero vector. The rate at which the <span class="math inline">\(i\text{th}\)</span> term converges to the zero vector is given by the ratio of <span class="math inline">\(\lambda_{i}\)</span> to <span class="math inline">\(\lambda_{1}\)</span>. We assume that the eigenvalues are ordered by absolute value, hence the largest such term is <span class="math inline">\(\lambda_{2}/\lambda_{1}\)</span>, and this term will determine the rate of convergence of power iteration, e.g., if this ratio is close to 1, then the algorithm may converge slowly.</p>
-<p>For large matrices, <span class="math inline">\(\lambda_{2}/\lambda_{1}\)</span> will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose <span class="math inline">\(p\in\left[0,1\right]\)</span>. Then, assume that with probability <span class="math inline">\(p\)</span> the web surfer randomly, with uniform probability, jumps to any page in the network given in <span class="math inline">\(\mathbf{A}\)</span> and with probability <span class="math inline">\(\left(1-p\right)\)</span> the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing <span class="math inline">\(\mathbf{A}\)</span> by</p>
+<p>For large matrices, <span class="math inline">\(\lambda_{2}/\lambda_{1}\)</span> will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose <span class="math inline">\(p\in\left[0,1\right]\)</span> (Google originally chose <span class="math inline">\(p\approx0.15\)</span>). Then, assume that with probability <span class="math inline">\(p\)</span> the web surfer randomly, with uniform probability, jumps to any page in the network given in <span class="math inline">\(\mathbf{A}\)</span> and with probability <span class="math inline">\(\left(1-p\right)\)</span> the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing <span class="math inline">\(\mathbf{A}\)</span> by</p>
 <p><span class="math display">\[
 \mathbf{M}=\left(1-p\right)\mathbf{A}+p\mathbf{B},
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{B}\)</span> is a matrix with all entries giben by <span class="math inline">\(1/n\)</span>, which <span class="math inline">\(n\)</span> is again the number of pages in the network. Observe that if <span class="math inline">\(p=0\)</span> this is equivalent to the original model.</p>
+<p>where <span class="math inline">\(\mathbf{B}\)</span> is a matrix with all entries given by <span class="math inline">\(1/n\)</span>, which <span class="math inline">\(n\)</span> is again the number of pages in the network. Observe that if <span class="math inline">\(p=0\)</span> this is equivalent to the original model.</p>
 <p>The surfer’s behavior under this model can similarly be modeled by a Markov chain whose stationary distribution <span class="math inline">\(\mathbf{v}\)</span> satisfies <span class="math inline">\(\mathbf{M}^{\mathsf{T}}\mathbf{v}=\mathbf{v}\)</span>. We can again approximate the stationary distribution by power iteration. We must be careful in implementation because while <span class="math inline">\(\mathbf{A}\)</span> is typically sparse, <span class="math inline">\(\mathbf{M}\)</span> never is (<span class="math inline">\(\mathbf{B}\)</span> has all non-zero entries). It turns out that we can decompose <span class="math inline">\(\mathbf{M}^{\mathsf{T}}\mathbf{v}\)</span> as</p>
 <p><span class="math display">\[
 \mathbf{M}^{\mathsf{T}}\mathbf{v}=
 \left(1-p\right)\mathbf{A}^{\mathsf{T}}\mathbf{v}+\dfrac{p}{n}\mathbf{1}\sum_{i=1}^{n}v_{i},
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{1}\)</span> is the <span class="math inline">\(n\)</span>-dimensional vector of ones. We now implement power iteration for this model.</p>
+<p>where <span class="math inline">\(\mathbf{1}\)</span> is the <span class="math inline">\(n\)</span>-dimensional vector of ones. This decomposition allows us to compute the dominant eigenvector of the sparse matrix <span class="math inline">\(\mathbf{A}^\mathsf{T}\)</span> rather than the dense matrix <span class="math inline">\(\left(\left(1-p\right)\mathbf{A}+p\mathbf{B}\right)^{\mathsf{T}}\)</span>, with the accompanying decrease in computational complexity. We now implement power iteration for this model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Modified power iteration</span>
 <span class="co">#&#39;</span>
 <span class="co">#&#39; @param A adjacency matrix of original network</span>
@@ -448,26 +448,39 @@ pagerank &lt;-<span class="st"> </span><span class="cf">function</span>(el, p, <
 }</code></pre></div>
 <p>We are now ready to examine the impact of <span class="math inline">\(p\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="op">-</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">2</span>), <span class="fl">0.15</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>, <span class="fl">0.99</span>)
-pr_dense &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)</code></pre></div>
+pr_dense &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)
+pr_dense</code></pre></div>
+<pre><code>## # A tibble: 9 x 4
+##          p top_node niter  time
+##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.000001 21012       31 0.943
+## 2 0.00001  21012       31 1.10 
+## 3 0.0001   21012       31 0.931
+## 4 0.001    21012       31 0.903
+## 5 0.01     21012       31 0.946
+## 6 0.15     21012       31 0.937
+## 7 0.5      21012       31 0.931
+## 8 0.9      21012       30 0.92 
+## 9 0.99     21012        4 0.128</code></pre>
 <p>We see that the top-rated node is 21012, and that 31 iterations were required for most values of <span class="math inline">\(p\)</span>. As <span class="math inline">\(p\)</span> becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_sparse &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob)
 pr_sparse</code></pre></div>
 <pre><code>## # A tibble: 9 x 4
-##          p top_node niter   time
-##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-## 1 0.000001 21012       31 0.045 
-## 2 0.00001  21012       31 0.035 
-## 3 0.0001   21012       31 0.037 
-## 4 0.001    21012       31 0.0330
-## 5 0.01     21012       31 0.0360
-## 6 0.15     21012       31 0.032 
-## 7 0.5      21012       31 0.035 
-## 8 0.9      21012       30 0.0340
-## 9 0.99     21012        4 0.004</code></pre>
+##          p top_node niter    time
+##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+## 1 0.000001 21012       31 0.0430 
+## 2 0.00001  21012       31 0.0430 
+## 3 0.0001   21012       31 0.032  
+## 4 0.001    21012       31 0.0330 
+## 5 0.01     21012       31 0.0330 
+## 6 0.15     21012       31 0.0330 
+## 7 0.5      21012       31 0.0330 
+## 8 0.9      21012       30 0.0310 
+## 9 0.99     21012        4 0.00500</code></pre>
 <p>We see that the same number of iterations are required to converge as in the dense case, but that the time required is decreased by roughly two orders of magnitude. Finally, observe that node 21012 is also the node with the largest number of adjacent vertices (connections) (note that the <em>ego graph</em> of a vertex includes the vertex itself):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(gr)
 igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span class="dt">v =</span> <span class="st">&quot;21012&quot;</span>)</code></pre></div>
-<pre><code>## + 81/5242 vertices, named, from f9a88f7:
+<pre><code>## + 81/5242 vertices, named, from c87e30b:
 ##  [1] 10243 6610  22691 2980  18866 25758 11241 13597 3409  15538 570  
 ## [12] 8503  18719 9889  773   9341  21847 6179  1997  2741  13060 14807
 ## [23] 24955 45    4511  21281 23293 9482  15003 20635 22457 19423 5134 
@@ -478,13 +491,20 @@ igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span c
 ## [78] 1841  16611 2450  8049</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">ego_size</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">max</span>()</code></pre></div>
 <pre><code>## [1] 82</code></pre>
-<p>Finally, observe that PageRank is a variant of <em>eigenvector centrality</em>:</p>
+<p>Finally, observe that PageRank is a variant of <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality">eigenvector centrality</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ec &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">eigen_centrality</span>(graph)
 ec<span class="op">$</span>vector[<span class="kw">which.max</span>(ec<span class="op">$</span>vector)]</code></pre></div>
 <pre><code>## 21012 
 ##     1</code></pre>
+<p>In eigenvector centrality, the score of a node is increased more by (inbound) connections from high-scoring nodes than from low-scoring nodes. There are several other important types of centrality, e.g., <em>betweenness centrality</em>, in which the score of a node is determined by how often it appears in the shortest path between two other nodes (how often it acts as a “bridge”).</p>
 
 </div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-page1999">
+<p>Page, Lawrence, Sergey Brin, Rajeev Motwani, and Terry Winograd. 1999. “The Pagerank Citation Ranking: Bringing Order to the Web.” Technical Report 1999-66. Stanford InfoLab; Stanford InfoLab. <a href="http://ilpubs.stanford.edu:8090/422/" class="uri">http://ilpubs.stanford.edu:8090/422/</a>.</p>
 </div>
 </div>
             </section>

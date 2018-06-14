@@ -48,7 +48,7 @@ Let $\mathbf{A}$ be a transition probability matrix as above.
 
 ```
 
-In Google's PageRank algorithm, the page rank is determined by the values of $v_{i}$ in decreasing order.
+In Google's PageRank algorithm, described in @page1999, the page rank is determined by the values of $v_{i}$ in decreasing order.
 
 ```{definition}
 For a given matrix, the eigenvalue with maximum absolute value is called the *dominant eigenvalue,* and the associated eigenvector is the *dominant eigenvector.*
@@ -199,7 +199,7 @@ At each step of power iteration, we must compute $\mathbf{A}\mathbf{v}^{\left(i-
 
 Thus, each step of power iteration has $O\left(n^{2}\right)$ complexity. While this is an improvement over cubic complexity, it is still intractable for real-world problems, e.g., if we assume that the Internet has on the order of one billion web pages, i.e., $n=10^{9}$, then power iteration requires $10^{18}$ multiplications _at each step_. If we suppose that a typical laptop computer can execute on the order of one billion operations per second, then one step of power iteration on the Internet would require $10^{18}/10^{9}=10^{9}$ seconds, or roughly 32 years (to say nothing of the memory requirements).
 
-Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of $\mathbf{A}\mathbf{v}^{\left(i-1\right)}$ must be computed. If we _knew in advance_ the result of certain of these multiplications, we might not have perform them. In particular, if we knew that the $\left(i,j\right)\text{th}$ entry of $\mathbf{A}$ were zero, then we would also immediately know that the $j\text{th}$ summand in the product of the $i\text{th}$ row of $\mathbf{A}$ and $\mathbf{v}^{\left(i-1\right)}$ is zero, and we could avoid doing that multiplication.
+Observe that the quadratic complexity of a step of power iteration arises from our assumption that each component of $\mathbf{A}\mathbf{v}^{\left(i-1\right)}$ must be computed. If we _knew in advance_ the result of certain of these multiplications, we might not have to perform them. In particular, if we knew that the $\left(i,j\right)\text{th}$ entry of $\mathbf{A}$ were zero, then we would also immediately know that the $j\text{th}$ summand in the product of the $i\text{th}$ row of $\mathbf{A}$ and $\mathbf{v}^{\left(i-1\right)}$ is zero, and we could avoid doing that multiplication.
 
 _Sparse matrices_ enable precisely this kind of savings: they represent matrices in such a way as to avoid multiplications by zero. It remains to consider the characteristics of the network of interest, so that we might determine whether a sparse representation would be advantageous. Suppose that each web page links to on the order of 10 other pages. In this case, only 10 entries of each row of $\mathbf{A}$ are nonzero, and the remaining $10^{9}-10$ entries are zero. We must perform just 10 multiplications per row, and $\mathbf{A}$ has $10^{9}$ rows, so that a single step of power iteration requires just $10^{10}$ multiplications, or roughly 10 seconds at $10^{9}$ operations per second.
 
@@ -207,13 +207,13 @@ _Sparse matrices_ enable precisely this kind of savings: they represent matrices
 
 The approximation $\mathbf{v}^{\left(M\right)}\approx\mathbf{w}^{\left(1\right)}$ depends on the terms involving the other eigenvectors $\left\{\mathbf{w}^{\left(i\right)}\right\}_{i=2}^{n}$ shrinking toward the zero vector. The rate at which the $i\text{th}$ term converges to the zero vector is given by the ratio of $\lambda_{i}$ to $\lambda_{1}$. We assume that the eigenvalues are ordered by absolute value, hence the largest such term is $\lambda_{2}/\lambda_{1}$, and this term will determine the rate of convergence of power iteration, e.g., if this ratio is close to 1, then the algorithm may converge slowly.
 
-For large matrices, $\lambda_{2}/\lambda_{1}$ will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose $p\in\left[0,1\right]$. Then, assume that with probability $p$ the web surfer randomly, with uniform probability, jumps to any page in the network given in $\mathbf{A}$ and with probability $\left(1-p\right)$ the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing $\mathbf{A}$ by 
+For large matrices, $\lambda_{2}/\lambda_{1}$ will be close to 1. Google dealt with the slow convergence by modifying the web surfer model. First, choose $p\in\left[0,1\right]$ (Google originally chose $p\approx0.15$). Then, assume that with probability $p$ the web surfer randomly, with uniform probability, jumps to any page in the network given in $\mathbf{A}$ and with probability $\left(1-p\right)$ the surfer randomly, with uniform probability, jumps to a page with a link given in the current page. Thus, rather than surfing behavior governed exclusively by the probability transition matrix, the surfer may also make a random jump to any page in the network. We can represent this new behavior by replacing $\mathbf{A}$ by 
 
 $$
 \mathbf{M}=\left(1-p\right)\mathbf{A}+p\mathbf{B},
 $$
 
-where $\mathbf{B}$ is a matrix with all entries giben by $1/n$, which $n$ is again the number of pages in the network. Observe that if $p=0$ this is equivalent to the original model.
+where $\mathbf{B}$ is a matrix with all entries given by $1/n$, which $n$ is again the number of pages in the network. Observe that if $p=0$ this is equivalent to the original model.
 
 The surfer's behavior under this model can similarly be modeled by a Markov chain whose stationary distribution $\mathbf{v}$ satisfies $\mathbf{M}^{\mathsf{T}}\mathbf{v}=\mathbf{v}$. We can again approximate the stationary distribution by power iteration. We must be careful in implementation because while $\mathbf{A}$ is typically sparse, $\mathbf{M}$ never is ($\mathbf{B}$ has all non-zero entries). It turns out that we can decompose $\mathbf{M}^{\mathsf{T}}\mathbf{v}$ as
 
@@ -222,7 +222,7 @@ $$
 \left(1-p\right)\mathbf{A}^{\mathsf{T}}\mathbf{v}+\dfrac{p}{n}\mathbf{1}\sum_{i=1}^{n}v_{i},
 $$
 
-where $\mathbf{1}$ is the $n$-dimensional vector of ones. We now implement power iteration for this model.
+where $\mathbf{1}$ is the $n$-dimensional vector of ones. This decomposition allows us to compute the dominant eigenvector of the sparse matrix $\mathbf{A}^\mathsf{T}$ rather than the dense matrix $\left(\left(1-p\right)\mathbf{A}+p\mathbf{B}\right)^{\mathsf{T}}$, with the accompanying decrease in computational complexity. We now implement power iteration for this model.
 
 ```{r}
 #' Modified power iteration
@@ -324,6 +324,7 @@ We are now ready to examine the impact of $p$.
 ```{r}
 prob <- c(10 ^ -(6:2), 0.15, 0.5, 0.9, 0.99)
 pr_dense <- pagerank(gr, p = prob, sparse = FALSE)
+pr_dense
 ```
 
 We see that the top-rated node is 21012, and that 31 iterations were required for most values of $p$. As $p$ becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.
@@ -341,9 +342,11 @@ igraph::neighbors(graph, v = "21012")
 graph %>% igraph::ego_size() %>% max()
 ```
 
-Finally, observe that PageRank is a variant of _eigenvector centrality_:
+Finally, observe that PageRank is a variant of [eigenvector centrality](https://en.wikipedia.org/wiki/Eigenvector_centrality):
 
 ```{r}
 ec <- igraph::eigen_centrality(graph)
 ec$vector[which.max(ec$vector)]
 ```
+
+In eigenvector centrality, the score of a node is increased more by (inbound) connections from high-scoring nodes than from low-scoring nodes. There are several other important types of centrality, e.g., _betweenness centrality_, in which the score of a node is determined by how often it appears in the shortest path between two other nodes (how often it acts as a "bridge").
