@@ -1,0 +1,185 @@
+# Markov Chain Monte Carlo
+
+## Motivation
+
+### Ising model
+
+### Intractable posterior distribution
+
+## Markov chain
+
+We begin by setting some notation. We define a matrix $\mathbf{A}$ raised to the $k\text{th}$ power as
+
+$$
+\mathbf{A}^{k}=\prod_{i=1}^{k}\mathbf{A}.
+$$
+
+Thus, $\mathbf{A}^{2}=\mathbf{A}\mathbf{A}$, $\mathbf{A}^{3}=\mathbf{A}\mathbf{A}\mathbf{A}$, and so on.
+
+```{theorem, label = "mc-ptm"}
+Let $X\left(t\right)$ be a finite-state Markov chain with transition probability matrix $\mathbf{P}$. Then,
+
+$$
+P\left(\left\{X\left(t\right)=j\right\}|\left\{X\left(0\right)=i\right\}\right)=\left(\mathbf{P}^{t}\right)_{ij},
+$$
+  
+i.e., the probability that the chain is in state $j$ given that it started in state $i$ is the $\left(i,j\right)\text{th}$ entry of the transition probability matrix raised to the power $t$.
+```
+
+We are now to consider the limiting behavior of Markov chains.
+
+```{definition}
+A distribution $\boldsymbol{\pi}$ is said to be a _stationary distribution_ for a Markov chain $X\left(t\right)$ with state space $S$ and transition probability matrix $\mathbf{P}$ if $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}$.
+```
+
+Observe that $\boldsymbol{\pi}$ is a left eigenvector with eigenvalue 1. We now consider how to compute $\boldsymbol{\pi}$. One option is to solve $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}$ as a linear algebra problem, i.e., solve
+
+$$
+\sum_{i=1}^{n}\pi\left(i\right)=1\quad\text{subject to}\quad\pi\left(i\right)\geq 0.
+$$
+
+Solving such constrained optimization problems is in general difficult, especially as the dimension of the problem increases. A second option comes from considering the limiting behavior of a finite-state Markov chain $X\left(t\right)$. The Perron-Frobenius theorem implies that $X\left(t\right)$ has a stationary distribution.
+
+```{theorem}
+Let $X\left(t\right)$ be a Markov chain with finitely many states and stationary distribution $\boldsymbol{\pi}$. If the stationary distribution is unique (equivalently, the chain is _irreducible_ or _ergodic_), then
+
+$$
+\lim_{t\rightarrow\infty}X\left(t\right)\sim\boldsymbol{\pi}.
+$$
+```
+
+```{proof}
+Let $X\left(t\right)$ be a Markov chain with transition probability matrix $\mathbf{P}$. For simplicity, we will prove the result in the case that $\mathbf{P}$ is symmetric (the result holds for non-symmetric $\mathbf{P}$, but the proof is considerably more complicated). From Theorem \@ref(thm:mc-ptm), we have 
+
+$$
+P\left(X\left(t\right)=j|X\left(0\right)=i\right)=\left(\mathbf{P}^{t}\right)_{ij}.
+$$
+
+Now, $\mathbf{P}$ is symmetric, so it follows from Theorem \@ref(thm:unitary-decomposition) that $\mathbf{P}=\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}$, where we have used the fact that the transpose of an orthogonal matrix is equal to its inverse. Thus,
+
+$$
+P\left(X\left(t\right)=j|X\left(0\right)=i\right)=
+  \left(\mathbf{P}^{t}\right)_{ij}=
+  \left(\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)^{t}\right)_{ij}.
+$$
+  
+Next, observe that 
+
+$$
+\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)=
+\mathbf{Q}\mathbf{D}\mathbf{Q}^{-1}\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}=
+\mathbf{Q}\mathbf{D}\mathbf{I}\mathbf{D}\mathbf{Q}^{\mathsf{T}}=
+\mathbf{Q}\mathbf{D}^{2}\mathbf{Q}^{\mathsf{T}}.
+$$
+
+It follows that $\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)=\mathbf{Q}\mathbf{D}^{t}\mathbf{Q}^{\mathsf{T}}$. Now, $\mathbf{D}$ is a diagonal matrix whose (diagonal) entries are the eigenvalues of $\mathbf{P}$, so that
+
+$$
+\mathbf{D}^{t}=
+\begin{bmatrix}
+\lambda_{1}^{t} & 0 & \cdots & 0 \\
+0 & \lambda_{2}^{t} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \lambda_{n}^{t}
+\end{bmatrix}.
+$$
+
+We factor out $\lambda_{1}^{t}$ to obtain
+
+$$
+P\left(X\left(t\right)=j|X\left(0\right)=i\right)=
+  \lambda_{1}^{t}\left(\mathbf{Q}
+\begin{bmatrix}
+1 & 0 & \cdots & 0 \\
+0 & \left(\frac{\lambda_{2}}{\lambda_{1}}\right)^{t} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \left(\frac{\lambda_{n}}{\lambda_{1}}\right)^{t}
+\end{bmatrix}\mathbf{Q}^{\mathsf{T}}\right)_{ij}.
+$$
+  
+Suppose that the eigenvalues are distinct, i.e., $\left|\lambda_{1}\right|>\left|\lambda_{2}\right|>\cdots>\left|\lambda_{n}\right|$, and consider the limiting behavior of this quantity. Because $\lambda_{1}$ has the largest absolute value, $\lambda_{i}/\lambda_{1}<1$ for $i\in\left\{2,\ldots,n\right\}$. Thus,
+
+$$
+\lim_{t\rightarrow\infty}P\left(X\left(t\right)=j|X\left(0\right)=i\right)\approx
+  \lambda_{1}^{t}\left(\mathbf{Q}
+\begin{bmatrix}
+1 & 0 & \cdots & 0 \\
+0 & 0 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 0
+\end{bmatrix}\mathbf{Q}^{\mathsf{T}}\right)_{ij}.
+$$
+  
+Now, $P\left(X\left(t\right)=j|X\left(0\right)=i\right)$ is a probability, hence must be between zero and one. If $\lambda_{1}>1$, as $t$ increases, the expression above will become greater than one, so that $P\left(X\left(t\right)=j|X\left(0\right)=i\right)$ will not be a valid probability. If $\lambda_{1}<1$, then as $t$ increases, the expression will go to zero. By assumption, $X\left(t\right)$ is irreducible, i.e., it is possible to reach any state from any other state. If the probability of being in state $j$ goes to zero, then the chain will not be irreducible ($j$ is arbitrary, and the chain must be _somewhere_), violating the assumption. It follows that $\lambda_{1}$ cannot be less than one, which implies that $\lambda_{1}=1$. 
+
+Recalling that the columns of $\mathbf{Q}$ are the eigenvectors of $\mathbf{P}$, it follows that
+
+$$
+\mathbf{P}\mathbf{q}_{1}=\lambda_{1}\mathbf{q}_{1}=\mathbf{q}_{1},
+$$
+
+where $\mathbf{q}_{i}$ is the $i\text{th}$ eigenvector of $\mathbf{Q}$. Taking the transpose of this expression, we have
+
+$$
+\left(\mathbf{P}\mathbf{q}_{1}\right)^{\mathsf{T}}=\mathbf{q}_{1}^{\mathsf{T}}
+\implies \mathbf{q}_{1}^{\mathsf{T}}\mathbf{P}^{\mathsf{T}}=\mathbf{q}_{1}^{\mathsf{T}},
+$$
+
+By assumption, $\mathbf{P}$ is symmetric, i.e., $\mathbf{P}^{\mathsf{T}}=\mathbf{P}$, so that $\mathbf{q}_{1}^{\mathsf{T}}\mathbf{P}=\mathbf{q}_{1}^{\mathsf{T}}$, i.e., $\mathbf{q}_{1}^{\mathsf{T}}$ is a left eigenvector of $\mathbf{P}$. Thus, the limiting distribution of $X\left(t\right)$ is $\mathbf{q}_{1}$, so that $\mathbf{q}_{1}=\boldsymbol{\pi}$, i.e., $\mathbf{q}_{1}$ is the stationary distribution.
+```
+
+
+## Detailed balance
+
+## Metropolis-Hastings
+
+## Gibbs Sampling
+
+We now present Gibbs sampling, a special case of the Metropolis-Hastings algorithm that does not require us to specify a proposal. Suppose that we wish to sample from $\mathbf{X}=\left(X_{1},\ldots,X_{n}\right)$. The idea behind Gibbs sampling is to set a Markov chain $\mathbf{W}\left(0\right)=\left(X_{1}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)$, where the $X_{i}^{\left(0\right)}$ are often set at random (from possible values of each $X_{i}$). Then, the marginal density of the first coordinate is $f\left(X_{1}|X_{2}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)$. Let $\hat{X}_{1}^{\left(1\right)}$ be a sample from the marginal density of $X_{1}$. Setting $X_{1}^{\left(1\right)}=\hat{X}_{1}^{\left(1\right)}$, the Markov chain at $t=1$ is $\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(0\right)}\ldots,X_{n}^{\left(0\right)}\right)$. For the second coordinate, let $f\left(X_{2}|X_{1}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)$ be the marginal density of $X_{2}$. We then draw a sample $\hat{X}_{2}^{\left(1\right)}$ from the marginal density, and our Markov chain becomes $\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)$. We proceed in this manner until we have drawn samples from the marginal density of each $X_{i}$, which is given by $f\left(X_{i}|\mathbf{X}_{-i}\right)$, where $\mathbf{X}_{-i}$ is the vector whose entries are the samples drawn from the marginal densities of $\left\{X_{j}\right\}_{j=1}^{i-1}$ and $\left\{X_{j}^{\left(0\right)}\right\}_{j=i+1}^{n}$. 
+
+```{theorem}
+The limiting distribution of $\mathbf{W}\left(t\right)$ is $\mathbf{X}$, i.e., 
+$$
+  \lim_{t\rightarrow\infty}\mathbf{W}\left(t\right)\sim\mathbf{X}.
+$$
+```
+
+We now present a proof sketch for Gibbs sampling.
+
+```{proof}
+We wish to sample from a distribution $\nu\left(X_{1},\ldots,X_{n}\right)$. Applying conditional probability, we have
+
+$$
+  \nu\left(X_{1},\ldots,X_{n}\right)=f\left(X_{i}|\mathbf{X}_{-i}\right)p\left(\mathbf{X}_{-i}\right).
+$$
+  
+Let $\hat{X}_{i}$ be the "Gibbs sampling" sample of coordinate $i$. We can regard $\hat{X}_{i}$ as a proposal in the Metropolis-Hastings sense. We begin by forming the Metropolis-Hastings ratio
+
+$$
+  \min\left(1,\frac{\nu\left(\mathbf{X}'\right)q\left(\mathbf{X}',\mathbf{X}\right)}{\nu\left(\mathbf{X}\right)q\left(\mathbf{X},\mathbf{X}'\right)}\right).
+$$
+
+Noting that $\nu\left(\mathbf{X}'\right)$ is just $\nu\left(\mathbf{X}\right)$ with $X_{i}$ replaced by $\hat{X}_{i}$, the ratio becomes
+    
+$$
+\min\left(1,\frac{f\left(\hat{X}_{i}|\mathbf{X}_{-i}\right)p\left(\mathbf{X}_{-i}\right)q\left(x',x\right)}{f\left(X_{i}|\mathbf{X}_{-i}\right)p\left(\mathbf{X}_{-i}\right)q\left(x,x'\right)}\right).
+$$
+
+Recall that $q\left(\mathbf{X},\mathbf{X}'\right)$ is the probability of proposing $\mathbf{X'}$ given that the chain is in state $\mathbf{X}$. Writing $q$ as
+
+$$
+q\left(\mathbf{X},\mathbf{X}'\right)=q\left(\left(X_{i},\mathbf{X}_{-i}\right),\left(\hat{X}_{i},\mathbf{X}_{-i}\right)\right)
+$$
+
+we see that the probability of proposing $\mathbf{X}'$ is given by the marginal density of $\mathbf{X}'$, $f\left(\hat{X}_{i}|\mathbf{X}_{-i}\right)$, which does not depend on the current state $\mathbf{X}$. Similarly, $q\left(\mathbf{X}',\mathbf{X}\right)=f\left(X_{i}|\mathbf{X}_{-i}\right)$, so that the ratio becomes
+
+$$
+\min\left(1,\frac{f\left(\hat{X}_{i}|\mathbf{X}_{-i}\right)p\left(\mathbf{X}_{-i}\right)f\left(X_{i}|\mathbf{X}_{-i}\right)}{f\left(X_{i}|\mathbf{X}_{-i}\right)p\left(\mathbf{X}_{-i}\right)f\left(\hat{X}_{i}|\mathbf{X}_{-i}\right)}\right)=\min\left(1,1\right)=1,
+$$
+
+i.e., in Gibbs sampling, we always accept the proposal. Thus, Gibbs sampling can be viewed as a special case of Metropolis-Hastings where the proposal is always accepted.
+```
+
+We can use Gibbs sampling to sample from $\mathbf{X}$ without specifying a proposal distribution, though we must know how to sample from the marginal densities of the $X_{i}$. Gibbs sampling tends to work well when the random variable we wish to sample breaks up into coordinates. Note also that Gibbs sampling is subject to the same convergence considerations as the general Metropolis-Hastings algorithm.
+
+### Latent Dirichlet Allocation
