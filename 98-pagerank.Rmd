@@ -5,6 +5,7 @@
 Imagine a web surfer who moves from page to page by clicking on links randomly with uniform probability. Suppose that the surfer is confined to a set of five pages defined by the following graph, where a link from page $i$ to page $j$ is represented by an arrow pointing from $i$ to $j$.
 
 ```{r, echo = FALSE, message = FALSE}
+library(fs)
 library(igraph)
 library(Matrix)
 library(purrr)
@@ -22,6 +23,8 @@ A <- matrix(
   byrow = TRUE
 )
 
+# for consistent plotting
+set.seed(123)
 gr <- igraph::graph_from_adjacency_matrix(A, mode = "directed")
 plot(gr)
 ```
@@ -262,10 +265,16 @@ power_iter <- function(A, v0, p, tol = 1e-4, niter = 1e3) {
 ```
 
 We will test our implementation using the General Relativity network from the Stanford Network Analysis Project. 
-
 ```{r, message = FALSE}
-url <- "http://snap.stanford.edu/data/ca-GrQc.txt.gz"
-gr <- readr::read_tsv(url, skip = 4, col_names = c("from", "to"))
+path <- "data/ca-GrQc.txt.gz"
+if (!fs::file_exists(path)) {
+  download.file(
+    "http://snap.stanford.edu/data/ca-GrQc.txt.gz", 
+    destfile = path,
+    quiet = TRUE
+  )
+}
+gr <- readr::read_tsv(path, skip = 4, col_names = c("from", "to"))
 gr
 ```
 
