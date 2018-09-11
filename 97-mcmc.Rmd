@@ -4,7 +4,38 @@
 
 ### Ising model
 
+The Ising model is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
+
+```{r, echo = FALSE, message = FALSE}
+library(igraph)
+
+gr <- igraph::make_lattice(c(5, 5))
+coords <- igraph::layout_on_grid(gr)
+vertex_cols <- rep("white", 25)
+vertex_cols[c(1, 5, 7, 9, 11)] <- "black"
+plot(
+  gr, 
+  layout = coords,
+  vertex.color = vertex_cols,
+  vertex.label = NA
+)
+```
+
+Each vertex can take one of two possible values, and there are 25 such vertices, so that there are $2^{25}$ possible configurations. For an $n\times n$ grid, there are $2^{n^{2}}$ possible configurations. It is clear that even for modest $n$, e.g., $n=10$, the number of possible configurations will be huge. Suppose that we wish to sample uniformly from the set of all possible configurations. It is not clear that we have a procedure that will produce uniform samples, i.e., a procedure such that each of the $2^{n^{2}}$ possible configurations is equally likely.
+
+Suppose further that we wish to sample according to a more complicated scheme. Let $E$ be the set of all possible configurations, so that $\left|E\right|=2^{n^{2}}$. Let $v\in E$ be some configuration, and let $\sigma_{ij}$ be the state of vertex $\left(i,j\right)$, so that $\sigma_{ij}\in\left\{-1,1\right\}$, and where we have indexed the vertices as a matrix, i.e., $i$ indicates the row and $j$ the column. Let
+
+$$
+H\left(v\right)=\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{ij}\left(\sigma_{i+1,j}+\sigma_{i,j+1}+\sigma_{i-1,j}+\sigma_{i,j-1}\right),
+$$
+
+i.e., $H\left(v\right)$ is the sum of the product of the state of each vertex multiplied by its neighboring vertices (and suppose that we "wrap" vertices on an edge). Let $X$ be the random variable that samples from $E$ according to $P\left(X=v\right)=c\cdot\mathrm{e}^{H\left(v\right)}$, where $c$ is some normalizing constant (to make this a valid probability distribution). Again, it is not clear that we have a procedure to sample from $X$.
+
 ### Intractable posterior distribution
+
+### MCMC is a sampling technique
+
+Monte Carlo methods are a class of computational methods for estimating some quantity via sampling. The idea behind Markov Chain Monte Carlo is to build a Markov chain $X\left(t\right)$ with state space $S=E$ and stationary distribution $\boldsymbol{\pi}$ such that $\boldsymbol{\pi}$ is the distribution on $E$ from which we want to sample ($\pi\left(i\right)=c\cdot\mathrm{e}^{H\left(i\right)}$ for the Ising model). We will soon see that, under certain conditions, the limiting distribution of the Markov chain is $\boldsymbol{\pi}$. Thus, if we can build such a chain, then we can run our sampler for a long (but finite) time, and we will be able to sample from $\boldsymbol{\pi}$. We can therefore view MCMC as a sampling technique, where given $\boldsymbol{\pi}$, our task is to find $\mathbf{P}$ such that $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}$.
 
 ## Markov chain
 
@@ -128,10 +159,87 @@ $$
 By assumption, $\mathbf{P}$ is symmetric, i.e., $\mathbf{P}^{\mathsf{T}}=\mathbf{P}$, so that $\mathbf{q}_{1}^{\mathsf{T}}\mathbf{P}=\mathbf{q}_{1}^{\mathsf{T}}$, i.e., $\mathbf{q}_{1}^{\mathsf{T}}$ is a left eigenvector of $\mathbf{P}$. Thus, the limiting distribution of $X\left(t\right)$ is $\mathbf{q}_{1}$, so that $\mathbf{q}_{1}=\boldsymbol{\pi}$, i.e., $\mathbf{q}_{1}$ is the stationary distribution.
 ```
 
+It is not difficult to find a finite-state Markov chain that does not have a unique stationary distribution. Consider a chain with four states and transition probability matrix
+
+$$
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+\frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} \\
+\end{bmatrix}
+$$
+
+In this chain, states 1 and 2 do not communicate with states 3 and 4, and it is easy to see that the chain has two stationary distributions. If $X\left(0\right)\in\left\{1,2\right\}$, then $\boldsymbol{\pi}=\left(1/2,1/2,0,0\right)$, and if $X\left(0\right)\in\left\{3,4\right\}$, then $\boldsymbol{\pi}=\left(0,0,1/2,1/2\right)$.
 
 ## Detailed balance
 
+We have said that we can use MCMC to sample from an otherwise intractable distribution if we construct a Markov chain whose stationary distribution is the target distribution. We have also proved that the limiting distribution of a finite-state Markov chain is the stationary distribution (provided it is unique). Our attention now turns to constructing such a chain.
+
+```{definition}
+A distribution $\boldsymbol{\nu}$ on a state space $S$ is said to be in _detailed balance_ for a Markov chain $X\left(t\right)$ on $S$ with transition probability matrix $\mathbf{P}$ if $\nu\left(i\right)P_{ij}=\nu\left(j\right)P_{ji}$.
+```
+
+Practically, it is difficult to produce a transition probability matrix $\mathbf{P}$ that makes $\boldsymbol{\pi}$ stationary. It is often easier to produce a $\mathbf{P}$ such that $\boldsymbol{\pi}$ is in detailed balance.
+
+```{theorem}
+If $\boldsymbol{\nu}$ is in detailed balance for a Markov chain $X\left(t\right)$, then $\boldsymbol{\nu}$ is a stationary distribution.
+```
+
+```{proof}
+We present a proof sketch of the above theorem. We need to show that $\boldsymbol{\nu}\mathbf{P}=\boldsymbol{\nu}$, or equivalently that $\left(\boldsymbol{\nu}\mathbf{P}\right)_{i}=\nu\left(i\right)$. Observe that
+
+$$
+\left(\boldsymbol{\nu}\mathbf{P}\right)_{i}=
+\sum_{j=1}^{n}\nu\left(j\right)P_{ji}=
+\sum_{j=1}^{n}\nu\left(i\right)P_{ij}=
+\nu\left(i\right)\sum_{j=1}^{n}P_{ij},
+$$
+
+where the second equality follows because $\boldsymbol{\nu}$ is in detailed balance. Now, $\sum_{j=1}^{n}P_{ij}$ is a sum over a row of a transition probability matrix, which is equal to 1, hence $\left(\boldsymbol{\nu}\mathbf{P}\right)_{i}=\nu\left(i\right)$. $i$ was chosen arbitrarily, so it follows that $\boldsymbol{\nu}\mathbf{P}=\boldsymbol{\nu}$, and the result has been shown.
+```
+
+We now attempt to give an intuition for detailed balance. Consider a Markov chain with two states, and suppose that $\boldsymbol{\nu}$ is in detailed balance for the chain. Then, $\nu\left(1\right)P_{12}=\nu\left(2\right)P_{21}$, i.e., the probability of being in state 1 and moving to state 2 is equal to the probability of being in state 2 and moving to state 1.
+
 ## Metropolis-Hastings
+
+We began by considering the problem of sampling from an intractable distribution. We have established that the limiting distribution of an irreducible finite-state Markov chain $X\left(t\right)$ is the stationary distribution, and we have seen that if a distribution is in detailed balance for the $X\left(t\right)$, then it is a stationary distribution. We now consider an algorithm for sampling from $X\left(t\right)$. The idea behind the Metropolis-Hastings algorithm is that we do not have, or cannot write down (or store in memory) the transition probability matrix $\mathbf{P}$. We will instead attempt to simulate $X\left(t\right)$ by the _Metropolis-Hastings algorithm_.
+
+1. Suppose that at time $t$ the chain is in state $s$, i.e., $X\left(t\right)=s$.
+2. Let $q\left(s,s'\right)$ be the probability of proposing state $s'$ given that the chain is in state $s$. $q$ is called a _proposal function_.
+3. Let $\hat{U}$ be a sample from a standard uniform random variable, and consider the quantity
+
+    $$
+    \min\left(1,\frac{\nu\left(s'\right)q\left(s',s\right)}{\nu\left(s\right)q\left(s,s'\right)}\right).
+    $$
+  
+    If $\hat{U}$ is less than this quantity, we will accept the proposal and set $X\left(t+1\right)=s'$. Otherwise, we will reject the proposal and remain in state $s$, i.e., $X\left(t+1\right)=s$.
+    
+```{example}
+Consider again the Ising model, and suppose that $n=3$, so that there are 9 possible states, hence $2^{9}$ possible configurations. Consider the proposal function that picks a vertex uniformly and flips its sign, taking the resulting configuration as the proposed state. Then, the probability of proposing $s'$ given that the chain is in state $s$ is
+
+$$
+q\left(s,s'\right)=
+  \begin{cases}
+    1/n^{2}, & \text{if }s\text{ and }s'\text{ differ at 1 vertex}\\
+    0, & \text{otherwise}
+  \end{cases}.
+$$
+
+We now step through the algorithm. Having sampled $s'$ from the proposal, we form the _Metropolis-Hastings ratio_
+
+$$
+\min\left(1,\frac{\nu\left(s'\right)q\left(s',s\right)}{\nu\left(s\right)q\left(s,s'\right)}\right)=
+\min\left(1,\frac{\mathrm{e}^{H\left(s'\right)}\left(1/n^{2}\right)}{\mathrm{e}^{H\left(s\right)}\left(1/n^{2}\right)}\right)=
+\min\left(1,\mathrm{e}^{H\left(s'\right)-H\left(s\right)}\right).
+$$
+
+If a sample drawn from $\mathcal{U}\left(0,1\right)$ is less than this quantity, we will accept the proposal and the chain will move to state $s'$, else we will reject it and remain in state $s$. We see that if $H\left(s'\right)>H\left(s\right)$, then $\min\left(1,\mathrm{e}^{H\left(s'\right)-H\left(s\right)}\right)=1$, i.e., we will accept the proposal. Intuitively, the algorithm moves to areas of higher probability, which reflects the stationary distribution. Observe also that if $H\left(s'\right)<H\left(s\right)$, that we will sometimes accept the proposal and sometimes reject, depending on the sample from $\mathcal{U}\left(0,1\right)$. This reflects the fact that for the chain to fully explore the state space, it must sometimes move to a state of lower probability. This completes one step of the algorithm.
+```
+
+```{proof}
+We now give a proof sketch for the Metropolis-Hastings algorithm.
+```
 
 ## Gibbs Sampling
 
