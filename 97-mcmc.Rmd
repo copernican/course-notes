@@ -2,6 +2,8 @@
 
 ## Motivation
 
+We now introduce a general sampling technique that is often used to sample from intractable distributions. Previous techniques we have seen have required information that we may not always have, such as the inverse cumulative distribution function (CDF inversion), or a distribution from which we know how to sample that envelops a target distribution (accept-reject). We begin by introducing two seemingly intractable problems.
+
 ### Ising model
 
 The [Ising model](https://en.wikipedia.org/wiki/Ising_model) is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
@@ -251,7 +253,21 @@ If a sample drawn from $\mathcal{U}\left(0,1\right)$ is less than this quantity,
 ```
 
 ```{example}
-MH to sample from a Gaussian
+Let $X\sim\mathcal{N}\left(0,1\right)$ be the distribution from which we wish to sample. In this case, $S=\mathbb{R}$, so that any state $s\in\mathbb{R}$. Let the probability of being in state $s$ be given by the Gaussian density, i.e., 
+
+$$
+\nu\left(s\right)=\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-s^{2}/2}.
+$$
+  
+Suppose that we propose a state by adding a sample from $\mathcal{U}\left(0,1\right)$ to $s$ and then subtracting $1/2$, i.e., $s'=s+\left(U-1/2\right)$, where $U$ is a sample from the standard uniform distribution. Observe that $s'$ has the uniform distribution over $\left[s-1/2,s+1/2\right]$, i.e., given that we are in state $s$, the probability that we will propose $s'$ is uniform over an interval of length $1$ centered at $s$. Thus, $s'$ has the uniform density $f_{U}\left(s\right)=1/\left(b-a\right)=1/1=1$. Observe also that the proposal is symmetric, i.e., $q\left(s,s'\right)=q\left(s',s\right)$. Accordingly, the Metropolis-Hastings ratio is
+
+$$
+\min\left(1,\frac{\nu\left(s'\right)q\left(s',s\right)}{\nu\left(s\right)q\left(s,s'\right)}\right)=
+\min\left(1,\frac{\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-\left(s'\right)^{2}/2}\cdot 1}{\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-s^{2}/2}\cdot 1}\right)=
+\min\left(1,\mathrm{e}^{\left(s^{2}-\left(s'\right)^{2}\right)/2}\right).
+$$
+
+Observe that Metropolis-Hastings is a general sampling algorithm, though for sampling from a $\mathcal{N}\left(0,1\right)$, the algorithm is slow and would not be used in practice.
 ```
 
 We now give a proof sketch for the Metropolis-Hastings algorithm. Recall that we cannot write down or store the transition probability matrix of the chain $X\left(t\right)$, but if we can find a distribution $\boldsymbol{\nu}$ that is in detailed balance for $X\left(t\right)$, then $\boldsymbol{\nu}$ will be a stationary distribution. Detailed balance is defined in terms of pairs of states, so the idea behind the algorithm is to make sure that every pair of states is in detailed balance. If we can do this, then $\boldsymbol{\nu}$ will be the stationary distribution, and $X\left(t\right)$ will converge to $\boldsymbol{\nu}$. For the proof sketch, we will consider two states, $i$ and $j$, where the probability of being in state $i$ is $\nu\left(i\right)$, and where the probability of proposing state $i$ given that $X\left(t\right)$ is in state $j$ is $q\left(i,j\right)$.
