@@ -4,7 +4,7 @@
 
 Imagine a web surfer who moves from page to page by clicking on links randomly with uniform probability. Suppose that the surfer is confined to a set of five pages defined by the following graph, where a link from page $i$ to page $j$ is represented by an arrow pointing from $i$ to $j$.
 
-```{r, echo = FALSE, message = FALSE}
+```{r pagerank-ex-graph, echo = FALSE, message = FALSE}
 library(fs)
 library(igraph)
 library(Matrix)

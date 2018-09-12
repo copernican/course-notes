@@ -8,7 +8,7 @@ We now introduce a general sampling technique that is often used to sample from 
 
 The [Ising model](https://en.wikipedia.org/wiki/Ising_model) is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
 
-```{r, echo = FALSE, message = FALSE}
+```{r ising, echo = FALSE, message = FALSE}
 library(igraph)
 
 gr <- igraph::make_lattice(c(5, 5))
@@ -272,7 +272,7 @@ Observe that Metropolis-Hastings is a general sampling algorithm, though for sam
 
 We now give a proof sketch for the Metropolis-Hastings algorithm. Recall that we cannot write down or store the transition probability matrix of the chain $X\left(t\right)$, but if we can find a distribution $\boldsymbol{\nu}$ that is in detailed balance for $X\left(t\right)$, then $\boldsymbol{\nu}$ will be a stationary distribution. Detailed balance is defined in terms of pairs of states, so the idea behind the algorithm is to make sure that every pair of states is in detailed balance. If we can do this, then $\boldsymbol{\nu}$ will be the stationary distribution, and $X\left(t\right)$ will converge to $\boldsymbol{\nu}$. For the proof sketch, we will consider two states, $i$ and $j$, where the probability of being in state $i$ is $\nu\left(i\right)$, and where the probability of proposing state $i$ given that $X\left(t\right)$ is in state $j$ is $q\left(i,j\right)$.
 
-```{r, echo = FALSE}
+```{r mh-proof, echo = FALSE}
 gr_mh <- igraph::make_graph(c("i", "j", "j", "i"))
 edge_labs <- c(expression(italic(q(i,j))), expression(italic(q(j,i))))
 set.seed(123)
