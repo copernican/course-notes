@@ -4,7 +4,7 @@
 
 ### Ising model
 
-The Ising model is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
+The [Ising model](https://en.wikipedia.org/wiki/Ising_model) is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
 
 ```{r, echo = FALSE, message = FALSE}
 library(igraph)
@@ -32,6 +32,15 @@ $$
 i.e., $H\left(v\right)$ is the sum of the product of the state of each vertex multiplied by its neighboring vertices (and suppose that we "wrap" vertices on an edge). Let $X$ be the random variable that samples from $E$ according to $P\left(X=v\right)=c\cdot\mathrm{e}^{H\left(v\right)}$, where $c$ is some normalizing constant (to make this a valid probability distribution). Again, it is not clear that we have a procedure to sample from $X$.
 
 ### Intractable posterior distribution
+
+Latent Dirichlet Allocation is a generative Bayesian model that describes a process for creating documents. A document is viewed as a collection of words drawn from one or more latent topics. In this model, neither grammar nor the order of words is considered. Rather, the document is viewed as a "bag of words," with each word arising from a particular topic. Each document has a distribution over topics, and each topic has a distribution over words. We are typically interested in the posterior distribution of the assignments of words to topics
+
+$$
+P\left(\mathbf{z}|\mathbf{w}\right)=
+\frac{P\left(\mathbf{w},\mathbf{z}\right)}{\sum_{\mathbf{z}}P\left(\mathbf{w},\mathbf{z}\right)},
+$$
+
+where $\mathbf{z}$ represents the topics and $\mathbf{w}$ represents the words in the corpus. @Griffiths2004 notes that "this distribution cannot be computed directly, because the sum in the denominator does not factorize and involves $T^{n}$ terms, where $n$ is the total number of word instances in the corpus." @Blei2003 estimate the distribution using a version of the expectation-maximization algorithm. We will see that it is also possible to estimate the distribution using Markov Chain Monte Carlo methods.
 
 ### MCMC is a sampling technique
 
@@ -71,7 +80,7 @@ $$
 
 Solving such constrained optimization problems is in general difficult, especially as the dimension of the problem increases. A second option comes from considering the limiting behavior of a finite-state Markov chain $X\left(t\right)$. The Perron-Frobenius theorem implies that $X\left(t\right)$ has a stationary distribution.
 
-```{theorem}
+```{theorem, label = "mc-convergence"}
 Let $X\left(t\right)$ be a Markov chain with finitely many states and stationary distribution $\boldsymbol{\pi}$. If the stationary distribution is unique (equivalently, the chain is _irreducible_ or _ergodic_), then
 
 $$
@@ -159,6 +168,10 @@ $$
 By assumption, $\mathbf{P}$ is symmetric, i.e., $\mathbf{P}^{\mathsf{T}}=\mathbf{P}$, so that $\mathbf{q}_{1}^{\mathsf{T}}\mathbf{P}=\mathbf{q}_{1}^{\mathsf{T}}$, i.e., $\mathbf{q}_{1}^{\mathsf{T}}$ is a left eigenvector of $\mathbf{P}$. Thus, the limiting distribution of $X\left(t\right)$ is $\mathbf{q}_{1}$, so that $\mathbf{q}_{1}=\boldsymbol{\pi}$, i.e., $\mathbf{q}_{1}$ is the stationary distribution.
 ```
 
+```{corollary}
+If $\mathbf{P}$ is a transition probability matrix for an irreducible, finite-state Markov chain $X\left(t\right)$, then its eigenvalues have absolute value less than or equal to $1$, i.e., $\left|\lambda_{i}\right|\leq 1\,\forall i$. Further, $\mathbf{P}$ has exactly one eigenvalue equal to $1$, and it corresponds to the eigenvector that is the stationary distribution of $X\left(t\right)$.
+```
+
 It is not difficult to find a finite-state Markov chain that does not have a unique stationary distribution. Consider a chain with four states and transition probability matrix
 
 $$
@@ -182,7 +195,7 @@ A distribution $\boldsymbol{\nu}$ on a state space $S$ is said to be in _detaile
 
 Practically, it is difficult to produce a transition probability matrix $\mathbf{P}$ that makes $\boldsymbol{\pi}$ stationary. It is often easier to produce a $\mathbf{P}$ such that $\boldsymbol{\pi}$ is in detailed balance.
 
-```{theorem}
+```{theorem, label = "detailed-balance"}
 If $\boldsymbol{\nu}$ is in detailed balance for a Markov chain $X\left(t\right)$, then $\boldsymbol{\nu}$ is a stationary distribution.
 ```
 
@@ -237,9 +250,111 @@ $$
 If a sample drawn from $\mathcal{U}\left(0,1\right)$ is less than this quantity, we will accept the proposal and the chain will move to state $s'$, else we will reject it and remain in state $s$. We see that if $H\left(s'\right)>H\left(s\right)$, then $\min\left(1,\mathrm{e}^{H\left(s'\right)-H\left(s\right)}\right)=1$, i.e., we will accept the proposal. Intuitively, the algorithm moves to areas of higher probability, which reflects the stationary distribution. Observe also that if $H\left(s'\right)<H\left(s\right)$, that we will sometimes accept the proposal and sometimes reject, depending on the sample from $\mathcal{U}\left(0,1\right)$. This reflects the fact that for the chain to fully explore the state space, it must sometimes move to a state of lower probability. This completes one step of the algorithm.
 ```
 
-```{proof}
-We now give a proof sketch for the Metropolis-Hastings algorithm.
+```{example}
+MH to sample from a Gaussian
 ```
+
+We now give a proof sketch for the Metropolis-Hastings algorithm. Recall that we cannot write down or store the transition probability matrix of the chain $X\left(t\right)$, but if we can find a distribution $\boldsymbol{\nu}$ that is in detailed balance for $X\left(t\right)$, then $\boldsymbol{\nu}$ will be a stationary distribution. Detailed balance is defined in terms of pairs of states, so the idea behind the algorithm is to make sure that every pair of states is in detailed balance. If we can do this, then $\boldsymbol{\nu}$ will be the stationary distribution, and $X\left(t\right)$ will converge to $\boldsymbol{\nu}$. For the proof sketch, we will consider two states, $i$ and $j$, where the probability of being in state $i$ is $\nu\left(i\right)$, and where the probability of proposing state $i$ given that $X\left(t\right)$ is in state $j$ is $q\left(i,j\right)$.
+
+```{r, echo = FALSE}
+gr_mh <- igraph::make_graph(c("i", "j", "j", "i"))
+edge_labs <- c(expression(italic(q(i,j))), expression(italic(q(j,i))))
+set.seed(123)
+plot(
+  gr_mh,
+  edge.curved = TRUE,
+  edge.label = edge_labs,
+  vertex.label = c(expression(italic(i)), expression(italic(j)))
+)
+text(
+  x = c(-1.25, 1.25),
+  y = c(1, -1), 
+  labels = c(expression(italic(nu(j))), expression(italic(nu(i))))
+)
+```
+
+```{proof}
+We will choose transition probabilities to make $\boldsymbol{\nu}$ the stationary distribution. For the moment, we will always accept the proposal, i.e., we will leave aside the third step of the algorithm.
+
+Then, from the diagram above, we see that the probability of moving from $i$ to $j$ is the probability of being in state $i$ multiplied by the probability of proposing $j$, i.e., $\nu\left(i\right)q\left(i,j\right)$, and similarly for moving from $j$ to $i$. But there is no reason that $\boldsymbol{\nu}$ should be in detailed balance for some proposal function $q$, i.e., in general we will not have $\nu\left(i\right)q\left(i,j\right)=\nu\left(j\right)q\left(j,i\right)$. We can correct the situation by introducing $\alpha,\beta\in\mathbb{R}$ such that we will accept the proposals to move to states $j$ and $i$ with probabilities $\alpha$ and $\beta$, respectively. I.e., the probability of accepting the proposal $j$ is $\alpha\cdot q\left(i,j\right)$, and similarly the probability of accepting the proposal $i$ is $\beta\cdot q\left(j,i\right)$.
+
+Observe then that the probability of moving from $i$ to $j$ is now the probability of being in $i$ multiplied by the probability of proposing $j$, multiplied by the probability of accepting the proposal, i.e., $\nu\left(i\right)q\left(i,j\right)\alpha$. (Observe that the $\left(i,j\right)\text{th}$ entry of the transition probability matrix is $P_{ij}=q\left(i,j\right)\alpha$. Thus, we will specify transition probabilities without ever writing down the matrix. Observe also that $\alpha=P\left(\mathcal{U}<\alpha\right)$.) Thus, we must choose $\alpha$ and $\beta$ to satisfy detailed balance, i.e., so that 
+
+$$
+\nu\left(i\right)q\left(i,j\right)\alpha=\nu\left(j\right)q\left(j,i\right)\beta
+\implies\frac{\alpha}{\beta}=\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)}.
+$$
+  
+If we choose $\beta=1$, then
+
+$$
+\alpha=\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)},
+$$
+  
+but observe that if the ratio on the right is greater than $1$, $\alpha$ will not be a valid probability. Thus, if the Metropolis-Hastings ratio is less than or equal to $1$, we will set 
+
+$$
+\beta=1\quad\text{and}\quad\alpha=\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)}.
+$$
+  
+Similarly, if the ratio is greater than $1$, we will set
+
+$$
+\alpha=1\quad\text{and}\quad\beta=\frac{\nu\left(i\right)q\left(i,j\right)}{\nu\left(j\right)q\left(j,i\right)},
+$$
+
+and observe that in this case $\beta$ is the reciprocal of the ratio. Therefore,
+
+$$
+\alpha=\min\left(1,\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)}\right)
+$$
+
+and 
+
+$$
+\beta=\min\left(1,\frac{\nu\left(i\right)q\left(i,j\right)}{\nu\left(j\right)q\left(j,i\right)}\right).
+$$
+  
+Observe that if the MH ratio is greater than 1, we will have 
+
+$$
+\alpha=1\quad\text{and}\quad\beta=\frac{\nu\left(i\right)q\left(i,j\right)}{\nu\left(j\right)q\left(j,i\right)},
+$$
+  
+so that
+
+$$
+\nu\left(i\right)q\left(i,j\right)\alpha=
+\nu\left(i\right)q\left(i,j\right)\cdot 1=
+\nu\left(i\right)q\left(i,j\right)
+$$
+
+and
+
+$$
+\nu\left(j\right)q\left(j,i\right)\beta=
+\nu\left(j\right)q\left(j,i\right)\frac{\nu\left(i\right)q\left(i,j\right)}{\nu\left(j\right)q\left(j,i\right)}=
+\nu\left(i\right)q\left(i,j\right),
+$$
+
+so that detailed balance is satisfied. If the MH ratio is less than or equal to 1, we will have
+
+$$
+\alpha=\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)}\quad\text{and}\quad\beta=1,
+$$
+
+so that
+
+$$
+\nu\left(i\right)q\left(i,j\right)\alpha=
+\nu\left(i\right)q\left(i,j\right)\frac{\nu\left(j\right)q\left(j,i\right)}{\nu\left(i\right)q\left(i,j\right)}=
+\nu\left(j\right)q\left(j,i\right),
+$$
+
+which we see is equal to $\nu\left(j\right)q\left(j,i\right)\beta$ when $\beta=1$, so that detailed balance is again satisfied. Thus, we have shown how to construct $\alpha$ and $\beta$, hence $P_{ij}$ for an arbitrary proposal $q$, such that detailed balance is satisfied for every pair of states. Theorem \@ref(thm:detailed-balance) implies that $\boldsymbol{\nu}$ is the stationary distribution of $X\left(t\right)$, and Theorem \@ref(thm:mc-convergence) implies that $X\left(t\right)$ will converge to $\boldsymbol{\nu}$.
+```
+
+Recall that our goal is to sample from $\boldsymbol{\nu}$. The Metropolis-Hastings algorithm gives us a way to sample from this distribution by constructing a Markov chain that has $\boldsymbol{\nu}$ as its stationary distribution. Now, Theorem \@ref(thm:mc-convergence) guarantees convergence only in the case that $t\rightarrow\infty$. In practice, we will run the chain until some large time $T$, e.g., $T=10^{6}$, and our sample of $\boldsymbol{\nu}$ is the state of the chain at time $T$, i.e., $X\left(T\right)$.
 
 ## Gibbs Sampling
 
@@ -291,3 +406,22 @@ i.e., in Gibbs sampling, we always accept the proposal. Thus, Gibbs sampling can
 We can use Gibbs sampling to sample from $\mathbf{X}$ without specifying a proposal distribution, though we must know how to sample from the marginal densities of the $X_{i}$. Gibbs sampling tends to work well when the random variable we wish to sample breaks up into coordinates. Note also that Gibbs sampling is subject to the same convergence considerations as the general Metropolis-Hastings algorithm.
 
 ### Latent Dirichlet Allocation
+
+We return now to LDA. Recall that we wish to estimate an intractable posterior distribution. We can write the conditional distribution of each topic $z_{i}$ as
+
+$$
+P\left(z_{i}=j|\mathbf{z}_{-i},\mathbf{w}\right)\propto\frac{n_{-i,j}^{\left(w_{i}\right)}+\beta}{n_{-i,j}^{\left(\cdot\right)}+W\beta}\frac{n_{-i,j}^{\left(d_{i}\right)}+\alpha}{n_{-i}^{\left(d_{i}\right)}+T\alpha},
+$$
+
+where 
+
+- $\mathbf{z}_{-i}$ consists of all topics except $z_{i}$
+- $n_{-i,j}^{\left(w_{i}\right)}$ is the number of times word $w_{i}$ has been assigned to topic $j$ (excluding $z_{i}$)
+- $n_{-i,j}^{\left(d_{i}\right)}$ is the number of times a word from document $d_{i}$ has been assigned to topic $j$ (again excluding $z_{i}$)
+- $n_{-i,j}^{\left(\cdot\right)}$ is the number of times all words have been assigned to topic $j$ (excluding $z_{i}$)
+- $n_{-i}^{\left(d_{i}\right)}$ is the number of times a word from document $d_{i}$ has been assigned to all topics (excluding $z_{i}$)
+- $W$ is the number of words in the dictionary
+- $T$ is the number of topics
+- and $\alpha$ and $\beta$ parameterize the prior distributions over topics and words, respectively.
+
+We can then use Gibbs sampling to sample each $z_{i}$ in turn, yielding samples of the posterior distribution of assignments of word to topics $\mathbf{z}$.
