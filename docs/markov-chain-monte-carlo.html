@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-09-12">
+<meta name="date" content="2018-09-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,7 +205,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="ising-model" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> Ising model</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Ising_model">Ising model</a> is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values <span class="math inline">\(\left\{-1,1\right\}\)</span>, with black and white representing <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, respectively.</p>
-<p><img src="course-notes_files/figure-html/ising-1.png" width="672" /></p>
+<p><img src="course-notes_files/figure-html/ising-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>Each vertex can take one of two possible values, and there are 25 such vertices, so that there are <span class="math inline">\(2^{25}\)</span> possible configurations. For an <span class="math inline">\(n\times n\)</span> grid, there are <span class="math inline">\(2^{n^{2}}\)</span> possible configurations. It is clear that even for modest <span class="math inline">\(n\)</span>, e.g., <span class="math inline">\(n=10\)</span>, the number of possible configurations will be huge. Suppose that we wish to sample uniformly from the set of all possible configurations. It is not clear that we have a procedure that will produce uniform samples, i.e., a procedure such that each of the <span class="math inline">\(2^{n^{2}}\)</span> possible configurations is equally likely.</p>
 <p>Suppose further that we wish to sample according to a more complicated scheme. Let <span class="math inline">\(E\)</span> be the set of all possible configurations, so that <span class="math inline">\(\left|E\right|=2^{n^{2}}\)</span>. Let <span class="math inline">\(v\in E\)</span> be some configuration, and let <span class="math inline">\(\sigma_{ij}\)</span> be the state of vertex <span class="math inline">\(\left(i,j\right)\)</span>, so that <span class="math inline">\(\sigma_{ij}\in\left\{-1,1\right\}\)</span>, and where we have indexed the vertices as a matrix, i.e., <span class="math inline">\(i\)</span> indicates the row and <span class="math inline">\(j\)</span> the column. Let</p>
 <p><span class="math display">\[
@@ -220,7 +220,7 @@ H\left(v\right)=\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{ij}\left(\sigma_{i+1,j}+\sig
 P\left(\mathbf{z}|\mathbf{w}\right)=
 \frac{P\left(\mathbf{w},\mathbf{z}\right)}{\sum_{\mathbf{z}}P\left(\mathbf{w},\mathbf{z}\right)},
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{z}\)</span> represents the topics and <span class="math inline">\(\mathbf{w}\)</span> represents the words in the corpus. <span class="citation">Griffiths and Steyvers (<a href="#ref-Griffiths2004">2004</a>)</span> notes that “this distribution cannot be computed directly, because the sum in the denominator does not factorize and involves <span class="math inline">\(T^{n}\)</span> terms, where <span class="math inline">\(n\)</span> is the total number of word instances in the corpus.” <span class="citation">Blei, Ng, and Jordan (<a href="#ref-Blei2003">2003</a>)</span> estimate the distribution using a version of the expectation-maximization algorithm. We will see that it is also possible to estimate the distribution using Markov Chain Monte Carlo methods.</p>
+<p>where <span class="math inline">\(\mathbf{z}\)</span> represents the topics and <span class="math inline">\(\mathbf{w}\)</span> represents the words in the corpus. <span class="citation">Griffiths and Steyvers (<a href="#ref-Griffiths2004">2004</a>)</span> note that “this distribution cannot be computed directly, because the sum in the denominator does not factorize and involves <span class="math inline">\(T^{n}\)</span> terms, where <span class="math inline">\(n\)</span> is the total number of word instances in the corpus.” <span class="citation">Blei, Ng, and Jordan (<a href="#ref-Blei2003">2003</a>)</span> estimate the distribution using a version of the expectation-maximization algorithm. We will see that it is also possible to estimate the distribution using Markov Chain Monte Carlo methods.</p>
 </div>
 <div id="mcmc-is-a-sampling-technique" class="section level3">
 <h3><span class="header-section-number">6.1.3</span> MCMC is a sampling technique</h3>
@@ -229,7 +229,7 @@ P\left(\mathbf{z}|\mathbf{w}\right)=
 </div>
 <div id="markov-chain" class="section level2">
 <h2><span class="header-section-number">6.2</span> Markov chain</h2>
-<p>We begin by setting some notation. We define a matrix <span class="math inline">\(\mathbf{A}\)</span> raised to the <span class="math inline">\(k\text{th}\)</span> power as</p>
+<p>We begin by setting some notation. We define a (square) matrix <span class="math inline">\(\mathbf{A}\)</span> raised to the <span class="math inline">\(k\text{th}\)</span> power as</p>
 <p><span class="math display">\[
 \mathbf{A}^{k}=\prod_{i=1}^{k}\mathbf{A}.
 \]</span></p>
@@ -246,10 +246,10 @@ i.e., the probability that the chain is in state <span class="math inline">\(j\)
 <p>We are now to consider the limiting behavior of Markov chains.</p>
 
 <div class="definition">
-<span id="def:unnamed-chunk-65" class="definition"><strong>Definition 6.1  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\pi}\)</span> is said to be a <em>stationary distribution</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> with state space <span class="math inline">\(S\)</span> and transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}\)</span>.
+<span id="def:unnamed-chunk-65" class="definition"><strong>Definition 6.1  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\pi}\)</span> is said to be a <em>stationary distribution</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> with state space <span class="math inline">\(S\)</span> and transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}\)</span>.
 </div>
 
-<p>Observe that <span class="math inline">\(\boldsymbol{\pi}\)</span> is a left eigenvector with eigenvalue 1. We now consider how to compute <span class="math inline">\(\boldsymbol{\pi}\)</span>. One option is to solve <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}\)</span> as a linear algebra problem, i.e., solve</p>
+<p>Observe that <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\)</span> is a left eigenvector with eigenvalue 1. We now consider how to compute <span class="math inline">\(\boldsymbol{\pi}\)</span>. One option is to solve <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}\)</span> as a linear algebra problem, i.e., solve</p>
 <p><span class="math display">\[
 \sum_{i=1}^{n}\pi\left(i\right)=1\quad\text{subject to}\quad\pi\left(i\right)\geq 0.
 \]</span></p>
@@ -281,7 +281,7 @@ P\left(X\left(t\right)=j|X\left(0\right)=i\right)=
 \mathbf{Q}\mathbf{D}\mathbf{I}\mathbf{D}\mathbf{Q}^{\mathsf{T}}=
 \mathbf{Q}\mathbf{D}^{2}\mathbf{Q}^{\mathsf{T}}.
 \]</span></p>
-<p>It follows that <span class="math inline">\(\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)=\mathbf{Q}\mathbf{D}^{t}\mathbf{Q}^{\mathsf{T}}\)</span>. Now, <span class="math inline">\(\mathbf{D}\)</span> is a diagonal matrix whose (diagonal) entries are the eigenvalues of <span class="math inline">\(\mathbf{P}\)</span>, so that</p>
+<p>It follows that <span class="math inline">\(\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)^{t}=\mathbf{Q}\mathbf{D}^{t}\mathbf{Q}^{\mathsf{T}}\)</span>. Now, <span class="math inline">\(\mathbf{D}\)</span> is a diagonal matrix whose (diagonal) entries are the eigenvalues of <span class="math inline">\(\mathbf{P}\)</span>, so that</p>
 <p><span class="math display">\[
 \mathbf{D}^{t}=
 \begin{bmatrix}
@@ -413,11 +413,45 @@ If a sample drawn from <span class="math inline">\(\mathcal{U}\left(0,1\right)\)
 \min\left(1,\frac{\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-\left(s&#39;\right)^{2}/2}\cdot 1}{\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-s^{2}/2}\cdot 1}\right)=
 \min\left(1,\mathrm{e}^{\left(s^{2}-\left(s&#39;\right)^{2}\right)/2}\right).
 \]</span></p>
-Observe that Metropolis-Hastings is a general sampling algorithm, though for sampling from a <span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span>, the algorithm is slow and would not be used in practice.
+Observe that Metropolis-Hastings is a general sampling algorithm, though for sampling from a <span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span>, the algorithm is slow and would not be used in practice. We will now sample from <span class="math inline">\(X\)</span> using the algorithm.
 </div>
 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nu &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>pi) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)
+
+propose &lt;-<span class="st"> </span><span class="cf">function</span>(x) x <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>
+
+q &lt;-<span class="st"> </span><span class="cf">function</span>(x, x_prime) <span class="dv">1</span>
+
+mh_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(x, x_prime, nu, q) {
+  <span class="kw">min</span>(<span class="dv">1</span>, <span class="kw">nu</span>(x_prime) <span class="op">*</span><span class="st"> </span><span class="kw">q</span>(x_prime, x) <span class="op">/</span><span class="st"> </span>(<span class="kw">nu</span>(x) <span class="op">*</span><span class="st"> </span><span class="kw">q</span>(x, x_prime)))
+}
+
+mh_sampler &lt;-<span class="st"> </span><span class="cf">function</span>(x0, proposal, nu, q, iter) {
+  x &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="dt">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> iter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+  x[<span class="dv">1</span>] &lt;-<span class="st"> </span>x0
+  
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(iter)) {
+    x_prime &lt;-<span class="st"> </span><span class="kw">proposal</span>(x[i])
+    ratio &lt;-<span class="st"> </span><span class="kw">mh_ratio</span>(x[i], x_prime, nu, q)
+    <span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span>ratio) {
+      x[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span>x_prime
+    } <span class="cf">else</span> {
+      x[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span>x[i]
+    }
+  }
+  x
+}</code></pre></div>
+<p>We will run our sampler for <span class="math inline">\(T=10^{4}\)</span> iterations, starting with <span class="math inline">\(X\left(0\right)=10\)</span> (we deliberately choose a starting value far from the stationary distribution to show how the algorithm moves to areas of higher probability).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">mh_sampler</span>(<span class="dt">x0 =</span> <span class="dv">10</span>, <span class="dt">proposal =</span> propose, <span class="dt">nu =</span> nu, <span class="dt">q =</span> q, <span class="dt">iter =</span> <span class="fl">1e4</span>)</code></pre></div>
+<p>We now examine the first 500 samples.</p>
+<p><img src="course-notes_files/figure-html/mh-gaussian-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We see that the distribution is far from the standard Gaussian. This is unsurprising given our choice of initial state. As the chain runs, we should begin to see convergence to the stationary distribution.</p>
+<p><img src="course-notes_files/figure-html/mh-gaussian-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We see that samples 501 to 1000 are much closer to the standard Gaussian. We now examine the remaining samples.</p>
+<p><img src="course-notes_files/figure-html/mh-gaussian-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The chain appears to have converged to the stationary distribution. For most applications, we will not know the density of the target distribution (if we did, we would not be using Metropolis-Hastings). Instead, we would perform <em>convergence diagnostics</em> and discard samples to account for starting “far” from the stationary distribution (burn-in) and autocorrelation (thinning).</p>
 <p>We now give a proof sketch for the Metropolis-Hastings algorithm. Recall that we cannot write down or store the transition probability matrix of the chain <span class="math inline">\(X\left(t\right)\)</span>, but if we can find a distribution <span class="math inline">\(\boldsymbol{\nu}\)</span> that is in detailed balance for <span class="math inline">\(X\left(t\right)\)</span>, then <span class="math inline">\(\boldsymbol{\nu}\)</span> will be a stationary distribution. Detailed balance is defined in terms of pairs of states, so the idea behind the algorithm is to make sure that every pair of states is in detailed balance. If we can do this, then <span class="math inline">\(\boldsymbol{\nu}\)</span> will be the stationary distribution, and <span class="math inline">\(X\left(t\right)\)</span> will converge to <span class="math inline">\(\boldsymbol{\nu}\)</span>. For the proof sketch, we will consider two states, <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, where the probability of being in state <span class="math inline">\(i\)</span> is <span class="math inline">\(\nu\left(i\right)\)</span>, and where the probability of proposing state <span class="math inline">\(i\)</span> given that <span class="math inline">\(X\left(t\right)\)</span> is in state <span class="math inline">\(j\)</span> is <span class="math inline">\(q\left(i,j\right)\)</span>.</p>
-<p><img src="course-notes_files/figure-html/mh-proof-1.png" width="672" /></p>
+<p><img src="course-notes_files/figure-html/mh-proof-1.png" width="384" style="display: block; margin: auto;" /></p>
 
 <div class="proof">
 <p> <span class="proof"><em>Proof. </em></span> We will choose transition probabilities to make <span class="math inline">\(\boldsymbol{\nu}\)</span> the stationary distribution. For the moment, we will always accept the proposal, i.e., we will leave aside the third step of the algorithm.</p>
@@ -483,7 +517,7 @@ which we see is equal to <span class="math inline">\(\nu\left(j\right)q\left(j,i
 <p>We now present Gibbs sampling, a special case of the Metropolis-Hastings algorithm that does not require us to specify a proposal. Suppose that we wish to sample from <span class="math inline">\(\mathbf{X}=\left(X_{1},\ldots,X_{n}\right)\)</span>. The idea behind Gibbs sampling is to set a Markov chain <span class="math inline">\(\mathbf{W}\left(0\right)=\left(X_{1}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>, where the <span class="math inline">\(X_{i}^{\left(0\right)}\)</span> are often set at random (from possible values of each <span class="math inline">\(X_{i}\)</span>). Then, the marginal density of the first coordinate is <span class="math inline">\(f\left(X_{1}|X_{2}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>. Let <span class="math inline">\(\hat{X}_{1}^{\left(1\right)}\)</span> be a sample from the marginal density of <span class="math inline">\(X_{1}\)</span>. Setting <span class="math inline">\(X_{1}^{\left(1\right)}=\hat{X}_{1}^{\left(1\right)}\)</span>, the Markov chain at <span class="math inline">\(t=1\)</span> is <span class="math inline">\(\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(0\right)}\ldots,X_{n}^{\left(0\right)}\right)\)</span>. For the second coordinate, let <span class="math inline">\(f\left(X_{2}|X_{1}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span> be the marginal density of <span class="math inline">\(X_{2}\)</span>. We then draw a sample <span class="math inline">\(\hat{X}_{2}^{\left(1\right)}\)</span> from the marginal density, and our Markov chain becomes <span class="math inline">\(\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>. We proceed in this manner until we have drawn samples from the marginal density of each <span class="math inline">\(X_{i}\)</span>, which is given by <span class="math inline">\(f\left(X_{i}|\mathbf{X}_{-i}\right)\)</span>, where <span class="math inline">\(\mathbf{X}_{-i}\)</span> is the vector whose entries are the samples drawn from the marginal densities of <span class="math inline">\(\left\{X_{j}\right\}_{j=1}^{i-1}\)</span> and <span class="math inline">\(\left\{X_{j}^{\left(0\right)}\right\}_{j=i+1}^{n}\)</span>.</p>
 
 <div class="theorem">
-<span id="thm:unnamed-chunk-73" class="theorem"><strong>Theorem 6.4  </strong></span>The limiting distribution of <span class="math inline">\(\mathbf{W}\left(t\right)\)</span> is <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math display">\[
+<span id="thm:unnamed-chunk-75" class="theorem"><strong>Theorem 6.4  </strong></span>The limiting distribution of <span class="math inline">\(\mathbf{W}\left(t\right)\)</span> is <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math display">\[
   \lim_{t\rightarrow\infty}\mathbf{W}\left(t\right)\sim\mathbf{X}.
 \]</span>
 </div>
@@ -533,6 +567,7 @@ P\left(z_{i}=j|\mathbf{z}_{-i},\mathbf{w}\right)\propto\frac{n_{-i,j}^{\left(w_{
 <li>and <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> parameterize the prior distributions over topics and words, respectively.</li>
 </ul>
 <p>We can then use Gibbs sampling to sample each <span class="math inline">\(z_{i}\)</span> in turn, yielding samples of the posterior distribution of assignments of word to topics <span class="math inline">\(\mathbf{z}\)</span>.</p>
+<p>Gibbs sampling appears frequently in Bayesian statistics because interest often lies in the marginal distributions of various parameters.</p>
 
 </div>
 </div>

@@ -8,13 +8,14 @@ We now introduce a general sampling technique that is often used to sample from 
 
 The [Ising model](https://en.wikipedia.org/wiki/Ising_model) is used in statistical mechanics to model ferromagnetism. The vertices in the graph below represent magnetic dipole moments of atomic spins, and each vertex takes one of the values $\left\{-1,1\right\}$, with black and white representing $-1$ and $1$, respectively.
 
-```{r ising, echo = FALSE, message = FALSE}
+```{r ising, echo = FALSE, message = FALSE, fig.width = 4, fig.align = 'center'}
 library(igraph)
 
 gr <- igraph::make_lattice(c(5, 5))
 coords <- igraph::layout_on_grid(gr)
 vertex_cols <- rep("white", 25)
 vertex_cols[c(1, 5, 7, 9, 11)] <- "black"
+par(mar = rep(0.1, 4))
 plot(
   gr, 
   layout = coords,
@@ -42,7 +43,7 @@ P\left(\mathbf{z}|\mathbf{w}\right)=
 \frac{P\left(\mathbf{w},\mathbf{z}\right)}{\sum_{\mathbf{z}}P\left(\mathbf{w},\mathbf{z}\right)},
 $$
 
-where $\mathbf{z}$ represents the topics and $\mathbf{w}$ represents the words in the corpus. @Griffiths2004 notes that "this distribution cannot be computed directly, because the sum in the denominator does not factorize and involves $T^{n}$ terms, where $n$ is the total number of word instances in the corpus." @Blei2003 estimate the distribution using a version of the expectation-maximization algorithm. We will see that it is also possible to estimate the distribution using Markov Chain Monte Carlo methods.
+where $\mathbf{z}$ represents the topics and $\mathbf{w}$ represents the words in the corpus. @Griffiths2004 note that "this distribution cannot be computed directly, because the sum in the denominator does not factorize and involves $T^{n}$ terms, where $n$ is the total number of word instances in the corpus." @Blei2003 estimate the distribution using a version of the expectation-maximization algorithm. We will see that it is also possible to estimate the distribution using Markov Chain Monte Carlo methods.
 
 ### MCMC is a sampling technique
 
@@ -50,7 +51,7 @@ Monte Carlo methods are a class of computational methods for estimating some qua
 
 ## Markov chain
 
-We begin by setting some notation. We define a matrix $\mathbf{A}$ raised to the $k\text{th}$ power as
+We begin by setting some notation. We define a (square) matrix $\mathbf{A}$ raised to the $k\text{th}$ power as
 
 $$
 \mathbf{A}^{k}=\prod_{i=1}^{k}\mathbf{A}.
@@ -71,10 +72,10 @@ i.e., the probability that the chain is in state $j$ given that it started in st
 We are now to consider the limiting behavior of Markov chains.
 
 ```{definition}
-A distribution $\boldsymbol{\pi}$ is said to be a _stationary distribution_ for a Markov chain $X\left(t\right)$ with state space $S$ and transition probability matrix $\mathbf{P}$ if $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}$.
+A distribution $\boldsymbol{\pi}$ is said to be a _stationary distribution_ for a Markov chain $X\left(t\right)$ with state space $S$ and transition probability matrix $\mathbf{P}$ if $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}$.
 ```
 
-Observe that $\boldsymbol{\pi}$ is a left eigenvector with eigenvalue 1. We now consider how to compute $\boldsymbol{\pi}$. One option is to solve $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}$ as a linear algebra problem, i.e., solve
+Observe that $\boldsymbol{\pi}^{\mathsf{T}}$ is a left eigenvector with eigenvalue 1. We now consider how to compute $\boldsymbol{\pi}$. One option is to solve $\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}$ as a linear algebra problem, i.e., solve
 
 $$
 \sum_{i=1}^{n}\pi\left(i\right)=1\quad\text{subject to}\quad\pi\left(i\right)\geq 0.
@@ -114,7 +115,7 @@ $$
 \mathbf{Q}\mathbf{D}^{2}\mathbf{Q}^{\mathsf{T}}.
 $$
 
-It follows that $\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)=\mathbf{Q}\mathbf{D}^{t}\mathbf{Q}^{\mathsf{T}}$. Now, $\mathbf{D}$ is a diagonal matrix whose (diagonal) entries are the eigenvalues of $\mathbf{P}$, so that
+It follows that $\left(\mathbf{Q}\mathbf{D}\mathbf{Q}^{\mathsf{T}}\right)^{t}=\mathbf{Q}\mathbf{D}^{t}\mathbf{Q}^{\mathsf{T}}$. Now, $\mathbf{D}$ is a diagonal matrix whose (diagonal) entries are the eigenvalues of $\mathbf{P}$, so that
 
 $$
 \mathbf{D}^{t}=
@@ -267,15 +268,85 @@ $$
 \min\left(1,\mathrm{e}^{\left(s^{2}-\left(s'\right)^{2}\right)/2}\right).
 $$
 
-Observe that Metropolis-Hastings is a general sampling algorithm, though for sampling from a $\mathcal{N}\left(0,1\right)$, the algorithm is slow and would not be used in practice.
+Observe that Metropolis-Hastings is a general sampling algorithm, though for sampling from a $\mathcal{N}\left(0,1\right)$, the algorithm is slow and would not be used in practice. We will now sample from $X$ using the algorithm.
 ```
+
+```{r}
+nu <- function(x) 1 / sqrt(2 * pi) * exp(-x ^ 2 / 2)
+
+propose <- function(x) x + runif(1) - 0.5
+
+q <- function(x, x_prime) 1
+
+mh_ratio <- function(x, x_prime, nu, q) {
+  min(1, nu(x_prime) * q(x_prime, x) / (nu(x) * q(x, x_prime)))
+}
+
+mh_sampler <- function(x0, proposal, nu, q, iter) {
+  x <- vector(mode = "numeric", length = iter + 1)
+  x[1] <- x0
+  
+  for (i in seq(iter)) {
+    x_prime <- proposal(x[i])
+    ratio <- mh_ratio(x[i], x_prime, nu, q)
+    if (runif(1) < ratio) {
+      x[i + 1] <- x_prime
+    } else {
+      x[i + 1] <- x[i]
+    }
+  }
+  x
+}
+```
+
+We will run our sampler for $T=10^{4}$ iterations, starting with $X\left(0\right)=10$ (we deliberately choose a starting value far from the stationary distribution to show how the algorithm moves to areas of higher probability). 
+
+```{r}
+x <- mh_sampler(x0 = 10, proposal = propose, nu = nu, q = q, iter = 1e4)
+```
+
+We now examine the first 500 samples.
+
+```{r mh-gaussian-1, echo = FALSE, fig.align = 'center'}
+my_hist <- function(x, ...) {
+  hist(
+    x, 
+    freq = FALSE, 
+    xlab = NULL, 
+    xlim = c(-10, 10), 
+    ylim = c(0, 0.6),
+    ...
+  )
+}
+par(mar = c(4, 4, 2, 0.1))
+my_hist(x[1:500], main = "Samples 1:500")
+curve(dnorm, col = "red", add = TRUE)
+```
+
+We see that the distribution is far from the standard Gaussian. This is unsurprising given our choice of initial state. As the chain runs, we should begin to see convergence to the stationary distribution.
+
+```{r mh-gaussian-2, echo = FALSE, fig.align = 'center'}
+par(mar = c(4, 4, 2, 0.1))
+my_hist(x[501:1000], main = "Samples 501:1000")
+curve(dnorm, col = "red", add = TRUE)
+```
+
+We see that samples 501 to 1000 are much closer to the standard Gaussian. We now examine the remaining samples.
+
+```{r mh-gaussian-3, echo = FALSE, fig.align = 'center'}
+my_hist(x[1001:1e4], main = "Samples 1001:10000")
+curve(dnorm, col = "red", add = TRUE)
+```
+
+The chain appears to have converged to the stationary distribution. For most applications, we will not know the density of the target distribution (if we did, we would not be using Metropolis-Hastings). Instead, we would perform _convergence diagnostics_ and discard samples to account for starting "far" from the stationary distribution (burn-in) and autocorrelation (thinning).
 
 We now give a proof sketch for the Metropolis-Hastings algorithm. Recall that we cannot write down or store the transition probability matrix of the chain $X\left(t\right)$, but if we can find a distribution $\boldsymbol{\nu}$ that is in detailed balance for $X\left(t\right)$, then $\boldsymbol{\nu}$ will be a stationary distribution. Detailed balance is defined in terms of pairs of states, so the idea behind the algorithm is to make sure that every pair of states is in detailed balance. If we can do this, then $\boldsymbol{\nu}$ will be the stationary distribution, and $X\left(t\right)$ will converge to $\boldsymbol{\nu}$. For the proof sketch, we will consider two states, $i$ and $j$, where the probability of being in state $i$ is $\nu\left(i\right)$, and where the probability of proposing state $i$ given that $X\left(t\right)$ is in state $j$ is $q\left(i,j\right)$.
 
-```{r mh-proof, echo = FALSE}
+```{r mh-proof, echo = FALSE, fig.width = 4, fig.align = 'center'}
 gr_mh <- igraph::make_graph(c("i", "j", "j", "i"))
 edge_labs <- c(expression(italic(q(i,j))), expression(italic(q(j,i))))
 set.seed(123)
+par(mar = rep(0.1, 4))
 plot(
   gr_mh,
   edge.curved = TRUE,
@@ -441,3 +512,5 @@ where
 - and $\alpha$ and $\beta$ parameterize the prior distributions over topics and words, respectively.
 
 We can then use Gibbs sampling to sample each $z_{i}$ in turn, yielding samples of the posterior distribution of assignments of word to topics $\mathbf{z}$.
+
+Gibbs sampling appears frequently in Bayesian statistics because interest often lies in the marginal distributions of various parameters.

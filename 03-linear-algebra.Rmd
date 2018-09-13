@@ -141,6 +141,6 @@ PROOF GOES HERE
 A *unitary matrix* $\mathbf{U}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ has the property $\mathbf{U}^{-1}=\mathbf{U}^{\mathsf{H}}$, where $\mathbf{A}^{\mathsf{H}}$ denotes the Hermitian conjugate (conjugate transpose) of $\mathbf{A}$.
 ```
 
-```{theorem, name = "Unitary Decomposition"}
+```{theorem, label = "unitary-decomposition", name = "Unitary Decomposition"}
 A symmetric matrix $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ admits the unitary diagonalization $\mathbf{A}=\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{-1}$, where $\mathbf{Q}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$ is unitary.
 ```

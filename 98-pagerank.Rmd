@@ -4,7 +4,7 @@
 
 Imagine a web surfer who moves from page to page by clicking on links randomly with uniform probability. Suppose that the surfer is confined to a set of five pages defined by the following graph, where a link from page $i$ to page $j$ is represented by an arrow pointing from $i$ to $j$.
 
-```{r pagerank-ex-graph, echo = FALSE, message = FALSE}
+```{r pagerank-ex-graph, echo = FALSE, message = FALSE, fig.align = 'center'}
 library(fs)
 library(igraph)
 library(Matrix)
@@ -24,8 +24,9 @@ A <- matrix(
 )
 
 # for consistent plotting
-set.seed(123)
 gr <- igraph::graph_from_adjacency_matrix(A, mode = "directed")
+par(mar = rep(0.1, 4))
+set.seed(123)
 plot(gr)
 ```
 
