@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Master’s Companion" />
+  
+  <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  
+
+<meta name="author" content="Sean Wilson">
+
+
+<meta name="date" content="2018-10-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="common-families-of-distributions.html">
+<link rel="next" href="markov-chain-monte-carlo.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+$$
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\coloneqq}{\mathrel{\mathop:}\mathrel{\mkern-1.2mu}=}
+$$
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Master's Companion</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="part"><span><b>I Background material</b></span></li>
+<li class="chapter" data-level="2" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>2</b> Analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="analysis.html"><a href="analysis.html#upper-bounds-and-suprema"><i class="fa fa-check"></i><b>2.1</b> Upper bounds and suprema</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="probability-theory.html"><a href="probability-theory.html"><i class="fa fa-check"></i><b>3</b> Probability theory</a><ul>
+<li class="chapter" data-level="3.1" data-path="probability-theory.html"><a href="probability-theory.html#background-material"><i class="fa fa-check"></i><b>3.1</b> Background material</a></li>
+<li class="chapter" data-level="3.2" data-path="probability-theory.html"><a href="probability-theory.html#transformations-and-expectations"><i class="fa fa-check"></i><b>3.2</b> Transformations and expectations</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="probability-theory.html"><a href="probability-theory.html#distributions-of-functions-of-a-random-variable"><i class="fa fa-check"></i><b>3.2.1</b> Distributions of functions of a random variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="probability-theory.html"><a href="probability-theory.html#expected-values"><i class="fa fa-check"></i><b>3.2.2</b> Expected values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="probability-theory.html"><a href="probability-theory.html#moments-and-moment-generating-functions"><i class="fa fa-check"></i><b>3.2.3</b> Moments and moment generating functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="probability-theory.html"><a href="probability-theory.html#multiple-random-variables"><i class="fa fa-check"></i><b>3.3</b> Multiple random variables</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="probability-theory.html"><a href="probability-theory.html#conditional-distributions-and-independence"><i class="fa fa-check"></i><b>3.3.1</b> Conditional distributions and independence</a></li>
+<li class="chapter" data-level="3.3.2" data-path="probability-theory.html"><a href="probability-theory.html#covariance-and-correlation"><i class="fa fa-check"></i><b>3.3.2</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="probability-theory.html"><a href="probability-theory.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3.3</b> Multivariate distributions</a></li>
+<li class="chapter" data-level="3.3.4" data-path="probability-theory.html"><a href="probability-theory.html#inequalities"><i class="fa fa-check"></i><b>3.3.4</b> Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="probability-theory.html"><a href="probability-theory.html#properties-of-a-random-sample"><i class="fa fa-check"></i><b>3.4</b> Properties of a random sample</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="probability-theory.html"><a href="probability-theory.html#sums-of-random-variables-from-a-random-sample"><i class="fa fa-check"></i><b>3.4.1</b> Sums of random variables from a random sample</a></li>
+<li class="chapter" data-level="3.4.2" data-path="probability-theory.html"><a href="probability-theory.html#sampling-from-the-normal-distribution"><i class="fa fa-check"></i><b>3.4.2</b> Sampling from the normal distribution</a></li>
+<li class="chapter" data-level="3.4.3" data-path="probability-theory.html"><a href="probability-theory.html#order-statistics"><i class="fa fa-check"></i><b>3.4.3</b> Order statistics</a></li>
+<li class="chapter" data-level="3.4.4" data-path="probability-theory.html"><a href="probability-theory.html#convergence-concepts"><i class="fa fa-check"></i><b>3.4.4</b> Convergence concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>4</b> Linear algebra</a></li>
+<li class="part"><span><b>II Mathematical statistics</b></span></li>
+<li class="chapter" data-level="5" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html"><i class="fa fa-check"></i><b>5</b> Common families of distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#defn-exp-family"><i class="fa fa-check"></i><b>5.1</b> Exponential families</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#natural-parameters"><i class="fa fa-check"></i><b>5.1.1</b> Natural parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-and-scale-families"><i class="fa fa-check"></i><b>5.2</b> Location and scale families</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-families"><i class="fa fa-check"></i><b>5.2.1</b> Location families</a></li>
+<li class="chapter" data-level="5.2.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#scale-families"><i class="fa fa-check"></i><b>5.2.2</b> Scale families</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="em-algorithm.html"><a href="em-algorithm.html"><i class="fa fa-check"></i><b>6</b> EM algorithm</a><ul>
+<li class="chapter" data-level="6.1" data-path="em-algorithm.html"><a href="em-algorithm.html#motivation"><i class="fa fa-check"></i><b>6.1</b> Motivation</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="em-algorithm.html"><a href="em-algorithm.html#k-means"><i class="fa fa-check"></i><b>6.1.1</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="em-algorithm.html"><a href="em-algorithm.html#em-algorithm-1"><i class="fa fa-check"></i><b>6.2</b> EM algorithm</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="em-algorithm.html"><a href="em-algorithm.html#algorithmic-perspective"><i class="fa fa-check"></i><b>6.2.1</b> Algorithmic perspective</a></li>
+<li class="chapter" data-level="6.2.2" data-path="em-algorithm.html"><a href="em-algorithm.html#statistical-perspective"><i class="fa fa-check"></i><b>6.2.2</b> Statistical perspective</a></li>
+<li class="chapter" data-level="6.2.3" data-path="em-algorithm.html"><a href="em-algorithm.html#proof-sketch"><i class="fa fa-check"></i><b>6.2.3</b> Proof sketch</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="em-algorithm.html"><a href="em-algorithm.html#example-gaussian-mixture"><i class="fa fa-check"></i><b>6.3</b> Example: Gaussian mixture</a></li>
+<li class="chapter" data-level="6.4" data-path="em-algorithm.html"><a href="em-algorithm.html#factor-analysis"><i class="fa fa-check"></i><b>6.4</b> Factor analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>7</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#motivation-1"><i class="fa fa-check"></i><b>7.1</b> Motivation</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#ising-model"><i class="fa fa-check"></i><b>7.1.1</b> Ising model</a></li>
+<li class="chapter" data-level="7.1.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#intractable-posterior-distribution"><i class="fa fa-check"></i><b>7.1.2</b> Intractable posterior distribution</a></li>
+<li class="chapter" data-level="7.1.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mcmc-is-a-sampling-technique"><i class="fa fa-check"></i><b>7.1.3</b> MCMC is a sampling technique</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>7.2</b> Markov chain</a></li>
+<li class="chapter" data-level="7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#detailed-balance"><i class="fa fa-check"></i><b>7.3</b> Detailed balance</a></li>
+<li class="chapter" data-level="7.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#metropolis-hastings"><i class="fa fa-check"></i><b>7.4</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="7.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#gibbs-sampling"><i class="fa fa-check"></i><b>7.5</b> Gibbs Sampling</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#latent-dirichlet-allocation"><i class="fa fa-check"></i><b>7.5.1</b> Latent Dirichlet Allocation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="pagerank.html"><a href="pagerank.html"><i class="fa fa-check"></i><b>8</b> PageRank</a><ul>
+<li class="chapter" data-level="8.1" data-path="pagerank.html"><a href="pagerank.html#motivation-2"><i class="fa fa-check"></i><b>8.1</b> Motivation</a></li>
+<li class="chapter" data-level="8.2" data-path="pagerank.html"><a href="pagerank.html#computing-eigenpairs"><i class="fa fa-check"></i><b>8.2</b> Computing eigenpairs</a></li>
+<li class="chapter" data-level="8.3" data-path="pagerank.html"><a href="pagerank.html#algorithm"><i class="fa fa-check"></i><b>8.3</b> Algorithm</a></li>
+<li class="chapter" data-level="8.4" data-path="pagerank.html"><a href="pagerank.html#considerations"><i class="fa fa-check"></i><b>8.4</b> Considerations</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="pagerank.html"><a href="pagerank.html#connection-to-markov-chains"><i class="fa fa-check"></i><b>8.4.1</b> Connection to Markov chains</a></li>
+<li class="chapter" data-level="8.4.2" data-path="pagerank.html"><a href="pagerank.html#calculating-the-dominant-eigenvalue"><i class="fa fa-check"></i><b>8.4.2</b> Calculating the dominant eigenvalue</a></li>
+<li class="chapter" data-level="8.4.3" data-path="pagerank.html"><a href="pagerank.html#computational-complexity"><i class="fa fa-check"></i><b>8.4.3</b> Computational complexity</a></li>
+<li class="chapter" data-level="8.4.4" data-path="pagerank.html"><a href="pagerank.html#convergence"><i class="fa fa-check"></i><b>8.4.4</b> Convergence</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Master’s Companion</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="em-algorithm" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> EM algorithm</h1>
+<div id="motivation" class="section level2">
+<h2><span class="header-section-number">6.1</span> Motivation</h2>
+<p>Suppose that we measure the height and weight of a sample of adult men, adult women, and children. Let <span class="math inline">\(\mathbf{w}^{\left(i\right)}\in\mathbb{R}^{2}\)</span> be the height and weight of the <span class="math inline">\(i\text{th}\)</span> person in the sample. Suppose that our data become corrupted, and we lose the age and gender for each <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span>, i.e., we do not know whether the <span class="math inline">\(i\text{th}\)</span> subject was an adult man, an adult woman, or a child. Then, a natural goal would be to attempt to classify the data points to regain this information.</p>
+<p>Let <span class="math inline">\(\bar{\mathbf{w}}_{1}\)</span>, <span class="math inline">\(\bar{\mathbf{w}}_{2}\)</span>, and <span class="math inline">\(\bar{\mathbf{w}}_{3}\)</span> be the means for the men, women, and children, respectively (and recall that each <span class="math inline">\(\bar{\mathbf{w}}_{i}\)</span> is a point in <span class="math inline">\(\mathbb{R}^{2}\)</span>). Because our data were corrupted, we do not know the <span class="math inline">\(\bar{\mathbf{w}}_{i}\)</span> <em>a priori</em>. Our task then is to choose each <span class="math inline">\(\bar{\mathbf{w}}_{i}\)</span> and to assign each sample <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span> to a class (man, woman, child), so that</p>
+<p><span class="math display">\[
+a\left(i\right)=\begin{cases}
+  1, &amp; \text{if the }i\text{th sample is a man}\\
+  2, &amp; \text{if the }i\text{th sample is a woman}\\
+  3, &amp; \text{if the }i\text{th sample is a child}
+\end{cases}.
+\]</span></p>
+<p>Suppose further that we wish to choose the <span class="math inline">\(\bar{\mathbf{w}}_{i}\)</span> and make the assignments <span class="math inline">\(a\left(i\right)\)</span> in some principled fashion. Let the error associated with the assignments be</p>
+<p><span class="math display">\[
+\mathrm{Err}\left(\bar{\mathbf{w}}_{1},\bar{\mathbf{w}}_{2},\bar{\mathbf{w}}_{3},\mathbf{a}\right)=
+  \sum_{i=1}^{N}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{a\left(i\right)}\right\Vert^{2},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{a}=\left(a\left(1\right),\ldots,a\left(N\right)\right)\)</span>. We can interpret the error as the sum of the squared assignment errors, where the <span class="math inline">\(i\text{th}\)</span> assignment error is the distance between <span class="math inline">\(\mathbf{w}^{\left(i\right)}\)</span> and the mean of the group to which it is assigned. Our goal then is to minimize the assignment error.</p>
+<div id="k-means" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> <span class="math inline">\(k\)</span>-means</h3>
+<p>Observe that <span class="math inline">\(\bar{\mathbf{w}}_{i}\in\mathbb{R}^{2}\)</span>, and that <span class="math inline">\(\mathbf{a}\in\left\{1,2,3\right\}^{N}\)</span>, i.e., <span class="math inline">\(\mathbf{a}\)</span> is a vector of length <span class="math inline">\(N\)</span> whose possible values are 1, 2, and 3. It is not immediately clear that techniques previously introduced for optimization in <span class="math inline">\(\mathbb{R}^{d}\)</span> will be helpful given the discrete nature of <span class="math inline">\(\mathbf{a}\)</span>. We now introduce a new classification algorithm, <span class="math inline">\(k\)</span>-means.</p>
+<ol style="list-style-type: decimal">
+<li>Choose initial assignments <span class="math inline">\(\mathbf{a}^{\left(0\right)}\)</span> at random.</li>
+<li>Given <span class="math inline">\(\mathbf{a}^{\left(0\right)}\)</span>, calculate new means <span class="math inline">\(\bar{\mathbf{w}}_{i}^{\left(1\right)}\)</span>.</li>
+<li>Given <span class="math inline">\(\bar{\mathbf{w}}_{i}^{\left(1\right)}\)</span>, calculate new assignments <span class="math inline">\(\mathbf{a}^{\left(1\right)}\)</span>.</li>
+<li>Repeat steps 2-3 until convergence (the assignments do not change from one iteration to the next).</li>
+</ol>
+<p>We now consider whether this algorithm will, in fact, converge. Recall that a <em>descent</em> algorithm applied to some objective function <span class="math inline">\(f\left(x\right)\)</span> satisfies <span class="math inline">\(f\left(x^{\left(1\right)}\right)\geq f\left(x^{\left(2\right)}\right)\geq f\left(x^{\left(3\right)}\right)\geq\cdots\)</span>. Consider step 2 of the algorithm, where we calculate the group means given the assignments. Let <span class="math inline">\(\mathcal{M}\)</span> be the set of all men, and suppose that <span class="math inline">\(\left|\mathcal{M}\right|=M\)</span>, i.e., <span class="math inline">\(M\)</span> of the samples are men. Then, we can minimize the error for the men by solving</p>
+<p><span class="math display">\[
+\min_{\bar{\mathbf{w}}_{1}}\sum_{i\in\mathcal{M}}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}.
+\]</span></p>
+<p>To ease notation, and without loss of generality, suppose that the samples are ordered such that the first <span class="math inline">\(M\)</span> correspond to the men, so that we can simply evaluate the above sum from <span class="math inline">\(i=1\)</span> to <span class="math inline">\(M\)</span>. We will now minimize this analytically. Letting</p>
+<p><span class="math display">\[
+Q\left(\bar{\mathbf{w}}_{1}\right)=\sum_{i=1}^{M}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2},
+\]</span></p>
+<p>note that we can minimize the error by solving</p>
+<p><span class="math display">\[
+\mathbf{0} = \nabla Q\left(\bar{\mathbf{w}}_{1}\right) 
+  = \nabla\left(\sum_{i=1}^{M}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}\right) 
+  = \sum_{i=1}^{M}\nabla\left(\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}\right),
+\]</span></p>
+<p>where we have used the linearity of the gradient. Next, observe that</p>
+<p><span class="math display">\[
+\begin{align*}
+  \left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2} &amp; = \left(\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right)^{\mathsf{T}}\left(\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right) \\
+  &amp; = \left(\left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}-\bar{\mathbf{w}}_{1}^{\mathsf{T}}\right)\left(\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right) \\
+  &amp; = \left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(i\right)}-\left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\bar{\mathbf{w}}_{1}-\bar{\mathbf{w}}_{1}^{\mathsf{T}}\mathbf{w}^{\left(i\right)}+\bar{\mathbf{w}}_{1}^{\mathsf{T}}\bar{\mathbf{w}}_{1}.
+\end{align*}
+\]</span></p>
+<p>Now, <span class="math inline">\(\bar{\mathbf{w}}_{1}^{\mathsf{T}}\mathbf{w}^{\left(i\right)}\)</span> is a scalar, hence is equal to its transpose, so it follows that</p>
+<p><span class="math display">\[
+\begin{align*}
+  \left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2} &amp; = \left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(i\right)}-2\left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\bar{\mathbf{w}}_{1}+\bar{\mathbf{w}}_{1}^{\mathsf{T}}\bar{\mathbf{w}}_{1} \\
+  &amp; = \left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(i\right)}-2\left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\bar{\mathbf{w}}_{1}+\bar{\mathbf{w}}_{1}^{\mathsf{T}}\mathbf{I}_{2}\bar{\mathbf{w}}_{1},
+\end{align*}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{I}_{k}\)</span> is the <span class="math inline">\(k\)</span>-dimensional identity matrix. Let <span class="math inline">\(\mathbf{A}=\mathbf{I}_{2}\)</span>, let <span class="math inline">\(\mathbf{b}=-2\mathbf{w}^{\left(i\right)}\)</span>, and let <span class="math inline">\(c=\left(\mathbf{w}^{\left(i\right)}\right)^{\mathsf{T}}\mathbf{w}^{\left(i\right)}\)</span>, so that</p>
+<p><span class="math display">\[
+\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}=\bar{\mathbf{w}}_{1}^{\mathsf{T}}\mathbf{A}\bar{\mathbf{w}}_{1}+\mathbf{b}^{\mathsf{T}}\bar{\mathbf{w}}_{1}+c
+\]</span></p>
+<p>which has the form of a general quadratic.</p>
+<p>PROVE THIS IN AN EARLIER SECTION</p>
+<p>It follows that the gradient of <span class="math inline">\(\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}\)</span> is given by</p>
+<p><span class="math display">\[
+\nabla\left(\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}\right)=
+  2\mathbf{A}\bar{\mathbf{w}}_{1}+\mathbf{b}=2\mathbf{I}_{2}\bar{\mathbf{w}}_{1}-2\mathbf{w}^{\left(i\right)}=2\left(\bar{\mathbf{w}}_{1}-\mathbf{w}^{\left(i\right)}\right).
+\]</span></p>
+<p>Thus, the minimization is solved by</p>
+<p><span class="math display">\[
+\begin{align*}
+  \mathbf{0} &amp; = \sum_{i=1}^{M}\nabla\left(\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{1}\right\Vert^{2}\right) \\
+  &amp; = \sum_{i=1}^{M}2\left(\bar{\mathbf{w}}_{1}-\mathbf{w}^{\left(i\right)}\right) \\
+  &amp; = 2\left(\sum_{i=1}^{M}\bar{\mathbf{w}}_{1}-\sum_{i=1}^{M}\mathbf{w}^{\left(i\right)}\right) \\
+  &amp; = 2\left(M\bar{\mathbf{w}}_{1}-\sum_{i=1}^{M}\mathbf{w}^{\left(i\right)}\right) \\
+  \implies M\bar{\mathbf{w}}_{1} &amp; = \sum_{i=1}^{M}\mathbf{w}^{\left(i\right)} \\
+  \implies\hat{\bar{\mathbf{w}}}_{1} &amp; = \frac{1}{M}\sum_{i=1}^{M}\mathbf{w}^{\left(i\right)},
+\end{align*}
+\]</span></p>
+<p>i.e., the point that minimizes the error for the men is the mean (center of mass) of the observations (it is easy to show that this optimum is a minimum). By symmetry, the errors for the women and the children are minimized by <span class="math inline">\(\hat{\bar{\mathbf{w}}}_{2}\)</span> and <span class="math inline">\(\hat{\bar{\mathbf{w}}}_{3}\)</span>, respectively. We now consider step 3 of the algorithm, where we choose assignments based on the group means just calculated. Observe that the overall error can be written as</p>
+<p><span class="math display">\[
+\mathrm{Err}\left(\bar{\mathbf{w}}_{1},\bar{\mathbf{w}}_{2},\bar{\mathbf{w}}_{3},\mathbf{a}\right)=
+  \sum_{i\in\mathcal{M}}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{a\left(i\right)}\right\Vert^{2}+\sum_{i\in\mathcal{W}}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{a\left(i\right)}\right\Vert^{2}+\sum_{i\in\mathcal{C}}\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{a\left(i\right)}\right\Vert^{2},
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{W}\)</span> and <span class="math inline">\(\mathcal{C}\)</span> are the sets of samples of women and children, respectively. We have shown that we can minimize the error for each group by setting <span class="math inline">\(\bar{\mathbf{w}}_{a\left(i\right)}\)</span> to the respective group mean. It follows that we should assign the <span class="math inline">\(i\text{th}\)</span> sample to the closest group whose mean is closest, i.e., the group for which <span class="math inline">\(\left\Vert\mathbf{w}^{\left(i\right)}-\bar{\mathbf{w}}_{a\left(i\right)}\right\Vert^{2}\)</span> is smallest.</p>
+<p>We can therefore view the <span class="math inline">\(k\)</span>-means algorithm as an alternating minimization. Having chosen initial assignments <span class="math inline">\(\mathbf{a}^{\left(0\right)}\)</span>, we can view the algorithm as first solving the minimization</p>
+<p><span class="math display">\[
+\hat{\bar{\mathbf{w}}}_{1},\hat{\bar{\mathbf{w}}}_{2},\hat{\bar{\mathbf{w}}}_{3}=\min_{\bar{\mathbf{w}}_{1},\bar{\mathbf{w}}_{2},\bar{\mathbf{w}}_{3}}\mathrm{Err}\left(\bar{\mathbf{w}}_{1},\bar{\mathbf{w}}_{2},\bar{\mathbf{w}}_{3},\mathbf{a}^{\left(0\right)}\right),
+\]</span></p>
+<p>which we have seen is solved by setting each <span class="math inline">\(\hat{\bar{\mathbf{w}}}_{i}\)</span> to the mean of the corresponding samples. We then solve the minimization</p>
+<p><span class="math display">\[
+\hat{\mathbf{a}}=\min_{\mathbf{a}}\mathrm{Err}\left(\hat{\bar{\mathbf{w}}}_{1},\hat{\bar{\mathbf{w}}}_{2},\hat{\bar{\mathbf{w}}}_{3},\mathbf{a}\right),
+\]</span></p>
+<p>which we have argued is solved by setting <span class="math inline">\(a\left(i\right)\)</span> to the group whose mean is closest. It follows that</p>
+<p><span class="math display">\[
+\mathrm{Err}\left(\hat{\bar{\mathbf{w}}}_{1},\hat{\bar{\mathbf{w}}}_{2},\hat{\bar{\mathbf{w}}}_{3},\hat{\mathbf{a}}\right)\leq\mathrm{Err}\left(\bar{\mathbf{w}}_{1},\bar{\mathbf{w}}_{2},\bar{\mathbf{w}}_{3},\mathbf{a}^{\left(0\right)}\right),
+\]</span></p>
+<p>i.e., <span class="math inline">\(k\)</span>-means is a descent algorithm, hence will converge (though possibly to a local minimum), and where <span class="math inline">\(\bar{\mathbf{w}}_{i}\)</span> is calculated using the initial assignments.</p>
+</div>
+</div>
+<div id="em-algorithm-1" class="section level2">
+<h2><span class="header-section-number">6.2</span> EM algorithm</h2>
+<div id="algorithmic-perspective" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Algorithmic perspective</h3>
+<p>We now introduce the <em>expectation-maximization algorithm</em>, which has a probabilistic component (unlike <span class="math inline">\(k\)</span>-means). The EM algorithm was introduced in the landmark paper of <span class="citation">Dempster, Laird, and Rubin (<a href="#ref-dempster1977">1977</a>)</span>, which generalized methods that had previously been applied in a variety of special cases. We will initially take an algorithmic perspective. For simplicity, suppose that we now consider only the height of the samples, and suppose that the height of the <span class="math inline">\(i\text{th}\)</span> sample is drawn from the Gaussian mixture</p>
+<p><span class="math display">\[
+w\sim
+\begin{cases}
+  \mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right), &amp; \text{with probability }p_{1} &amp; \text{(men)} \\
+  \mathcal{N}\left(\mu_{2},\sigma_{2}^{2}\right), &amp; \text{with probability }p_{2} &amp; \text{(women)} \\
+  \mathcal{N}\left(\mu_{3},\sigma_{3}^{2}\right), &amp; \text{with probability }1-p_{1}-p_{2} &amp; \text{(children)}
+\end{cases}.
+\]</span></p>
+<p>Then, the likelihood is a function of <span class="math inline">\(\boldsymbol{\theta}=\left(p_{1},p_{2},\mu_{1},\mu_{2},\mu_{3},\sigma_{1}^{2},\sigma_{2}^{2},\sigma_{3}^{2}\right)\)</span>. We would like to maximize the log-likelihood <span class="math inline">\(\ell\left(\boldsymbol{\theta}\right)\)</span> of the data (and the value of <span class="math inline">\(\boldsymbol{\theta}\)</span> at the maximum will be our estimate for the parameters). This optimization will be very difficult (if not intractable) using techniques introduced thus far.</p>
+<p>Observe that the optimization would be easy if we knew the assignment (which samples are men, which are women, and which are children). We can regard these assignments <span class="math inline">\(a\left(i\right)\)</span> as <em>missing</em>. Now, if we knew the assignments, then it would be easy to calculate <span class="math inline">\(\boldsymbol{\theta}_{\text{MLE}}\)</span>. As before, consider the <span class="math inline">\(M\)</span> samples for men. These are distributed according to <span class="math inline">\(\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\)</span>, so it follows that</p>
+<p>PROVE THIS IN AN EARLIER SECTION</p>
+<p><span class="math display">\[
+\hat{\mu}_{\text{MLE}}=\frac{1}{M}\sum_{i\in\mathcal{M}}w^{\left(i\right)}\quad\text{and}\quad
+  \hat{\sigma}_{\text{MLE}}^{2}=\frac{1}{M}\sum_{i\in\mathcal{M}}\left(w^{\left(i\right)}-\hat{\mu}_{\text{MLE}}\right)^2,
+\]</span></p>
+<p>and <span class="math inline">\(\hat{p}_{1}=M/N\)</span> (the fraction of samples that are men). We can similarly determine the remaining parameters. Now, suppose that we know <span class="math inline">\(\boldsymbol{\theta}\)</span>, and we wish to make assignments. Recall that <span class="math inline">\(w^{\left(i\right)}\)</span> is sampled from a Gaussian mixture. One possibility is to assign <span class="math inline">\(w^{\left(i\right)}\)</span> to the component of the mixture model with the highest probability, known as a <em>hard assignment</em> (similar to <span class="math inline">\(k\)</span>-means). Because this strategy does not respect the underlying probability distribution, such assignments will not maximimize the log-likelihood. Rather, we will make <em>soft assignments</em>, which allocate probability to the mixture components, and which represent the difference between <span class="math inline">\(k\)</span>-means and the EM algorithm. In this framework, we consider</p>
+<p><span class="math display">\[
+P\left(w^{\left(i\right)}\text{ and }w^{\left(i\right)}\text{ is a man}\right)=
+  P\left(w^{\left(i\right)}\text{ is a man}\right)P\left(w^{\left(i\right)}|w^{\left(i\right)}\text{ is a man}\right)=
+  p_{1}\cdot\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\left(w^{\left(i\right)}\right),
+\]</span></p>
+<p>where the first equality follows from conditional probability, and where <span class="math inline">\(\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\)</span> represents the density of a Gaussian evaluated at <span class="math inline">\(w^{\left(i\right)}\)</span>. We can apply the same reasoning to <span class="math inline">\(P\left(w^{\left(i\right)}\text{ and }w^{\left(i\right)}\text{ is a woman}\right)\)</span> and <span class="math inline">\(P\left(w^{\left(i\right)}\text{ and }w^{\left(i\right)}\text{ is a child}\right)\)</span>. Then, we will assign the sample to the men with weight</p>
+<p><span class="math display">\[
+\frac{P\left(w^{\left(i\right)}\text{ and man}\right)}{P\left(w^{\left(i\right)}\text{ and man}\right)+P\left(w^{\left(i\right)}\text{ and woman}\right)+P\left(w^{\left(i\right)}\text{ and child}\right)},
+\]</span></p>
+<p>where the denominator represents the total probability of the sample, and where by “man” we mean “<span class="math inline">\(w^{\left(i\right)}\)</span> is a man.” Thus, the assignments are three numbers that sum to 1. Letting <span class="math inline">\(q_{i}\)</span> be the fraction of the <span class="math inline">\(i\text{th}\)</span> sample assigned to the “men” class, we now consider how to calculate <span class="math inline">\(\boldsymbol{\theta}\)</span>. We have fractional samples, so that</p>
+<p><span class="math display">\[
+\hat{\mu}_{1}=\frac{\sum_{i=1}^{N}q_{i}w^{\left(i\right)}}{\sum_{i=1}^{N}q_{i}}\quad\text{and}\quad
+  \hat{\sigma}_{1}^{2}=\frac{1}{\sum_{i=1}^{N}q_{i}}\sum_{i=1}^{N}\left(q_{i}w^{\left(i\right)}-\hat{\mu}_{1}\right)^{2},
+\]</span></p>
+<p>and similarly, <span class="math inline">\(\hat{p}_{1}=\sum_{i=1}^{N}q_{i}/N\)</span>. (Observe that if <span class="math inline">\(q_{i}=1\)</span> for all <span class="math inline">\(i\)</span>, then the above expressions simplify to the expressions for hard assignments.) This gives rise to the EM algorithm:</p>
+<ol style="list-style-type: decimal">
+<li>Choose <span class="math inline">\(\boldsymbol{\theta}^{\left(0\right)}\)</span>, using prior information if possible.</li>
+<li>Given <span class="math inline">\(\boldsymbol{\theta}^{\left(0\right)}\)</span>, update the (soft) assignments.</li>
+<li>Given the soft assignments, update <span class="math inline">\(\boldsymbol{\theta}\)</span>.</li>
+<li>Repeat steps 2-3 until convergence (the assignments do not change from one iteration to the next by some desired tolerance).</li>
+</ol>
+<p>Note the similarity to <span class="math inline">\(k\)</span>-means, though because it is difficult to randomly choose soft assignments, we begin by choosing <span class="math inline">\(\boldsymbol{\theta}\)</span> rather than the assignments.</p>
+</div>
+<div id="statistical-perspective" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Statistical perspective</h3>
+<p>We now present EM from a statistical perspective. We will reset notation to match that commonly used in the literature, denoting by <span class="math inline">\(x^{\left(i\right)}\)</span> the observed data. Following our example above, suppose that each <span class="math inline">\(x^{\left(i\right)}\)</span> is a sample from a Gaussian mixture model, which is again parameterized by <span class="math inline">\(\boldsymbol{\theta}=\left(p_{1},p_{2},\mu_{1},\mu_{2},\mu_{3},\sigma_{1}^{2},\sigma_{2}^{2},\sigma_{3}^{2}\right)\)</span>. We will denote by <span class="math inline">\(z^{\left(i\right)}\)</span> the missing data, which in this example represents the Gaussian from which the <span class="math inline">\(i\text{th}\)</span> sample was drawn, so that <span class="math inline">\(z^{\left(i\right)}\in\left\{1,2,3\right\}\)</span>. We refer to the combination of the observed data and the missing data as the <em>complete data</em>, sometimes written <span class="math inline">\(y^{\left(i\right)}=\left(x^{\left(i\right)},z^{\left(i\right)}\right)\)</span>. Then, the EM algorithm consists of two steps.</p>
+<div id="e-step" class="section level4">
+<h4><span class="header-section-number">6.2.2.1</span> E step</h4>
+<p><span class="citation">Givens and Hoeting (<a href="#ref-givens2012">2012</a>)</span> describes the EM algorithm as seeking to iteratively maximize the log-likelihood of the observed data <span class="math inline">\(\ell\left(\boldsymbol{\theta}|\mathbf{x}\right)\)</span> with respect to <span class="math inline">\(\boldsymbol{\theta}\)</span>. Let <span class="math inline">\(f\left(\mathbf{z},\mathbf{x}|\boldsymbol{\theta}\right)\)</span> be the joint density of the complete data, with corresponding log-likelihood <span class="math inline">\(\ell\left(\boldsymbol{\theta}|\mathbf{z},\mathbf{x}\right)\)</span>. Consider the expectation of <span class="math inline">\(\ell\left(\boldsymbol{\theta}|\mathbf{z},\mathbf{x}\right)\)</span> conditioned on the observed data <span class="math inline">\(\mathbf{x}\)</span>, i.e.,</p>
+<p><span class="math display">\[
+Q\left(\boldsymbol{\theta}&#39;,\boldsymbol{\theta}^{\left(t\right)}\right) = 
+  \E_{\mathbf{z}|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}}\left[\ell\left(\boldsymbol{\theta}&#39;|\mathbf{z},\mathbf{x}\right)\right] =
+  \E\left[\ell\left(\boldsymbol{\theta}&#39;|\mathbf{z},\mathbf{x}\right)|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}\right],
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\theta}^{\left(t\right)}\)</span> is the current maximizer of <span class="math inline">\(\ell\)</span>, and where the first equality emphasizes that the expectation is taken with respect to <span class="math inline">\(\mathbf{z}\)</span> (though we will typically prefer the notation of the second equality). Then, we have</p>
+<p><span class="math display">\[
+\begin{align*}
+  Q\left(\boldsymbol{\theta}&#39;,\boldsymbol{\theta}^{\left(t\right)}\right) &amp; = \E\left[\ell\left(\boldsymbol{\theta}&#39;|\mathbf{z},\mathbf{x}\right)|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}\right] \\
+  &amp; = \E\left[\sum_{i=1}^{N}\log\mathcal{L}\left(\boldsymbol{\theta}&#39;|z^{\left(i\right)},x^{\left(i\right)}\right)|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}\right] \\
+  &amp; = \E\left[\sum_{i=1}^{N}\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\boldsymbol{\theta}&#39;\right)|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}\right].
+\end{align*}
+\]</span></p>
+<p>The <em>expectation</em> step of the algorithm involves computing the above quantity, to which we shall return shortly.</p>
+</div>
+<div id="m-step" class="section level4">
+<h4><span class="header-section-number">6.2.2.2</span> M step</h4>
+<p>In the <em>maximization</em> step, we will maximize <span class="math inline">\(Q\left(\boldsymbol{\theta}&#39;,\boldsymbol{\theta}^{\left(t\right)}\right)\)</span> over <span class="math inline">\(\boldsymbol{\theta}&#39;\)</span>, setting <span class="math inline">\(\boldsymbol{\theta}^{\left(t+1\right)}\)</span> equal to the maximizer of <span class="math inline">\(Q\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\boldsymbol{\theta}^{\left(t+1\right)}\gets\argmax_{\boldsymbol{\theta}&#39;}Q\left(\boldsymbol{\theta}&#39;,\boldsymbol{\theta}^{\left(t\right)}\right)
+\]</span></p>
+<p>By alternating between the E and M steps, the algorithm maximizes <span class="math inline">\(\ell\left(\boldsymbol{\theta}\right)\)</span> as an ascent algorithm, i.e., <span class="math inline">\(\ell\left(\boldsymbol{\theta}^{\left(1\right)}\right)\leq\ell\left(\boldsymbol{\theta}^{\left(2\right)}\right)\leq\ell\left(\boldsymbol{\theta}^{\left(3\right)}\right)\leq\cdots\)</span>.</p>
+</div>
+<div id="back-to-the-e-step" class="section level4">
+<h4><span class="header-section-number">6.2.2.3</span> Back to the E step</h4>
+<p>It follows from the linearity of expectation that</p>
+<p><span class="math display">\[
+\begin{align*}
+  Q\left(\boldsymbol{\theta}&#39;,\boldsymbol{\theta}^{\left(t\right)}\right) &amp; = \sum_{i=1}^{N}\E\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\boldsymbol{\theta}&#39;\right)|\mathbf{x},\boldsymbol{\theta}^{\left(t\right)}\right] \\
+  &amp; = \sum_{i=1}^{N}\sum_{z=1}^{3}\log\left(f\left(z^{\left(i\right)}=z,x^{\left(i\right)}|\boldsymbol{\theta}&#39;\right)\right)P\left(z^{\left(i\right)}=z\right),
+\end{align*}
+\]</span></p>
+<p>where the second equality follows from the definition of expected value, and where <span class="math inline">\(P\left(z^{\left(i\right)}=z\right)=P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\boldsymbol{\theta}^{\left(t\right)}\right)\)</span>, which corresponds to the soft assignment. To see this, observe that</p>
+<p><span class="math display">\[
+P\left(z^{\left(i\right)}=1|x^{\left(i\right)},\boldsymbol{\theta}^{\left(t\right)}\right) = \frac{P\left(z^{\left(i\right)}=1,x^{\left(i\right)}|\boldsymbol{\theta}^{\left(t\right)}\right)}{P\left(x^{\left(i\right)}|\boldsymbol{\theta}^{\left(t\right)}\right)} = \frac{p_{1}\cdot\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\left(x^{\left(i\right)}\right)}{\sum_{z=1}^{3}P\left(z^{\left(i\right)}=z,x^{\left(i\right)}|\boldsymbol{\theta}^{\left(t\right)}\right)},
+\]</span></p>
+<p>where the notation <span class="math inline">\(\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\left(x^{\left(i\right)}\right)\)</span> represents evaluating the density of the specified Gaussian at <span class="math inline">\(x^{\left(i\right)}\)</span>, and where we have applied the law of total probability. The value of EM is that it separates <span class="math inline">\(\boldsymbol{\theta}^{\left(t\right)}\)</span> and <span class="math inline">\(\boldsymbol{\theta}&#39;\)</span>, i.e., the maximization</p>
+<p><span class="math display">\[
+\max_{\boldsymbol{\theta}^{\left(t\right)}}\E\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\boldsymbol{\theta}^{\left(t\right)}\right)|x^{\left(i\right)},\boldsymbol{\theta}^{\left(t\right)}\right]
+\]</span></p>
+<p>is not tractable due to the circular interaction between <span class="math inline">\(z^{\left(i\right)}\)</span> and <span class="math inline">\(\boldsymbol{\theta}^{\left(t\right)}\)</span>.</p>
+</div>
+</div>
+<div id="proof-sketch" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Proof sketch</h3>
+<p>We now consider why EM works. Let <span class="math inline">\(x^{\left(1\right)},\ldots,x^{\left(N\right)}\)</span> be samples from <span class="math inline">\(X\left(\theta\right)\)</span>. The generic likelihood problem is</p>
+<p><span class="math display">\[
+\max_{\theta}\sum_{i=1}^{N}\log f\left(x^{\left(i\right)}|\theta\right),
+\]</span></p>
+<p>where <span class="math inline">\(f\)</span> is the density of <span class="math inline">\(X\left(\theta\right)\)</span>. It it not at all clear how this is related to</p>
+<p><span class="math display">\[
+\E\left[\sum_{i=1}^{N}\log f\left(x^{\left(i\right)},z^{\left(i\right)}|\theta&#39;\right)|x^{\left(i\right)},\theta\right],
+\]</span></p>
+<p>and in fact</p>
+<p><span class="math display">\[
+\log f\left(x^{\left(i\right)}|\theta\right)\neq\E\left[\log f\left(x^{\left(i\right)},z^{\left(i\right)}|\theta&#39;\right)|x^{\left(i\right)},\theta\right],
+\]</span></p>
+<p>where we have moved the expectation inside the sum and dropped the summation notation for clarity. Let <span class="math inline">\(z^{\left(i\right)}\in\left\{1,2\right\}\)</span> be the missing data, e.g., suppose <span class="math inline">\(z^{\left(i\right)}\)</span> represents the distribution from which <span class="math inline">\(x^{\left(i\right)}\)</span> was drawn in a mixture model. We now consider</p>
+<p><span class="math display">\[
+\begin{align*}
+  \log f\left(x^{\left(i\right)}|\theta&#39;\right) &amp; = \log\left(\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)f\left(x^{\left(i\right)}|\theta&#39;\right)}{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}\right) \\
+  &amp; = \sum_{z=1}^{2}\log\left(\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)f\left(x^{\left(i\right)}|\theta&#39;\right)}{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}\right)P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; = \sum_{z=1}^{2}\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)+\log\frac{f\left(x^{\left(i\right)}|\theta&#39;\right)}{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}\right]P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; = \sum_{z=1}^{2}\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)+\log\left(\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}{f\left(x^{\left(i\right)}|\theta&#39;\right)}\right)^{-1}\right]P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; = \sum_{z=1}^{2}\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)-\log\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}{f\left(x^{\left(i\right)}|\theta&#39;\right)}\right]P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; = \sum_{z=1}^{2}\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; \quad-\sum_{z=1}^{2}\log\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}{f\left(x^{\left(i\right)}|\theta&#39;\right)}P\left(z^{\left(i\right)}=z|x^{\left(i\right)},\theta\right) \\
+  &amp; = \E\left[\log f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)|x^{\left(i\right)},\theta\right]-\E\left[\log\frac{f\left(z^{\left(i\right)},x^{\left(i\right)}|\theta&#39;\right)}{f\left(x^{\left(i\right)}|\theta&#39;\right)}|x^{\left(i\right)},\theta\right] \\
+  &amp; = Q\left(\theta&#39;,\theta\right)-\E\left[\log f\left(z^{\left(i\right)}|x^{\left(i\right)},\theta&#39;\right)|x^{\left(i\right)},\theta\right] \\
+  &amp; = Q\left(\theta&#39;,\theta\right)-H\left(\theta&#39;,\theta\right).
+\end{align*}
+\]</span></p>
+<p>Thus, we see that the log-likelihood can be written in terms of the <span class="math inline">\(Q\left(\theta&#39;,\theta\right)\)</span> from the E step and a new function <span class="math inline">\(H\left(\theta&#39;,\theta\right)\)</span>. We now consider the M step. Now, it is a consequence of Theorem <a href="probability-theory.html#thm:jensens-inequality">3.18</a> that <span class="math inline">\(H\left(\theta,\theta\right)\geq H\left(\theta&#39;,\theta\right)\)</span>. Thus, by choosing <span class="math inline">\(\theta^{\left(t+1\right)}\)</span> to maximize <span class="math inline">\(Q\left(\theta&#39;,\theta^{\left(t\right)}\right)\)</span> over <span class="math inline">\(\theta&#39;\)</span>, we are guaranteed that <span class="math inline">\(H\left(\theta&#39;,\theta^{\left(t\right)}\right)\)</span> will be smaller than <span class="math inline">\(H\left(\theta^{\left(t\right)},\theta^{\left(t\right)}\right)\)</span>. It follows that</p>
+<p><span class="math display">\[
+\log f\left(x^{\left(i\right)}|\theta^{\left(t+1\right)}\right)\geq\log f\left(x^{\left(i\right)}|\theta^{\left(t\right)}\right),
+\]</span></p>
+<p>hence that EM is an ascent algorithm.</p>
+</div>
+</div>
+<div id="example-gaussian-mixture" class="section level2">
+<h2><span class="header-section-number">6.3</span> Example: Gaussian mixture</h2>
+<p>We now return to our Gaussian mixture problem. For simplicity, we will consider only the men and women, i.e., we consider a mixture of two Gaussians, so that</p>
+<p><span class="math display">\[
+w\sim
+\begin{cases}
+  \mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right), &amp; \text{with probability }p_{1} &amp; \text{(men)} \\
+  \mathcal{N}\left(\mu_{2},\sigma_{2}^{2}\right), &amp; \text{with probability }(1-p_{1}) &amp; \text{(women)}
+\end{cases},
+\]</span></p>
+<p>with corresponding density</p>
+<p><span class="math display">\[
+f\left(w|\boldsymbol{\theta}\right)=p_{1}\phi_{\boldsymbol{\theta}_{1}}\left(w\right)+\left(1-p_{1}\right)\phi_{\boldsymbol{\theta}_{2}}\left(w\right),
+\]</span></p>
+<p>where <span class="math inline">\(\phi_{\boldsymbol{\theta}}\left(w\right)\)</span> is the Gaussian density parameterized by <span class="math inline">\(\boldsymbol{\theta}\)</span> evaluated at <span class="math inline">\(w\)</span>. Thus, the log-likelihood is</p>
+<p><span class="math display">\[
+\begin{align*}
+  \ell\left(\boldsymbol{\theta}|\mathbf{w}\right) &amp; =\log\mathcal{L}\left(\boldsymbol{\theta}|\mathbf{w}\right)\\
+ &amp; =\log\prod_{i=1}^{N}\left[p_{1}\phi_{\boldsymbol{\theta}_{1}}\left(w_{i}\right)+\left(1-p_{1}\right)\phi_{\boldsymbol{\theta}_{2}}\left(w_{i}\right)\right],\\
+ &amp; =\sum_{i=1}^{N}\log\left[p_{1}\phi_{\boldsymbol{\theta}_{1}}\left(w_{i}\right)+\left(1-p_{1}\right)\phi_{\boldsymbol{\theta}_{2}}\left(w_{i}\right)\right].
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+\begin{align*}
+  \ell\left(\boldsymbol{\theta}|\mathbf{w}\right)&amp; = \log\prod_{i=1}^{N}f\left(w^{\left(i\right)}|\boldsymbol{\theta}\right) \\
+  &amp; = \sum_{i=1}^{N}\log f\left(w^{\left(i\right)}|\boldsymbol{\theta}\right) \\
+  &amp; =\sum_{i=1}^{N}\log\left(p_{1}\phi_{\boldsymbol{\theta}_{1}}\left(w\right)+p_{2}\phi_{\boldsymbol{\theta}_{2}}\left(w\right)+(1-p_{1}-p_{2})\phi_{\boldsymbol{\theta}_{3}}\left(w\right)\right)
+\end{align*}.
+\]</span></p>
+<p>Pretending that <span class="math inline">\(\boldsymbol{\theta}\)</span> (and the class of each sample) is unknown, we define a random variable</p>
+<p><span class="math display">\[
+Z_{i}=\begin{cases}
+1, &amp; \text{if the sample came from }\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\\
+0, &amp; \text{if the sample came from }\mathcal{N}\left(\mu_{2},\sigma_{2}^{2}\right)
+\end{cases}
+\]</span></p>
+<p>to represent the hidden data (similar to the 3-Gaussian case). From <span class="citation">Friedman, Hastie, and Tibshirani (<a href="#ref-friedman2001">2009</a>)</span>, the complete-data log-likelihood is</p>
+<p><span class="math display">\[
+\ell\left(\boldsymbol{\theta}|\mathbf{w},\mathbf{z}\right)=\sum_{i=1}^{N}\left[z_{i}\log\phi_{\boldsymbol{\theta}_{1}}\left(w_{i}\right)+\left(1-z_{i}\right)\log\phi_{\boldsymbol{\theta}_{2}}\left(w_{i}\right)\right]+\sum_{i=1}^{N}\left[z_{i}\log p_{1}+\left(1-z_{i}\right)\log\left(1-p_{1}\right)\right].
+\]</span></p>
+<p>The probability that <span class="math inline">\(Z=1\)</span> conditioned on <span class="math inline">\(W\)</span> is</p>
+<p><span class="math display">\[
+\begin{align*}
+P\left(\left\{ Z=1|W=w\right\} \right) &amp; =\frac{P\left(\left\{ W=w|Z=1\right\} \right)P\left(\left\{ Z=1\right\} \right)}{P\left(\left\{ W=w\right\} \right)} \\
+ &amp; =\frac{\phi_{\boldsymbol{\theta}_{1}}\left(w\right)\cdot p_{1}}{p_{1}\phi_{\boldsymbol{\theta}_{1}}\left(w\right)+\left(1-p_{1}\right)\phi_{\boldsymbol{\theta}_{2}}\left(w\right)}.
+\end{align*}
+\]</span></p>
+<p>Let</p>
+<p><span class="math display">\[
+\gamma_{i}\left(\boldsymbol{\theta}\right)=
+  \E\left[Z_{i}|\boldsymbol{\theta},\mathbf{W}\right]=
+  P\left(\left\{ Z_{i}=1|\boldsymbol{\theta},\mathbf{W}\right\} \right)
+\]</span></p>
+<p>be the responsibility of model 1 (<span class="math inline">\(\mathcal{N}\left(\mu_{1},\sigma_{1}^{2}\right)\)</span>) for observation <span class="math inline">\(i\)</span>. Then, given an initial guess <span class="math inline">\(\boldsymbol{\theta}^{\left(0\right)}\)</span>, we compute</p>
+<p><span class="math display">\[
+\hat{\gamma}_{i}\left(\boldsymbol{\theta}\right)=P\left(\left\{ Z_{i}=1|\boldsymbol{\theta},\mathbf{W}\right\} \right)=\frac{\hat{p}_{1}\phi_{\hat{\boldsymbol{\theta}}_{1}}\left(w_{i}\right)}{\hat{p}_{1}\phi_{\hat{\boldsymbol{\theta}}_{1}}\left(w_{i}\right)+\left(1-\hat{p}_{1}\right)\phi_{\hat{\boldsymbol{\theta}}_{2}}\left(w_{i}\right)},\quad i=1,2,\ldots,n.
+\]</span></p>
+<p>Then, we compute the weighted means and variances</p>
+<p><span class="math display">\[
+\hat{\mu}_{1}=\frac{\sum_{i=1}^{N}\hat{\gamma}_{i}w_{i}}{\sum_{i=1}^{N}\hat{\gamma}_{i}},\qquad\hat{\sigma}_{1}^{2}=\frac{\sum_{i=1}^{N}\hat{\gamma}_{i}\left(w_{i}-\hat{\mu}_{1}\right)^{2}}{\sum_{i=1}^{N}\hat{\gamma}_{i}}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\mu}_{2}=\frac{\sum_{i=1}^{N}\left(1-\hat{\gamma}_{i}\right)w_{i}}{\sum_{i=1}^{N}\left(1-\hat{\gamma}_{i}\right)},\quad\hat{\sigma}_{2}^{2}=\frac{\sum_{i=1}^{N}\left(1-\hat{\gamma}_{i}\right)\left(w_{i}-\hat{\mu}_{2}\right)^{2}}{\sum_{i=1}^{N}\left(1-\hat{\gamma}_{i}\right)}
+\]</span></p>
+<p>and the mixing probability <span class="math inline">\(\hat{p}_{1}=\sum_{i=1}^{N}\hat{\gamma}_{i}/n\)</span>. We will iterate until convergence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Calculate P(Z = 1 | W = w)</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @param x numeric vector of samples</span>
+<span class="co">#&#39; @param theta numeric parameter vector (mu1, mu2, var1, var2, p)</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return probability that Z = 1 given W = w</span>
+prob_z &lt;-<span class="st"> </span><span class="cf">function</span>(x, theta) {
+  num &lt;-<span class="st"> </span>theta[<span class="dv">5</span>] <span class="op">*</span><span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> theta[<span class="dv">1</span>], <span class="dt">sd =</span> <span class="kw">sqrt</span>(theta[<span class="dv">3</span>]))
+  denom &lt;-<span class="st"> </span>num <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>theta[<span class="dv">5</span>]) <span class="op">*</span><span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> theta[<span class="dv">2</span>], <span class="dt">sd =</span> <span class="kw">sqrt</span>(theta[<span class="dv">4</span>]))
+  num <span class="op">/</span><span class="st"> </span>denom
+}
+
+<span class="co">#&#39; Calculate the parameter vector</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @param x numeric vector of samples</span>
+<span class="co">#&#39; @param prob vector of probabilities P(Z = 1 | theta, X)</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return parameter vector (mu1, mu2, var1, var2, p)</span>
+find_params &lt;-<span class="st"> </span><span class="cf">function</span>(x, prob) {
+  mu1 &lt;-<span class="st"> </span><span class="kw">sum</span>(prob <span class="op">*</span><span class="st"> </span>x) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob)
+  var1 &lt;-<span class="st"> </span><span class="kw">sum</span>(prob <span class="op">*</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>mu1) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob)
+  mu2 &lt;-<span class="st"> </span><span class="kw">sum</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob) <span class="op">*</span><span class="st"> </span>x) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob)
+  var2 &lt;-<span class="st"> </span><span class="kw">sum</span>((<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob) <span class="op">*</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>mu2) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prob)
+  <span class="co"># estimate for p1 is just the mean of the probability vector </span>
+  p &lt;-<span class="st"> </span><span class="kw">mean</span>(prob)
+  <span class="kw">c</span>(mu1, mu2, var1, var2, p)
+}
+
+<span class="co">#&#39; EM algorithm</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @param x numeric vector of samples</span>
+<span class="co">#&#39; @param theta0 initial parameter vector (mu1, mu2, var1, var2, p)</span>
+<span class="co">#&#39; @param eps iteration tolerance</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return estimated parameter vector</span>
+em_est &lt;-<span class="st"> </span><span class="cf">function</span>(x, theta0, <span class="dt">eps =</span> <span class="fl">1e-6</span>) {
+  theta_old &lt;-<span class="st"> </span>theta0
+  <span class="co"># whatever epsilon was specified, we need our initial difference to be larger </span>
+  d &lt;-<span class="st"> </span>eps <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  <span class="cf">while</span> (<span class="kw">all</span>(<span class="kw">abs</span>(d) <span class="op">&gt;</span><span class="st"> </span>eps)) {
+    <span class="co"># E-step</span>
+    prob &lt;-<span class="st"> </span><span class="kw">prob_z</span>(x, theta_old)
+    <span class="co"># M-step</span>
+    theta_new &lt;-<span class="st"> </span><span class="kw">find_params</span>(x, prob)
+    d &lt;-<span class="st"> </span>theta_new <span class="op">-</span><span class="st"> </span>theta_old
+    theta_old &lt;-<span class="st"> </span>theta_new
+  }
+  theta_old
+}</code></pre></div>
+<p>We now simulate observations using plausible height data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Sample from Gaussian mixture model parameterized by theta</span>
+<span class="co">#&#39; </span>
+<span class="co">#&#39; @param n number of samples</span>
+<span class="co">#&#39; @param theta numeric parameter vector (mu1, mu2, var1, var2, p)</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return samples from mixture model</span>
+sample_mixture &lt;-<span class="st"> </span><span class="cf">function</span>(n, theta) {
+  <span class="co"># with probability p = theta[5], X ~ N(mu1, var1)</span>
+  component &lt;-<span class="st"> </span><span class="kw">runif</span>(n) <span class="op">&lt;=</span><span class="st"> </span>theta[<span class="dv">5</span>]
+  samples &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
+  samples[component] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(
+    <span class="kw">sum</span>(component), <span class="dt">mean =</span> theta[<span class="dv">1</span>], <span class="dt">sd =</span> <span class="kw">sqrt</span>(theta[<span class="dv">3</span>])
+  )
+  samples[<span class="op">!</span>component] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(
+    <span class="kw">sum</span>(<span class="op">!</span>component), <span class="dt">mean =</span> theta[<span class="dv">2</span>], <span class="dt">sd =</span> <span class="kw">sqrt</span>(theta[<span class="dv">4</span>])
+  )
+  dplyr<span class="op">::</span><span class="kw">tibble</span>(
+    <span class="dt">gender =</span> <span class="kw">if_else</span>(component, <span class="st">&quot;man&quot;</span>, <span class="st">&quot;woman&quot;</span>),
+    <span class="dt">height =</span> samples
+  )
+}  
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+data &lt;-<span class="st"> </span><span class="kw">sample_mixture</span>(<span class="dv">1000</span>, <span class="dt">theta =</span> <span class="kw">c</span>(<span class="dv">178</span>, <span class="dv">165</span>, <span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">9</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>, <span class="fl">0.4</span>))
+
+data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(length, mean, sd))</code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##   gender length  mean    sd
+##   &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 man       404  178. 10.1 
+## 2 woman     596  165.  8.97</code></pre>
+<p>We will also plot the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">fill =</span> gender)) <span class="op">+</span>
+<span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">stat_density</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="course-notes_files/figure-html/gaussian-mixture-1.png" width="672" /></p>
+<p>We now apply the algorithm. To pick a starting point <span class="math inline">\(\boldsymbol{\theta}^{\left(0\right)}\)</span>, <span class="citation">Friedman, Hastie, and Tibshirani (<a href="#ref-friedman2001">2009</a>)</span> recommend selecting two of the samples <span class="math inline">\(w^{\left(i\right)}\)</span> and <span class="math inline">\(w^{\left(j\right)}\)</span> at random and setting <span class="math inline">\(\mu_{1}=w^{\left(i\right)}\)</span> and <span class="math inline">\(\mu_{2}=w^{\left(j\right)}\)</span>. They recommend setting the initial estimates for <span class="math inline">\(\sigma_{1}^{2}\)</span> and <span class="math inline">\(\sigma_{2}^{2}\)</span> equal to the sample variance, i.e.,</p>
+<p><span class="math display">\[
+\sigma_{1}^{2}=\sigma_{2}^{2}=\frac{1}{N}\sum_{i=1}^{N}\left(w^{\left(i\right)}-\bar{w}\right)^{2},\quad\text{where}\quad\bar{w}=\frac{1}{N}\sum_{i=1}^{N}w^{\left(i\right)}.
+\]</span></p>
+<p>And, for an initial estimate for <span class="math inline">\(p_{1}\)</span>, they recommend 0.5.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu0 &lt;-<span class="st"> </span><span class="kw">sample</span>(data<span class="op">$</span>height, <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>) 
+var0 &lt;-<span class="st"> </span><span class="kw">with</span>(data, <span class="kw">sum</span>((height <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(height)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(height))
+theta0 &lt;-<span class="st"> </span><span class="kw">c</span>(mu0, <span class="kw">rep</span>(var0, <span class="dv">2</span>), <span class="fl">0.5</span>)
+theta_est &lt;-<span class="st"> </span><span class="kw">em_est</span>(data<span class="op">$</span>height, theta0)
+theta_est</code></pre></div>
+<pre><code>## [1] 163.6802881 175.9983849  70.0014149 108.9100842   0.4577089</code></pre>
+<p>We see that we our estimate is quite good given our knowledge of the true parameters. The fact that the position of <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\sigma_{1}^{2}\)</span> are “reversed” from their “true” positions is not a problem. The algorithm is blind to our initial assignments, which were in any case arbitrary. Rather, the estimate should be interpreted as “the observation is drawn from a Gaussian with mean <span class="math inline">\(\hat{\mu}_{1}\)</span> and variance <span class="math inline">\(\hat{\sigma}_{1}^{2}\)</span> with probability <span class="math inline">\(\hat{p}_{1}\)</span> and from a Gaussian with mean <span class="math inline">\(\hat{\mu}_{2}\)</span> and variance <span class="math inline">\(\hat{\sigma}_{2}^{2}\)</span> with probability <span class="math inline">\(1-\hat{p}_{1}\)</span>.”</p>
+</div>
+<div id="factor-analysis" class="section level2">
+<h2><span class="header-section-number">6.4</span> Factor analysis</h2>
+<p>Outline from Dempster</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-dempster1977">
+<p>Dempster, A.P., N.M. Laird, and Donald B Rubin. 1977. “Maximum likelihood from incomplete data via the EM algorithm.” <em>Journal of the Royal Statistical Society Series B Methodological</em> 39 (1): 1–38. <a href="http://www.jstor.org/stable/10.2307/2984875" class="uri">http://www.jstor.org/stable/10.2307/2984875</a>.</p>
+</div>
+<div id="ref-givens2012">
+<p>Givens, Geof H, and Jennifer A Hoeting. 2012. <em>Computational Statistics</em>. Vol. 710. John Wiley &amp; Sons. <a href="https://www.stat.colostate.edu/computationalstatistics/" class="uri">https://www.stat.colostate.edu/computationalstatistics/</a>.</p>
+</div>
+<div id="ref-friedman2001">
+<p>Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2009. <em>The Elements of Statistical Learning</em>. Vol. 1. 12. Springer series in statistics New York, NY, USA:</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="common-families-of-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="markov-chain-monte-carlo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["course-notes.pdf", "course-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
