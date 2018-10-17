@@ -606,6 +606,20 @@ $$
 (This is Theorem 4.7.3 from @casella2002statistical.)
 ```
 
+```{definition}
+A function $g\left(x\right)$ is _convex_ if $g\left(\lambda x+\left(1-\lambda\right)y\right)\leq\lambda g\left(x\right)+\left(1-\lambda\right)g\left(y\right)$, for all $x$ and $y$, and $0<\lambda<1$. The function $g\left(x\right)$ is _concave_ if $-g\left(x\right)$ is convex.
+```
+
+```{theorem, label = "jensens-inequality", name = "Jensen's Inequality"}
+For any random variable $X$, if $g\left(x\right)$ is a convex function, then
+
+$$
+\E\left[g\left(X\right)\right]\geq g\left(\E\left[X\right]\right).
+$$
+
+Equality holds if and only if, for every line $a+bx$ that is tangent to $g\left(x\right)$ at $x=\E\left[X\right]$, $P\left(g\left(X\right)=a+bX\right)=1$.
+```
+
 ## Properties of a random sample
 
 ### Sums of random variables from a random sample
