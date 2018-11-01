@@ -1,0 +1,351 @@
+# Machine representation
+
+This chapter is based on a lecture given by Professor Sivan Leviyang on January 28, 2016 for MATH-504 Numerical Methods at Georgetown University.
+
+## Binary numbers
+
+Following @sauer2011, binary numbers are expressed as
+
+$$
+\ldots b_{2}b_{1}b_{0}.b_{-1}b_{-2}\ldots,
+$$
+
+where each binary digit, or _bit_, is 0 or 1. The decimal (base 10) equivalent to the number is
+
+$$
+\ldots b_{2}2^{2}+b_{1}2^{1}+b_{0}2^{0}+b_{-1}2^{-1}+b_{-2}2^{-2}\ldots.
+$$
+
+A binary number with no fractional part may be converted to the corresponding decimal integer by adding powers of 2. If the $j\text{th}$ bit is 1, then the sum should include the term $2^{j}$.
+
+```{example}
+The binary number $10001$ has $1\text{s}$ in positions 0 and 4. Denoting by $\left(\cdot\right)_{b}$ a number in base $b$, we have
+
+$$
+\left(10001\right)_{2}=\sum_{j=0}^{4}b_{j}2^{j}
+  =2^{0}+0+0+0+2^{4}
+  =17.
+$$
+```
+
+If the fractional part of a binary number is finite (a terminating base 2 expansion), we can proceed in the same fashion.
+
+```{example}
+The binary number $0.101$ has $1\text{s}$ in positions $-1$ and $-3$, so that
+
+$$
+\left(0.101\right)_{2}=2^{-1}+2^{-3}
+  =\frac{1}{2}+\frac{1}{8}
+  =\frac{5}{8}.
+$$
+```
+
+The situation is more involved if the fractional part does not terminate, but that discussion is beyond the scope of this chapter.
+
+## Integers
+
+Suppose that we encode an integer using 32 bits (equivalently, 4 bytes), each of which may be 0 or 1. We allocate a single bit $s$ to hold the sign, and we denote the $k\text{th}$ bit by $i_{k}$. Then, an integer $x$ can be written as
+
+$$
+x=\left(-1\right)^{s}\cdot\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}\right)
+  =\left(-1\right)^{s}\sum_{k=1}^{31}i_{k}2^{k-1},
+$$
+
+and we can store this representation as the vector
+
+$$
+\begin{bmatrix}
+  s & i_{1} & i_{2} & \cdots & i_{30} & i_{31}
+\end{bmatrix},
+$$
+
+where $i_{k}=1$ if the $k\text{th}$ term is included in the sum and 0 if it is not. R uses signed 32-bit integers, so that the maximum integer that can be represented is $2^{31}-1=2147483647$, which we can confirm by inspecting the `.Machine` variable.
+
+```{r}
+.Machine$integer.max
+```
+
+Observe that this is equivalent to the maximum number representable under the scheme described above (though R does not use this exact scheme).
+
+```{r}
+sum(2 ^ seq(0, 30))
+```
+
+Now, this encoding is inefficient because it represents zero in two ways (zero is unsigned, so we may have $s=0$ or $s=1$), hence we are losing a bit. Suppose instead that we allocate all 32 bits to terms in the above summation, and by convention subtract $2^{31}$ from the sum, so that negative integers can be represented. Then, under this scheme, 
+$$
+x=\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}+i_{32}2^{31}\right)-2^{31}
+  =\sum_{k=1}^{32}i_{k}2^{k-1}-2^{31}.
+$$
+
+To represent 1, we will have $i_{1}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 2,3,\ldots,31\right\}$. The next consecutive integer is 2, which we represent with $i_{2}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 1\right\} \cup\left\{ 3,4,\ldots,31\right\}$. We represent 3 as $i_{1}=1$, $i_{2}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 3,4,\ldots,31\right\}$. We proceed in this fashion until $i_{k}=1$ for $k\in\left\{ 1,2,\ldots,32\right\}$, i.e., 
+
+$$
+\begin{align*}
+x_{\max} & = \left(2^{0}+2^{1}+2^{2}+\cdots+2^{30}+2^{31}\right)-2^{31} \\
+  & = 2^{0}+2^{1}+2^{2}+\cdots+2^{30} \\
+  & = 2147483647 \\
+  & = 2^{31}-1,
+\end{align*}
+$$
+
+which is the largest integer that can be stored under this encoding scheme. The largest negative integer that can be stored occurs when each $i_{k}$ is 0, and this is $-2^{31}$. Zero is represented by setting $i_{32}=1$ and $i_{k}=0$ for $k\in\left\{ 1,2,\ldots,31\right\}$. Thus, we see that there are a variety of possible encoding schemes for integers, each with its own considerations.
+
+## Floating-point numbers
+
+The integer encoding schemes discussed in the previous section have two immediate drawbacks: they can only represent integers, and in general a $k$-bit encoding scheme cannot represent numbers larger than $2^k$ (provided that all intermediate numbers must be representable). We now introduce _floating-point numbers_, which address these issues. Under the IEEE 754 Floating Point Standard, numbers are encoded as 64-bit (8-byte) _words_ of the form
+
+$$
+\begin{bmatrix}
+  s & e_{1} & e_{2} & \cdots & e_{11} & b_{1} & b_{2} & \cdots & b_{52}
+\end{bmatrix},
+$$
+
+where $s$ is the sign bit, the 11 $e_{k}$ bits represent the _exponent_, and the 52 $b_{j}$ bits represent the _mantissa_. Under this scheme, the representation of $x\in\mathbb{R}$ is 
+
+$$
+x=\left(-1\right)^{s}\cdot1.\boxed{b_{1}b_{2}\ldots b_{52}}\cdot2^{\boxed{e_{1}e_{2}\ldots e_{11}}-1023},
+$$
+
+where $\boxed{b_{1}b_{2}\dots b_{52}}$ and $\boxed{e_{1}e_{2}\ldots e_{11}}$ are the concatenations of the $b_{j}$ bits and $e_{k}$ bits, respectively.
+
+We first consider the exponent. More precisely, the $e_{k}$ bits represent the positive binary integer that is the sum of the exponent and the _bias_ $2^{10}-1=1023$ (for exponents between -1022 and 1023). Letting $p$ be the decimal exponent, we will consider some examples.
+
+ $p$  | $p+1023$ | $\left(p+1023\right)_{2}$ | $\boxed{e_{1}e_{2}\ldots e_{11}}$ |
+-----:| --------:| -------------------------:| ---------------------------------:|
+ $-1$ | $1022$   | $11\,1111\,1110$          | $\mathtt{011\,1111\,1110}$        |
+ $0$  | $1023$   | $11\,1111\,1111$          | $\mathtt{011\,1111\,1111}$        |
+ $1$  | $1024$   | $100\,0000\,0000$         | $\mathtt{100\,0000\,0000}$        |
+ $2$  | $1025$   | $100\,0000\,0001$         | $\mathtt{100\,0000\,0001}$        |
+ $17$ | $1033$   | $100\,0001\,0001$         | $\mathtt{100\,0001\,0001}$        |
+
+Thus, given some $\boxed{e_{1}e_{2}\ldots e_{11}}$, we can recover the exponent $p$ by subtracting the bias.
+
+We now consider the mantissa. @sauer2011 describes the _normalized_ floating-point representation of a binary number as being "left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point" (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix "floats." Now, the $1$ in $1.\boxed{b_{1}b_{2}\ldots b_{52}}$ is assumed, _not stored_. More formally, we have
+
+$$
+x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
+$$
+
+Thus, we see that the term $2^{-j}$ is included in the representation of $x$ precisely when $b_{j}=1$ (the term is $2^{-j}$ and not $2^{j}$ because the $b_{j}\text{th}$ bit occurs to the right of the radix).
+
+```{example}
+The decimal number 9 is equivalent to $\left(1001\right)_{2}$. We can represent this as a floating-point number by shifting the radix point by 3 bits and setting the exponent to 3, i.e., 
+
+$$
+\left(9\right)_{10}=\left(1001\right)_{2}=1.001\cdot2^3,
+$$
+  
+so that $s=0$, $b_{j}=1$ for $j=3$, and $e_{k}=1$ for $k\in\left\{1,10\right\}$. As a check, note that
+
+$$
+\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
+  = \left(1+2^{-3}\right)\cdot 2^{1026-1023}
+  = 1.125\cdot 2^{3}
+  = 9.
+$$
+```
+
+```{example}
+The decimal number 17.625 is equivalent to $\left(10001.101\right)_{2}$. We can represent this as a floating-point number by shifting the radix point by 4 bits, i.e., 
+
+$$
+\left(17.625\right)_{10}=\left(10001.101\right)_{2}=1.0001101\cdot2^4,
+$$
+  
+so that $s=0$, $b_{j}=1$ for $j\in\left\{4,5,7\right\}$, and $e_{k}=1$ for $k\in\left\{1,10,11\right\}$. As a check, note that
+
+$$
+\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
+  = \left(1+2^{-4}+2^{-5}+2^{-7}\right)\cdot 2^{1027-1023}
+  = 1.1015625\cdot 2^{4}
+  = 17.625.
+$$
+```
+
+### Special exponent values
+
+Now, the exponent value $2047_{10}=\left(111\,1111\,1111\right)_{2}$ is reserved to represent infinity if every $b_{j}$ is zero, i.e., if the mantissa bits are all zero, and to represent `NaN` (Not a Number) otherwise. The exponent value 0 is used to represent _subnormal_ floating point numbers, or those numbers where the left-most bit is not assumed to be 1. Thus, the smallest non-reserved value the exponent bits can take is $\mathtt{000\,0000\,0001}$, which corresponds to an exponent of $2^{0}-1023=-1022$. The largest non-reserved value the exponent bits can take is $\mathtt{111\,1111\,1110}$, which corresponds to an exponent of $\sum_{k=1}^{10}2^{k}-1023=1023$.
+
+Thus, the range of the exponent is $\left(-2^{10}+2,2^{10}-1\right)$, so that the largest number that can be represented using the double precision floating-point encoding is roughly $2^{2^{10}-1}=2^{1023}$. To be precise, we must also consider the mantissa. If all the mantissa bits are 1, then 
+
+$$
+\sum_{j=1}^{52}b_{j}2^{-j}=\sum_{j=1}^{52}2^{-j}=\frac{1}{2^{1}}+\frac{1}{2^{2}}+\cdots+\frac{1}{2^{52}},
+$$
+
+which is a geometric series of the form $a+ar+ar^{2}+ar^{3}+\cdots$, with $a=r=1/2$. The sum is finite, but we can view it as the sum of the first $n$ terms of an infinite sum, which has the well-known formula
+
+$$
+\sum_{k=0}^{n-1}ar^{k}=a\left(\frac{1-r^{n}}{1-r}\right).
+$$
+
+Thus,
+
+$$
+\sum_{j=1}^{52}2^{-j} = \frac{1}{2}\left(\frac{1-\left(1/2\right)^{52}}{1-1/2}\right)
+  = 1-\left(\frac{1}{2}\right)^{52}
+  = 1-2^{-52},
+$$
+
+so that
+
+$$
+x_{\max}=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
+  = \left(1+1-2^{-52}\right)\cdot 2^{1023}
+  = \left(2-2^{-52}\right)\cdot 2^{1023}.
+$$
+
+We can compute this quantity.
+
+```{r}
+(2 - 2 ^ -52) * 2 ^ 1023
+```
+
+We see that this is equal to the maximum value of a double-precision floating point number.
+
+```{r}
+.Machine$double.xmax
+```
+
+### Limitations
+
+Floating-point representation has the advantage of being able to represent a large range of numbers, including on very different scales. It also has limitations. For example, it is not possible that to represent every real number exactly. For example, $\sqrt{2}$ does not have a finite decimal expansion, and extremely large or small numbers cannot be represented exactly due to the defined (and finite) number of bits available for representation.
+
+For example, it can be shown that the largest consecutive integer that can be stored exactly is $2^{53}$. If we add 1 to this number, R will be unable to differentiate between them.
+
+```{r}
+2 ^ 53 == (2 ^ 53 + 1)
+```
+
+Floating-point arithmetic is also subject to round-off error, which is especially problematic when adding two numbers on very different scales.
+
+### Floating-point error
+
+```{definition}
+For some $x\in\mathbb{R}$, denote by $\text{fl}\left(x\right)$ the closest double precision floating-point number to $x$.
+```
+
+We now consider the accuracy of floating-point representation. We have 52 stored mantissa bits plus 1 implicit leading bit to store the precision of $x$, which is equivalent to 15-17 decimal bits. The relative roundoff error in representing $x$ is $\left|\text{fl}\left(x\right)-x\right|/\left|x\right|$.
+
+```{example}
+Suppose that $x=12345678901234567890$. Assuming that 16 decimal bits of precision are available to represent $x$, we have $\text{fl}\left(x\right)=12345678901234560000$, so that the relative roundoff error is
+
+$$
+\frac{\left|\text{fl}\left(x\right)-x\right|}{\left|x\right|}=\frac{\left|7890\right|}{\left|x\right|}\approx\frac{10^{4}}{10^{20}}=10^{-16}.
+$$
+```
+
+```{definition}
+The number machine epsilon, denoted $\epsilon_{\text{mach}}$, is the distance between 1 and the smallest floating point number greater than 1.
+```
+
+Alternatively, $\epsilon_{\text{mach}}$ is the smallest positive number for which $\text{fl}\left(1+\epsilon_{\text{mach}}\right)\neq1$. Under the IEEE double precision floating-point standard, machine epsilon is $2^{-52}\approx10^{-16}$. 
+
+```{r}
+2 ^ -52 == .Machine$double.eps
+```
+
+In practice, R cannot distinguish between some $x\in\mathbb{R}$ and $x+c$ for some $c<\epsilon_{\text{mach}}$.
+
+```{r}
+1 == 1 + 2 ^ -53
+```
+
+The relative roundoff error in representing some $x\neq0$ will be at most $\epsilon_{\text{mach}}$, i.e.,
+
+$$
+\frac{\left|\text{fl}\left(x\right)-x\right|}{\left|x\right|}\leq\epsilon_{\text{mach}}.
+$$
+
+In the worst case, i.e., equality, we will have $\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}$. If $\text{fl}\left(x\right)\geq x$, then $\left|\text{fl}\left(x\right)-x\right|\geq0$, so that this expression becomes
+
+$$
+\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}
+  \implies\text{fl}\left(x\right)-x=\left|x\right|\epsilon_{\text{mach}}
+  \implies\text{fl}\left(x\right)=x+\left|x\right|\epsilon_{\text{mach}}.
+$$
+
+If $\text{fl}\left(x\right)<x$, then $\left|\text{fl}\left(x\right)-x\right|<0$, so that the expression becomes
+
+$$
+\left|\text{fl}\left(x\right)-x\right|=\left|x\right|\epsilon_{\text{mach}}
+  \implies-\left(\text{fl}\left(x\right)-x\right)=\left|x\right|\epsilon_{\text{mach}}
+  \implies\text{fl}\left(x\right)=x-\left|x\right|\epsilon_{\text{mach}},
+$$
+
+which we can express compactly as $\text{fl}\left(x\right)=x\pm\left|x\right|\epsilon_{\text{mach}}$. If $x\geq0$, then the right side of this expression becomes 
+
+$$
+x\pm x\epsilon_{\text{mach}}=x\left(1\pm\epsilon_{\text{mach}}\right). 
+$$
+
+If $x<0$, the right side of the expression becomes 
+
+$$
+x\pm\left(-x\right)\epsilon_{\text{mach}}=x\pm x\epsilon_{\text{mach}}
+  =x\left(1\pm\epsilon_{\text{mach}}\right),
+$$
+
+hence $\text{fl}\left(x\right)=x\left(1\pm\epsilon_{\text{mach}}\right)$ for all real $x$. Thus, the relative error of floating-point representation is bounded by $x\left(1\pm\epsilon_{\text{mach}}\right)$. 
+
+```{example}
+Suppose $x,y\in\mathbb{R}$, and consider the floating-point representation of $\left(x+y\right)^{2}$. We have
+
+\begin{align*}
+\text{fl}\left(\left(x+y\right)^{2}\right) & =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)^{2}\right) \\
+	& =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\cdot\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\right) \\
+	& =\text{fl}\left(\left(x\left(1+\epsilon_{1}\right)+y\left(1+\epsilon_{2}\right)\right)\cdot\left(x\left(1+\epsilon_{1}\right)+y\left(1+\epsilon_{2}\right)\right)\right) \\
+	& =\text{fl}\left(x^{2}\left(1+\epsilon_{1}\right)^{2}\left(1+\epsilon_{3}\right)+y^{2}\left(1+\epsilon_{2}\right)^{2}\left(1+\epsilon_{4}\right)+2xy\left(1+\epsilon_{1}\right)\left(1+\epsilon_{2}\right)\left(1+\epsilon_{5}\right)\right) \\
+	& =\left[x^{2}\left(1+\epsilon_{1}\right)^{2}\left(1+\epsilon_{3}\right)+y^{2}\left(1+\epsilon_{2}\right)^{2}\left(1+\epsilon_{4}\right)+2xy\left(1+\epsilon_{1}\right)\left(1+\epsilon_{2}\right)\left(1+\epsilon_{5}\right)\right] \\
+  &\quad\times\left(1+\epsilon_{6}\right),
+\end{align*}
+
+where the $\epsilon_{i}$ terms are specific to the respective floating-point representations of each quantity and are on the order of $\epsilon_{\text{mach}}$. This expression can be simplified as
+
+$$
+\text{fl}\left(\left(x+y\right)^{2}\right)=\left(x+y\right)^{2}\left(1+c\epsilon_{\text{mach}}\right),
+$$
+  
+where $c\approx4$ (and in particular, $c>1$).
+```
+
+We see from this example that floating-point errors can add up. 
+
+```{example}
+The [Vandermonde matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix) has the form
+
+$$
+\mathbf{A}=\begin{bmatrix}
+  1 & \alpha_{1} & \alpha_{1}^{2} & \alpha_{1}^{3} & \cdots & \alpha_{1}^{n-1} \\
+  1 & \alpha_{2} & \alpha_{2}^{2} & \alpha_{2}^{3} & \cdots & \alpha_{2}^{n-1} \\
+  1 & \alpha_{3} & \alpha_{3}^{2} & \alpha_{3}^{3} & \cdots & \alpha_{3}^{n-1} \\
+  \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+  1 & \alpha_{m} & \alpha_{m}^{2} & \alpha_{m}^{3} & \cdots & \alpha_{m}^{n-1} \\
+\end{bmatrix}.
+$$
+
+Let $\mathbf{b}\in\mathbb{R}^{n}$, and consider solving $\mathbf{A}\mathbf{x}=\mathbf{b}$. When we invert $\mathbf{A}$ to find the solution $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}$, we will mix quantities on very different scales, and floating-point error will propagate through our calculation.
+
+Suppose that $m=n=20$ and 
+
+$$
+\boldsymbol{\alpha}=\left(\frac{1}{20},\frac{2}{20},\cdots,\frac{19}{20},1\right).
+$$
+
+Letting $\mathbf{x}=\left(1,2,\ldots,20\right)$, we will compute $\mathbf{b}$.
+```
+
+```{r}
+options(digits = 16)
+n <- 20
+x <- seq(n)
+alpha <- x / n
+A <- t(vapply(alpha, `^`, numeric(n), seq(0, n - 1)))
+b <- A %*% x
+```
+
+Now we pretend that we do not know $\mathbf{x}$ and will solve for it. Comparing $\mathbf{x}$ to the numerical solution $\hat{\mathbf{x}}$, we see that some elements are close, but in most cases the solution is highly inaccurate.
+
+```{r}
+x_hat <- solve(A, b, tol = 10 ^ -100)
+matrix(c(x, x_hat), ncol = 2)
+```
