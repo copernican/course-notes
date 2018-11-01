@@ -116,11 +116,11 @@ We first consider the exponent. More precisely, the $e_{k}$ bits represent the p
  $0$  | $1023$   | $11\,1111\,1111$          | $\mathtt{011\,1111\,1111}$        |
  $1$  | $1024$   | $100\,0000\,0000$         | $\mathtt{100\,0000\,0000}$        |
  $2$  | $1025$   | $100\,0000\,0001$         | $\mathtt{100\,0000\,0001}$        |
- $17$ | $1033$   | $100\,0001\,0001$         | $\mathtt{100\,0001\,0001}$        |
+ $17$ | $1040$   | $100\,0001\,0000$         | $\mathtt{100\,0001\,0000}$        |
 
 Thus, given some $\boxed{e_{1}e_{2}\ldots e_{11}}$, we can recover the exponent $p$ by subtracting the bias.
 
-We now consider the mantissa. @sauer2011 describes the _normalized_ floating-point representation of a binary number as being "left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point" (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix "floats." Observe that this notat scientific notation
+We now consider the mantissa. @sauer2011 describes the _normalized_ floating-point representation of a binary number as being "left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point" (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix "floats." Observe that this is the same process used to convert a decimal number to scientific notation, e.g., $256=2.56\cdot 10^{2}$.
 
 Now, the $1$ in $1.\boxed{b_{1}b_{2}\ldots b_{52}}$ is assumed, _not stored_. More formally, we have
 
@@ -137,7 +137,7 @@ $$
 \left(9\right)_{10}=\left(1001\right)_{2}=1.001\cdot2^3,
 $$
   
-so that $s=0$, $b_{j}=1$ for $j=3$, and $e_{k}=1$ for $k\in\left\{1,10\right\}$. As a check, note that
+so that $s=0$, $b_{j}=1$ for $j=3$, and $p=3\implies p+1023=1026\implies e_{k}=1$ for $k\in\left\{1,10\right\}$. As a check, note that
 
 $$
 \left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
@@ -154,7 +154,7 @@ $$
 \left(17.625\right)_{10}=\left(10001.101\right)_{2}=1.0001101\cdot2^4,
 $$
   
-so that $s=0$, $b_{j}=1$ for $j\in\left\{4,5,7\right\}$, and $e_{k}=1$ for $k\in\left\{1,10,11\right\}$. As a check, note that
+so that $s=0$, $b_{j}=1$ for $j\in\left\{4,5,7\right\}$, and $p=4\implies p+1023=1027\implies e_{k}=1$ for $k\in\left\{1,10,11\right\}$. As a check, note that
 
 $$
 \left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}

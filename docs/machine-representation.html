@@ -347,14 +347,14 @@ x=\left(-1\right)^{s}\cdot1.\boxed{b_{1}b_{2}\ldots b_{52}}\cdot2^{\boxed{e_{1}e
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(17\)</span></td>
-<td align="right"><span class="math inline">\(1033\)</span></td>
-<td align="right"><span class="math inline">\(100\,0001\,0001\)</span></td>
-<td align="right"><span class="math inline">\(\mathtt{100\,0001\,0001}\)</span></td>
+<td align="right"><span class="math inline">\(1040\)</span></td>
+<td align="right"><span class="math inline">\(100\,0001\,0000\)</span></td>
+<td align="right"><span class="math inline">\(\mathtt{100\,0001\,0000}\)</span></td>
 </tr>
 </tbody>
 </table>
 <p>Thus, given some <span class="math inline">\(\boxed{e_{1}e_{2}\ldots e_{11}}\)</span>, we can recover the exponent <span class="math inline">\(p\)</span> by subtracting the bias.</p>
-<p>We now consider the mantissa. <span class="citation">Sauer (<a href="#ref-sauer2011">2011</a>)</span> describes the <em>normalized</em> floating-point representation of a binary number as being “left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point” (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix “floats.” Observe that this notat scientific notation</p>
+<p>We now consider the mantissa. <span class="citation">Sauer (<a href="#ref-sauer2011">2011</a>)</span> describes the <em>normalized</em> floating-point representation of a binary number as being “left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point” (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix “floats.” Observe that this is the same process used to convert a decimal number to scientific notation, e.g., <span class="math inline">\(256=2.56\cdot 10^{2}\)</span>.</p>
 <p>Now, the <span class="math inline">\(1\)</span> in <span class="math inline">\(1.\boxed{b_{1}b_{2}\ldots b_{52}}\)</span> is assumed, <em>not stored</em>. More formally, we have</p>
 <p><span class="math display">\[
 x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
@@ -366,7 +366,7 @@ x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
 <p><span class="math display">\[
 \left(9\right)_{10}=\left(1001\right)_{2}=1.001\cdot2^3,
 \]</span></p>
-<p>so that <span class="math inline">\(s=0\)</span>, <span class="math inline">\(b_{j}=1\)</span> for <span class="math inline">\(j=3\)</span>, and <span class="math inline">\(e_{k}=1\)</span> for <span class="math inline">\(k\in\left\{1,10\right\}\)</span>. As a check, note that</p>
+<p>so that <span class="math inline">\(s=0\)</span>, <span class="math inline">\(b_{j}=1\)</span> for <span class="math inline">\(j=3\)</span>, and <span class="math inline">\(p=3\implies p+1023=1026\implies e_{k}=1\)</span> for <span class="math inline">\(k\in\left\{1,10\right\}\)</span>. As a check, note that</p>
 <span class="math display">\[
 \left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
   = \left(1+2^{-3}\right)\cdot 2^{1026-1023}
@@ -381,7 +381,7 @@ x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
 <p><span class="math display">\[
 \left(17.625\right)_{10}=\left(10001.101\right)_{2}=1.0001101\cdot2^4,
 \]</span></p>
-<p>so that <span class="math inline">\(s=0\)</span>, <span class="math inline">\(b_{j}=1\)</span> for <span class="math inline">\(j\in\left\{4,5,7\right\}\)</span>, and <span class="math inline">\(e_{k}=1\)</span> for <span class="math inline">\(k\in\left\{1,10,11\right\}\)</span>. As a check, note that</p>
+<p>so that <span class="math inline">\(s=0\)</span>, <span class="math inline">\(b_{j}=1\)</span> for <span class="math inline">\(j\in\left\{4,5,7\right\}\)</span>, and <span class="math inline">\(p=4\implies p+1023=1027\implies e_{k}=1\)</span> for <span class="math inline">\(k\in\left\{1,10,11\right\}\)</span>. As a check, note that</p>
 <span class="math display">\[
 \left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-1023}
   = \left(1+2^{-4}+2^{-5}+2^{-7}\right)\cdot 2^{1027-1023}

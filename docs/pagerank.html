@@ -502,34 +502,34 @@ pr_dense</code></pre></div>
 <pre><code>## # A tibble: 9 x 4
 ##          p top_node niter  time
 ##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.000001 21012       31 1.02 
+## 1 0.000001 21012       31 1.00 
 ## 2 0.00001  21012       31 1.02 
-## 3 0.0001   21012       31 0.978
-## 4 0.001    21012       31 0.961
-## 5 0.01     21012       31 0.968
-## 6 0.15     21012       31 0.964
-## 7 0.5      21012       31 1.02 
-## 8 0.9      21012       30 0.946
-## 9 0.99     21012        4 0.094</code></pre>
+## 3 0.0001   21012       31 1.02 
+## 4 0.001    21012       31 1.01 
+## 5 0.01     21012       31 0.836
+## 6 0.15     21012       31 1.17 
+## 7 0.5      21012       31 1.01 
+## 8 0.9      21012       30 0.98 
+## 9 0.99     21012        4 0.128</code></pre>
 <p>We see that the top-rated node is 21012, and that 31 iterations were required for most values of <span class="math inline">\(p\)</span>. As <span class="math inline">\(p\)</span> becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_sparse &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob)
 pr_sparse</code></pre></div>
 <pre><code>## # A tibble: 9 x 4
-##          p top_node niter    time
-##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-## 1 0.000001 21012       31 0.0330 
-## 2 0.00001  21012       31 0.0230 
-## 3 0.0001   21012       31 0.022  
-## 4 0.001    21012       31 0.028  
-## 5 0.01     21012       31 0.0230 
-## 6 0.15     21012       31 0.0240 
-## 7 0.5      21012       31 0.024  
-## 8 0.9      21012       30 0.0230 
-## 9 0.99     21012        4 0.00200</code></pre>
+##          p top_node niter   time
+##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1 0.000001 21012       31 0.0490
+## 2 0.00001  21012       31 0.0370
+## 3 0.0001   21012       31 0.0400
+## 4 0.001    21012       31 0.0390
+## 5 0.01     21012       31 0.0360
+## 6 0.15     21012       31 0.038 
+## 7 0.5      21012       31 0.035 
+## 8 0.9      21012       30 0.0370
+## 9 0.99     21012        4 0.006</code></pre>
 <p>We see that the same number of iterations are required to converge as in the dense case, but that the time required is decreased by roughly two orders of magnitude. Finally, observe that node 21012 is also the node with the largest number of adjacent vertices (connections) (note that the <em>ego graph</em> of a vertex includes the vertex itself):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(gr)
 igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span class="dt">v =</span> <span class="st">&quot;21012&quot;</span>)</code></pre></div>
-<pre><code>## + 81/5242 vertices, named, from aada27d:
+<pre><code>## + 81/5242 vertices, named, from f27f284:
 ##  [1] 10243 6610  22691 2980  18866 25758 11241 13597 3409  15538 570  
 ## [12] 8503  18719 9889  773   9341  21847 6179  1997  2741  13060 14807
 ## [23] 24955 45    4511  21281 23293 9482  15003 20635 22457 19423 5134 
