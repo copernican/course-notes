@@ -16,7 +16,7 @@ $$
 \ldots b_{2}2^{2}+b_{1}2^{1}+b_{0}2^{0}+b_{-1}2^{-1}+b_{-2}2^{-2}\ldots.
 $$
 
-A binary number with no fractional part may be converted to the corresponding decimal integer by adding powers of 2. If the $j\text{th}$ bit is 1, then the sum should include the term $2^{j}$.
+A binary number with no fractional part may be converted to the corresponding decimal integer by adding (the nonnegative) powers of 2. If the $j\text{th}$ bit is 1, then the sum should include the term $2^{j}$.
 
 ```{example}
 The binary number $10001$ has $1\text{s}$ in positions 0 and 4. Denoting by $\left(\cdot\right)_{b}$ a number in base $b$, we have
@@ -47,15 +47,15 @@ The situation is more involved if the fractional part does not terminate, but th
 Suppose that we encode an integer using 32 bits (equivalently, 4 bytes), each of which may be 0 or 1. We allocate a single bit $s$ to hold the sign, and we denote the $k\text{th}$ bit by $i_{k}$. Then, an integer $x$ can be written as
 
 $$
-x=\left(-1\right)^{s}\cdot\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}\right)
-  =\left(-1\right)^{s}\sum_{k=1}^{31}i_{k}2^{k-1},
+x=\left(-1\right)^{s}\cdot\left(i_{0}2^{0}+i_{1}2^{1}+i_{2}2^{2}+\cdots+i_{30}2^{30}\right)
+  =\left(-1\right)^{s}\sum_{k=0}^{30}i_{k}2^{k},
 $$
 
 and we can store this representation as the vector
 
 $$
 \begin{bmatrix}
-  s & i_{1} & i_{2} & \cdots & i_{30} & i_{31}
+  s & i_{0} & i_{1} & \cdots & i_{29} & i_{30}
 \end{bmatrix},
 $$
 
@@ -73,11 +73,11 @@ sum(2 ^ seq(0, 30))
 
 Now, this encoding is inefficient because it represents zero in two ways (zero is unsigned, so we may have $s=0$ or $s=1$), hence we are losing a bit. Suppose instead that we allocate all 32 bits to terms in the above summation, and by convention subtract $2^{31}$ from the sum, so that negative integers can be represented. Then, under this scheme, 
 $$
-x=\left(i_{1}2^{0}+i_{2}2^{1}+i_{3}2^{2}+\cdots+i_{31}2^{30}+i_{32}2^{31}\right)-2^{31}
-  =\sum_{k=1}^{32}i_{k}2^{k-1}-2^{31}.
+x=\left(i_{0}2^{0}+i_{1}2^{1}+i_{2}2^{2}+\cdots+i_{30}2^{30}+i_{31}2^{31}\right)-2^{31}
+  =\sum_{k=1}^{32}i_{k}2^{k}-2^{31}.
 $$
 
-To represent 1, we will have $i_{1}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 2,3,\ldots,31\right\}$. The next consecutive integer is 2, which we represent with $i_{2}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 1\right\} \cup\left\{ 3,4,\ldots,31\right\}$. We represent 3 as $i_{1}=1$, $i_{2}=1$, $i_{32}=1$, and $i_{k}=0$ for $k\in\left\{ 3,4,\ldots,31\right\}$. We proceed in this fashion until $i_{k}=1$ for $k\in\left\{ 1,2,\ldots,32\right\}$, i.e., 
+To represent 1, we will have $i_{0}=1$, $i_{31}=1$, and $i_{k}=0$ for $k\in\left\{ 1,2,\ldots,30\right\}$. The next consecutive integer is 2, which we represent with $i_{1}=1$, $i_{31}=1$, and $i_{k}=0$ for $k\in\left\{ 0\right\} \cup\left\{ 2,3,\ldots,30\right\}$. We represent 3 as $i_{0}=1$, $i_{1}=1$, $i_{31}=1$, and $i_{k}=0$ for $k\in\left\{ 2,3,\ldots,30\right\}$. We proceed in this fashion until $i_{k}=1$ for $k\in\left\{ 0,1,\ldots,31\right\}$, i.e., 
 
 $$
 \begin{align*}
@@ -88,7 +88,7 @@ x_{\max} & = \left(2^{0}+2^{1}+2^{2}+\cdots+2^{30}+2^{31}\right)-2^{31} \\
 \end{align*}
 $$
 
-which is the largest integer that can be stored under this encoding scheme. The largest negative integer that can be stored occurs when each $i_{k}$ is 0, and this is $-2^{31}$. Zero is represented by setting $i_{32}=1$ and $i_{k}=0$ for $k\in\left\{ 1,2,\ldots,31\right\}$. Thus, we see that there are a variety of possible encoding schemes for integers, each with its own considerations.
+which is the largest integer that can be stored under this encoding scheme. The largest negative integer that can be stored occurs when each $i_{k}$ is 0, and this is $-2^{31}$. Zero is represented by setting $i_{31}=1$ and $i_{k}=0$ for $k\in\left\{ 0,1,\ldots,30\right\}$. Thus, we see that there are a variety of possible encoding schemes for integers, each with its own considerations.
 
 ## Floating-point numbers
 
@@ -108,7 +108,7 @@ $$
 
 where $\boxed{b_{1}b_{2}\dots b_{52}}$ and $\boxed{e_{1}e_{2}\ldots e_{11}}$ are the concatenations of the $b_{j}$ bits and $e_{k}$ bits, respectively.
 
-We first consider the exponent. More precisely, the $e_{k}$ bits represent the positive binary integer that is the sum of the exponent and the _bias_ $2^{10}-1=1023$ (for exponents between -1022 and 1023). Letting $p$ be the decimal exponent, we will consider some examples.
+We first consider the exponent. More precisely, the $e_{k}$ bits represent the positive binary integer that is the sum of the exponent and the _bias_ $2^{10}-1=1023$ (for exponents between -1022 and 1023). Letting $p=\left(\boxed{e_{1}e_{2}\ldots e_{11}}\right)_{2}-\left(1023\right)_{10}$ be the decimal exponent, we will consider some examples.
 
  $p$  | $p+1023$ | $\left(p+1023\right)_{2}$ | $\boxed{e_{1}e_{2}\ldots e_{11}}$ |
 -----:| --------:| -------------------------:| ---------------------------------:|
@@ -120,7 +120,9 @@ We first consider the exponent. More precisely, the $e_{k}$ bits represent the p
 
 Thus, given some $\boxed{e_{1}e_{2}\ldots e_{11}}$, we can recover the exponent $p$ by subtracting the bias.
 
-We now consider the mantissa. @sauer2011 describes the _normalized_ floating-point representation of a binary number as being "left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point" (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix "floats." Now, the $1$ in $1.\boxed{b_{1}b_{2}\ldots b_{52}}$ is assumed, _not stored_. More formally, we have
+We now consider the mantissa. @sauer2011 describes the _normalized_ floating-point representation of a binary number as being "left-justified, meaning that the leftmost 1 is shifted just to the left of the radix point" (generalization of a decimal point). We can change the exponent to compensate for shifting the radix, i.e., the radix "floats." Observe that this notat scientific notation
+
+Now, the $1$ in $1.\boxed{b_{1}b_{2}\ldots b_{52}}$ is assumed, _not stored_. More formally, we have
 
 $$
 x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
@@ -164,9 +166,20 @@ $$
 
 ### Special exponent values
 
-Now, the exponent value $2047_{10}=\left(111\,1111\,1111\right)_{2}$ is reserved to represent infinity if every $b_{j}$ is zero, i.e., if the mantissa bits are all zero, and to represent `NaN` (Not a Number) otherwise. The exponent value 0 is used to represent _subnormal_ floating point numbers, or those numbers where the left-most bit is not assumed to be 1. Thus, the smallest non-reserved value the exponent bits can take is $\mathtt{000\,0000\,0001}$, which corresponds to an exponent of $2^{0}-1023=-1022$. The largest non-reserved value the exponent bits can take is $\mathtt{111\,1111\,1110}$, which corresponds to an exponent of $\sum_{k=1}^{10}2^{k}-1023=1023$.
+Now, the exponent value $\left(2047\right)_{10}=\left(111\,1111\,1111\right)_{2}$ is reserved to represent infinity if every $b_{j}$ is zero, i.e., if the mantissa bits are all zero, and to represent `NaN` (Not a Number) otherwise. The exponent value 0 is used to represent _subnormal_ floating point numbers, or those numbers where the left-most bit is not assumed to be 1. We summarize a variety of special cases below.
 
-Thus, the range of the exponent is $\left(-2^{10}+2,2^{10}-1\right)$, so that the largest number that can be represented using the double precision floating-point encoding is roughly $2^{2^{10}-1}=2^{1023}$. To be precise, we must also consider the mantissa. If all the mantissa bits are 1, then 
+ $s$ | $\boxed{e_{1}e_{2}\ldots e_{11}}$ | $\boxed{b_{1}b_{2}\ldots b_{52}}$ | value |
+----:|---:| ---:| ---:|
+ $\mathtt{0}$ | $\mathtt{111\,1111\,1111}$ | $b_{j}=0\,\forall j$ | $+\infty$ |
+ $\mathtt{1}$ | $\mathtt{111\,1111\,1111}$ | $b_{j}=0\,\forall j$ | $-\infty$ |
+ $\mathtt{0}$ | $\mathtt{111\,1111\,1111}$ | $b_{52}=1$ | `NaN` |
+ $\mathtt{0}$ | $\mathtt{000\,0000\,0000}$ | $\exists\,j:b_{j}=1$ | subnormal |
+ $\mathtt{0}$ | $\mathtt{000\,0000\,0000}$ | $b_{j}=0\,\forall j$ | $+0$ |
+ $\mathtt{1}$ | $\mathtt{000\,0000\,0000}$ | $b_{j}=0\,\forall j$ | $-0$ |
+ 
+Thus, the smallest non-reserved value the exponent bits can take is $\mathtt{000\,0000\,0001}$, which corresponds to an exponent of $2^{0}-1023=-1022$. The largest non-reserved value the exponent bits can take is $\mathtt{111\,1111\,1110}$, which corresponds to an exponent of $\sum_{k=1}^{10}2^{k}-1023=1023$.
+
+It follows that the range of the exponent is $\left(-2^{10}+2,2^{10}-1\right)$, so that the largest number that can be represented using the double precision floating-point encoding is roughly $2^{2^{10}-1}=2^{1023}$. To be precise, we must also consider the mantissa. If all the mantissa bits are 1, then 
 
 $$
 \sum_{j=1}^{52}b_{j}2^{-j}=\sum_{j=1}^{52}2^{-j}=\frac{1}{2^{1}}+\frac{1}{2^{2}}+\cdots+\frac{1}{2^{52}},
@@ -208,7 +221,7 @@ We see that this is equal to the maximum value of a double-precision floating po
 
 ### Limitations
 
-Floating-point representation has the advantage of being able to represent a large range of numbers, including on very different scales. It also has limitations. For example, it is not possible that to represent every real number exactly. For example, $\sqrt{2}$ does not have a finite decimal expansion, and extremely large or small numbers cannot be represented exactly due to the defined (and finite) number of bits available for representation.
+Floating-point representation has the advantage of being able to represent a large range of numbers, including on very different scales. It also has limitations. For example, it is not possible to represent every real number exactly. For example, $\sqrt{2}$ does not have a finite decimal expansion, and extremely large or small numbers cannot be represented exactly due to the defined (and finite) number of bits available for representation.
 
 For example, it can be shown that the largest consecutive integer that can be stored exactly is $2^{53}$. If we add 1 to this number, R will be unable to differentiate between them.
 
@@ -343,7 +356,7 @@ A <- t(vapply(alpha, `^`, numeric(n), seq(0, n - 1)))
 b <- A %*% x
 ```
 
-Now we pretend that we do not know $\mathbf{x}$ and will solve for it. Comparing $\mathbf{x}$ to the numerical solution $\hat{\mathbf{x}}$, we see that some elements are close, but in most cases the solution is highly inaccurate.
+Now we pretend that we do not know $\mathbf{x}$ and will solve for it. Comparing $\mathbf{x}$ to the numerical solution $\hat{\mathbf{x}}$, we see that some elements are close, but in most cases the solution is highly inaccurate. We will see in the future that this inaccuracy is intimately connected to the _condition number_ $\kappa$ of the matrix $\mathbf{A}$.
 
 ```{r}
 x_hat <- solve(A, b, tol = 10 ^ -100)
