@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="common-families-of-distributions.html">
-<link rel="next" href="generalized-linear-models.html">
+<link rel="prev" href="point-estimation.html">
+<link rel="next" href="machine-representation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -228,77 +228,87 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="point-estimation" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Point estimation</h1>
-<div id="methods-of-finding-estimators" class="section level2">
-<h2><span class="header-section-number">6.1</span> Methods of finding estimators</h2>
-<div id="maximum-likelihood-estimators" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> Maximum likelihood estimators</h3>
+<div id="generalized-linear-models" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Generalized linear models</h1>
+<p>In ordinary least squares with a single predictor, we have the relationship <span class="math inline">\(\E\left[Y_{i}\right]=\alpha+\beta x_{i}\)</span>. This model asserts that the mean response</p>
+<ul>
+<li>has a “baseline” (intercept) of <span class="math inline">\(\alpha\)</span></li>
+<li>will change by <span class="math inline">\(\beta\)</span> (slope) for a one-unit increase in <span class="math inline">\(x_{i}\)</span></li>
+</ul>
+<p>Because the mean response is <em>linear</em> in the regression coefficients, we refer to OLS as a linear model. OLS assumes that the response <span class="math inline">\(Y\)</span> is continuous, e.g., height. But, analytical interest often lies in responses that are not continuous, and OLS does not model these discrete responses well. In such cases, we can extend the model by assuming other distributions for <span class="math inline">\(Y\)</span>.</p>
+<p>Following <span class="citation">Casella and Berger (<a href="#ref-casella2002statistical">2002</a>)</span>, a <em>generalized linear model</em> “describes a relationship between the mean of a response variable <span class="math inline">\(Y\)</span> and an independent variable <span class="math inline">\(x\)</span>.” A GLM consists of three components.</p>
+<ol style="list-style-type: decimal">
+<li><p>The <em>random component</em> or <em>distributional assumption</em> consists of the response variables <span class="math inline">\(Y_{1},\ldots,Y_{n}\)</span>, which are assumed to be independent random variables from the same exponential family (though they are not assumed to be identically distributed). <span class="citation">Fitzmaurice, Laird, and Ware (<a href="#ref-fitzmaurice2012applied">2012</a>)</span> describe the random component as “a probabilistic mechanism by which the responses are assumed to be generated.”</p></li>
+<li><p>The <em>systematic component</em> is the linear regression model, i.e., a function of the predictor variables <span class="math inline">\(X_{i}\)</span> that is linear in the parameters <span class="math inline">\(\beta_{i}\)</span> and related to the mean of <span class="math inline">\(Y_{i}\)</span>.</p></li>
+<li><p>The <em>link function</em> <span class="math inline">\(g\left(\mu\right)\)</span> links the random and systematic components by asserting that <span class="math inline">\(g\left(\mu_{i}\right)=\mathbf{X}_{i}^{\mathsf{T}}\boldsymbol{\beta}\)</span>, where <span class="math inline">\(\mu_{i}=\E\left[Y_{i}\right]\)</span> and <span class="math inline">\(\mathbf{X}_{i}^{\mathsf{T}}\boldsymbol{\beta}=\sum_{k=1}^{p}\beta_{k}X_{ik}\)</span> is the systematic component.</p></li>
+</ol>
 
 <div class="example">
-<p><span id="exm:gaussian-mle" class="example"><strong>Example 6.1  </strong></span>Let <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> be iid <span class="math inline">\(\mathcal{N}\left(\mu,\sigma^{2}\right)\)</span>, with both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^{2}\)</span> unknown. Then,</p>
+<p><span id="exm:logistic-regression" class="example"><strong>Example 7.1  (Logistic regression)  </strong></span>For <span class="math inline">\(Y_{1},Y_{2},\ldots,Y_{n}\)</span>, let <span class="math inline">\(Y_{i}\sim\text{Bernoulli}\left(p\right)\)</span>, i.e.,</p>
 <p><span class="math display">\[
-\mathcal{L}\left(\mu,\sigma^{2}|\mathbf{x}\right)=\frac{1}{\left(2\pi\sigma^{2}\right)^{n/2}}\exp\left\{-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2}\right\},
+Y_{i}=\begin{cases}
+0, &amp; \text{if no event}\\
+1, &amp; \text{if event}
+\end{cases}.
 \]</span></p>
-<p>so that</p>
+<p>The <span class="math inline">\(Y_{i}\)</span> are the random component. Suppose that we believe that variables <span class="math inline">\(X_{1},\ldots,X_{p}\)</span> are related to the response <span class="math inline">\(Y\)</span>, so that the systematic component is <span class="math inline">\(\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\)</span>. We now consider the link function. The expected value of a Bernoulli random variable is its parameter <span class="math inline">\(p\)</span>, hence <span class="math inline">\(\mu_{i}=\E\left[Y_{i}\right]=p_{i}=P\left(Y_{i}=1\right)\)</span>.</p>
+<p>If we use the <em>identity link</em> <span class="math inline">\(g\left(\mu\right)=\mu\)</span>, then our model is <span class="math inline">\(\mu=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\)</span>. Depending on our predictors, we may obtain values for <span class="math inline">\(\mu\)</span> that lie outside <span class="math inline">\(\left[0,1\right]\)</span>. Because <span class="math inline">\(p\in\left[0,1\right]\)</span>, it is not clear how to interpret such values. Accordingly, we would like to transform <span class="math inline">\(\mu\)</span> such that it always lies in <span class="math inline">\(\left[0,1\right]\)</span>.</p>
+<p>The standard logistic function is</p>
 <p><span class="math display">\[
-\ell\left(\mu,\sigma^{2}|\mathbf{x}\right)=-\frac{n}{2}\log 2\pi-\frac{n}{2}\log\sigma^{2}-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2}.
+\sigma\left(t\right)=\frac{1}{1+\mathrm{e}^{-t}},\quad x\in\mathbb{R}.
 \]</span></p>
-<p>The partial derivatives are</p>
+<p>Observe that</p>
 <p><span class="math display">\[
-\frac{\partial}{\partial\mu}\ell\left(\mu,\sigma^{2}|\mathbf{x}\right) = 
-  -\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}2\left(x_{i}-\mu\right)\cdot\left(-1\right) = 
-  \frac{1}{\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)
+\lim_{t\rightarrow\infty} \sigma\left(t\right)=\frac{1}{\lim_{t\rightarrow\infty}\left(1+\mathrm{e}^{-t}\right)}
+  = \frac{1}{1+\lim_{t\rightarrow\infty}\mathrm{e}^{-t}}=\frac{1}{1+0}=1
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-\frac{\partial}{\partial\sigma^{2}}\ell\left(\mu,\sigma^{2}|\mathbf{x}\right) =
-  -\frac{n}{2\sigma^{2}}-(-1)\frac{1}{2\sigma^{4}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2} =
-  -\frac{n}{2\sigma^{2}}+\frac{1}{2\sigma^{4}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2}.
+\lim_{t\rightarrow -\infty}\sigma\left(t\right)=\frac{1}{1+\lim_{t\rightarrow -\infty}\mathrm{e}^{-t}}=\frac{1}{1+\infty}=0.
 \]</span></p>
-<p>Setting the partial derivative with respect to <span class="math inline">\(\mu\)</span> equal to zero gives</p>
+<p>For any <span class="math inline">\(t\in\left(-\infty,\infty\right)\)</span>, we have <span class="math inline">\(\mathrm{e}^{-t}&gt;0\)</span>, so that <span class="math inline">\(1&lt;1+\mathrm{e}^{-t}\)</span>, hence <span class="math inline">\(\sigma\left(t\right)\)</span> is bounded below by 0 and above by 1. The standard logistic function would thus seem to be a good candidate for our link. If we let <span class="math inline">\(t=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\)</span>, then <span class="math inline">\(\sigma\)</span> will map the model to <span class="math inline">\(\left[0,1\right]\)</span>, i.e.,</p>
 <p><span class="math display">\[
-0 = \frac{1}{\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)=\frac{1}{\sigma^{2}}\left(\sum_{i=1}^{n}x_{i}-n\mu\right)\implies n\mu=\sum_{i=1}^{n}x_{i}\implies\hat{\mu}=\frac{1}{n}\sum_{i=1}^{n}x_{i}=\bar{x}.
+p\left(\mathbf{X}\right)=\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}},
 \]</span></p>
-<p>Setting the partial derivative with respect to <span class="math inline">\(\sigma^{2}\)</span> equal to zero gives</p>
+<p>where we have used the notation <span class="math inline">\(p\)</span> to reflect that we are modeling the probability of a success (the event of interest occurs). We have mapped the model to an interval appropriate for the mean response, but have some work left to do to put it into the correct form for a GLM. The inverse of the logistic function is the <em>logit</em> function, given by</p>
 <p><span class="math display">\[
-\begin{align*}
-  0 &amp; =-\frac{n}{2\sigma^{2}}+\frac{1}{2\sigma^{4}}\sum_{i=1}^{n}\left(x_{i}-\hat{\mu}\right)^{2} \\
-  \implies n &amp; = \frac{1}{\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \\
-  \implies \hat{\sigma}^{2} &amp; = \frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}
-\end{align*}
+\text{logit}\left(t\right)=\log\frac{t}{1-t}.
 \]</span></p>
-<p>Now, theorem <a href="probability-theory.html#thm:computing-sums-rand-samples">3.19</a> implies that</p>
-<p><span class="math display">\[
-\sum_{i=1}^{n}\left(x_{i}-a\right)^{2}\geq\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2},
-\]</span></p>
-<p>with equality if and only if <span class="math inline">\(a=\bar{x}\)</span>. It follows that</p>
-<p><span class="math display">\[
-\exp\left\{-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}\right\}\geq\exp\left\{-\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2}\right\}
-\]</span></p>
-<p>for any <span class="math inline">\(\sigma^{2}\)</span>, i.e., the likelihood will not be maximized for any <span class="math inline">\(\mu\neq\bar{x}\)</span>. Thus, we need only verify that that likelihood is maximized for <span class="math inline">\(\hat{\sigma}^{2}\)</span>. We will evaluate the second derivative of the log-likelihood with respect to <span class="math inline">\(\sigma^{2}\)</span> at <span class="math inline">\(\boldsymbol{\theta}=\hat{\boldsymbol{\theta}}\)</span> to verify that <span class="math inline">\(\hat{\sigma^{2}}\)</span> is a maximum. We have</p>
+<p>Observe that</p>
 <p><span class="math display">\[
 \begin{align*}
-  \frac{\partial^{2}}{\partial\left(\sigma^{2}\right)^{2}}\ell\left(\mu,\sigma^{2}|\mathbf{x}\right) &amp; =
-  -\frac{n}{2\sigma^{4}}\left(-1\right)+\frac{1}{2\sigma^{6}}\left(-2\right)\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2} \\
-  &amp; = \frac{n}{2\sigma^{4}}-\frac{1}{\sigma^{6}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2} \\
-  &amp; = \frac{1}{\sigma^{4}}\left(\frac{n}{2}-\frac{1}{\sigma^{2}}\sum_{i=1}^{n}\left(x_{i}-\mu\right)^{2}\right).
+  \text{logit}\left(p\left(\mathbf{X}\right)\right) &amp; = \log\frac{p\left(\mathbf{X}\right)}{1-p\left(\mathbf{X}\right)} \\
+  &amp; = \log p\left(\mathbf{X}\right)-\log\left(1-p\left(\mathbf{X}\right)\right) \\
+  &amp; = \log\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}-\log\left(1-\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  &amp; = \log 1-\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(\frac{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}-\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  &amp; = -\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(\frac{\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  &amp; = -\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\left[\log\left(\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)\right] \\
+  &amp; = \mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}.
 \end{align*}
 \]</span></p>
-<p>Now, <span class="math inline">\(\hat{\sigma}^{2}\)</span> is nonnegative, and provided at least one sample is nonzero, will be positive. Thus, the quantity above will be negative if and only if</p>
+<p>Thus, applying the logit function to the transformed mean response <span class="math inline">\(p\left(\mathbf{X}\right)\)</span> results in an appropriate form for the systematic component of the model. Accordingly, we will take the logit as the link function, i.e., <span class="math inline">\(g\left(\mu\right)=\text{logit}\left(\mu\right)\)</span>, so that the logistic regression model is</p>
 <p><span class="math display">\[
-\begin{align*}
-  \frac{n}{2} &amp; &lt;\frac{1}{\hat{\sigma}^{2}}\sum_{i=1}^{n}\left(x_{i}-\hat{\mu}\right)^{2} \\
-  \implies n\hat{\sigma}^{2} &amp; &lt; 2\sum_{i=1}^{n}\left(x_{i}-\hat{\mu}\right)^{2} \\
-  \implies n\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}\right) &amp; &lt; 2\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2} \\
-  \implies 1 &lt; 2.
-\end{align*}
+\text{logit}\left(\mu\right) = \text{logit}\left(p\right) = \log\left(\frac{p}{1-p}\right)=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}.
 \]</span></p>
-We see that the inequality holds, hence the second derivative evaluated at <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is negative, and it follows that <span class="math inline">\(\hat{\sigma}^{2}\)</span> is a maximum, hence <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is the MLE.
+<p>We refer to <span class="math inline">\(p/\left(1-p\right)\)</span> as the <em>odds</em> of the event (how likely versus not). We see that logistic regression is linear in the <em>log-odds</em> of <span class="math inline">\(Y\)</span>. When we exponentiate both sides of the above equation, we can interpret the coefficient <span class="math inline">\(\beta_{i}\)</span> as the multiplicative change in the odds of success associated with a one-unit change in <span class="math inline">\(X_{i}\)</span>.</p>
+Finally, recall from <a href="common-families-of-distributions.html#exm:natural-param-binomial">5.6</a> that <span class="math inline">\(\log\left(p/\left(1-p\right)\right)\)</span> is the natural parameter of the binomial exponential family. When the natural parameter is used as the link function in a GLM, it is called the <em>canonical link</em>.
+</div>
+
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-67" class="example"><strong>Example 7.2  (Poisson regression)  </strong></span>FINISH THIS EXAMPLE</p>
+In a Poisson regression, we have <span class="math inline">\(\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}\)</span>.
 </div>
 
 
 </div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-casella2002statistical">
+<p>Casella, G., and R.L. Berger. 2002. <em>Statistical Inference</em>. Duxbury Advanced Series in Statistics and Decision Sciences. Thomson Learning. <a href="https://books.google.com/books?id=0x\_vAAAAMAAJ" class="uri">https://books.google.com/books?id=0x\_vAAAAMAAJ</a>.</p>
+</div>
+<div id="ref-fitzmaurice2012applied">
+<p>Fitzmaurice, Garrett M, Nan M Laird, and James H Ware. 2012. <em>Applied Longitudinal Analysis</em>. Vol. 998. John Wiley &amp; Sons.</p>
 </div>
 </div>
             </section>
@@ -306,8 +316,8 @@ We see that the inequality holds, hence the second derivative evaluated at <span
           </div>
         </div>
       </div>
-<a href="common-families-of-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="generalized-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="point-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-representation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

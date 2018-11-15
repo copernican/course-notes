@@ -1,0 +1,93 @@
+# Generalized linear models
+
+In ordinary least squares with a single predictor, we have the relationship $\E\left[Y_{i}\right]=\alpha+\beta x_{i}$. This model asserts that the mean response 
+
+- has a "baseline" (intercept) of $\alpha$
+- will change by $\beta$ (slope) for a one-unit increase in $x_{i}$
+
+Because the mean response is _linear_ in the regression coefficients, we refer to OLS as a linear model. OLS assumes that the response $Y$ is continuous, e.g., height. But, analytical interest often lies in responses that are not continuous, and OLS does not model these discrete responses well. In such cases, we can extend the model by assuming other distributions for $Y$.
+
+Following @casella2002statistical, a _generalized linear model_ "describes a relationship between the mean of a response variable $Y$ and an independent variable $x$." A GLM consists of three components.
+
+1. The _random component_ or _distributional assumption_ consists of the response variables $Y_{1},\ldots,Y_{n}$, which are assumed to be independent random variables from the same exponential family (though they are not assumed to be identically distributed). @fitzmaurice2012applied describe the random component as "a probabilistic mechanism by which the responses are assumed to be generated."
+
+2. The _systematic component_ is the linear regression model, i.e., a function of the predictor variables $X_{i}$ that is linear in the parameters $\beta_{i}$ and related to the mean of $Y_{i}$.
+
+3. The _link function_ $g\left(\mu\right)$ links the random and systematic components by asserting that $g\left(\mu_{i}\right)=\mathbf{X}_{i}^{\mathsf{T}}\boldsymbol{\beta}$, where $\mu_{i}=\E\left[Y_{i}\right]$ and $\mathbf{X}_{i}^{\mathsf{T}}\boldsymbol{\beta}=\sum_{k=1}^{p}\beta_{k}X_{ik}$ is the systematic component.
+
+```{example, label = "logistic-regression", name = "Logistic regression"}
+For $Y_{1},Y_{2},\ldots,Y_{n}$, let $Y_{i}\sim\text{Bernoulli}\left(p\right)$, i.e., 
+
+$$
+Y_{i}=\begin{cases}
+0, & \text{if no event}\\
+1, & \text{if event}
+\end{cases}.
+$$
+
+The $Y_{i}$ are the random component. Suppose that we believe that variables $X_{1},\ldots,X_{p}$ are related to the response $Y$, so that the systematic component is $\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}$. We now consider the link function. The expected value of a Bernoulli random variable is its parameter $p$, hence $\mu_{i}=\E\left[Y_{i}\right]=p_{i}=P\left(Y_{i}=1\right)$. 
+
+If we use the _identity link_ $g\left(\mu\right)=\mu$, then our model is $\mu=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}$. Depending on our predictors, we may obtain values for $\mu$ that lie outside $\left[0,1\right]$. Because $p\in\left[0,1\right]$, it is not clear how to interpret such values. Accordingly, we would like to transform $\mu$ such that it always lies in $\left[0,1\right]$.
+
+The standard logistic function is
+
+$$
+\sigma\left(t\right)=\frac{1}{1+\mathrm{e}^{-t}},\quad x\in\mathbb{R}.
+$$
+
+Observe that
+
+$$
+\lim_{t\rightarrow\infty} \sigma\left(t\right)=\frac{1}{\lim_{t\rightarrow\infty}\left(1+\mathrm{e}^{-t}\right)}
+  = \frac{1}{1+\lim_{t\rightarrow\infty}\mathrm{e}^{-t}}=\frac{1}{1+0}=1
+$$
+
+and
+
+$$
+\lim_{t\rightarrow -\infty}\sigma\left(t\right)=\frac{1}{1+\lim_{t\rightarrow -\infty}\mathrm{e}^{-t}}=\frac{1}{1+\infty}=0.
+$$
+
+For any $t\in\left(-\infty,\infty\right)$, we have $\mathrm{e}^{-t}>0$, so that $1<1+\mathrm{e}^{-t}$, hence $\sigma\left(t\right)$ is bounded below by 0 and above by 1. The standard logistic function would thus seem to be a good candidate for our link. If we let $t=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}$, then $\sigma$ will map the model to $\left[0,1\right]$, i.e.,
+
+$$
+p\left(\mathbf{X}\right)=\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}},
+$$
+
+where we have used the notation $p$ to reflect that we are modeling the probability of a success (the event of interest occurs). We have mapped the model to an interval appropriate for the mean response, but have some work left to do to put it into the correct form for a GLM. The inverse of the logistic function is the _logit_ function, given by
+
+$$
+\text{logit}\left(t\right)=\log\frac{t}{1-t}.
+$$
+
+Observe that
+
+$$
+\begin{align*}
+  \text{logit}\left(p\left(\mathbf{X}\right)\right) & = \log\frac{p\left(\mathbf{X}\right)}{1-p\left(\mathbf{X}\right)} \\
+  & = \log p\left(\mathbf{X}\right)-\log\left(1-p\left(\mathbf{X}\right)\right) \\
+  & = \log\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}-\log\left(1-\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  & = \log 1-\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(\frac{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}-\frac{1}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  & = -\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(\frac{\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}{1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}}\right) \\
+  & = -\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\left[\log\left(\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)-\log\left(1+\exp\left\{-\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}\right)\right] \\
+  & = \mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}.
+\end{align*}
+$$
+
+Thus, applying the logit function to the transformed mean response $p\left(\mathbf{X}\right)$ results in an appropriate form for the systematic component of the model. Accordingly, we will take the logit as the link function, i.e., $g\left(\mu\right)=\text{logit}\left(\mu\right)$, so that the logistic regression model is
+
+
+$$
+\text{logit}\left(\mu\right) = \text{logit}\left(p\right) = \log\left(\frac{p}{1-p}\right)=\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}.
+$$
+  
+We refer to $p/\left(1-p\right)$ as the _odds_ of the event (how likely versus not). We see that logistic regression is linear in the _log-odds_ of $Y$. When we exponentiate both sides of the above equation, we can interpret the coefficient $\beta_{i}$ as the multiplicative change in the odds of success associated with a one-unit change in $X_{i}$.
+
+Finally, recall from \@ref(exm:natural-param-binomial) that $\log\left(p/\left(1-p\right)\right)$ is the natural parameter of the binomial exponential family. When the natural parameter is used as the link function in a GLM, it is called the _canonical link_.
+```
+
+```{example, name = "Poisson regression"}
+FINISH THIS EXAMPLE
+
+In a Poisson regression, we have $\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}$.
+```

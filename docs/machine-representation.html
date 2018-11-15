@@ -25,14 +25,14 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-11-01">
+<meta name="date" content="2018-11-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="point-estimation.html">
+<link rel="prev" href="generalized-linear-models.html">
 <link rel="next" href="em-algorithm.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -147,6 +147,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html"><i class="fa fa-check"></i><b>5</b> Common families of distributions</a><ul>
 <li class="chapter" data-level="5.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#defn-exp-family"><i class="fa fa-check"></i><b>5.1</b> Exponential families</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#natural-parameters"><i class="fa fa-check"></i><b>5.1.1</b> Natural parameters</a></li>
+<li class="chapter" data-level="5.1.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#conjugate-prior-distributions"><i class="fa fa-check"></i><b>5.1.2</b> Conjugate prior distributions</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-and-scale-families"><i class="fa fa-check"></i><b>5.2</b> Location and scale families</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="common-families-of-distributions.html"><a href="common-families-of-distributions.html#location-families"><i class="fa fa-check"></i><b>5.2.1</b> Location families</a></li>
@@ -158,51 +159,52 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1.1" data-path="point-estimation.html"><a href="point-estimation.html#maximum-likelihood-estimators"><i class="fa fa-check"></i><b>6.1.1</b> Maximum likelihood estimators</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="machine-representation.html"><a href="machine-representation.html"><i class="fa fa-check"></i><b>7</b> Machine representation</a><ul>
-<li class="chapter" data-level="7.1" data-path="machine-representation.html"><a href="machine-representation.html#binary-numbers"><i class="fa fa-check"></i><b>7.1</b> Binary numbers</a></li>
-<li class="chapter" data-level="7.2" data-path="machine-representation.html"><a href="machine-representation.html#integers"><i class="fa fa-check"></i><b>7.2</b> Integers</a></li>
-<li class="chapter" data-level="7.3" data-path="machine-representation.html"><a href="machine-representation.html#floating-point-numbers"><i class="fa fa-check"></i><b>7.3</b> Floating-point numbers</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="machine-representation.html"><a href="machine-representation.html#special-exponent-values"><i class="fa fa-check"></i><b>7.3.1</b> Special exponent values</a></li>
-<li class="chapter" data-level="7.3.2" data-path="machine-representation.html"><a href="machine-representation.html#limitations"><i class="fa fa-check"></i><b>7.3.2</b> Limitations</a></li>
-<li class="chapter" data-level="7.3.3" data-path="machine-representation.html"><a href="machine-representation.html#floating-point-error"><i class="fa fa-check"></i><b>7.3.3</b> Floating-point error</a></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized linear models</a></li>
+<li class="chapter" data-level="8" data-path="machine-representation.html"><a href="machine-representation.html"><i class="fa fa-check"></i><b>8</b> Machine representation</a><ul>
+<li class="chapter" data-level="8.1" data-path="machine-representation.html"><a href="machine-representation.html#binary-numbers"><i class="fa fa-check"></i><b>8.1</b> Binary numbers</a></li>
+<li class="chapter" data-level="8.2" data-path="machine-representation.html"><a href="machine-representation.html#integers"><i class="fa fa-check"></i><b>8.2</b> Integers</a></li>
+<li class="chapter" data-level="8.3" data-path="machine-representation.html"><a href="machine-representation.html#floating-point-numbers"><i class="fa fa-check"></i><b>8.3</b> Floating-point numbers</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="machine-representation.html"><a href="machine-representation.html#special-exponent-values"><i class="fa fa-check"></i><b>8.3.1</b> Special exponent values</a></li>
+<li class="chapter" data-level="8.3.2" data-path="machine-representation.html"><a href="machine-representation.html#limitations"><i class="fa fa-check"></i><b>8.3.2</b> Limitations</a></li>
+<li class="chapter" data-level="8.3.3" data-path="machine-representation.html"><a href="machine-representation.html#floating-point-error"><i class="fa fa-check"></i><b>8.3.3</b> Floating-point error</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="em-algorithm.html"><a href="em-algorithm.html"><i class="fa fa-check"></i><b>8</b> EM algorithm</a><ul>
-<li class="chapter" data-level="8.1" data-path="em-algorithm.html"><a href="em-algorithm.html#motivation"><i class="fa fa-check"></i><b>8.1</b> Motivation</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="em-algorithm.html"><a href="em-algorithm.html#k-means"><i class="fa fa-check"></i><b>8.1.1</b> <span class="math inline">\(k\)</span>-means</a></li>
+<li class="chapter" data-level="9" data-path="em-algorithm.html"><a href="em-algorithm.html"><i class="fa fa-check"></i><b>9</b> EM algorithm</a><ul>
+<li class="chapter" data-level="9.1" data-path="em-algorithm.html"><a href="em-algorithm.html#motivation"><i class="fa fa-check"></i><b>9.1</b> Motivation</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="em-algorithm.html"><a href="em-algorithm.html#k-means"><i class="fa fa-check"></i><b>9.1.1</b> <span class="math inline">\(k\)</span>-means</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="em-algorithm.html"><a href="em-algorithm.html#em-algorithm-1"><i class="fa fa-check"></i><b>8.2</b> EM algorithm</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="em-algorithm.html"><a href="em-algorithm.html#algorithmic-perspective"><i class="fa fa-check"></i><b>8.2.1</b> Algorithmic perspective</a></li>
-<li class="chapter" data-level="8.2.2" data-path="em-algorithm.html"><a href="em-algorithm.html#statistical-perspective"><i class="fa fa-check"></i><b>8.2.2</b> Statistical perspective</a></li>
-<li class="chapter" data-level="8.2.3" data-path="em-algorithm.html"><a href="em-algorithm.html#proof-sketch"><i class="fa fa-check"></i><b>8.2.3</b> Proof sketch</a></li>
+<li class="chapter" data-level="9.2" data-path="em-algorithm.html"><a href="em-algorithm.html#em-algorithm-1"><i class="fa fa-check"></i><b>9.2</b> EM algorithm</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="em-algorithm.html"><a href="em-algorithm.html#algorithmic-perspective"><i class="fa fa-check"></i><b>9.2.1</b> Algorithmic perspective</a></li>
+<li class="chapter" data-level="9.2.2" data-path="em-algorithm.html"><a href="em-algorithm.html#statistical-perspective"><i class="fa fa-check"></i><b>9.2.2</b> Statistical perspective</a></li>
+<li class="chapter" data-level="9.2.3" data-path="em-algorithm.html"><a href="em-algorithm.html#proof-sketch"><i class="fa fa-check"></i><b>9.2.3</b> Proof sketch</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="em-algorithm.html"><a href="em-algorithm.html#example-gaussian-mixture"><i class="fa fa-check"></i><b>8.3</b> Example: Gaussian mixture</a></li>
-<li class="chapter" data-level="8.4" data-path="em-algorithm.html"><a href="em-algorithm.html#applications"><i class="fa fa-check"></i><b>8.4</b> Applications</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="em-algorithm.html"><a href="em-algorithm.html#factor-analysis"><i class="fa fa-check"></i><b>8.4.1</b> Factor analysis</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>9</b> Markov Chain Monte Carlo</a><ul>
-<li class="chapter" data-level="9.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#motivation-1"><i class="fa fa-check"></i><b>9.1</b> Motivation</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#ising-model"><i class="fa fa-check"></i><b>9.1.1</b> Ising model</a></li>
-<li class="chapter" data-level="9.1.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#intractable-posterior-distribution"><i class="fa fa-check"></i><b>9.1.2</b> Intractable posterior distribution</a></li>
-<li class="chapter" data-level="9.1.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mcmc-is-a-sampling-technique"><i class="fa fa-check"></i><b>9.1.3</b> MCMC is a sampling technique</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>9.2</b> Markov chain</a></li>
-<li class="chapter" data-level="9.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#detailed-balance"><i class="fa fa-check"></i><b>9.3</b> Detailed balance</a></li>
-<li class="chapter" data-level="9.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#metropolis-hastings"><i class="fa fa-check"></i><b>9.4</b> Metropolis-Hastings</a></li>
-<li class="chapter" data-level="9.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#gibbs-sampling"><i class="fa fa-check"></i><b>9.5</b> Gibbs Sampling</a><ul>
-<li class="chapter" data-level="9.5.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#latent-dirichlet-allocation"><i class="fa fa-check"></i><b>9.5.1</b> Latent Dirichlet Allocation</a></li>
+<li class="chapter" data-level="9.3" data-path="em-algorithm.html"><a href="em-algorithm.html#example-gaussian-mixture"><i class="fa fa-check"></i><b>9.3</b> Example: Gaussian mixture</a></li>
+<li class="chapter" data-level="9.4" data-path="em-algorithm.html"><a href="em-algorithm.html#applications"><i class="fa fa-check"></i><b>9.4</b> Applications</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="em-algorithm.html"><a href="em-algorithm.html#factor-analysis"><i class="fa fa-check"></i><b>9.4.1</b> Factor analysis</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="pagerank.html"><a href="pagerank.html"><i class="fa fa-check"></i><b>10</b> PageRank</a><ul>
-<li class="chapter" data-level="10.1" data-path="pagerank.html"><a href="pagerank.html#motivation-2"><i class="fa fa-check"></i><b>10.1</b> Motivation</a></li>
-<li class="chapter" data-level="10.2" data-path="pagerank.html"><a href="pagerank.html#computing-eigenpairs"><i class="fa fa-check"></i><b>10.2</b> Computing eigenpairs</a></li>
-<li class="chapter" data-level="10.3" data-path="pagerank.html"><a href="pagerank.html#algorithm"><i class="fa fa-check"></i><b>10.3</b> Algorithm</a></li>
-<li class="chapter" data-level="10.4" data-path="pagerank.html"><a href="pagerank.html#considerations"><i class="fa fa-check"></i><b>10.4</b> Considerations</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="pagerank.html"><a href="pagerank.html#connection-to-markov-chains"><i class="fa fa-check"></i><b>10.4.1</b> Connection to Markov chains</a></li>
-<li class="chapter" data-level="10.4.2" data-path="pagerank.html"><a href="pagerank.html#calculating-the-dominant-eigenvalue"><i class="fa fa-check"></i><b>10.4.2</b> Calculating the dominant eigenvalue</a></li>
-<li class="chapter" data-level="10.4.3" data-path="pagerank.html"><a href="pagerank.html#computational-complexity"><i class="fa fa-check"></i><b>10.4.3</b> Computational complexity</a></li>
-<li class="chapter" data-level="10.4.4" data-path="pagerank.html"><a href="pagerank.html#convergence-1"><i class="fa fa-check"></i><b>10.4.4</b> Convergence</a></li>
+<li class="chapter" data-level="10" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>10</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="10.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#motivation-1"><i class="fa fa-check"></i><b>10.1</b> Motivation</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#ising-model"><i class="fa fa-check"></i><b>10.1.1</b> Ising model</a></li>
+<li class="chapter" data-level="10.1.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#intractable-posterior-distribution"><i class="fa fa-check"></i><b>10.1.2</b> Intractable posterior distribution</a></li>
+<li class="chapter" data-level="10.1.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mcmc-is-a-sampling-technique"><i class="fa fa-check"></i><b>10.1.3</b> MCMC is a sampling technique</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>10.2</b> Markov chain</a></li>
+<li class="chapter" data-level="10.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#detailed-balance"><i class="fa fa-check"></i><b>10.3</b> Detailed balance</a></li>
+<li class="chapter" data-level="10.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#metropolis-hastings"><i class="fa fa-check"></i><b>10.4</b> Metropolis-Hastings</a></li>
+<li class="chapter" data-level="10.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#gibbs-sampling"><i class="fa fa-check"></i><b>10.5</b> Gibbs Sampling</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#latent-dirichlet-allocation"><i class="fa fa-check"></i><b>10.5.1</b> Latent Dirichlet Allocation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pagerank.html"><a href="pagerank.html"><i class="fa fa-check"></i><b>11</b> PageRank</a><ul>
+<li class="chapter" data-level="11.1" data-path="pagerank.html"><a href="pagerank.html#motivation-2"><i class="fa fa-check"></i><b>11.1</b> Motivation</a></li>
+<li class="chapter" data-level="11.2" data-path="pagerank.html"><a href="pagerank.html#computing-eigenpairs"><i class="fa fa-check"></i><b>11.2</b> Computing eigenpairs</a></li>
+<li class="chapter" data-level="11.3" data-path="pagerank.html"><a href="pagerank.html#algorithm"><i class="fa fa-check"></i><b>11.3</b> Algorithm</a></li>
+<li class="chapter" data-level="11.4" data-path="pagerank.html"><a href="pagerank.html#considerations"><i class="fa fa-check"></i><b>11.4</b> Considerations</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="pagerank.html"><a href="pagerank.html#connection-to-markov-chains"><i class="fa fa-check"></i><b>11.4.1</b> Connection to Markov chains</a></li>
+<li class="chapter" data-level="11.4.2" data-path="pagerank.html"><a href="pagerank.html#calculating-the-dominant-eigenvalue"><i class="fa fa-check"></i><b>11.4.2</b> Calculating the dominant eigenvalue</a></li>
+<li class="chapter" data-level="11.4.3" data-path="pagerank.html"><a href="pagerank.html#computational-complexity"><i class="fa fa-check"></i><b>11.4.3</b> Computational complexity</a></li>
+<li class="chapter" data-level="11.4.4" data-path="pagerank.html"><a href="pagerank.html#convergence-1"><i class="fa fa-check"></i><b>11.4.4</b> Convergence</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -227,10 +229,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="machine-representation" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Machine representation</h1>
+<h1><span class="header-section-number">Chapter 8</span> Machine representation</h1>
 <p>This chapter is based on a lecture given by Professor Sivan Leviyang on January 28, 2016 for MATH-504 Numerical Methods at Georgetown University.</p>
 <div id="binary-numbers" class="section level2">
-<h2><span class="header-section-number">7.1</span> Binary numbers</h2>
+<h2><span class="header-section-number">8.1</span> Binary numbers</h2>
 <p>Following <span class="citation">Sauer (<a href="#ref-sauer2011">2011</a>)</span>, binary numbers are expressed as</p>
 <p><span class="math display">\[
 \ldots b_{2}b_{1}b_{0}.b_{-1}b_{-2}\ldots,
@@ -242,7 +244,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>A binary number with no fractional part may be converted to the corresponding decimal integer by adding (the nonnegative) powers of 2. If the <span class="math inline">\(j\text{th}\)</span> bit is 1, then the sum should include the term <span class="math inline">\(2^{j}\)</span>.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-66" class="example"><strong>Example 7.1  </strong></span>The binary number <span class="math inline">\(10001\)</span> has <span class="math inline">\(1\text{s}\)</span> in positions 0 and 4. Denoting by <span class="math inline">\(\left(\cdot\right)_{b}\)</span> a number in base <span class="math inline">\(b\)</span>, we have</p>
+<p><span id="exm:unnamed-chunk-68" class="example"><strong>Example 8.1  </strong></span>The binary number <span class="math inline">\(10001\)</span> has <span class="math inline">\(1\text{s}\)</span> in positions 0 and 4. Denoting by <span class="math inline">\(\left(\cdot\right)_{b}\)</span> a number in base <span class="math inline">\(b\)</span>, we have</p>
 <span class="math display">\[
 \left(10001\right)_{2}=\sum_{j=0}^{4}b_{j}2^{j}
   =2^{0}+0+0+0+2^{4}
@@ -253,7 +255,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>If the fractional part of a binary number is finite (a terminating base 2 expansion), we can proceed in the same fashion.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-67" class="example"><strong>Example 7.2  </strong></span>The binary number <span class="math inline">\(0.101\)</span> has <span class="math inline">\(1\text{s}\)</span> in positions <span class="math inline">\(-1\)</span> and <span class="math inline">\(-3\)</span>, so that</p>
+<p><span id="exm:unnamed-chunk-69" class="example"><strong>Example 8.2  </strong></span>The binary number <span class="math inline">\(0.101\)</span> has <span class="math inline">\(1\text{s}\)</span> in positions <span class="math inline">\(-1\)</span> and <span class="math inline">\(-3\)</span>, so that</p>
 <span class="math display">\[
 \left(0.101\right)_{2}=2^{-1}+2^{-3}
   =\frac{1}{2}+\frac{1}{8}
@@ -264,7 +266,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The situation is more involved if the fractional part does not terminate, but that discussion is beyond the scope of this chapter.</p>
 </div>
 <div id="integers" class="section level2">
-<h2><span class="header-section-number">7.2</span> Integers</h2>
+<h2><span class="header-section-number">8.2</span> Integers</h2>
 <p>Suppose that we encode an integer using 32 bits (equivalently, 4 bytes), each of which may be 0 or 1. We allocate a single bit <span class="math inline">\(s\)</span> to hold the sign, and we denote the <span class="math inline">\(k\text{th}\)</span> bit by <span class="math inline">\(i_{k}\)</span>. Then, an integer <span class="math inline">\(x\)</span> can be written as</p>
 <p><span class="math display">\[
 x=\left(-1\right)^{s}\cdot\left(i_{0}2^{0}+i_{1}2^{1}+i_{2}2^{2}+\cdots+i_{30}2^{30}\right)
@@ -298,7 +300,7 @@ x_{\max} &amp; = \left(2^{0}+2^{1}+2^{2}+\cdots+2^{30}+2^{31}\right)-2^{31} \\
 <p>which is the largest integer that can be stored under this encoding scheme. The largest negative integer that can be stored occurs when each <span class="math inline">\(i_{k}\)</span> is 0, and this is <span class="math inline">\(-2^{31}\)</span>. Zero is represented by setting <span class="math inline">\(i_{31}=1\)</span> and <span class="math inline">\(i_{k}=0\)</span> for <span class="math inline">\(k\in\left\{ 0,1,\ldots,30\right\}\)</span>. Thus, we see that there are a variety of possible encoding schemes for integers, each with its own considerations.</p>
 </div>
 <div id="floating-point-numbers" class="section level2">
-<h2><span class="header-section-number">7.3</span> Floating-point numbers</h2>
+<h2><span class="header-section-number">8.3</span> Floating-point numbers</h2>
 <p>The integer encoding schemes discussed in the previous section have two immediate drawbacks: they can only represent integers, and in general a <span class="math inline">\(k\)</span>-bit encoding scheme cannot represent numbers larger than <span class="math inline">\(2^k\)</span> (provided that all intermediate numbers must be representable). We now introduce <em>floating-point numbers</em>, which address these issues. Under the IEEE 754 Floating Point Standard, numbers are encoded as 64-bit (8-byte) <em>words</em> of the form</p>
 <p><span class="math display">\[
 \begin{bmatrix}
@@ -362,7 +364,7 @@ x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
 <p>Thus, we see that the term <span class="math inline">\(2^{-j}\)</span> is included in the representation of <span class="math inline">\(x\)</span> precisely when <span class="math inline">\(b_{j}=1\)</span> (the term is <span class="math inline">\(2^{-j}\)</span> and not <span class="math inline">\(2^{j}\)</span> because the <span class="math inline">\(b_{j}\text{th}\)</span> bit occurs to the right of the radix).</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-70" class="example"><strong>Example 7.3  </strong></span>The decimal number 9 is equivalent to <span class="math inline">\(\left(1001\right)_{2}\)</span>. We can represent this as a floating-point number by shifting the radix point by 3 bits and setting the exponent to 3, i.e.,</p>
+<p><span id="exm:unnamed-chunk-72" class="example"><strong>Example 8.3  </strong></span>The decimal number 9 is equivalent to <span class="math inline">\(\left(1001\right)_{2}\)</span>. We can represent this as a floating-point number by shifting the radix point by 3 bits and setting the exponent to 3, i.e.,</p>
 <p><span class="math display">\[
 \left(9\right)_{10}=\left(1001\right)_{2}=1.001\cdot2^3,
 \]</span></p>
@@ -377,7 +379,7 @@ x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-71" class="example"><strong>Example 7.4  </strong></span>The decimal number 17.625 is equivalent to <span class="math inline">\(\left(10001.101\right)_{2}\)</span>. We can represent this as a floating-point number by shifting the radix point by 4 bits, i.e.,</p>
+<p><span id="exm:unnamed-chunk-73" class="example"><strong>Example 8.4  </strong></span>The decimal number 17.625 is equivalent to <span class="math inline">\(\left(10001.101\right)_{2}\)</span>. We can represent this as a floating-point number by shifting the radix point by 4 bits, i.e.,</p>
 <p><span class="math display">\[
 \left(17.625\right)_{10}=\left(10001.101\right)_{2}=1.0001101\cdot2^4,
 \]</span></p>
@@ -391,7 +393,7 @@ x=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot2^{p-1023}.
 </div>
 
 <div id="special-exponent-values" class="section level3">
-<h3><span class="header-section-number">7.3.1</span> Special exponent values</h3>
+<h3><span class="header-section-number">8.3.1</span> Special exponent values</h3>
 <p>Now, the exponent value <span class="math inline">\(\left(2047\right)_{10}=\left(111\,1111\,1111\right)_{2}\)</span> is reserved to represent infinity if every <span class="math inline">\(b_{j}\)</span> is zero, i.e., if the mantissa bits are all zero, and to represent <code>NaN</code> (Not a Number) otherwise. The exponent value 0 is used to represent <em>subnormal</em> floating point numbers, or those numbers where the left-most bit is not assumed to be 1. We summarize a variety of special cases below.</p>
 <table>
 <thead>
@@ -470,7 +472,7 @@ x_{\max}=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-
 <pre><code>## [1] 1.797693e+308</code></pre>
 </div>
 <div id="limitations" class="section level3">
-<h3><span class="header-section-number">7.3.2</span> Limitations</h3>
+<h3><span class="header-section-number">8.3.2</span> Limitations</h3>
 <p>Floating-point representation has the advantage of being able to represent a large range of numbers, including on very different scales. It also has limitations. For example, it is not possible to represent every real number exactly. For example, <span class="math inline">\(\sqrt{2}\)</span> does not have a finite decimal expansion, and extremely large or small numbers cannot be represented exactly due to the defined (and finite) number of bits available for representation.</p>
 <p>For example, it can be shown that the largest consecutive integer that can be stored exactly is <span class="math inline">\(2^{53}\)</span>. If we add 1 to this number, R will be unable to differentiate between them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">53</span> <span class="op">==</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">53</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
@@ -478,16 +480,16 @@ x_{\max}=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-
 <p>Floating-point arithmetic is also subject to round-off error, which is especially problematic when adding two numbers on very different scales.</p>
 </div>
 <div id="floating-point-error" class="section level3">
-<h3><span class="header-section-number">7.3.3</span> Floating-point error</h3>
+<h3><span class="header-section-number">8.3.3</span> Floating-point error</h3>
 
 <div class="definition">
-<span id="def:unnamed-chunk-75" class="definition"><strong>Definition 7.1  </strong></span>For some <span class="math inline">\(x\in\mathbb{R}\)</span>, denote by <span class="math inline">\(\text{fl}\left(x\right)\)</span> the closest double precision floating-point number to <span class="math inline">\(x\)</span>.
+<span id="def:unnamed-chunk-77" class="definition"><strong>Definition 8.1  </strong></span>For some <span class="math inline">\(x\in\mathbb{R}\)</span>, denote by <span class="math inline">\(\text{fl}\left(x\right)\)</span> the closest double precision floating-point number to <span class="math inline">\(x\)</span>.
 </div>
 
 <p>We now consider the accuracy of floating-point representation. We have 52 stored mantissa bits plus 1 implicit leading bit to store the precision of <span class="math inline">\(x\)</span>, which is equivalent to 15-17 decimal bits. The relative roundoff error in representing <span class="math inline">\(x\)</span> is <span class="math inline">\(\left|\text{fl}\left(x\right)-x\right|/\left|x\right|\)</span>.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-76" class="example"><strong>Example 7.5  </strong></span>Suppose that <span class="math inline">\(x=12345678901234567890\)</span>. Assuming that 16 decimal bits of precision are available to represent <span class="math inline">\(x\)</span>, we have <span class="math inline">\(\text{fl}\left(x\right)=12345678901234560000\)</span>, so that the relative roundoff error is</p>
+<p><span id="exm:unnamed-chunk-78" class="example"><strong>Example 8.5  </strong></span>Suppose that <span class="math inline">\(x=12345678901234567890\)</span>. Assuming that 16 decimal bits of precision are available to represent <span class="math inline">\(x\)</span>, we have <span class="math inline">\(\text{fl}\left(x\right)=12345678901234560000\)</span>, so that the relative roundoff error is</p>
 <span class="math display">\[
 \frac{\left|\text{fl}\left(x\right)-x\right|}{\left|x\right|}=\frac{\left|7890\right|}{\left|x\right|}\approx\frac{10^{4}}{10^{20}}=10^{-16}.
 \]</span>
@@ -495,7 +497,7 @@ x_{\max}=\left(-1\right)^{s}\left(1+\sum_{j=1}^{52}b_{j}2^{-j}\right)\cdot 2^{p-
 
 
 <div class="definition">
-<span id="def:unnamed-chunk-77" class="definition"><strong>Definition 7.2  </strong></span>The number machine epsilon, denoted <span class="math inline">\(\epsilon_{\text{mach}}\)</span>, is the distance between 1 and the smallest floating point number greater than 1.
+<span id="def:unnamed-chunk-79" class="definition"><strong>Definition 8.2  </strong></span>The number machine epsilon, denoted <span class="math inline">\(\epsilon_{\text{mach}}\)</span>, is the distance between 1 and the smallest floating point number greater than 1.
 </div>
 
 <p>Alternatively, <span class="math inline">\(\epsilon_{\text{mach}}\)</span> is the smallest positive number for which <span class="math inline">\(\text{fl}\left(1+\epsilon_{\text{mach}}\right)\neq1\)</span>. Under the IEEE double precision floating-point standard, machine epsilon is <span class="math inline">\(2^{-52}\approx10^{-16}\)</span>.</p>
@@ -532,7 +534,7 @@ x\pm\left(-x\right)\epsilon_{\text{mach}}=x\pm x\epsilon_{\text{mach}}
 <p>hence <span class="math inline">\(\text{fl}\left(x\right)=x\left(1\pm\epsilon_{\text{mach}}\right)\)</span> for all real <span class="math inline">\(x\)</span>. Thus, the relative error of floating-point representation is bounded by <span class="math inline">\(x\left(1\pm\epsilon_{\text{mach}}\right)\)</span>.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-80" class="example"><strong>Example 7.6  </strong></span>Suppose <span class="math inline">\(x,y\in\mathbb{R}\)</span>, and consider the floating-point representation of <span class="math inline">\(\left(x+y\right)^{2}\)</span>. We have</p>
+<p><span id="exm:unnamed-chunk-82" class="example"><strong>Example 8.6  </strong></span>Suppose <span class="math inline">\(x,y\in\mathbb{R}\)</span>, and consider the floating-point representation of <span class="math inline">\(\left(x+y\right)^{2}\)</span>. We have</p>
 <span class="math display">\[\begin{align*}
 \text{fl}\left(\left(x+y\right)^{2}\right) &amp; =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)^{2}\right) \\
     &amp; =\text{fl}\left(\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\cdot\left(\text{fl}\left(x\right)+\text{fl}\left(y\right)\right)\right) \\
@@ -551,7 +553,7 @@ where <span class="math inline">\(c\approx4\)</span> (and in particular, <span c
 <p>We see from this example that floating-point errors can add up.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-81" class="example"><strong>Example 7.7  </strong></span>The <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix">Vandermonde matrix</a> has the form</p>
+<p><span id="exm:unnamed-chunk-83" class="example"><strong>Example 8.7  </strong></span>The <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix">Vandermonde matrix</a> has the form</p>
 <p><span class="math display">\[
 \mathbf{A}=\begin{bmatrix}
   1 &amp; \alpha_{1} &amp; \alpha_{1}^{2} &amp; \alpha_{1}^{3} &amp; \cdots &amp; \alpha_{1}^{n-1} \\
@@ -578,27 +580,27 @@ b &lt;-<span class="st"> </span>A <span class="op">%*%</span><span class="st"> <
 <p>Now we pretend that we do not know <span class="math inline">\(\mathbf{x}\)</span> and will solve for it. Comparing <span class="math inline">\(\mathbf{x}\)</span> to the numerical solution <span class="math inline">\(\hat{\mathbf{x}}\)</span>, we see that some elements are close, but in most cases the solution is highly inaccurate. We will see in the future that this inaccuracy is intimately connected to the <em>condition number</em> <span class="math inline">\(\kappa\)</span> of the matrix <span class="math inline">\(\mathbf{A}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(A, b, <span class="dt">tol =</span> <span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="op">-</span><span class="dv">100</span>)
 <span class="kw">matrix</span>(<span class="kw">c</span>(x, x_hat), <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>##       [,1]                [,2]
-##  [1,]    1  0.9999999993682894
-##  [2,]    2  2.0000000452419524
-##  [3,]    3  2.9999985840341985
-##  [4,]    4  4.0000260927784890
-##  [5,]    5  4.9996796624587772
-##  [6,]    6  6.0028026562690906
-##  [7,]    7  6.9817844528432431
-##  [8,]    8  8.0903707943980958
-##  [9,]    9  8.6515157526434869
-## [10,]   10 11.0567547944967579
-## [11,]   11  8.4632446490974242
-## [12,]   12 16.8311800963078042
-## [13,]   13  5.7161444807356325
-## [14,]   14 22.6329623196960412
-## [15,]   15  7.0609068913640360
-## [16,]   16 21.5439693204203131
-## [17,]   17 14.1614119961693703
-## [18,]   18 19.0042167212783184
-## [19,]   19 18.7807959498778132
-## [20,]   20 20.0222347405208261</code></pre>
+<pre><code>##       [,1]                 [,2]
+##  [1,]    1   0.9999999959939599
+##  [2,]    2   2.0000002804437607
+##  [3,]    3   2.9999914553683995
+##  [4,]    4   4.0001528634092809
+##  [5,]    5   4.9981811134476066
+##  [6,]    6   6.0154110617063621
+##  [7,]    7   6.9030107223950488
+##  [8,]    8   8.4661440559123466
+##  [9,]    9   7.2571538558229456
+## [10,]   10  15.1302804892885554
+## [11,]   11  -0.9712010501010772
+## [12,]   12  34.1956299352763935
+## [13,]   13 -19.6308828634955574
+## [14,]   14  51.7740177166188218
+## [15,]   15 -18.9844982124529089
+## [16,]   16  39.2543471429789150
+## [17,]   17   5.3148923184038113
+## [18,]   18  22.0630210855204538
+## [19,]   19  18.1270846115910054
+## [20,]   20  20.0872634218718602</code></pre>
 
 </div>
 </div>
@@ -614,7 +616,7 @@ b &lt;-<span class="st"> </span>A <span class="op">%*%</span><span class="st"> <
           </div>
         </div>
       </div>
-<a href="point-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="em-algorithm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -635,7 +637,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },

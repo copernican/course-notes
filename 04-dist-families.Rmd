@@ -10,46 +10,39 @@ $$
 f\left(x|\boldsymbol{\theta}\right)=h\left(x\right)c\left(\boldsymbol{\theta}\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\boldsymbol{\theta}\right)t_{j}\left(x\right)\right\}
 $$
 
-where $h\left(x\right)\geq 0$, $c\left(\boldsymbol{\theta}\right)\geq 0$, and $t_{1}\left(x\right),\ldots,t_{k}\left(x\right)$ are real-valued functions of $x$, and $\omega_{1}\left(\boldsymbol{\theta}\right),\ldots,\omega_{k}\left(\boldsymbol{\theta}\right)$ are real-valued functions of the possibly vector-valued parameter $\boldsymbol{\theta}$. I.e., $f\left(x|\boldsymbol{\theta}\right)$ can be expressed in three parts: a part that depends only on the random variable(s), a part that depends only on the parameter(s), and a part that depends on both the random variable(s) and the parameter(s). Most of the parametric models you may have studied are exponential families, e.g., normal, gamma, beta, binomial, negative binomial, Poisson, and multinomial. The uniform distribution is not an exponential family (see Example \@ref(exm:exp-family-uniform) below).
+where $h\left(x\right)\geq 0$, $c\left(\boldsymbol{\theta}\right)\geq 0$, and $\left\{t_{j}\left(x\right)\right\}_{j=1}^{k}$ are real-valued functions of $x$, and where  $\left\{\omega_{j}\left(\boldsymbol{\theta}\right)\right\}_{j=1}^{k}$ are real-valued functions of the possibly vector-valued parameter $\boldsymbol{\theta}$. I.e., $f\left(x|\boldsymbol{\theta}\right)$ can be expressed in three parts: 
 
-```{example, label = "logistic-regression", name = "Logistic regression"}
-TO DO: this example doesn't make sense here, move it.
+- a part that depends only on the random variable(s)
+- a part that depends only on the parameter(s)
+- a part that depends on both the random variable(s) and the parameter(s).
 
-For $Y_{1},Y_{2},\ldots,Y_{n}$, let $Y_{i}\sim\text{Bernoulli}\left(p\right)$, i.e., 
-
-$$
-Y_{i}=\begin{cases}
-0, & \text{if no event}\\
-1, & \text{if event.}
-\end{cases}
-$$
-  
-Then the logistic regression model is
-
-$$
-\log\left(\frac{p}{1-p}\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}
-$$
-  
-where $\log\left(p/\left(1-p\right)\right)$ is called the logit link.
-```
+Most of the parametric models you may have studied are exponential families, e.g., normal, gamma, beta, binomial, negative binomial, Poisson, and multinomial. The uniform distribution is not an exponential family (see Example \@ref(exm:exp-family-uniform) below).
 
 ```{example, label = "exp-family-binomial", name = "Binomial random variables"}
-Let $X\sim\mathcal{B}\left(n,p\right)$, where $p\in\left(0,1\right)$. Recall that $X$ represents the number of successes in $n$ i.i.d. Bernoulli trials and its pmf is given by
+Let $X\sim\mathcal{B}\left(n,p\right)$, where $n$ is known and $p\in\left(0,1\right)$. Recall that $X$ represents the number of successes in $n$ i.i.d. Bernoulli trials and its pmf is given by
 
 $$
 f\left(x|p\right)	=\binom{n}{x}p^{x}\left(1-p\right)^{n-x}
 $$
 
-for $x=0,1,\ldots,n$ and $f\left(x|p\right)=0$ otherwise. Express $f\left(x|p\right)$ in exponential family form.
+for $x=0,1,\ldots,n$ and $f\left(x|p\right)=0$ otherwise. We can write $f$ as
 
 \begin{align*}
-f\left(x|p\right)	& =\binom{n}{x}p^{x}\left(1-p\right)^{n-x} \\
-	& =\binom{n}{x}p^{x}\left(1-p\right)^{n}\left(1-p\right)^{-x} \\
-	& =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p^{x}}{\left(1-p\right)^{x}}\right) \\
-	& =\binom{n}{x}\left(1-p\right)^{n}\left(\frac{p}{1-p}\right)^{x} \\
-	& =\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ \log\left(\frac{p}{1-p}\right)^{x}\right\} \\
-	& =\underbrace{\binom{n}{x}}_{h\left(x\right)}\underbrace{\left(1-p\right)^{n}}_{c\left(p\right)}\exp\left\{ \underbrace{x}_{t_{1}\left(x\right)}\underbrace{\log\left(\frac{p}{1-p}\right)}_{\omega_{1}\left(p\right)}\right\} 
+f\left(x|p\right)	& = \binom{n}{x}p^{x}\left(1-p\right)^{n-x} \\
+	& = \binom{n}{x}p^{x}\left(1-p\right)^{n}\left(1-p\right)^{-x} \\
+	& = \binom{n}{x}\left(1-p\right)^{n}\left(\frac{p^{x}}{\left(1-p\right)^{x}}\right) \\
+	& = \binom{n}{x}\left(1-p\right)^{n}\left(\frac{p}{1-p}\right)^{x} \\
+	& = \binom{n}{x}\left(1-p\right)^{n}\exp\left\{ \log\left(\frac{p}{1-p}\right)^{x}\right\} \\
+  & = \binom{n}{x}\left(1-p\right)^{n}\exp\left\{ x\log\frac{p}{1-p}\right\}.
 \end{align*}
+
+Now, $n$ is known, so the only parameter is $p$. Thus, we see that the binomial distribution is an exponential family, with
+
+$$
+h\left(x\right)=\binom{n}{x},\quad c\left(p\right)=\left(1-p\right)^{n},\quad t\left(x\right)=x,\quad\ \omega\left(p\right)=\log\frac{p}{1-p}.
+$$
+  
+Observe that when $n=1$, $X$ is a Bernoulli random variable, so it follows that the Bernoulli distribution is also an exponential family.
 ```
 
 ```{example, label = "exp-family-poisson", name = "Poisson random variables"}
@@ -59,42 +52,66 @@ $$
 f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}
 $$
   
-for $x=0,1,2,\ldots$ and $f\left(x|\lambda\right)=0$ otherwise. Express $f\left(x|\lambda\right)$ in exponential family form.
+for $x=0,1,2,\ldots$ and $f\left(x|\lambda\right)=0$ otherwise. We can write $f$ as
 
 $$
-f\left(x|\lambda\right)=\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}=\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ \log\left(\lambda^{x}\right)\right\} =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\}
+f\left(x|\lambda\right)
+  =\frac{\mathrm{e}^{-\lambda}\lambda^{x}}{x!}
+  =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ \log\left(\lambda^{x}\right)\right\}   
+  =\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\}.
 $$
   
-Then, we have $h\left(x\right)=1/x!$, $c\left(\lambda\right)=\mathrm{e}^{-\lambda}$, $t_{1}\left(x\right)=x$, and $\omega_{1}\left(\lambda\right)=\log\lambda$. In a Poisson regression, we have $\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}$.
+It follows that the Poisson distribution is an exponential family, with
+
+$$
+h\left(x\right)=\frac{1}{x!},\quad c\left(\lambda\right)=\mathrm{e}^{-\lambda},\quad t\left(x\right)=x,\quad \omega\left(\lambda\right)=\log\lambda. 
+$$
 ```
 
 ```{example, label = "exp-family-normal", name = "Normal random variables"}
-Let $X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)$, where $\mu\in\mathbb{R}$ and $\sigma>0$. A pdf for $X$ is given by
+Let $X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)$, where $\mu\in\mathbb{R}$ and $\sigma^{2}>0$. A pdf for $X$ is given by
 
 $$
-f\left(x|\mu,\sigma^{2}\right)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\}
+f\left(x|\mu,\sigma^{2}\right)=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\}
 $$
   
-for $x\in\mathbb{R}$. Express $f\left(x|\mu,\sigma^{2}\right)$ in exponential family form.
+for $x\in\mathbb{R}$. We begin with the case that $\sigma^{2}$ is known, so that $\theta=\mu$. We can write $f$ as
 
-Suppose $\sigma$ is known.
-
+$$
 \begin{align*}
-f\left(x|\mu\right)	& =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
-	& =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{-2\mu x}{2\sigma^{2}}\right\} \\
-	& =\underbrace{\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} }_{c\left(\mu\right)}\exp\left\{ \underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{1}\left(\mu\right)}\cdot\underbrace{x}_{t_{1}\left(x\right)}\right\} \\
+f\left(x|\mu\right)	& =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
+	& =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{x^{2}}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \exp\left\{ x\frac{\mu}{\sigma^{2}}\right\},
 \end{align*}
+$$
 
-Suppose $\sigma$ is unknown.
+so that
 
+$$
+h\left(x\right)=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{-\frac{x^{2}}{2\sigma^{2}}\right\},\quad c\left(\mu\right)=\exp\left\{-\frac{\mu^{2}}{2\sigma^{2}}\right\},\quad t\left(x\right)=x,\quad \omega\left(\mu\right)=\frac{\mu}{\sigma^{2}},
+$$
+
+hence the normal distribution with known variance is an exponential family. Now suppose that $\sigma^{2}$ is unknown, so that $\boldsymbol{\theta}=\left(\mu,\sigma^{2}\right)$. We can write $f$ as
+
+$$
 \begin{align*}
-f\left(x|\mu,\sigma^{2}\right) & =\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\} \\
+f\left(x|\mu,\sigma^{2}\right) & =\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right\} \\
 	& =\frac{1}{\sqrt{2\pi}}\left(\sigma^{2}\right)^{-1/2}\exp\left\{ -\frac{x^{2}-2\mu x+\mu^{2}}{2\sigma^{2}}\right\} \\
-	& =\frac{1}{\sqrt{2\pi}}\exp\left\{ \log\left(\sigma^{2}\right)^{-1/2}\right\} \exp\left\{ -\frac{x^{2}-2\mu x}{2\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \\
-	& =\underbrace{\frac{1}{\sqrt{2\pi}}}_{h\left(x\right)}\underbrace{\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} }_{c\left(\mu,\sigma^{2}\right)}\exp\left\{ \underbrace{\frac{1}{\sigma^{2}}}_{\omega_{1}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{\left(-\frac{x^{2}}{2}\right)}_{t_{1}\left(x\right)}+\underbrace{\frac{\mu}{\sigma^{2}}}_{\omega_{2}\left(\mu,\sigma^{2}\right)}\cdot\underbrace{x}_{t_{2}\left(x\right)}\right\}
+	& =\frac{1}{\sqrt{2\pi}}\exp\left\{ \log\left(\sigma^{2}\right)^{-1/2}\right\} \exp\left\{ -\frac{x^{2}}{2\sigma^{2}}+\frac{\mu x}{\sigma^{2}}\right\} \exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}\right\} \\
+	& =\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{1}{2}\left(\frac{\mu^{2}}{\sigma^{2}}+\log\sigma^{2}\right)\right\} \exp\left\{ -\frac{x^{2}}{2\sigma^{2}}+\frac{\mu x}{\sigma^{2}}\right\},
 \end{align*}
+$$
 
-Thus, in the case that $\sigma$ is unknown, $f\left(x|\mu,\sigma^{2}\right)$ is a two-parameter exponential family, i.e., we have $k=2$ for $\sum_{j=1}^{k}\omega_{j}\left(\theta\right)t_{j}\left(x\right)$.
+so that
+
+$$
+\begin{align*}
+  h\left(x\right) &= \frac{1}{\sqrt{2\pi}}, & c\left(\boldsymbol{\theta}\right) &= \exp\left\{-\frac{1}{2}\left(\frac{\mu^{2}}{\sigma^{2}}+\log\sigma^{2}\right)\right\}, \\
+  t_{1}\left(x\right) &= -\frac{x^{2}}{2}, & \omega_{1}\left(\boldsymbol{\theta}\right) &= \frac{1}{\sigma^{2}}, \\ 
+  t_{2}\left(x\right) &= x, & \omega_{2}\left(\boldsymbol{\theta}\right) &=\frac{\mu}{\sigma^{2}}.
+\end{align*}
+$$
+
+Thus, the normal distribution with unknown variance is also an exponential family (and the first exponential family we have seen where $k>1$).
 ```
 
 ```{definition}
@@ -110,23 +127,21 @@ $$
 ```
 
 ```{example, label = "exp-family-uniform", name = "Uniform random variables"}
-Let $X\sim\mathcal{U}\left(0,\theta\right)$, where $\theta>0$. A pdf for $X$ is given by 
+Let $X\sim\mathcal{U}\left(a,b\right)$, where $-\infty<a<b<\infty$. A pdf for $X$ is given by 
 
 $$
-f\left(x|\theta\right)=\frac{1}{\theta-0}=\frac{1}{\theta}
+f\left(x|a,b\right)=\frac{1}{b-a}
 $$
   
-for $0<x<\theta$. Express $f\left(x|\theta\right)$ in exponential family form, if possible.
-
-Let $\mathcal{A}=\left\{ x:x\in\left(0,\theta\right)\right\}$ and let $I_{\mathcal{A}}$ be the indicator function of $\mathcal{A}$.Then, we can write $f\left(x|\theta\right)$ as
+for $x\in\left[a,b\right]$ and $f\left(x|a,b\right)=0$ otherwise. Let $\mathcal{A}=\left\{ x:x\in\left[a,b\right]\right\}$ and let $I_{\mathcal{A}}$ be the indicator function of $\mathcal{A}$. Then, we can write $f$ as
 
 $$
-f\left(x|\theta\right)=
-  \frac{1}{\theta}I_{A}\left(x\right)=
-  \frac{1}{\theta}I_{\left(0,\theta\right)}\left(x\right).
+f\left(x|a,b\right)=
+  \frac{1}{b-a}I_{\mathcal{A}}\left(x\right)=
+  \frac{1}{b-a}I_{\left[a,b\right]}\left(x\right).
 $$
   
-Notice that $I_{\left(0,\theta\right)}\left(x\right)$ is not a function of $x$ exclusively, not a function of $\theta$ exclusively, and cannot be written as an exponential. Because the entire pdf must be incorporated into $h\left(x\right)$, $c\left(\theta\right)$, $t_{j}\left(x\right)$, and $\omega_{j}\left(\theta\right)$, it follows that the family of pdfs given by $f\left(x|\theta\right)$ is not an exponential family.
+Notice that $I_{\left[a,b\right]}\left(x\right)$ is not a function of $x$ exclusively, not a function of $\boldsymbol{\theta}=\left(a,b\right)$ exclusively, and cannot be written as an exponential. Because the entire pdf must be incorporated into $h\left(x\right)$, $c\left(\boldsymbol{\theta}\right)$, $t_{j}\left(x\right)$, and $\omega_{j}\left(\boldsymbol{\theta}\right)$, it follows that the uniform distribution is not an exponential family.
 ```
 
 ```{example, label = "3-param-exp-family", name = "Three-parameter exponential family distribution"}
@@ -149,9 +164,21 @@ so we have
 \begin{align*}
 f\left(x|\theta\right)	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left[-\left(x-\theta\right)^{4}\right] \\
 	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\sum_{k=0}^{4}\binom{4}{k}x^{k}\left(-\theta\right)^{4-k}\right\} \\
-	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\left[1\cdot1\cdot\theta^{4}-4x\theta^{3}+6x^{2}\theta^{2}-4x^{3}\theta+1\cdot x^{4}\cdot1\right]\right\} \\
-	& =\underbrace{\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -x^{4}\right\} }_{h\left(x\right)}\underbrace{\exp\left\{ -\theta^{4}\right\} }_{c\left(\theta\right)}\exp\left\{ \underbrace{4x^{3}}_{t_{1}\left(x\right)}\underbrace{\theta}_{\omega_{1}\left(\theta\right)}\underbrace{-6x^{2}}_{t_{2}\left(x\right)}\underbrace{\theta^{2}}_{\omega_{2}\left(\theta\right)}+\underbrace{4x}_{t_{3}\left(x\right)}\underbrace{\theta^{3}}_{\omega_{3}\left(\theta\right)}\right\}.
+	& =\frac{2}{\Gamma\left(1/4\right)}\exp\left\{ -\left[1\cdot1\cdot\theta^{4}-4x\theta^{3}+6x^{2}\theta^{2}-4x^{3}\theta+1\cdot x^{4}\cdot1\right]\right\},
 \end{align*}
+
+so that
+
+$$
+\begin{align*}
+  h\left(x\right) & = \frac{2}{\Gamma\left(1/4\right)}\exp\left\{-x^{4}\right\}, & c\left(\theta\right) & = \exp\left\{-\theta^{4}\right\}, \\
+  t_{1}\left(x\right) & = 4x^{3}, & \omega_{1}\left(\theta\right) & = \theta, \\
+  t_{2}\left(x\right) & = -6x^{2}, & \omega_{2}\left(\theta\right) & = \theta^{2}, \\
+  t_{3}\left(x\right) & = 4x, & \omega_{3}\left(\theta\right) & = \theta^{3}.
+\end{align*}
+$$
+
+Thus, this family of distributions is a 3-parameter exponential family.
 ```
 
 ```{theorem}
@@ -168,7 +195,7 @@ $$
 Now suppose that $X_{1},X_{2},\ldots,X_{n}$ is a random sample from a population having the distribution of $X$. It follows that the $X_{i}\text{'s}$ are independent and identically distributed, and that each $X_{i}$ has the same cdf as $X$, and therefore that $f\left(x|\theta\right)$ is a pdf for each $X_{i}$. Then, the joint pdf of the $X_{i}\text{'s}$ is given by
 
 \begin{align*}
-f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	& =\prod_{i=1}^{n}f\left(x_{i}|\theta\right) \\
+f\left(\mathbf{x}|\theta\right)	& =\prod_{i=1}^{n}f\left(x_{i}|\theta\right) \\
 	& =\prod_{i=1}^{n}\left[h\left(x_{i}\right)c\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \right] \\
 	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\}
 \end{align*}
@@ -182,17 +209,17 @@ $$
 so that we have
 
 \begin{align*}
-f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \\
+f\left(\mathbf{x}|\theta\right)	& =\left[\prod_{i=1}^{n}h\left(x_{i}\right)\right]\left[c\left(\theta\right)\right]^{n}\exp\left\{ \sum_{j=1}^{k}\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\omega_{j}\left(\theta\right)\right\} \\
 	& =h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\left(\omega_{j}\left(\theta\right)\sum_{i=1}^{n}t_{j}\left(x_{i}\right)\right)\right\} .
 \end{align*}
 
 Now, let $T_{j}\left(x\right)	=\sum_{i=1}^{n}t_{j}\left(x_{i}\right)$, so that 
 
 $$
-f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)	=h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\theta\right)T_{j}\left(x\right)\right\} .
+f\left(\mathbf{x}|\theta\right)	=h^{*}\left(x\right)c^{*}\left(\theta\right)\exp\left\{ \sum_{j=1}^{k}\omega_{j}\left(\theta\right)T_{j}\left(x\right)\right\} .
 $$
   
-Thus, the joint pdf $f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)$ is a $k$-parameter exponential family.
+Thus, the joint pdf $f\left(\mathbf{x}|\theta\right)$ is a $k$-parameter exponential family.
 ```
 
 ### Natural parameters {#natural-parameters}
@@ -200,13 +227,13 @@ Thus, the joint pdf $f\left(x_{1},x_{2},\ldots,x_{n}|\theta\right)$ is a $k$-par
 An exponential family is sometimes reparametrized as
 
 $$
-f\left(x|\boldsymbol{\eta}\right)	=h\left(x\right)c^{*}\left(\boldsymbol{\eta}\right)\exp\left(\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right),
+f\left(x|\boldsymbol{\eta}\right)	=h\left(x\right)c^{*}\left(\boldsymbol{\eta}\right)\exp\left\{\sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\},
 $$
 
 where the natural parameters are defined by $\eta_{j}=\omega_{j}\left(\theta\right)$ and the natural parameter space is
 
 $$
-\left\{ \boldsymbol{\eta}=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x<\infty\right\}
+\mathcal{H}=\left\{ \boldsymbol{\eta}=\left(\eta_{1},\ldots,\eta_{k}\right):\int h\left(x\right)\exp\left\{ \sum_{j=1}^{k}\eta_{j}t_{j}\left(x\right)\right\} \dif x<\infty\right\}
 $$
 
 so that 
@@ -218,21 +245,21 @@ $$
 which ensures that the pdf integrates to 1.
 
 ```{example, label = "natural-param-binomial", name = "Binomial random variables"}
-Express the pmf of $X\sim\text{Binomial}\left(n,p\right)$ using a natural parameterization.
+Express the pmf of $X\sim\mathcal{B}\left(n,p\right)$ using a natural parameterization.
 
 From Example \@ref(exm:exp-family-binomial), the pmf of $X$ can be written as 
 
 $$
-f\left(x|p\right)	=\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ x\log\left(\frac{p}{1-p}\right)\right\} ,
+f\left(x|p\right)	=\binom{n}{x}\left(1-p\right)^{n}\exp\left\{ x\log\frac{p}{1-p}\right\} ,
 $$
   
 where $k=1$ and 
 
 $$
-\omega_{1}\left(p\right)	=\log\frac{p}{1-p}.
+\omega\left(p\right)	=\log\frac{p}{1-p}.
 $$
   
-Then, let $\eta=\omega_{1}\left(p\right)$, so that
+Then, let $\eta=\omega\left(p\right)$, so that
 
 $$
 \mathrm{e}^{\eta}=\frac{p}{1-p}\implies p=\mathrm{e}^{\eta}\left(1-p\right)=\mathrm{e}^{\eta}-\mathrm{e}^{\eta}p\implies\mathrm{e}^{\eta}=p\left(1+\mathrm{e}^{\eta}\right)\implies p=\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}.
@@ -241,13 +268,13 @@ $$
 Then, we have
 
 $$
-c\left(p\right)=\left(1-p\right)^{n}\implies c\left(\eta\right)=\left(1-\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}\right)^{n}=\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}
+c\left(p\right)=\left(1-p\right)^{n}\implies c^{\ast}\left(\eta\right)=\left(1-\frac{\mathrm{e}^{\eta}}{1+\mathrm{e}^{\eta}}\right)^{n}=\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}
 $$
   
 and 
 
 $$
-f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
+f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\mathrm{e}^{x\eta}.
 $$
 ```
 
@@ -260,33 +287,29 @@ $$
 f\left(x|\lambda\right)	=\frac{1}{x!}\mathrm{e}^{-\lambda}\exp\left\{ x\log\lambda\right\} ,
 $$
   
-where $k=1$ and $\omega_{1}\left(\lambda\right)	=\log\lambda$. Then, let $\eta=\omega_{1}\left(\lambda\right)$, so that
+where $k=1$ and $\omega\left(\lambda\right)	=\log\lambda$. Then, let $\eta=\omega\left(\lambda\right)$, so that
 
 $$
-\eta=\log\lambda\implies\mathrm{e}^{\eta}=\exp\left(\log\lambda\right)\implies\mathrm{e}^{\eta}=\lambda.
+\eta=\log\lambda\implies\mathrm{e}^{\eta}=\mathrm{e}^{\log\lambda}\implies\mathrm{e}^{\eta}=\lambda.
 $$
   
-Then, we have $c\left(\lambda\right)=\mathrm{e}^{-\lambda}\implies c\left(\eta\right)=\exp\left(-\mathrm{e}^{\eta}\right)$ and
+Then, we have $c\left(\lambda\right)=\mathrm{e}^{-\lambda}\implies c^{\ast}\left(\eta\right)=\exp\left\{-\mathrm{e}^{\eta}\right\}$ and
 
 $$
-f\left(x|\eta\right)	=\frac{1}{x!}\exp\left(-\mathrm{e}^{\eta}\right)\exp\left(x\eta\right).
+f\left(x|\eta\right)	=\frac{1}{x!}\exp\left\{-\mathrm{e}^{\eta}\right\}\mathrm{e}^{x\eta}.
 $$
 ```
 
 ```{example, name = "Bernoulli random variables"}
 Express the pmf of $X\sim\text{Bernoulli}\left(p\right)$ using a natural parameterization.
 
-Noting that $X\sim\text{Binomial}\left(1,p\right)$, from Example \@ref(exm:natural-param-binomial), we have
+Noting that $X\sim\mathcal{B}\left(1,p\right)$, from Example \@ref(exm:natural-param-binomial), we have
 
 $$
-f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right).
-$$
-  
-With $n=1$, we have
-
-$$
-f\left(x|\eta\right)=\binom{1}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=1\cdot\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\exp\left(x\eta\right)=\frac{1}{1+\mathrm{e}^{\eta}}\exp\left(x\eta\right).
-$$
+f\left(x|\eta\right)	= \binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\mathrm{e}^{x\eta}
+  = \binom{1}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)\mathrm{e}^{x\eta}
+  = \frac{\mathrm{e}^{x\eta}}{1+\mathrm{e}^{\eta}}.
+$$  
 ```
 
 ```{example, name = "Normal random variables"}
@@ -295,16 +318,16 @@ Express the pdf of $X\sim\mathcal{N}\left(\mu,\sigma^{2}\right)$ using a natural
 From Example \@ref(exm:exp-family-normal), we have
 
 $$
-f\left(x|\mu,\sigma^{2}\right)	=\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \exp\left\{ -x^{2}\frac{1}{2\sigma^{2}}+x\frac{\mu}{\sigma^{2}}\right\} .
+f\left(x|\boldsymbol{\theta}\right) = \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{1}{2}\left(\frac{\mu^{2}}{\sigma^{2}}+\log\sigma^{2}\right)\right\} \exp\left\{ -\frac{x^{2}}{2\sigma^{2}}+\frac{\mu x}{\sigma^{2}}\right\}.
 $$
   
-Then, let $\eta_{1}=\omega_{1}\left(\mu,\sigma^{2}\right)$, so that
+Then, let $\eta_{1}=\omega_{1}\left(\boldsymbol{\theta}\right)$, so that
 
 $$
-\eta_{1}=\frac{1}{\sigma^{2}}\implies\sigma^{2}\eta_{1}=1\implies\sigma^{2}=\frac{1}{\eta_{1}}
+\eta_{1}=\frac{1}{\sigma^{2}}\implies\sigma^{2}=\frac{1}{\eta_{1}}
 $$
   
-and let $\eta_{2}=\omega_{2}\left(\mu,\sigma^{2}\right)$, so that
+and let $\eta_{2}=\omega_{2}\left(\boldsymbol{\theta}\right)$, so that
 
 $$
 \eta_{2}=\frac{\mu}{\sigma^{2}}\implies\mu=\sigma^{2}\eta_{2}=\frac{\eta_{2}}{\eta_{1}}.
@@ -312,27 +335,26 @@ $$
   
 Then, we have
 
+$$
 \begin{align*}
-c\left(\mu,\sigma^{2}\right) & =\exp\left\{ -\frac{\mu^{2}}{2\sigma^{2}}-\frac{1}{2}\log\sigma^{2}\right\} \\
-\implies c^{*}\left(\eta_{1},\eta_{2}\right)	& =\exp\left\{ -\frac{\left(\frac{\eta_{2}}{\eta_{1}}\right)^{2}}{2\left(\frac{1}{\eta_{1}}\right)}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
-	& =\exp\left\{ -\frac{\frac{\eta_{2}^{2}}{\eta_{1}^{2}}}{\frac{2}{\eta_{1}}}-\frac{1}{2}\log\frac{1}{\eta_{1}}\right\} \\
-	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\frac{1}{\eta_{1}}\right)^{-1/2}\right\} \\
-	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\left(\left(\eta_{1}\right)^{-1}\right)^{-1/2}\right\} \\
-	& =\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\}
+  c\left(\boldsymbol{\theta}\right) & = \exp\left\{ -\frac{1}{2}\left(\frac{\mu^{2}}{\sigma^{2}}+\log\sigma^{2}\right)\right\} \\
+\implies c^{\ast}\left(\boldsymbol{\eta}\right) & = \exp\left\{-\frac{1}{2}\left(\frac{\left(\eta_{2}/\eta_{1}\right)^{2}}{1/\eta_{1}}+\log\frac{1}{\eta_{1}}\right)\right\} \\
+  & = \exp\left\{-\frac{1}{2}\left(\frac{\eta_{2}^{2}}{\eta_{1}}-\log\eta_{1}\right)\right\},
 \end{align*}
+$$
 
-and
+so that
  
 $$
-f\left(x|\eta_{1},\eta_{2}\right)	=\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\eta_{2}^{2}}{2\eta_{1}}+\log\sqrt{\eta_{1}}\right\} \exp\left\{ -\frac{\eta_{1}x^{2}}{2}+\eta_{2}x\right\} .
+f\left(x|\boldsymbol{\eta}\right)	=\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{1}{2}\left(\frac{\eta_{2}^{2}}{\eta_{1}}-\log\eta_{1}\right)\right\} \exp\left\{ -\frac{\eta_{1}x^{2}}{2}+\eta_{2}x\right\}.
 $$
 ```
 
 ```{theorem, label = "expected-value-exp-family"}
 Let $X$ have density in an exponential family. Then,
 
-1. $\E\left[t_{j}\left(X\right)\right]=-\dfrac{\partial}{\partial\eta_{j}}\log c^{*}\left(\eta\right)$,
-2. $\Var\left(t_{j}\left(X\right)\right)=-\dfrac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\eta\right)$,
+1. $\E\left[t_{j}\left(X\right)\right]=-\dfrac{\partial}{\partial\eta_{j}}\log c^{*}\left(\boldsymbol{\eta}\right)$,
+2. $\Var\left(t_{j}\left(X\right)\right)=-\dfrac{\partial^{2}}{\partial\eta_{j}^{2}}\log c^{*}\left(\boldsymbol{\eta}\right)$,
 
 and the moment-generating function for $\left(X_{1},\ldots,X_{k}\right)$ is
 
@@ -439,15 +461,21 @@ proving the second claim.
 ```
 
 ```{example, name = "Expected value of a binomial random variable"}
-Find the expected value of $X\sim\text{Binomial}\left(n,p\right)$.
+Find the expected value of $X\sim\mathcal{B}\left(n,p\right)$.
 
 We will find $\E\left[X\right]$ by applying Theorem \@ref(thm:expected-value-exp-family). From Example \@ref(exm:natural-param-binomial), the pmf of $X$ is given by
 
 $$
-f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\exp\left(x\eta\right),
+f\left(x|\eta\right)	=\binom{n}{x}\left(\frac{1}{1+\mathrm{e}^{\eta}}\right)^{n}\mathrm{e}^{x\eta},
 $$
   
-where $\eta=\log\left(p/\left(1-p\right)\right)$, so that $p=1/\left(1+\mathrm{e}^{\eta}\right)$. From the general form of a natural parameterization, we have $k=1$, $t\left(x\right)=x$, and $c^{*}\left(\eta\right)=\left(1/\left(1+\mathrm{e}^{\eta}\right)\right)^{n}$. Then, we have 
+where 
+
+$$
+\eta=\log\frac{p}{1-p}\implies p=\frac{1}{1+\mathrm{e}^{\eta}}.
+$$
+
+From the general form of a natural parameterization, we have $k=1$, $t\left(x\right)=x$, and $c^{*}\left(\eta\right)=\left(1/\left(1+\mathrm{e}^{\eta}\right)\right)^{n}$. Then, we have 
 
 \begin{align*}
 \E\left[X\right] & =\E\left[t\left(X\right)\right] \\
@@ -502,6 +530,57 @@ establishing the claim.
 ```{definition}
 A *curved exponential family* is a family of densities of the form given in Section \@ref(defn-exp-family) for which the dimension of the vector $\boldsymbol{\theta}$ is equal to $d<k$, where $k$ is the number of terms in the sum in the exponent. If $d=k$, the family is a *full exponential family*.
 ```
+
+### Conjugate prior distributions
+
+MOVE THIS TO THE (EVENTUAL) BAYESIAN SECTION (WITH CONSISTENT NOTATION)
+
+Sampling models from exponential families all have conjugate priors. Recall that a one-parameter exponential family model is any model with density that can be expressed as
+
+$$
+p\left(x|\theta\right)=h\left(x\right)g\left(\theta\right)\exp\left\{ \phi\left(\theta\right)t\left(x\right)\right\} ,
+$$
+
+where $\phi\left(\theta\right)$ is called the natural parameter and $t\left(x\right)$ is a sufficient statistic for $\theta$. The conjugate prior has the form
+
+$$
+p\left(\theta\right)\propto g\left(\theta\right)^{n_{0}}\exp\left\{ \phi\left(\theta\right)\nu\right\} ,
+$$
+
+where $\nu$ represents the prior expected value of $t\left(X\right)$ and $n_{0}/\left(n_{0}+n\right)$ represents how informative the prior is relative to the data. With observed iid data $x_{1},\ldots,x_{n}$, the likelihood for $\theta$ is
+
+$$
+\mathcal{L}\left(\theta\right)=\prod_{i=1}^{n}p\left(x_{i}|\theta\right)=\left(\prod_{i=1}^{n}h\left(x_{i}\right)\right)g\left(\theta\right)^{n}\exp\left\{ \phi\left(\theta\right)\sum_{i=1}^{n}t\left(x_{i}\right)\right\} .
+$$
+
+The posterior distribution then becomes 
+
+$$
+p\left(\theta|x\right)\propto g\left(\theta\right)^{n_{0}+n}\exp\left\{ \phi\left(\theta\right)\left(\nu+\sum_{i=1}^{n}t\left(x_{i}\right)\right)\right\} .
+$$
+
+```{example, name = "Binomial conjugate prior"}
+```
+
+Suppose $Y\sim\mathcal{B}\left(n,\theta\right)$. Then, \@ref(exm:exp-family-binomial) implies that 
+
+$$
+p\left(y|\theta\right)=\binom{n}{y}\left(1-\theta\right)^{n}\exp\left\{ y\log\frac{\theta}{1-\theta}\right\} ,
+$$
+
+so that $g\left(\theta\right)=1-\theta$, $\phi\left(\theta\right)=\log\left(\theta/\left(1-\theta\right)\right)$ is the natural parameter, and $t\left(y\right)=y$ is a sufficient statistic. Then, the conjugate prior for $\theta$ is
+
+$$
+\begin{align*}
+p\left(\theta\right) & \propto g\left(\theta\right)^{n_{0}}\exp\left\{ \phi\left(\theta\right)\nu\right\} \\
+	& =\left(1-\theta\right)^{n_{0}}\exp\left\{ \nu\log\frac{\theta}{1-\theta}\right\} \\
+	& =\left(1-\theta\right)^{n_{0}}\left[\exp\left\{ \log\frac{\theta}{1-\theta}\right\} \right]^{\nu} \\
+	& =\left(1-\theta\right)^{n_{0}}\left(\frac{\theta}{1-\theta}\right)^{\nu} \\
+	& =\theta^{\nu}\left(1-\theta\right)^{n_{0}}\left(1-\theta\right)^{-\nu} \\
+	& =\theta^{\nu}\left(1-\theta\right)^{n_{0}-\nu},
+\end{align*}
+$$	
+which we recognize as the kernel of a $\text{Beta}\left(\nu+1,n_{0}-\nu+1\right)$ distribution, i.e., the conjugate prior for $\theta$ is a beta distribution.
 
 ## Location and scale families
 

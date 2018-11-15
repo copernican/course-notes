@@ -26,6 +26,7 @@ Let $\mathbf{A}\in\mathbf{M}_{m,m}\left(\mathbb{R}\right)$. Then, the following 
 2. $\mathrm{rank}\left(\mathbf{A}\right)=m$.
 3. $\mathrm{range}\left(\mathbf{A}\right)=\mathbb{R}^{m}$.
 4. $\mathrm{null}\left(\mathbf{A}\right)=\mathbf{0}$.
+
 ```
 
 ```{theorem}
