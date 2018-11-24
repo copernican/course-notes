@@ -86,8 +86,10 @@ We refer to $p/\left(1-p\right)$ as the _odds_ of the event (how likely versus n
 Finally, recall from \@ref(exm:natural-param-binomial) that $\log\left(p/\left(1-p\right)\right)$ is the natural parameter of the binomial exponential family. When the natural parameter is used as the link function in a GLM, it is called the _canonical link_.
 ```
 
+We now consider a GLM suitable for count data.
+
 ```{example, name = "Poisson regression"}
-FINISH THIS EXAMPLE
+For $Y_{1},Y_{2},\ldots,Y_{n}$, let $Y_{i}\sim\text{Poisson}\left(p\right)$.
 
 In a Poisson regression, we have $\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}$.
 ```

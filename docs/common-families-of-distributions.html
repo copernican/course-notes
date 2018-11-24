@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-11-15">
+<meta name="date" content="2018-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -738,7 +738,98 @@ Figure 5.2: example of a normal scale family
 </p>
 </div>
 
+<div class="theorem">
+<p><span id="thm:location-scale-family" class="theorem"><strong>Theorem 5.4  </strong></span>Let <span class="math inline">\(f\left(x\right)\)</span> be any pdf. Let <span class="math inline">\(\mu\)</span> be any real number, and let <span class="math inline">\(\sigma\)</span> be any positive real number. Then <span class="math inline">\(X\)</span> is a random variable with pdf <span class="math inline">\(\left(1/\sigma\right)f\left(\left(x-\mu\right)/\sigma\right)\)</span> if and only if there exists a random variable <span class="math inline">\(Z\)</span> with pdf <span class="math inline">\(f\left(z\right)\)</span> and <span class="math inline">\(X=\sigma Z+\mu\)</span>.</p>
+(This is Theorem 3.5.6 from <span class="citation">Casella and Berger (<a href="#ref-casella2002statistical">2002</a>)</span>; the following proof is based on one given there.)
 </div>
+
+
+<div class="proof">
+<p> <span class="proof"><em>Proof. </em></span> To prove the “if” part, define <span class="math inline">\(g\left(z\right)=\sigma z+\mu\)</span>, so that</p>
+<p><span class="math display">\[
+X=g\left(Z\right)=\sigma Z +\mu\implies Z=\frac{X-\mu}{\sigma}.
+\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[
+g^{-1}\left(x\right) = g^{-1}\left(g\left(z\right)\right) = z = \frac{x-\mu}{\sigma}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\left|\frac{\dif}{\dif x}g^{-1}\left(x\right)\right|=\left|\frac{1}{\sigma}\right|=\frac{1}{\sigma},
+\]</span></p>
+<p>which is continuous on <span class="math inline">\(\mathbb{R}\)</span>. Noting that <span class="math inline">\(g\)</span> is monotone, Theorem <a href="probability-theory.html#thm:pdf-of-function-of-rv">3.5</a> implies that the pdf of <span class="math inline">\(X\)</span> is</p>
+<p><span class="math display">\[
+f_{X}\left(x\right) = f_{Z}\left(g^{-1}\left(x\right)\right)\left|\frac{\dif}{\dif x}g^{-1}\left(x\right)\right|
+  = f_{Z}\left(z\right)\frac{1}{\sigma}
+  = \frac{1}{\sigma}f\left(\frac{x-\mu}{\sigma}\right).
+\]</span></p>
+<p>To prove the “only if” part, define <span class="math inline">\(g\left(x\right)=\left(x-\mu\right)/\sigma\)</span>, and let</p>
+<p><span class="math display">\[
+Z=g\left(X\right)=\frac{X-\mu}{\sigma}\implies X=\sigma Z+\mu.
+\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[
+g^{-1}\left(z\right)=g^{-1}\left(g\left(x\right)\right) = x = \sigma z+\mu
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\left|\frac{\dif}{\dif z}g^{-1}\left(z\right)\right|=\left|\sigma\right|=\sigma,
+\]</span></p>
+<p>which is continuous on <span class="math inline">\(\mathbb{R}\)</span>. Noting that <span class="math inline">\(g\)</span> is monotone, Theorem <a href="probability-theory.html#thm:pdf-of-function-of-rv">3.5</a> implies that the pdf of <span class="math inline">\(Z\)</span> is</p>
+<span class="math display">\[
+f_{Z}\left(z\right) = f_{X}\left(g^{-1}\left(z\right)\right)\left|\frac{\dif}{\dif z}g^{-1}\left(z\right)\right|
+  = f_{X}\left(x\right)\sigma
+  = \frac{1}{\sigma}f\left(\frac{x-\mu}{\sigma}\right)\sigma
+  = f\left(z\right).
+\]</span>
+</div>
+
+
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-68" class="theorem"><strong>Theorem 5.5  </strong></span>Let <span class="math inline">\(Z\)</span> be a random variable with pdf <span class="math inline">\(f\left(z\right).\)</span> Suppose <span class="math inline">\(\E\left[Z\right]\)</span> and <span class="math inline">\(\Var\left(Z\right)\)</span> exist. If <span class="math inline">\(X\)</span> is a random variable with pdf <span class="math inline">\(\left(1/\sigma\right)f\left(\left(x-\mu\right)/\sigma\right)\)</span>, then</p>
+<p><span class="math display">\[
+\E\left[X\right]=\sigma\E\left[Z\right]+\mu\quad\text{and}\quad\Var\left(X\right)=\sigma^{2}\Var\left(Z\right).
+\]</span></p>
+(This is Theorem 3.5.7 from <span class="citation">Casella and Berger (<a href="#ref-casella2002statistical">2002</a>)</span>.)
+</div>
+
+
+<div class="proof">
+ <span class="proof"><em>Proof. </em></span> 
+</div>
+
+<p>By Theorem <a href="common-families-of-distributions.html#thm:location-scale-family">5.4</a>, there is a random variable <span class="math inline">\(Z^{\ast}\)</span> with pdf <span class="math inline">\(f\left(z\right)\)</span> and <span class="math inline">\(X=\sigma Z^{\ast}+\mu\)</span>. So</p>
+<p><span class="math display">\[
+\begin{align*}
+  \E\left[X\right] &amp; =\E\left[\sigma Z^{\ast}+\mu\right] \\
+  &amp; = \sigma\E\left[Z^{\ast}\right]+\mu \\
+  &amp; = \sigma\int z^{\ast}\cdot f\left(z^{\ast}\right)\dif z^{\ast}+\mu \\
+  &amp; = \sigma\int z\cdot f\left(z\right)\dif z+\mu \\
+  &amp; =\sigma\E\left[Z\right]+\mu,
+\end{align*}
+\]</span></p>
+<p>where the penultimate equality follows because <span class="math inline">\(Z^{\ast}\)</span> has the same pdf as <span class="math inline">\(Z\)</span>. Next,</p>
+<p><span class="math display">\[
+\begin{align*}
+  \Var\left(X\right) &amp; = \E\left[\left(X-\E\left[X\right]\right)^{2}\right] \\
+  &amp; = \E\left[\left(\sigma Z^{\ast}+\mu-\E\left[\sigma Z^{\ast}+\mu\right]\right)^{2}\right] \\
+  &amp; = \E\left[\left(\sigma Z^{\ast}+\mu-\left(\sigma\E\left[Z^{\ast}\right]+\mu\right)\right)^{2}\right] \\
+  &amp; = \E\left[\left(\sigma\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)\right)^{2}\right] \\
+  &amp; = \E\left[\sigma^{2}\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)^{2}\right] \\
+  &amp; = \sigma^{2}\E\left[\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)^{2}\right] \\
+  &amp; = \sigma^{2}\Var\left(Z^{\ast}\right) \\
+  &amp; = \sigma^{2}\Var\left(Z\right),
+\end{align*}
+\]</span></p>
+<p>where the final equality follows because <span class="math inline">\(Z^{\ast}\)</span> has the same pdf as <span class="math inline">\(Z\)</span>, and the result has been shown.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-casella2002statistical">
+<p>Casella, G., and R.L. Berger. 2002. <em>Statistical Inference</em>. Duxbury Advanced Series in Statistics and Decision Sciences. Thomson Learning. <a href="https://books.google.com/books?id=0x\_vAAAAMAAJ" class="uri">https://books.google.com/books?id=0x\_vAAAAMAAJ</a>.</p>
 </div>
 </div>
             </section>

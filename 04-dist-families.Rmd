@@ -636,3 +636,106 @@ plot(
 lines(x, dnorm(x, mean = 0, sd = 1), type = "l", col = "red")
 lines(x, dnorm(x, mean = 0, sd = 1.5), type = "l", col = "green")
 ```
+
+```{theorem, label = "location-scale-family"}
+Let $f\left(x\right)$ be any pdf. Let $\mu$ be any real number, and let $\sigma$ be any positive real number. Then $X$ is a random variable with pdf $\left(1/\sigma\right)f\left(\left(x-\mu\right)/\sigma\right)$ if and only if there exists a random variable $Z$ with pdf $f\left(z\right)$ and $X=\sigma Z+\mu$. 
+
+(This is Theorem 3.5.6 from @casella2002statistical; the following proof is based on one given there.)
+```
+
+```{proof}
+To prove the "if" part, define $g\left(z\right)=\sigma z+\mu$, so that
+
+$$
+X=g\left(Z\right)=\sigma Z +\mu\implies Z=\frac{X-\mu}{\sigma}.
+$$
+
+We have
+
+$$
+g^{-1}\left(x\right) = g^{-1}\left(g\left(z\right)\right) = z = \frac{x-\mu}{\sigma}
+$$
+
+and
+
+$$
+\left|\frac{\dif}{\dif x}g^{-1}\left(x\right)\right|=\left|\frac{1}{\sigma}\right|=\frac{1}{\sigma},
+$$
+
+which is continuous on $\mathbb{R}$. Noting that $g$ is monotone, Theorem \@ref(thm:pdf-of-function-of-rv) implies that the pdf of $X$ is
+
+$$
+f_{X}\left(x\right) = f_{Z}\left(g^{-1}\left(x\right)\right)\left|\frac{\dif}{\dif x}g^{-1}\left(x\right)\right|
+  = f_{Z}\left(z\right)\frac{1}{\sigma}
+  = \frac{1}{\sigma}f\left(\frac{x-\mu}{\sigma}\right).
+$$
+
+To prove the "only if" part, define $g\left(x\right)=\left(x-\mu\right)/\sigma$, and let 
+
+$$
+Z=g\left(X\right)=\frac{X-\mu}{\sigma}\implies X=\sigma Z+\mu.
+$$ 
+
+We have
+
+$$
+g^{-1}\left(z\right)=g^{-1}\left(g\left(x\right)\right) = x = \sigma z+\mu
+$$
+
+and
+
+$$
+\left|\frac{\dif}{\dif z}g^{-1}\left(z\right)\right|=\left|\sigma\right|=\sigma,
+$$
+
+which is continuous on $\mathbb{R}$. Noting that $g$ is monotone, Theorem \@ref(thm:pdf-of-function-of-rv) implies that the pdf of $Z$ is
+
+$$
+f_{Z}\left(z\right) = f_{X}\left(g^{-1}\left(z\right)\right)\left|\frac{\dif}{\dif z}g^{-1}\left(z\right)\right|
+  = f_{X}\left(x\right)\sigma
+  = \frac{1}{\sigma}f\left(\frac{x-\mu}{\sigma}\right)\sigma
+  = f\left(z\right).
+$$
+```
+
+```{theorem}
+Let $Z$ be a random variable with pdf $f\left(z\right).$ Suppose $\E\left[Z\right]$ and $\Var\left(Z\right)$ exist. If $X$ is a random variable with pdf $\left(1/\sigma\right)f\left(\left(x-\mu\right)/\sigma\right)$, then 
+
+$$
+\E\left[X\right]=\sigma\E\left[Z\right]+\mu\quad\text{and}\quad\Var\left(X\right)=\sigma^{2}\Var\left(Z\right).
+$$
+  
+(This is Theorem 3.5.7 from @casella2002statistical.)
+```
+
+```{proof}
+```
+
+By Theorem \@ref(thm:location-scale-family), there is a random variable $Z^{\ast}$ with pdf $f\left(z\right)$ and $X=\sigma Z^{\ast}+\mu$. So 
+
+$$
+\begin{align*}
+  \E\left[X\right] & =\E\left[\sigma Z^{\ast}+\mu\right] \\
+  & = \sigma\E\left[Z^{\ast}\right]+\mu \\
+  & = \sigma\int z^{\ast}\cdot f\left(z^{\ast}\right)\dif z^{\ast}+\mu \\
+  & = \sigma\int z\cdot f\left(z\right)\dif z+\mu \\
+  & =\sigma\E\left[Z\right]+\mu,
+\end{align*}
+$$	
+
+where the penultimate equality follows because $Z^{\ast}$ has the same pdf as $Z$. Next, 
+
+$$
+\begin{align*}
+  \Var\left(X\right) & = \E\left[\left(X-\E\left[X\right]\right)^{2}\right] \\
+  & = \E\left[\left(\sigma Z^{\ast}+\mu-\E\left[\sigma Z^{\ast}+\mu\right]\right)^{2}\right] \\
+  & = \E\left[\left(\sigma Z^{\ast}+\mu-\left(\sigma\E\left[Z^{\ast}\right]+\mu\right)\right)^{2}\right] \\
+  & = \E\left[\left(\sigma\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)\right)^{2}\right] \\
+  & = \E\left[\sigma^{2}\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)^{2}\right] \\
+  & = \sigma^{2}\E\left[\left(Z^{\ast}-\E\left[Z^{\ast}\right]\right)^{2}\right] \\
+  & = \sigma^{2}\Var\left(Z^{\ast}\right) \\
+  & = \sigma^{2}\Var\left(Z\right),
+\end{align*}
+$$	
+
+where the final equality follows because $Z^{\ast}$ has the same pdf as $Z$, and the result has been shown.

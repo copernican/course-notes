@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-11-15">
+<meta name="date" content="2018-11-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -277,7 +277,7 @@ i.e., the probability that the chain is in state <span class="math inline">\(j\)
 <p>We are now to consider the limiting behavior of Markov chains.</p>
 
 <div class="definition">
-<span id="def:unnamed-chunk-89" class="definition"><strong>Definition 10.1  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\pi}\)</span> is said to be a <em>stationary distribution</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> with state space <span class="math inline">\(S\)</span> and transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}\)</span>.
+<span id="def:unnamed-chunk-92" class="definition"><strong>Definition 10.1  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\pi}\)</span> is said to be a <em>stationary distribution</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> with state space <span class="math inline">\(S\)</span> and transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}\)</span>.
 </div>
 
 <p>Observe that <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\)</span> is a left eigenvector with eigenvalue 1. We now consider how to compute <span class="math inline">\(\boldsymbol{\pi}\)</span>. One option is to solve <span class="math inline">\(\boldsymbol{\pi}^{\mathsf{T}}\mathbf{P}=\boldsymbol{\pi}^{\mathsf{T}}\)</span> as a linear algebra problem, i.e., solve</p>
@@ -359,7 +359,7 @@ By assumption, <span class="math inline">\(\mathbf{P}\)</span> is symmetric, i.e
 
 
 <div class="corollary">
-<span id="cor:unnamed-chunk-91" class="corollary"><strong>Corollary 10.1  </strong></span>If <span class="math inline">\(\mathbf{P}\)</span> is a transition probability matrix for an irreducible, finite-state Markov chain <span class="math inline">\(X\left(t\right)\)</span>, then its eigenvalues have absolute value less than or equal to <span class="math inline">\(1\)</span>, i.e., <span class="math inline">\(\left|\lambda_{i}\right|\leq 1\,\forall i\)</span>. Further, <span class="math inline">\(\mathbf{P}\)</span> has exactly one eigenvalue equal to <span class="math inline">\(1\)</span>, and it corresponds to the eigenvector that is the stationary distribution of <span class="math inline">\(X\left(t\right)\)</span>.
+<span id="cor:unnamed-chunk-94" class="corollary"><strong>Corollary 10.1  </strong></span>If <span class="math inline">\(\mathbf{P}\)</span> is a transition probability matrix for an irreducible, finite-state Markov chain <span class="math inline">\(X\left(t\right)\)</span>, then its eigenvalues have absolute value less than or equal to <span class="math inline">\(1\)</span>, i.e., <span class="math inline">\(\left|\lambda_{i}\right|\leq 1\,\forall i\)</span>. Further, <span class="math inline">\(\mathbf{P}\)</span> has exactly one eigenvalue equal to <span class="math inline">\(1\)</span>, and it corresponds to the eigenvector that is the stationary distribution of <span class="math inline">\(X\left(t\right)\)</span>.
 </div>
 
 <p>It is not difficult to find a finite-state Markov chain that does not have a unique stationary distribution. Consider a chain with four states and transition probability matrix</p>
@@ -378,7 +378,7 @@ By assumption, <span class="math inline">\(\mathbf{P}\)</span> is symmetric, i.e
 <p>We have said that we can use MCMC to sample from an otherwise intractable distribution if we construct a Markov chain whose stationary distribution is the target distribution. We have also proved that the limiting distribution of a finite-state Markov chain is the stationary distribution (provided it is unique). Our attention now turns to constructing such a chain.</p>
 
 <div class="definition">
-<span id="def:unnamed-chunk-92" class="definition"><strong>Definition 10.2  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\nu}\)</span> on a state space <span class="math inline">\(S\)</span> is said to be in <em>detailed balance</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> on <span class="math inline">\(S\)</span> with transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\nu\left(i\right)P_{ij}=\nu\left(j\right)P_{ji}\)</span>.
+<span id="def:unnamed-chunk-95" class="definition"><strong>Definition 10.2  </strong></span>A distribution <span class="math inline">\(\boldsymbol{\nu}\)</span> on a state space <span class="math inline">\(S\)</span> is said to be in <em>detailed balance</em> for a Markov chain <span class="math inline">\(X\left(t\right)\)</span> on <span class="math inline">\(S\)</span> with transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> if <span class="math inline">\(\nu\left(i\right)P_{ij}=\nu\left(j\right)P_{ji}\)</span>.
 </div>
 
 <p>Practically, it is difficult to produce a transition probability matrix <span class="math inline">\(\mathbf{P}\)</span> that makes <span class="math inline">\(\boldsymbol{\pi}\)</span> stationary. It is often easier to produce a <span class="math inline">\(\mathbf{P}\)</span> such that <span class="math inline">\(\boldsymbol{\pi}\)</span> is in detailed balance.</p>
@@ -415,7 +415,7 @@ where the second equality follows because <span class="math inline">\(\boldsymbo
 </ol>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-94" class="example"><strong>Example 10.1  </strong></span>Consider again the Ising model, and suppose that <span class="math inline">\(n=3\)</span>, so that there are 9 possible states, hence <span class="math inline">\(2^{9}\)</span> possible configurations. Consider the proposal function that picks a vertex uniformly and flips its sign, taking the resulting configuration as the proposed state. Then, the probability of proposing <span class="math inline">\(s&#39;\)</span> given that the chain is in state <span class="math inline">\(s\)</span> is</p>
+<p><span id="exm:unnamed-chunk-97" class="example"><strong>Example 10.1  </strong></span>Consider again the Ising model, and suppose that <span class="math inline">\(n=3\)</span>, so that there are 9 possible states, hence <span class="math inline">\(2^{9}\)</span> possible configurations. Consider the proposal function that picks a vertex uniformly and flips its sign, taking the resulting configuration as the proposed state. Then, the probability of proposing <span class="math inline">\(s&#39;\)</span> given that the chain is in state <span class="math inline">\(s\)</span> is</p>
 <p><span class="math display">\[
 q\left(s,s&#39;\right)=
   \begin{cases}
@@ -434,7 +434,7 @@ If a sample drawn from <span class="math inline">\(\mathcal{U}\left(0,1\right)\)
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-95" class="example"><strong>Example 10.2  </strong></span>Let <span class="math inline">\(X\sim\mathcal{N}\left(0,1\right)\)</span> be the distribution from which we wish to sample. In this case, <span class="math inline">\(S=\mathbb{R}\)</span>, so that any state <span class="math inline">\(s\in\mathbb{R}\)</span>. Let the probability of being in state <span class="math inline">\(s\)</span> be given by the Gaussian density, i.e.,</p>
+<p><span id="exm:unnamed-chunk-98" class="example"><strong>Example 10.2  </strong></span>Let <span class="math inline">\(X\sim\mathcal{N}\left(0,1\right)\)</span> be the distribution from which we wish to sample. In this case, <span class="math inline">\(S=\mathbb{R}\)</span>, so that any state <span class="math inline">\(s\in\mathbb{R}\)</span>. Let the probability of being in state <span class="math inline">\(s\)</span> be given by the Gaussian density, i.e.,</p>
 <p><span class="math display">\[
 \nu\left(s\right)=\frac{1}{\sqrt{2\pi}}\mathrm{e}^{-s^{2}/2}.
 \]</span></p>
@@ -548,7 +548,7 @@ which we see is equal to <span class="math inline">\(\nu\left(j\right)q\left(j,i
 <p>We now present Gibbs sampling, a special case of the Metropolis-Hastings algorithm that does not require us to specify a proposal. Suppose that we wish to sample from <span class="math inline">\(\mathbf{X}=\left(X_{1},\ldots,X_{n}\right)\)</span>. The idea behind Gibbs sampling is to set a Markov chain <span class="math inline">\(\mathbf{W}\left(0\right)=\left(X_{1}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>, where the <span class="math inline">\(X_{i}^{\left(0\right)}\)</span> are often set at random (from possible values of each <span class="math inline">\(X_{i}\)</span>). Then, the marginal density of the first coordinate is <span class="math inline">\(f\left(X_{1}|X_{2}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>. Let <span class="math inline">\(\hat{X}_{1}^{\left(1\right)}\)</span> be a sample from the marginal density of <span class="math inline">\(X_{1}\)</span>. Setting <span class="math inline">\(X_{1}^{\left(1\right)}=\hat{X}_{1}^{\left(1\right)}\)</span>, the Markov chain at <span class="math inline">\(t=1\)</span> is <span class="math inline">\(\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(0\right)}\ldots,X_{n}^{\left(0\right)}\right)\)</span>. For the second coordinate, let <span class="math inline">\(f\left(X_{2}|X_{1}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span> be the marginal density of <span class="math inline">\(X_{2}\)</span>. We then draw a sample <span class="math inline">\(\hat{X}_{2}^{\left(1\right)}\)</span> from the marginal density, and our Markov chain becomes <span class="math inline">\(\mathbf{W}\left(1\right)=\left(X_{1}^{\left(1\right)},X_{2}^{\left(1\right)},X_{3}^{\left(0\right)},\ldots,X_{n}^{\left(0\right)}\right)\)</span>. We proceed in this manner until we have drawn samples from the marginal density of each <span class="math inline">\(X_{i}\)</span>, which is given by <span class="math inline">\(f\left(X_{i}|\mathbf{X}_{-i}\right)\)</span>, where <span class="math inline">\(\mathbf{X}_{-i}\)</span> is the vector whose entries are the samples drawn from the marginal densities of <span class="math inline">\(\left\{X_{j}\right\}_{j=1}^{i-1}\)</span> and <span class="math inline">\(\left\{X_{j}^{\left(0\right)}\right\}_{j=i+1}^{n}\)</span>.</p>
 
 <div class="theorem">
-<span id="thm:unnamed-chunk-99" class="theorem"><strong>Theorem 10.4  </strong></span>The limiting distribution of <span class="math inline">\(\mathbf{W}\left(t\right)\)</span> is <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math display">\[
+<span id="thm:unnamed-chunk-102" class="theorem"><strong>Theorem 10.4  </strong></span>The limiting distribution of <span class="math inline">\(\mathbf{W}\left(t\right)\)</span> is <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math display">\[
   \lim_{t\rightarrow\infty}\mathbf{W}\left(t\right)\sim\mathbf{X}.
 \]</span>
 </div>
