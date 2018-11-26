@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-11-24">
+<meta name="date" content="2018-11-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -159,7 +159,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1.1" data-path="point-estimation.html"><a href="point-estimation.html#maximum-likelihood-estimators"><i class="fa fa-check"></i><b>6.1.1</b> Maximum likelihood estimators</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized linear models</a></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized linear models</a><ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interaction-terms"><i class="fa fa-check"></i><b>7.1</b> Interaction terms</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="machine-representation.html"><a href="machine-representation.html"><i class="fa fa-check"></i><b>8</b> Machine representation</a><ul>
 <li class="chapter" data-level="8.1" data-path="machine-representation.html"><a href="machine-representation.html#binary-numbers"><i class="fa fa-check"></i><b>8.1</b> Binary numbers</a></li>
 <li class="chapter" data-level="8.2" data-path="machine-representation.html"><a href="machine-representation.html#integers"><i class="fa fa-check"></i><b>8.2</b> Integers</a></li>
@@ -301,7 +303,148 @@ Finally, recall from <a href="common-families-of-distributions.html#exm:natural-
 In a Poisson regression, we have <span class="math inline">\(\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}\)</span>.
 </div>
 
+<div id="interaction-terms" class="section level2">
+<h2><span class="header-section-number">7.1</span> Interaction terms</h2>
+<p>THIS DOESN’T QUITE BELONG HERE, EVENTUALLY REARRANGE IT</p>
+<p>The relationship among the predictors in the models specified above is additive: the effect on the response variable of two predictors <span class="math inline">\(X_{i}\)</span> and <span class="math inline">\(X_{j}\)</span> for <span class="math inline">\(i\neq j\)</span> is their sum, weighted by their respective coefficients, i.e., <span class="math inline">\(\beta_{i}X_{i}+\beta_{j}X_{j}\)</span>. Suppose that we believe that the effect on the reponse of <span class="math inline">\(X_{j}\)</span> is not independent of the value <span class="math inline">\(X_{i}\)</span>, i.e., the relationship between <span class="math inline">\(X_{i}\)</span> and <span class="math inline">\(X_{j}\)</span> is <em>not</em> additive. We can test this hypothesis by introducing an <em>interaction term</em>.</p>
+<p>We will begin by considering interactions in the context of the German Credit data set from <span class="citation">Dheeru and Karra Taniskidou (<a href="#ref-dua2017">2017</a>)</span>, which is bundled in the <strong><code>caret</code></strong> package. This data set gives the creditworthiness (<code>Good</code> or <code>Bad</code>) of 1000 customers, along with related attributes. We will model the credit class as a function of the customer’s age, whether the customer is a foreign worker, and whether the customer has a telephone number registered under his or her name. (While the data set contains many other predictors, we will use a simple model that allows us to examine a two-way interaction of binary variables.) The response variable (<code>Class</code>) has two levels, so (binary) logistic regression is suitable. We begin by fitting the (additive) model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(
+  Class <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>ForeignWorker <span class="op">+</span><span class="st"> </span>Telephone, 
+  <span class="dt">family =</span> binomial,
+  <span class="dt">data =</span> GermanCredit
+)
 
+<span class="kw">summary</span>(glm_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Class ~ Age + ForeignWorker + Telephone, family = binomial, 
+##     data = GermanCredit)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2389  -1.4298   0.8033   0.8835   0.9851  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)    1.629875   0.594810   2.740  0.00614 **
+## Age            0.017587   0.006495   2.708  0.00677 **
+## ForeignWorker -1.347619   0.536163  -2.513  0.01196 * 
+## Telephone     -0.145706   0.144578  -1.008  0.31355   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1221.7  on 999  degrees of freedom
+## Residual deviance: 1203.9  on 996  degrees of freedom
+## AIC: 1211.9
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>We can exponentiate the coefficients to obtain odds ratios. Recall that the odds of a success are given by</p>
+<p><span class="math display">\[
+\frac{p}{1-p}=\exp\left\{\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}.
+\]</span></p>
+<p>for <span class="math inline">\(\mathbf{X}\in\mathbb{R}^{n+1}\)</span>. Let <span class="math inline">\(\text{odds}\left(x_{i}\right)\)</span> be the odds of a success when <span class="math inline">\(X_{i}=x_{i}\)</span> and all other predictors are held fixed. Then, the <em>odds ratio</em> associated with a one-unit increase in <span class="math inline">\(X_{i}\)</span> is</p>
+<p><span class="math display">\[
+\begin{align*}
+  \frac{\text{odds}\left(x_{i}+1\right)}{\text{odds}\left(x_{i}\right)} &amp; = \frac{\exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}\left(x_{i}+1\right)+\cdots+\beta_{n}x_{n}\right\}}{\exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}x_{i}+\cdots+\beta_{n}x_{n}\right\}} \\
+  &amp; = \exp\left\{\beta_{i}\left(x_{i}+1\right)\right\}\exp\left\{-\beta_{i}x_{i}\right\} \\
+  &amp; = \mathrm{e}^{\beta_{i}}.
+\end{align*}
+\]</span></p>
+<p>Observe that for some <span class="math inline">\(k\in\mathbb{N}^{+}\)</span>, we have</p>
+<p><span class="math display">\[
+\begin{align*}
+  \text{odds}\left(x_{i}+k\right) &amp; = \exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}\left(x_{i}+k\right)+\cdots+\beta_{n}x_{n}\right\} \\
+  &amp; = \exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}x_{i}+\cdots+\beta_{n}x_{n}\right\}\exp\left\{k\beta_{i}\right\} \\
+  &amp; = \mathrm{e}^{k\beta_{i}}\cdot\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta} \\
+  &amp; = \left(\prod_{i=1}^{k}\mathrm{e}^{\beta_{i}}\right)\text{odds}\left(x_{i}\right).
+\end{align*}
+\]</span></p>
+<p>We thus see that the odds of a success are multiplied by <span class="math inline">\(\mathrm{e}^{\beta_{i}}\)</span> <span class="math inline">\(k\)</span> times for a <span class="math inline">\(k\)</span>-unit increase in <span class="math inline">\(X_{i}\)</span> (again, when all other predictors are held fixed). We could also divide this expression by <span class="math inline">\(\text{odds}\left(x_{i}\right)\)</span> to obtain the odds ratio associated with a <span class="math inline">\(k\)</span>-unit increase in <span class="math inline">\(X_{i}\)</span>. We now consider the odds ratios for our model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>(
+  <span class="dt">coef =</span> <span class="kw">coef</span>(glm_fit),
+  <span class="dt">coef_exp =</span> <span class="kw">exp</span>(<span class="kw">coef</span>(glm_fit))
+)</code></pre></div>
+<pre><code>##                      coef  coef_exp
+## (Intercept)    1.62987542 5.1032389
+## Age            0.01758655 1.0177421
+## ForeignWorker -1.34761869 0.2598583
+## Telephone     -0.14570579 0.8644120</code></pre>
+<p>We see that the customer’s <code>Age</code> and status as a <code>ForeignWorker</code> are statistically significant predictors of credit class at the customary <span class="math inline">\(\alpha=0.05\)</span>. A one-unit change in <code>Age</code> is associated with a change in odds of <span class="math inline">\(\left(1.02-1\right)\times 100\%=2\%\)</span>, i.e., for every additional year older, the odds of <code>Good</code> credit increase by a (multiplicative) factor of <span class="math inline">\(2\%\)</span>. Similarly, a one-unit change in <code>ForeignWorker</code> is associated with a change in odds of <span class="math inline">\(\left(0.26-1\right)\times 100\%=-74\%\)</span>, i.e., if the customer is a foreign worker (versus not), the odds of <code>Good</code> credit decrease by <span class="math inline">\(74\%\)</span>.</p>
+<p>We observe that that whether the customer has a registered telephone number is not a significant predictor of <code>Good</code> credit. Now, it is plausible that having a registered telephone number is a proxy for how long one has been a resident of the country, hence that workers from abroad might tend to have telephone numbers at a rate different from that of domestic workers. We can test whether this interaction is significant by including the appropriate model term.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glm_interact_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(
+  Class <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>ForeignWorker <span class="op">*</span><span class="st"> </span>Telephone, 
+  <span class="dt">family =</span> binomial,
+  <span class="dt">data =</span> GermanCredit
+)
+
+<span class="kw">summary</span>(glm_interact_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Class ~ Age + ForeignWorker * Telephone, family = binomial, 
+##     data = GermanCredit)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.3440  -1.4251   0.8021   0.8835   1.0674  
+## 
+## Coefficients:
+##                          Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)             -0.187238   0.940721  -0.199  0.84223   
+## Age                      0.017371   0.006503   2.671  0.00755 **
+## ForeignWorker            0.496322   0.921310   0.539  0.59008   
+## Telephone                2.294990   1.170523   1.961  0.04992 * 
+## ForeignWorker:Telephone -2.472636   1.179491  -2.096  0.03605 * 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1221.7  on 999  degrees of freedom
+## Residual deviance: 1199.8  on 995  degrees of freedom
+## AIC: 1209.8
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>We see that the interaction term <code>ForeignWorker:Telephone</code> is significant, so we conclude that the effect of having a <code>Telephone</code> number is <em>not</em> independent of whether the customer is a <code>ForeignWorker</code>. The interpretation of the <em>main effects</em> for <code>ForeignWorker</code> and <code>Telephone</code> is very different in the presence of the interaction term. One way to understand the effects is to consider all possible combinations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newdata &lt;-<span class="st"> </span><span class="kw">with</span>(
+  GermanCredit,
+  <span class="kw">expand.grid</span>(
+    <span class="dt">ForeignWorker =</span> <span class="kw">unique</span>(ForeignWorker),
+    <span class="dt">Telephone =</span> <span class="kw">unique</span>(Telephone),
+    <span class="dt">Age =</span> <span class="kw">mean</span>(Age)
+  )
+)
+
+pred &lt;-<span class="st"> </span><span class="kw">predict</span>(glm_interact_fit, <span class="dt">newdata =</span> newdata)
+
+pred_odds &lt;-<span class="st"> </span><span class="kw">cbind</span>(
+  newdata,
+  <span class="dt">log_odds =</span> pred,
+  <span class="dt">odds =</span> <span class="kw">exp</span>(pred)
+)
+
+pred_odds</code></pre></div>
+<pre><code>##   ForeignWorker Telephone    Age  log_odds      odds
+## 1             1         0 35.546 0.9265514  2.525784
+## 2             0         0 35.546 0.4302298  1.537611
+## 3             1         1 35.546 0.7489063  2.114686
+## 4             0         1 35.546 2.7252202 15.259774</code></pre>
+<p>These results give the odds of having <code>Good</code> versus <code>Bad</code> credit for each combination of <code>ForeignWorker</code> and <code>Telephone</code>, holding <code>Age</code> constant (at its mean). Observe that the log-odds is a linear combination of the coefficients for each set of predictors. For example, the first row represents a customer who is a foreign worker, is of mean age, and does not have a telephone. <code>Telephone</code> is 0, so that the interaction <span class="math inline">\(\text{ForeignWorker}\times\text{Telephone}\)</span> is 0, hence the log-odds are the sum of the coefficients for the intercept, <code>ForeignWorker</code>, and <code>Age</code> (multiplied by the mean age), i.e.,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(
+  <span class="kw">coef</span>(glm_interact_fit)[<span class="kw">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;ForeignWorker&quot;</span>)],
+  <span class="kw">coef</span>(glm_interact_fit)[<span class="st">&quot;Age&quot;</span>] <span class="op">*</span><span class="st"> </span>pred_odds[<span class="dv">1</span>, <span class="st">&quot;Age&quot;</span>]
+)</code></pre></div>
+<pre><code>## [1] 0.9265514</code></pre>
+<p>Geometrically, including an interaction term is equivalent to testing whether the <em>slope</em> (the coefficient) of the <code>Telephone</code> predictor is different if the customer is a <code>ForeignWorker</code>; else we assume the slope is the same regardless of <code>ForeignWorker</code> status. Also notice that we can no longer interpret the coefficient for <code>Telephone</code> as the unique effect of having a telephone on credit class. The interaction is significant, i.e., <em>the effect of having a telephone depends on whether the customer is a foreign worker</em>, so we must consider the interaction term in addition to the main effect. It also follows that we cannot simply exponentiate the main effect for <code>Telephone</code> to obtain the change in odds of <code>Good</code> credit associated with having a telephone. If we wish to consider an odds ratio in this case, we must first specify whether the customer is a <code>ForeignWorker</code>, i.e., fix the value of that predictor. Then, we can compute the odds in both cases (telephone versus no telephone) and divide to obtain an odds ratio. If we set <code>ForeignWorker</code> to 0, then having a telephone is associated with an increase in the odds of <code>Good</code> credit by a factor of nearly 10.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_odds[<span class="dv">4</span>, <span class="dv">5</span>] <span class="op">/</span><span class="st"> </span>pred_odds[<span class="dv">2</span>, <span class="dv">5</span>]</code></pre></div>
+<pre><code>## [1] 9.924342</code></pre>
+<p>If we set <code>ForeignWorker</code> to 1, however, having a telephone is associated with a slight decrease in the odds of <code>Good</code> credit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_odds[<span class="dv">3</span>, <span class="dv">5</span>] <span class="op">/</span><span class="st"> </span>pred_odds[<span class="dv">1</span>, <span class="dv">5</span>]</code></pre></div>
+<pre><code>## [1] 0.8372396</code></pre>
+<p>These very different odds ratios are consistent with our earlier finding that the interaction is significant.</p>
+
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -310,6 +453,9 @@ In a Poisson regression, we have <span class="math inline">\(\log\left(\lambda\r
 </div>
 <div id="ref-fitzmaurice2012applied">
 <p>Fitzmaurice, Garrett M, Nan M Laird, and James H Ware. 2012. <em>Applied Longitudinal Analysis</em>. Vol. 998. John Wiley &amp; Sons.</p>
+</div>
+<div id="ref-dua2017">
+<p>Dheeru, Dua, and Efi Karra Taniskidou. 2017. “UCI Machine Learning Repository.” University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml" class="uri">http://archive.ics.uci.edu/ml</a>.</p>
 </div>
 </div>
             </section>
@@ -348,6 +494,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },

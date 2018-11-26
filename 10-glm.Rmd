@@ -1,5 +1,10 @@
 # Generalized linear models
 
+```{r setup-glm, include = FALSE}
+library(caret)
+data(GermanCredit)
+```
+
 In ordinary least squares with a single predictor, we have the relationship $\E\left[Y_{i}\right]=\alpha+\beta x_{i}$. This model asserts that the mean response 
 
 - has a "baseline" (intercept) of $\alpha$
@@ -93,3 +98,117 @@ For $Y_{1},Y_{2},\ldots,Y_{n}$, let $Y_{i}\sim\text{Poisson}\left(p\right)$.
 
 In a Poisson regression, we have $\log\left(\lambda\right)=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{k}X_{k}$.
 ```
+
+## Interaction terms
+
+THIS DOESN'T QUITE BELONG HERE, EVENTUALLY REARRANGE IT
+
+The relationship among the predictors in the models specified above is additive: the effect on the response variable of two predictors $X_{i}$ and $X_{j}$ for $i\neq j$ is their sum, weighted by their respective coefficients, i.e., $\beta_{i}X_{i}+\beta_{j}X_{j}$. Suppose that we believe that the effect on the reponse of $X_{j}$ is not independent of the value $X_{i}$, i.e., the relationship between $X_{i}$ and $X_{j}$ is _not_ additive. We can test this hypothesis by introducing an _interaction term_.
+
+We will begin by considering interactions in the context of the German Credit data set from @dua2017, which is bundled in the **`caret`** package. This data set gives the creditworthiness (`Good` or `Bad`) of 1000 customers, along with related attributes. We will model the credit class as a function of the customer's age, whether the customer is a foreign worker, and whether the customer has a telephone number registered under his or her name. (While the data set contains many other predictors, we will use a simple model that allows us to examine a two-way interaction of binary variables.) The response variable (`Class`) has two levels, so (binary) logistic regression is suitable. We begin by fitting the (additive) model.
+
+```{r}
+glm_fit <- glm(
+  Class ~ Age + ForeignWorker + Telephone, 
+  family = binomial,
+  data = GermanCredit
+)
+
+summary(glm_fit)
+```
+
+We can exponentiate the coefficients to obtain odds ratios. Recall that the odds of a success are given by
+
+$$
+\frac{p}{1-p}=\exp\left\{\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta}\right\}.
+$$
+
+for $\mathbf{X}\in\mathbb{R}^{n+1}$. Let $\text{odds}\left(x_{i}\right)$ be the odds of a success when $X_{i}=x_{i}$ and all other predictors are held fixed. Then, the _odds ratio_ associated with a one-unit increase in $X_{i}$ is
+
+$$
+\begin{align*}
+  \frac{\text{odds}\left(x_{i}+1\right)}{\text{odds}\left(x_{i}\right)} & = \frac{\exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}\left(x_{i}+1\right)+\cdots+\beta_{n}x_{n}\right\}}{\exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}x_{i}+\cdots+\beta_{n}x_{n}\right\}} \\
+  & = \exp\left\{\beta_{i}\left(x_{i}+1\right)\right\}\exp\left\{-\beta_{i}x_{i}\right\} \\
+  & = \mathrm{e}^{\beta_{i}}.
+\end{align*}
+$$
+
+Observe that for some $k\in\mathbb{N}^{+}$, we have
+
+$$
+\begin{align*}
+  \text{odds}\left(x_{i}+k\right) & = \exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}\left(x_{i}+k\right)+\cdots+\beta_{n}x_{n}\right\} \\
+  & = \exp\left\{\beta_{0}+\beta_{1}x_{1}+\cdots+\beta_{i}x_{i}+\cdots+\beta_{n}x_{n}\right\}\exp\left\{k\beta_{i}\right\} \\
+  & = \mathrm{e}^{k\beta_{i}}\cdot\mathbf{X}^{\mathsf{T}}\boldsymbol{\beta} \\
+  & = \left(\prod_{i=1}^{k}\mathrm{e}^{\beta_{i}}\right)\text{odds}\left(x_{i}\right).
+\end{align*}
+$$
+
+We thus see that the odds of a success are multiplied by $\mathrm{e}^{\beta_{i}}$ $k$ times for a $k$-unit increase in $X_{i}$ (again, when all other predictors are held fixed). We could also divide this expression by $\text{odds}\left(x_{i}\right)$ to obtain the odds ratio associated with a $k$-unit increase in $X_{i}$. We now consider the odds ratios for our model.
+
+```{r}
+cbind(
+  coef = coef(glm_fit),
+  coef_exp = exp(coef(glm_fit))
+)
+```
+
+We see that the customer's `Age` and status as a `ForeignWorker` are statistically significant predictors of credit class at the customary $\alpha=0.05$. A one-unit change in `Age` is associated with a change in odds of $\left(1.02-1\right)\times 100\%=2\%$, i.e., for every additional year older, the odds of `Good` credit increase by a (multiplicative) factor of $2\%$. Similarly, a one-unit change in `ForeignWorker` is associated with a change in odds of $\left(0.26-1\right)\times 100\%=-74\%$, i.e., if the customer is a foreign worker (versus not), the odds of `Good` credit decrease by $74\%$.
+
+We observe that that whether the customer has a registered telephone number is not a significant predictor of `Good` credit. Now, it is plausible that having a registered telephone number is a proxy for how long one has been a resident of the country, hence that workers from abroad might tend to have telephone numbers at a rate different from that of domestic workers. We can test whether this interaction is significant by including the appropriate model term.
+
+```{r}
+glm_interact_fit <- glm(
+  Class ~ Age + ForeignWorker * Telephone, 
+  family = binomial,
+  data = GermanCredit
+)
+
+summary(glm_interact_fit)
+```
+
+We see that the interaction term `ForeignWorker:Telephone` is significant, so we conclude that the effect of having a `Telephone` number is _not_ independent of whether the customer is a `ForeignWorker`. The interpretation of the _main effects_ for `ForeignWorker` and `Telephone` is very different in the presence of the interaction term. One way to understand the effects is to consider all possible combinations.
+
+```{r}
+newdata <- with(
+  GermanCredit,
+  expand.grid(
+    ForeignWorker = unique(ForeignWorker),
+    Telephone = unique(Telephone),
+    Age = mean(Age)
+  )
+)
+
+pred <- predict(glm_interact_fit, newdata = newdata)
+
+pred_odds <- cbind(
+  newdata,
+  log_odds = pred,
+  odds = exp(pred)
+)
+
+pred_odds
+```
+
+These results give the odds of having `Good` versus `Bad` credit for each combination of `ForeignWorker` and `Telephone`, holding `Age` constant (at its mean). Observe that the log-odds is a linear combination of the coefficients for each set of predictors. For example, the first row represents a customer who is a foreign worker, is of mean age, and does not have a telephone. `Telephone` is 0, so that the interaction $\text{ForeignWorker}\times\text{Telephone}$ is 0, hence the log-odds are the sum of the coefficients for the intercept, `ForeignWorker`, and `Age` (multiplied by the mean age), i.e.,
+
+```{r}
+sum(
+  coef(glm_interact_fit)[c("(Intercept)", "ForeignWorker")],
+  coef(glm_interact_fit)["Age"] * pred_odds[1, "Age"]
+)
+```
+
+Geometrically, including an interaction term is equivalent to testing whether the _slope_ (the coefficient) of the `Telephone` predictor is different if the customer is a `ForeignWorker`; else we assume the slope is the same regardless of `ForeignWorker` status. Also notice that we can no longer interpret the coefficient for `Telephone` as the unique effect of having a telephone on credit class. The interaction is significant, i.e., _the effect of having a telephone depends on whether the customer is a foreign worker_, so we must consider the interaction term in addition to the main effect. It also follows that we cannot simply exponentiate the main effect for `Telephone` to obtain the change in odds of `Good` credit associated with having a telephone. If we wish to consider an odds ratio in this case, we must first specify whether the customer is a `ForeignWorker`, i.e., fix the value of that predictor. Then, we can compute the odds in both cases (telephone versus no telephone) and divide to obtain an odds ratio. If we set `ForeignWorker` to 0, then having a telephone is associated with an increase in the odds of `Good` credit by a factor of nearly 10.
+
+```{r}
+pred_odds[4, 5] / pred_odds[2, 5]
+```
+
+If we set `ForeignWorker` to 1, however, having a telephone is associated with a slight decrease in the odds of `Good` credit.
+
+```{r}
+pred_odds[3, 5] / pred_odds[1, 5]
+```
+
+These very different odds ratios are consistent with our earlier finding that the interaction is significant.

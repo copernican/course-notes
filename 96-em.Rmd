@@ -1,6 +1,6 @@
 # EM algorithm
 
-```{r setup, include = FALSE}
+```{r setup-em, include = FALSE}
 library(dplyr)
 library(ggplot2)
 ```

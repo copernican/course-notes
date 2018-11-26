@@ -25,7 +25,7 @@
 <meta name="author" content="Sean Wilson">
 
 
-<meta name="date" content="2018-11-24">
+<meta name="date" content="2018-11-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -159,7 +159,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1.1" data-path="point-estimation.html"><a href="point-estimation.html#maximum-likelihood-estimators"><i class="fa fa-check"></i><b>6.1.1</b> Maximum likelihood estimators</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized linear models</a></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized linear models</a><ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interaction-terms"><i class="fa fa-check"></i><b>7.1</b> Interaction terms</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="machine-representation.html"><a href="machine-representation.html"><i class="fa fa-check"></i><b>8</b> Machine representation</a><ul>
 <li class="chapter" data-level="8.1" data-path="machine-representation.html"><a href="machine-representation.html#binary-numbers"><i class="fa fa-check"></i><b>8.1</b> Binary numbers</a></li>
 <li class="chapter" data-level="8.2" data-path="machine-representation.html"><a href="machine-representation.html#integers"><i class="fa fa-check"></i><b>8.2</b> Integers</a></li>
@@ -247,7 +249,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 \]</span></p>
 
 <div class="proposition">
-<p><span id="prp:unnamed-chunk-104" class="proposition"><strong>Proposition 11.1  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a transition probability matrix as above.</p>
+<p><span id="prp:unnamed-chunk-111" class="proposition"><strong>Proposition 11.1  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a transition probability matrix as above.</p>
 <ol style="list-style-type: decimal">
 <li>Let <span class="math inline">\(\boldsymbol{\lambda}\in\mathbb{R}^{n}\)</span> be the eigenvalues of <span class="math inline">\(\mathbf{A}^{\mathsf{T}}\)</span>. Then, <span class="math inline">\(\max_{i\in\left\{1,\ldots,n\right\}}\left |\lambda_{i}\right |=1\)</span>.</li>
 <li>Let <span class="math inline">\(\mathbf{v}\)</span> be the eigenvector with eigenvalue 1. Then, <span class="math inline">\(v_{i}\geq 0\)</span>.</li>
@@ -258,7 +260,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In Google’s PageRank algorithm, described in <span class="citation">Page et al. (<a href="#ref-page1999">1999</a>)</span>, the page rank is determined by the values of <span class="math inline">\(v_{i}\)</span> in decreasing order.</p>
 
 <div class="definition">
-<span id="def:unnamed-chunk-105" class="definition"><strong>Definition 11.1  </strong></span>For a given matrix, the eigenvalue with maximum absolute value is called the <em>dominant eigenvalue,</em> and the associated eigenvector is the <em>dominant eigenvector.</em>
+<span id="def:unnamed-chunk-112" class="definition"><strong>Definition 11.1  </strong></span>For a given matrix, the eigenvalue with maximum absolute value is called the <em>dominant eigenvalue,</em> and the associated eigenvector is the <em>dominant eigenvector.</em>
 </div>
 
 <p>To obtain a page’s rank, we must compute the dominant eigenvector and eigenvalue.</p>
@@ -443,7 +445,7 @@ gr &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"
 gr</code></pre></div>
 <pre><code>## # A tibble: 28,980 x 2
 ##     from    to
-##    &lt;int&gt; &lt;int&gt;
+##    &lt;dbl&gt; &lt;dbl&gt;
 ##  1  3466   937
 ##  2  3466  5233
 ##  3  3466  8579
@@ -504,34 +506,34 @@ pr_dense</code></pre></div>
 <pre><code>## # A tibble: 9 x 4
 ##          p top_node niter  time
 ##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.000001 21012       31 2.12 
-## 2 0.00001  21012       31 2.00 
-## 3 0.0001   21012       31 2.05 
-## 4 0.001    21012       31 2.25 
-## 5 0.01     21012       31 2.22 
-## 6 0.15     21012       31 2.04 
-## 7 0.5      21012       31 1.99 
-## 8 0.9      21012       30 1.92 
-## 9 0.99     21012        4 0.256</code></pre>
+## 1 0.000001 21012       31 1.11 
+## 2 0.00001  21012       31 1.34 
+## 3 0.0001   21012       31 1.28 
+## 4 0.001    21012       31 1.29 
+## 5 0.01     21012       31 1.44 
+## 6 0.15     21012       31 1.38 
+## 7 0.5      21012       31 1.32 
+## 8 0.9      21012       30 1.21 
+## 9 0.99     21012        4 0.404</code></pre>
 <p>We see that the top-rated node is 21012, and that 31 iterations were required for most values of <span class="math inline">\(p\)</span>. As <span class="math inline">\(p\)</span> becomes large, the number of iterations required to converge decreases. We now repeat the process with sparse matrices.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_sparse &lt;-<span class="st"> </span><span class="kw">pagerank</span>(gr, <span class="dt">p =</span> prob)
 pr_sparse</code></pre></div>
 <pre><code>## # A tibble: 9 x 4
 ##          p top_node niter   time
 ##      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-## 1 0.000001 21012       31 0.0510
-## 2 0.00001  21012       31 0.039 
-## 3 0.0001   21012       31 0.04  
-## 4 0.001    21012       31 0.04  
-## 5 0.01     21012       31 0.0390
-## 6 0.15     21012       31 0.0400
-## 7 0.5      21012       31 0.04  
-## 8 0.9      21012       30 0.0390
-## 9 0.99     21012        4 0.005</code></pre>
+## 1 0.000001 21012       31 0.165 
+## 2 0.00001  21012       31 0.075 
+## 3 0.0001   21012       31 0.072 
+## 4 0.001    21012       31 0.0580
+## 5 0.01     21012       31 0.067 
+## 6 0.15     21012       31 0.0970
+## 7 0.5      21012       31 0.0430
+## 8 0.9      21012       30 0.05  
+## 9 0.99     21012        4 0.006</code></pre>
 <p>We see that the same number of iterations are required to converge as in the dense case, but that the time required is decreased by roughly two orders of magnitude. Finally, observe that node 21012 is also the node with the largest number of adjacent vertices (connections) (note that the <em>ego graph</em> of a vertex includes the vertex itself):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">graph &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(gr)
 igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span class="dt">v =</span> <span class="st">&quot;21012&quot;</span>)</code></pre></div>
-<pre><code>## + 81/5242 vertices, named, from 871dcc4:
+<pre><code>## + 81/5242 vertices, named, from 215c642:
 ##  [1] 10243 6610  22691 2980  18866 25758 11241 13597 3409  15538 570  
 ## [12] 8503  18719 9889  773   9341  21847 6179  1997  2741  13060 14807
 ## [23] 24955 45    4511  21281 23293 9482  15003 20635 22457 19423 5134 
@@ -545,8 +547,8 @@ igraph<span class="op">::</span><span class="kw">neighbors</span>(graph, <span c
 <p>Finally, observe that PageRank is a variant of <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality">eigenvector centrality</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ec &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">eigen_centrality</span>(graph)
 ec<span class="op">$</span>vector[<span class="kw">which.max</span>(ec<span class="op">$</span>vector)]</code></pre></div>
-<pre><code>## 21012 
-##     1</code></pre>
+<pre><code>##              21012 
+## 0.9999999999999999</code></pre>
 <p>In eigenvector centrality, the score of a node is increased more by (inbound) connections from high-scoring nodes than from low-scoring nodes. There are several other important types of centrality, e.g., <em>betweenness centrality</em>, in which the score of a node is determined by how often it appears in the shortest path between two other nodes (how often it acts as a “bridge”).</p>
 
 </div>
@@ -594,6 +596,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
