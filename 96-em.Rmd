@@ -463,7 +463,7 @@ data <- sample_mixture(1000, theta = c(178, 165, 10 ^ 2, 9 ^ 2, 0.4))
 
 data %>% 
   dplyr::group_by(gender) %>% 
-  dplyr::summarize_all(funs(length, mean, sd))
+  dplyr::summarize_all(list(length = length, mean = mean, sd = sd))
 ```
 
 We will also plot the data.
