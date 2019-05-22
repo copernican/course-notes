@@ -436,7 +436,7 @@ em_est <- function(x, theta0, eps = 1e-6) {
 
 We will simulate observations of height data.
 
-```{r}
+```{r, cache = TRUE}
 #' Sample from Gaussian mixture model parameterized by theta
 #' 
 #' @param n number of samples

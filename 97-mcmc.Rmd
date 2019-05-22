@@ -301,7 +301,7 @@ mh_sampler <- function(x0, proposal, nu, q, iter) {
 
 We will run our sampler for $T=10^{4}$ iterations, starting with $X\left(0\right)=10$ (we deliberately choose a starting value far from the stationary distribution to show how the algorithm moves to areas of higher probability). 
 
-```{r}
+```{r, cache = TRUE}
 x <- mh_sampler(x0 = 10, proposal = propose, nu = nu, q = q, iter = 1e4)
 ```
 
