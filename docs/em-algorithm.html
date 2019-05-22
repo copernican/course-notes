@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>A Master’s Companion</title>
-  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 EM algorithm | A Master’s Companion</title>
+  <meta name="description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Master’s Companion" />
+  <meta property="og:title" content="Chapter 9 EM algorithm | A Master’s Companion" />
   <meta property="og:type" content="book" />
   
   
@@ -17,19 +16,19 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Master’s Companion" />
+  <meta name="twitter:title" content="Chapter 9 EM algorithm | A Master’s Companion" />
   
   <meta name="twitter:description" content="Notes and supporting material for selected courses from Georgetown’s Master of Science in Mathematics and Statistics program" />
   
 
-<meta name="author" content="Sean Wilson">
+<meta name="author" content="Sean Wilson" />
 
 
-<meta name="date" content="2018-11-26">
+<meta name="date" content="2019-05-22" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="machine-representation.html">
@@ -599,7 +598,7 @@ data &lt;-<span class="st"> </span><span class="kw">sample_mixture</span>(<span 
 
 data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(length, mean, sd))</code></pre></div>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize_all</span>(<span class="kw">list</span>(<span class="dt">length =</span> length, <span class="dt">mean =</span> mean, <span class="dt">sd =</span> sd))</code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   gender length  mean    sd
 ##   &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -620,8 +619,8 @@ var0 &lt;-<span class="st"> </span><span class="kw">with</span>(data, <span clas
 theta0 &lt;-<span class="st"> </span><span class="kw">c</span>(mu0, <span class="kw">rep</span>(var0, <span class="dv">2</span>), <span class="fl">0.5</span>)
 theta_est &lt;-<span class="st"> </span><span class="kw">em_est</span>(data<span class="op">$</span>height, theta0)
 theta_est</code></pre></div>
-<pre><code>## [1] 163.6802881453768634 175.9983849283037500  70.0014148757636576
-## [4] 108.9100842224778489   0.4577089087970919</code></pre>
+<pre><code>## [1] 163.6802881453766929 175.9983849283036079  70.0014148757628192
+## [4] 108.9100842224782042   0.4577089087970805</code></pre>
 <p>We see that we our estimate is quite good given our knowledge of the true parameters. The fact that the position of <span class="math inline">\(\mu_{1}\)</span> and <span class="math inline">\(\sigma_{1}^{2}\)</span> are “reversed” from their “true” positions is not a problem. The algorithm is blind to our initial assignments, which were in any case arbitrary. Rather, the estimate should be interpreted as “the observation is drawn from a Gaussian with mean <span class="math inline">\(\hat{\mu}_{1}\)</span> and variance <span class="math inline">\(\hat{\sigma}_{1}^{2}\)</span> with probability <span class="math inline">\(\hat{p}\)</span> and from a Gaussian with mean <span class="math inline">\(\hat{\mu}_{2}\)</span> and variance <span class="math inline">\(\hat{\sigma}_{2}^{2}\)</span> with probability <span class="math inline">\(1-\hat{p}\)</span>.” In practice, the greater the difference in means between the two Gaussians, the more accurately EM will recover the true parameters.</p>
 </div>
 <div id="applications" class="section level2">
@@ -639,11 +638,11 @@ theta_est</code></pre></div>
 <div id="ref-dempster1977">
 <p>Dempster, A.P., N.M. Laird, and Donald B Rubin. 1977. “Maximum likelihood from incomplete data via the EM algorithm.” <em>Journal of the Royal Statistical Society Series B Methodological</em> 39 (1): 1–38. <a href="http://www.jstor.org/stable/10.2307/2984875" class="uri">http://www.jstor.org/stable/10.2307/2984875</a>.</p>
 </div>
-<div id="ref-givens2012">
-<p>Givens, Geof H, and Jennifer A Hoeting. 2012. <em>Computational Statistics</em>. Vol. 710. John Wiley &amp; Sons. <a href="https://www.stat.colostate.edu/computationalstatistics/" class="uri">https://www.stat.colostate.edu/computationalstatistics/</a>.</p>
-</div>
 <div id="ref-friedman2001">
 <p>Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2009. <em>The Elements of Statistical Learning</em>. Vol. 1. 12. Springer series in statistics New York, NY, USA:</p>
+</div>
+<div id="ref-givens2012">
+<p>Givens, Geof H, and Jennifer A Hoeting. 2012. <em>Computational Statistics</em>. Vol. 710. John Wiley &amp; Sons. <a href="https://www.stat.colostate.edu/computationalstatistics/" class="uri">https://www.stat.colostate.edu/computationalstatistics/</a>.</p>
 </div>
 </div>
             </section>
