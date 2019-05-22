@@ -22,7 +22,7 @@ From the definition of conditional probability, we have
 P\left(A_{i}|B\right) & =\frac{P\left(A_{i}\cap B\right)}{P\left(B\right)} \\
  & =\frac{P\left(B|A_{i}\right)P\left(A_{i}\right)}{P\left(B\right)}\tag{conditional probability} \\
  & =\frac{P\left(B|A_{i}\right)P\left(A_{i}\right)}{\sum_{j=1}^{\infty}P\left(B\cap A_{j}\right)}\tag{the $A_{j}$ partition $\Omega$} \\
- & =\frac{P\left(B|A_{i}\right)}{\sum_{j=1}^{\infty}P\left(B|A_{j}\right)P\left(A_{j}\right)}.\tag{conditional probability}
+ & =\frac{P\left(B|A_{i}\right)P\left(A_{i}\right)}{\sum_{j=1}^{\infty}P\left(B|A_{j}\right)P\left(A_{j}\right)}.\tag{conditional probability}
 \end{align*}
 ```
 
